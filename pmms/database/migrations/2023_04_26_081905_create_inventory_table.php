@@ -17,8 +17,8 @@ class CreateInventoryTable extends Migration
                 $table->increments('id');
                 $table->string('name');
                 $table->string('category');
-                $table->integer('price');
-                $table->integer('cost');
+                $table->decimal('price', 8, 2);
+                $table->decimal('cost', 8, 2);
                 $table->integer('quantity');
                 $table->timestamps();
         });

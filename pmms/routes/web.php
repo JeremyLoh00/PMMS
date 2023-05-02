@@ -46,3 +46,9 @@ Route::get('/edit_inventory/{id}', [InventoryController::class, 'Edit']);
 
 //Access edit inventory page by calling the func in controller
 Route::post('/update/{id}', [InventoryController::class, 'Update']);
+
+//Access edit inventory page by calling the func in controller
+Route::post('/increment/{id}', [InventoryController::class, 'Increment']);
+
+//Access the function of delete inside con
+Route::delete('/delete/{id}', [InventoryController::class, 'delete'])->name('inventory.delete');

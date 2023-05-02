@@ -25,8 +25,8 @@ class InventoryController extends Controller
     $request->validate([
         'name' =>'required',
         'category' =>'required',
-        'cost' =>'required|integer',
-        'price' =>'required|integer',
+        'cost' =>"required|regex:/^\d+(\.\d{1,2})?$/",
+        'price' =>"required|regex:/^\d+(\.\d{1,2})?$/",
         'quantity' =>'required|integer',
     ]);
     
@@ -56,6 +56,26 @@ class InventoryController extends Controller
         // $data->quantity=$request->quantity;
         $input = $request->all();
         $inventory->update($input);
+        return redirect('/inventory')->with('message', 'Update successful!');
+    }
+    //Delete item
+    function delete($id)
+    {
+        Inventory::find($id)->delete();
+  
+        return redirect('/inventory')->with('message', 'Delete successful!');
+    }
+
+    function decrementQuantity(int $itemId){
+        $data = Inventory::where('id', $itemId)->where('id',auth()->user()->id)->first();
+        if($data){
+
+            $data->decrement('quantity');
+        }
+    }
+    function increment(Request $request, $id){
+        $input = $request->quantity;
+        Inventory::where('id', $id)->increment('quantity', $input);
         return redirect('/inventory')->with('message', 'Update successful!');
     }
 }

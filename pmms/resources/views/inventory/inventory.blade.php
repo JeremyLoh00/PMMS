@@ -1,4 +1,5 @@
 @include('navbar.inventory')
+
 <!DOCTYPE html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 <head>
@@ -52,8 +53,11 @@
                         <td>{{ $inv['price'] }}</td>
                         <td>{{ $inv['quantity'] }}</td>
                         <td>
-                            <a href={{"edit_inventory/".$inv['id']}}>Edit</a>
+                            <a href={{"edit_inventory/".$inv['id']}}><x-uni-pen-o style="width: 30px; height: 30px; color: #00A3D8;"/></a>
                         </td>
+                        {{-- <td>
+                            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#incrementModal">+</button>
+                        </td> --}}
                     </tr>
                 @endforeach
                 
@@ -62,8 +66,34 @@
         {{$inventory->links()}}
     </div>
     <div style="margin: 50px; align-items: center; justify-content: center; display: flex;">
-    <a href="/add_inventory"><button style="width: 60px; height: 60px; padding: 15px; border-radius: 50%; background-color: #00A3D8; border: none; left: 50%; box-shadow: 3px 3px rgba(0, 0, 0, 0.02);"><x-monoicon-add style="color: white;"/></button></a>
+    <a href="/add_inventory"><button style="width: 60px; height: 60px; padding: 15px; border-radius: 50%; background-color: #00A3D8; border: none; left: 50%; box-shadow: 3px 3px rgba(0, 0, 0, 0.02); active: none"><x-monoicon-add style="color: white;"/></button></a>
     </div>
 </body>
+{{-- Increment --}}
+<div class="modal fade" id="incrementModal" tabindex="-1" role="dialog" aria-labelledby="incrementModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content"><form>
+        <div class="modal-header">
+          <h5 class="modal-title" id="incrementModalLabel">Add stock</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          
+            <div class="form-group">
+              <label for="recipient-name" class="col-form-label">Quantity</label>
+              <input type="text" class="form-control" id="recipient-name">
+            </div>
+            <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+          <a><button type="button" class="btn btn-primary">Add</button></a>
+         
+        </div>
+        
+        </div> </form>
+      </div>
+    </div>
+  </div>
 
 </html>
