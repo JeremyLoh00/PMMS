@@ -65,17 +65,26 @@ class InventoryController extends Controller
   
         return redirect('/inventory')->with('message', 'Delete successful!');
     }
-
-    function decrementQuantity(int $itemId){
-        $data = Inventory::where('id', $itemId)->where('id',auth()->user()->id)->first();
-        if($data){
-
-            $data->decrement('quantity');
-        }
+    //Add stock page
+    function add($id){
+        $data = Inventory::find($id);
+        return view('inventory.add_stock', ['inventory' => $data]);
     }
+    //Add stock update
     function increment(Request $request, $id){
         $input = $request->quantity;
         Inventory::where('id', $id)->increment('quantity', $input);
-        return redirect('/inventory')->with('message', 'Update successful!');
+        return redirect('/inventory')->with('message', 'Stock update successful!');
+    }
+    //Deduct stock page
+    function deduct($id){
+        $data = Inventory::find($id);
+        return view('inventory.deduct_stock', ['inventory' => $data]);
+    }
+    //Update deduct stock
+    function decrement(Request $request, $id){
+        $input = $request->quantity;
+        Inventory::where('id', $id)->decrement('quantity', $input);
+        return redirect('/inventory')->with('message', 'Stock update successful!');
     }
 }
