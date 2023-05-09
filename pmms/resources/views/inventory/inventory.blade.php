@@ -38,6 +38,22 @@
         <h3>
             Inventory List
         </h3>
+        <div style="margin: 5px; padding: 5px;">
+            <form action="" method="get">
+                @csrf
+                <div class="row">
+                    <div>
+                        <input type="search" wire:model="search" class="form-control float-end mx-2"
+                            placeholder="Search">
+                    </div>
+                    <div class="col-md-2">
+                        <button type="submit" style="width: 35px; height: 35px; border: none; background-color: none"><x-ri-search-line style="color: #00A3D8"/></button>
+                        {{-- <input type="submit" name="" class="btn btn-primaray form-control" value="Search" style="background-color: #00A3D8; color: white; width: 200px; height: 60px; border-radius: 10px"> --}}
+                    </div>
+                </div>
+            </form>
+        </div>
+
         <table class="table">
             <thead class="thead-dark">
                 <tr>
@@ -60,10 +76,10 @@
                         <td>{{ $inv['price'] }}</td>
                         <td>{{ $inv['quantity'] }}</td>
                         <td>
-                            <a href={{ 'add_stock/' . $inv['id'] }}>+</a>
+                            <a href={{ 'add_stock/' . $inv['id'] }}><x-ri-add-fill style="width: 30px; height: 30px; color: #00A3D8;"/></a>
                         </td>
                         <td>
-                            <a href={{ 'deduct_stock/' . $inv['id'] }}>-</a>
+                            <a href={{ 'deduct_stock/' . $inv['id'] }}><x-feathericon-minus style="width: 30px; height: 30px; color: #00A3D8;"/></a>
                         </td>
                         <td>
                             <a href={{ 'edit_inventory/' . $inv['id'] }}>
