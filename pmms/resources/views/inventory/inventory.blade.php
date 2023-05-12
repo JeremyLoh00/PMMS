@@ -4,18 +4,29 @@
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 
 <head>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!--Add successfully alert-->
     @if (session('message'))
-        <div class="alert alert-success">{{ session('message') }}
+        <div id="success" class="alert alert-success">{{ session('message') }}
             <button type="button" class="close", data-dismiss="alert">
                 <x-govicon-times style="color: black" />
             </button>
         </div>
+        <script>
+            $(document).ready(function () {
+                setTimeout(function () {
+                    $('#success').alert('close');
+                }, 5000); // Close the alert after 5 seconds (5000 milliseconds)
+            });
+        </script>
     @endif
-
-
+    @if (Session::has('alert'))
+        <div class="alert alert-{{ Session::get('alert-type') }}">
+            {{ Session::get('alert') }}
+        </div>
+    @endif
     <!-- Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.1.3/dist/css/bootstrap.min.css"
@@ -36,22 +47,16 @@
     <div
         style="margin: 50px; background-color: white; padding: 30px; border-radius: 10px; box-shadow: 3px 9px rgba(0, 0, 0, 0.02);">
         <h3>
-            Inventory List
+            Item List
         </h3>
         <div style="margin: 5px; padding: 5px;">
-            <form action="" method="get">
-                @csrf
-                <div class="row">
-                    <div>
-                        <input type="search" wire:model="search" class="form-control float-end mx-2"
-                            placeholder="Search">
-                    </div>
-                    <div class="col-md-2">
-                        <button type="submit" style="width: 35px; height: 35px; border: none; background-color: none"><x-ri-search-line style="color: #00A3D8"/></button>
-                        {{-- <input type="submit" name="" class="btn btn-primaray form-control" value="Search" style="background-color: #00A3D8; color: white; width: 200px; height: 60px; border-radius: 10px"> --}}
-                    </div>
-                </div>
+            <form action="" method="GET">
+                <input type="text" name="query" placeholder="Search..." value="{{ request('query') }}">
+                <button type="submit" style="width: 35px; height: 35px; border: none; background-color: none">
+                    <x-ri-search-line style="color: #00A3D8" />
+                </button>
             </form>
+            
         </div>
 
         <table class="table">
@@ -74,12 +79,16 @@
                         <td>{{ $inv['category'] }}</td>
                         <td>{{ $inv['cost'] }}</td>
                         <td>{{ $inv['price'] }}</td>
-                        <td>{{ $inv['quantity'] }}</td>
+                        <td style="color: {{ $inv['quantity'] <= 5 ? 'red' : 'black' }}">{{ $inv['quantity'] }}</td>
                         <td>
-                            <a href={{ 'add_stock/' . $inv['id'] }}><x-ri-add-fill style="width: 30px; height: 30px; color: #00A3D8;"/></a>
+                            <a href={{ 'add_stock/' . $inv['id'] }}>
+                                <x-ri-add-fill style="width: 30px; height: 30px; color: #00A3D8;" />
+                            </a>
                         </td>
                         <td>
-                            <a href={{ 'deduct_stock/' . $inv['id'] }}><x-feathericon-minus style="width: 30px; height: 30px; color: #00A3D8;"/></a>
+                            <a href={{ 'deduct_stock/' . $inv['id'] }}>
+                                <x-feathericon-minus style="width: 30px; height: 30px; color: #00A3D8;" />
+                            </a>
                         </td>
                         <td>
                             <a href={{ 'edit_inventory/' . $inv['id'] }}>

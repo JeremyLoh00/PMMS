@@ -36,7 +36,7 @@ Route::get('/payment', function () {
 Route::get('/inventory', [InventoryController::class, 'Index']);
 
 //Access inventory in view and call index func in controller 
-Route::get('/search', [InventoryController::class, 'Index']);
+Route::get('/search', [InventoryController::class, 'search'])->name('search');
 
 //Access add inventory page by calling the func in controller
 Route::get('/add_inventory', [InventoryController::class, 'Create']);

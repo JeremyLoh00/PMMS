@@ -5,25 +5,53 @@ namespace App\Http\Controllers;
 use App\Models\Inventory;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Session;
 
 class InventoryController extends Controller
 {
     //Access inventory page and read data to list out on table
     function index(Request $request)
     {
-        if (empty($request->all())) {
+        // if (empty($request->all())) {
             $data = Inventory::paginate(5);
+            $threshold = 5;
+
+            // Retrieve items with low stock
+            $lowStockItems = Inventory::where('quantity', '<=', $threshold)->get();
+            if ($lowStockItems->count() > 0) {
+                $message = 'Low stock alert:';
+
+                // Build the message with item names and stock quantities
+                foreach ($lowStockItems as $item) {
+                    $message .= "\nItem '{$item->name}' has only {$item->quantity} items left.";
+                }
+
+                // Store the alert message in the session
+                Session::flash('alert', $message);
+                Session::flash('alert-type', 'warning');
+            }
+            
+        // $query = $request->input('query');
+        
+        // $products = Inventory::when($query, function ($queryBuilder) use ($query) {
+        //         $queryBuilder->where('name', 'like', '%'.$query.'%')
+        //             ->orWhere('category', 'like', '%'.$query.'%');
+        //     })
+        //     ->paginate(10);
+        
+        // return view('inventory.inventory', compact('products', 'query'));
+
             return view('inventory.inventory', ['inventory' => $data]);
-        } else {
-            // $data = Inventory::paginate(5);
-            // return view('inventory.inventory', ['inventory' => $data -> filter(request(['search']))->get()]);
-            $this->authorize('list', Inventory::class);
-            $search = $request->get('search', '');
-            $data = Inventory::where('name', 'like', "%{$search}%")->paginate(10);
-            return view('inventory.inventory')
-            ->with('inventory', $data)
-            ->with('search', $search);
-        }
+        // } else {
+        //     // $data = Inventory::paginate(5);
+        //     // return view('inventory.inventory', ['inventory' => $data -> filter(request(['search']))->get()]);
+        //     $this->authorize('list', Inventory::class);
+        //     $search = $request->get('search', '');
+        //     $data = Inventory::where('name', 'like', "%{$search}%")->paginate(10);
+        //     return view('inventory.inventory')
+        //         ->with('inventory', $data)
+        //         ->with('search', $search);
+        // }
     }
 
     //Access add inventory page
@@ -107,5 +135,31 @@ class InventoryController extends Controller
         Inventory::where('id', $id)->decrement('quantity', $input);
         return redirect('/inventory')->with('message', 'Stock update successful!');
     }
+    function checkLowStock()
+    {
+        $threshold = 5;
 
+        // Retrieve products with low stock
+        $lowStockProducts = Inventory::where('quantity', '<=', $threshold)->get();
+
+        // Trigger an alert for each low stock product
+        foreach ($lowStockProducts as $inventory) {
+            // Set the alert message
+            $message = "Low stock alert: Product '{$inventory->name}' has only {$inventory->quantity} items left.";
+
+            // Store the alert message in the session
+            Session::flash('alert', $message);
+            Session::flash('alert-type', 'warning'); // You can customize the alert type (e.g., success, warning, error)
+        }
+    }
+
+    public function search(Request $request)
+    {
+        $query = $request->input('query');
+
+        $items = Inventory::where('name', 'like', '%' . $query . '%')
+            ->paginate(10);
+
+        return view('inventory.inventory', compact('items'));
+    }
 }
