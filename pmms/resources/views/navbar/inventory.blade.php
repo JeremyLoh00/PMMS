@@ -31,7 +31,7 @@
                 {{-- <x-polaris-major-inventory style="color: black"/> --}}
                 <span><a class="nav-link active" href="/inventory">Inventory</a></span>
             </li>
-            <li class="nav-item">
+            <li class="nav-item" >
                 <a class="flex-sm-fill text-sm-center nav-link" href="/schedule">Schedule</a>            </li>
             <li class="nav-item">
                 <a class="flex-sm-fill text-sm-center nav-link" href="#">Sales Report</a>
