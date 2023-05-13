@@ -31,10 +31,10 @@ Route::get('/schedule', function () {
 Route::get('/payment', function () {
     return view('payment');
 });
+// Route::get('/users', function () {
+//     return view('User.view_user');
+// });
 
-Route::get('/users', function () {
-    return view('User.view_user');
-});
 
 //INVENTORY
 //Access inventory in view and call index func in controller 
@@ -59,6 +59,7 @@ Route::post('/increment/{id}', [InventoryController::class, 'Increment']);
 Route::delete('/delete/{id}', [InventoryController::class, 'delete'])->name('inventory.delete');
 
 //USERS
+Route::get('/users', [user_controller::class, 'show']);
 //Access add inventory page by calling the func in controller
 Route::get('/add_user', [user_controller::class, 'create']);
 

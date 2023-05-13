@@ -50,13 +50,28 @@
                     <td>
                       {{$user2->username}}
                     </td>
+                    <td>
+                      {{$user2->name}}
+                    </td>
+                    <td>
+                      {{$user2->role}}
+                    </td>
+                    <td>
+                      {{$user2->email}}
+                    </td>
+                    <td>
+                      {{$user2->phone_num}}
+                    </td>
+                    <td>
+                     
+                    </td>
                   </tr>
                    
                @endforeach
                 
             </tbody>
         </table>
-        {{-- {{$inventory->links()}} --}}
+        {{$user->links()}}
     </div>
     <div style="margin: 50px; align-items: center; justify-content: center; display: flex;">
     <a href="/add_user"><button style="width: 60px; height: 60px; padding: 15px; border-radius: 50%; background-color: #00A3D8; border: none; left: 50%; box-shadow: 3px 3px rgba(0, 0, 0, 0.02); active: none"><x-monoicon-add style="color: white;"/></button></a>

@@ -14,9 +14,10 @@ class user_controller extends Controller
     }
 
     public function show(){
-        $data=User::paginate(5);
-        return view('User.view_user', ['user' => $data]);
+        $users = User::paginate(5);
+        return view('User.view_user', ['user' => $users]);
     }
+    
 
     function store(Request $request){
 
@@ -26,12 +27,13 @@ class user_controller extends Controller
             'address' =>'required',
             'phone_num' =>'required',
             'email' =>'required',
+            'password' => "required|min:6",
             'role' =>'required',
-            'password' => "required|min:6"
+            
             
         ]);
         
           User::create($formfields);
-           return redirect('/view_user')->with('message', 'Add successful!'); //redirect back to inventory page, call the route
+           return redirect('/users')->with('message', 'Add successful!'); //redirect back to inventory page, call the route
         }
 }
