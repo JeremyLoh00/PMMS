@@ -40,7 +40,7 @@
                 <a class="flex-sm-fill text-sm-center nav-link" href="/payment">Payment</a>
             </li>
             <li class="nav-item">
-                <a class="flex-sm-fill text-sm-center nav-link" href="#">User Registration</a>
+                <a class="flex-sm-fill text-sm-center nav-link" href="/users">User Registration</a>
             </li>
           </ul>
           <span class="navbar-text">

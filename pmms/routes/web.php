@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\InventoryController;
+use App\Http\Controllers\user_controller;
 use App\Models\Inventory;
 use Illuminate\Support\Facades\Route;
 
@@ -32,7 +33,7 @@ Route::get('/payment', function () {
 });
 
 Route::get('/users', function () {
-    return view('users.users');
+    return view('User.view_user');
 });
 
 //INVENTORY
@@ -56,3 +57,7 @@ Route::post('/increment/{id}', [InventoryController::class, 'Increment']);
 
 //Access the function of delete inside con
 Route::delete('/delete/{id}', [InventoryController::class, 'delete'])->name('inventory.delete');
+
+//USERS
+//Access add inventory page by calling the func in controller
+Route::get('/add_user', [user_controller::class, 'create']);
