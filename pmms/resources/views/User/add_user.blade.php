@@ -47,6 +47,11 @@
                 <input type="text" class="form-control" name="role" placeholder="">
                 <span style="color: red">@error('role'){{ $message }} @enderror</span>
             </div>
+            <div class="form-group">
+                <label for="formGroupExampleInput2">Password</label>
+                <input type="text" class="form-control" name="password" placeholder="">
+                <span style="color: red">@error('password'){{ $message }} @enderror</span>
+            </div>
             <div style="margin: 50px; align-items: center; justify-content: center; display: flex;">
             <span style="margin-right: 10px"><a href="/inventory"><button type="button" class="btn btn-outline-primary"
                         style="width: 130px; border-radius: 5px">Cancel</button></a></span>
