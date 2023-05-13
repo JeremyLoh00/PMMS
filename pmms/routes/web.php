@@ -31,6 +31,10 @@ Route::get('/payment', function () {
     return view('payment');
 });
 
+Route::get('/users', function () {
+    return view('users.users');
+});
+
 //INVENTORY
 //Access inventory in view and call index func in controller 
 Route::get('/inventory', [InventoryController::class, 'Index']);
