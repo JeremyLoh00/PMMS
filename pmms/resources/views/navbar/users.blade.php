@@ -52,7 +52,7 @@
             {{-- <span class="navbar-text">
             Logout 
           </span> --}}
-          <button type="submit" class="btn btn-link black">Logout</button>
+          <button type="submit" class="btn btn-link black" style="color:grey;">Logout</button>
         </form>
         
         </div>

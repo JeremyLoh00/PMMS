@@ -59,7 +59,7 @@ class user_controller extends Controller
             ]);
         
             // Check if a new password is provided
-            if($request->has('password')){
+            if ($request->filled('password')) {
                 $validatedData['password'] = bcrypt($request->password);
             } else {
                 // If not, keep the old password
@@ -72,6 +72,7 @@ class user_controller extends Controller
                 return redirect('/users')->with('error', 'Update failed!');
             }
         }
+        
         
         
 

@@ -18,13 +18,13 @@ class UserFactory extends Factory
     
        
         return [
-            'username' => $this->faker->userName(),
-            'name' => $this->faker->name(),
-            'address' => $this->faker->address(),
-            'phone_num' => $this->faker->phoneNumber(),
-            'email' => $this->faker->unique()->safeEmail(),
-            'password' => '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', // password
-            'role' => $this->faker->name(),
+            'username' => "CB20182",
+            'name' => "AHMAD KHAIRUL IMAN BIN AHMAD SAYUTI",
+            'address' => "No19, jln teratai, tmn idaman, 48200 serendah selangor.",
+            'phone_num' => "0182617468",
+            'email' => "akmafarah84@gmail.com",
+            'password' => 'iman2617', // password
+            'role' => "Admin",
          
         ];
     }

@@ -31,7 +31,7 @@
 <body style="background-color: #98dde2;">
     <div style="margin: 50px; background-color: white; padding: 30px; border-radius: 10px; box-shadow: 3px 9px rgba(0, 0, 0, 0.02);">
       <h3>
-        Inventory List
+        User List
       </h3>
         <table class="table">
             <thead class="thead-dark">
@@ -41,7 +41,7 @@
                     <th scope="col">Role</th>
                     <th scope="col">Email</th>
                     <th scope="col">Phone Number</th>
-                    <th scope="col"> </th>
+                    <th scope="col">Action </th>
                 </tr>
             </thead>
             <tbody>
