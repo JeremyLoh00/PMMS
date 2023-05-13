@@ -24,7 +24,7 @@ Route::get('/', function () {
 // });
 
 Route::get('/schedule', function () {
-    return view('schedule');
+    return view('/roster/admin_schedule_page');
 });
 
 Route::get('/payment', function () {
