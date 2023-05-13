@@ -1,9 +1,11 @@
 <?php
 
-use App\Http\Controllers\InventoryController;
-use App\Http\Controllers\user_controller;
 use App\Models\Inventory;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\user_controller;
+use App\Http\Controllers\InventoryController;
+use App\Http\Controllers\LogoutController;
 
 /*
 |--------------------------------------------------------------------------
@@ -72,3 +74,18 @@ Route::get('/edit_user/{id}', [user_controller::class, 'index']);
 Route::post('/update-user/{id}', [user_controller::class, 'update']);
 
 Route::delete('/delete-user/{id}', [user_controller::class, 'delete'])->name('User.delete');
+Auth::routes();
+
+// Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+
+
+Route::post('/login', function () {
+   
+});
+
+Route::post('/login', [App\Http\Controllers\Auth\LoginController::class, 'login'])->name('login');
+
+Route::post('/logout', [App\Http\Controllers\Auth\LogoutController::class, 'logout'])->name('logout');
+
+
+

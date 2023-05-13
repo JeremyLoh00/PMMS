@@ -1,4 +1,4 @@
-@include('navbar.inventory')
+@include('navbar.users')
 <!DOCTYPE html>
 <html lang="en">
 
