@@ -61,10 +61,13 @@ Route::post('/increment/{id}', [InventoryController::class, 'Increment']);
 Route::delete('/delete/{id}', [InventoryController::class, 'delete'])->name('inventory.delete');
 
 //USERS
+//redirect to view_user page
 Route::get('/users', [user_controller::class, 'show']);
-//Access add inventory page by calling the func in controller
+
+//Access add add_user page by calling the func in controller
 Route::get('/add_user', [user_controller::class, 'create']);
 
+//call store func in the controller to store data into database
 Route::POST('/store', [user_controller::class, 'store']);
 
 //Access edit inventory page by calling the func in controller
@@ -73,15 +76,14 @@ Route::get('/edit_user/{id}', [user_controller::class, 'index']);
 //Access edit user page by calling the func in controller
 Route::post('/update-user/{id}', [user_controller::class, 'update']);
 
+//Access the function of delete inside con
 Route::delete('/delete-user/{id}', [user_controller::class, 'delete'])->name('User.delete');
 Auth::routes();
 
 // Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
 
-Route::post('/login', function () {
-   
-});
+//LOGIN
 
 Route::post('/login', [App\Http\Controllers\Auth\LoginController::class, 'login'])->name('login');
 
