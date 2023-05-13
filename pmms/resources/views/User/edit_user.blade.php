@@ -45,7 +45,17 @@
             </div>
             <div class="form-group">
                 <label for="formGroupExampleInput2">Role</label>
-                <input type="text" class="form-control" name="role" placeholder="Role" value="{{ $user->role }}">
+                <select name="role" class="form-control">
+                    <option value="0" @if($user->role == '0') selected @endif>Please select</option>
+                    <option value="Admin" @if($user->role == 'Admin') selected @endif>{{$user->role == 'Admin' ? ' Admin' : 'Admin'}}</option>
+                    <option value="Cashier" @if($user->role == 'Cashier') selected @endif>{{$user->role == 'Cashier' ? 'Cashier' : 'Cashier'}}</option>
+                    <option value="Secretary" @if($user->role == 'Secretary') selected @endif>{{$user->role == 'Secretary' ? ' Secretary' : 'Secretary'}}</option>
+                    <option value="Treasurer" @if($user->role == 'Treasurer') selected @endif>{{$user->role == 'Treasurer' ? 'Treasurer' : 'Treasurer'}}</option>
+                    <option value="Coordinator" @if($user->role == 'Coordinator') selected @endif>{{$user->role == 'Coordinator' ? ' Coordinator' : 'Coordinator'}}</option>
+                </select>
+                
+                
+                
                 <span style="color: red">@error('role') {{ $message }} @enderror</span>
             </div>
             <div class="form-group">

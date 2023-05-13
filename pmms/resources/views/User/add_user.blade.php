@@ -44,7 +44,14 @@
             </div>
             <div class="form-group">
                 <label for="formGroupExampleInput2">Role</label>
-                <input type="text" class="form-control" name="role" placeholder="">
+                <select name="role" class="form-control"  value="{{old('role')}}">
+                    <option value="0">Please select</option>
+                    <option value="Admin">Admin</option>
+                    <option value="Cashier">Cashier</option>
+                    <option value="Secretary">Secretary</option>
+                    <option value="Treasurer">Treasurer</option>
+                    <option value="Coordinator">Coordinator</option>
+                </select> 
                 <span style="color: red">@error('role'){{ $message }} @enderror</span>
             </div>
             <div class="form-group">
