@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\User;
 use App\Models\user_list;
 use Illuminate\Http\Request;
+use Illuminate\Validation\Rule;
 
 class user_controller extends Controller
 {
@@ -26,7 +27,7 @@ class user_controller extends Controller
             'name' =>'required',
             'address' =>'required',
             'phone_num' =>'required',
-            'email' =>'required',
+            'email' => ['required', 'email', Rule::unique('users','email')],
             'password' => "required|min:6",
             'role' =>'required',
             
@@ -35,5 +36,24 @@ class user_controller extends Controller
         
           User::create($formfields);
            return redirect('/users')->with('message', 'Add successful!'); //redirect back to inventory page, call the route
+        }
+
+        function index($id){
+            $data = User::find($id);
+            return view('User.edit_user', ['user' => $data]); //selected data pass inside the 'user' key used in edit_user
+        }
+
+        function update(Request $request, $id){
+            $user = User::find($id);
+            $input = $request->validate([
+                'name' =>'required',
+                'address' =>'required',
+                'phone_num' =>'required',
+                'email' => 'required|email|unique:users,email,'.$id,
+                'password' => 'nullable|min:6|confirmed',
+            ]);
+        
+            $user->update($input);
+            return redirect('/users')->with('message', 'Update successful!');
         }
 }

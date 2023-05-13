@@ -53,7 +53,7 @@
                 <span style="color: red">@error('password'){{ $message }} @enderror</span>
             </div>
             <div style="margin: 50px; align-items: center; justify-content: center; display: flex;">
-            <span style="margin-right: 10px"><a href="/inventory"><button type="button" class="btn btn-outline-primary"
+            <span style="margin-right: 10px"><a href="/users"><button type="button" class="btn btn-outline-primary"
                         style="width: 130px; border-radius: 5px">Cancel</button></a></span>
             <span><button type="submit" class="btn btn-primary"
                         style="width: 130px; border-radius: 5px">Add</button></span>

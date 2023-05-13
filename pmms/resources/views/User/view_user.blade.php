@@ -63,7 +63,7 @@
                       {{$user2->phone_num}}
                     </td>
                     <td>
-                     
+                      <a href={{"edit_user/".$user2['id']}}><x-uni-pen-o style="width: 30px; height: 30px; color: #00A3D8;"/></a>
                     </td>
                   </tr>
                    

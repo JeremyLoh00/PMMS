@@ -64,3 +64,9 @@ Route::get('/users', [user_controller::class, 'show']);
 Route::get('/add_user', [user_controller::class, 'create']);
 
 Route::POST('/store', [user_controller::class, 'store']);
+
+//Access edit inventory page by calling the func in controller
+Route::get('/edit_user/{id}', [user_controller::class, 'index']);
+
+//Access edit user page by calling the func in controller
+Route::post('/update-user/{id}', [user_controller::class, 'update']);
