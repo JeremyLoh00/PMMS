@@ -61,3 +61,5 @@ Route::delete('/delete/{id}', [InventoryController::class, 'delete'])->name('inv
 //USERS
 //Access add inventory page by calling the func in controller
 Route::get('/add_user', [user_controller::class, 'create']);
+
+Route::POST('/store', [user_controller::class, 'store']);

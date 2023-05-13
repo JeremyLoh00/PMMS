@@ -45,7 +45,14 @@
                 </tr>
             </thead>
             <tbody>
-               
+               @foreach ($user as $user2)
+                  <tr>
+                    <td>
+                      {{$user2->username}}
+                    </td>
+                  </tr>
+                   
+               @endforeach
                 
             </tbody>
         </table>

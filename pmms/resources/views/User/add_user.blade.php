@@ -15,7 +15,7 @@
         <h3>
             Add user
         </h3>
-        <form action="store" method="POST">
+        <form action="/store" method="POST">
             @csrf
             <div class="form-group">
                 <label for="formGroupExampleInput">Username</label>
