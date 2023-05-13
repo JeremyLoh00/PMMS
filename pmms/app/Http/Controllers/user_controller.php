@@ -6,6 +6,7 @@ use App\Models\User;
 use App\Models\user_list;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
+use Illuminate\Support\Facades\Hash;
 
 class user_controller extends Controller
 {
@@ -23,20 +24,23 @@ class user_controller extends Controller
     function store(Request $request){
 
         $formfields = $request->validate([
-            'username' =>'required',
+            'username' => ['required', Rule::unique('users','username')],
             'name' =>'required',
             'address' =>'required',
             'phone_num' =>'required',
             'email' => ['required', 'email', Rule::unique('users','email')],
-            'password' => "required|min:6",
+            'password' => ["required", "min:6"],
+            
             'role' =>'required',
-            
-            
         ]);
         
-          User::create($formfields);
-           return redirect('/users')->with('message', 'Add successful!'); //redirect back to inventory page, call the route
-        }
+    
+        $formfields['password'] = Hash::make($request->password);
+    
+        User::create($formfields);
+        return redirect('/users')->with('message', 'Add successful!'); //redirect back to inventory page, call the route
+    }
+    
 
         function index($id){
             $data = User::find($id);
@@ -45,15 +49,37 @@ class user_controller extends Controller
 
         function update(Request $request, $id){
             $user = User::find($id);
-            $input = $request->validate([
+            $validatedData = $request->validate([
                 'name' =>'required',
                 'address' =>'required',
                 'phone_num' =>'required',
                 'email' => 'required|email|unique:users,email,'.$id,
+                'role' => 'required',
                 'password' => 'nullable|min:6|confirmed',
             ]);
         
-            $user->update($input);
-            return redirect('/users')->with('message', 'Update successful!');
+            // Check if a new password is provided
+            if($request->has('password')){
+                $validatedData['password'] = bcrypt($request->password);
+            } else {
+                // If not, keep the old password
+                $validatedData['password'] = $user->password;
+            }
+        
+            if($user->update($validatedData)){
+                return redirect('/users')->with('message', 'Update successful!');
+            } else {
+                return redirect('/users')->with('error', 'Update failed!');
+            }
         }
+        
+        
+
+        function delete($id)
+        {
+            User::find($id)->delete();
+      
+            return redirect('/users')->with('message', 'Delete successful!');
+        }
+        
 }

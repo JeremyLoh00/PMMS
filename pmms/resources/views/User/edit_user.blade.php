@@ -18,87 +18,45 @@
             Edit user
         </h3>
         <form action="/update-user/{{ $user->id }}" method="POST">
-            {!! csrf_field() !!}
+            @csrf
             <div class="form-group">
                 <label for="formGroupExampleInput">Username</label>
-                <input type="text" class="form-control" name="username" placeholder="Item name"
-                    value="{{ $user->username}}" readonly>
+                <input type="text" class="form-control" name="username" placeholder="Item name" value="{{ $user->username }}" readonly>
             </div>
             <div class="form-group">
                 <label for="formGroupExampleInput2">Name</label>
-                <input type="text" class="form-control" name="name" placeholder="Category"
-                    value="{{ $user['name'] }}">
-                <span style="color: red">
-                    @error('category')
-                        {{ $message }}
-                    @enderror
-                </span>
+                <input type="text" class="form-control" name="name" placeholder="Name" value="{{ $user->name }}">
+                <span style="color: red">@error('name') {{ $message }} @enderror</span>
             </div>
             <div class="form-group">
                 <label for="formGroupExampleInput2">Address</label>
-                <input type="text" class="form-control" name="address" placeholder="Cost"
-                    value="{{ $user['address'] }}">
-                <span style="color: red">
-                    @error('cost')
-                        {{ $message }}
-                    @enderror
-                </span>
+                <input type="text" class="form-control" name="address" placeholder="Address" value="{{ $user->address }}">
+                <span style="color: red">@error('address') {{ $message }} @enderror</span>
             </div>
             <div class="form-group">
                 <label for="formGroupExampleInput2">Phone Number</label>
-                <input type="text" class="form-control" name="phone_num" placeholder="Price"
-                    value="{{ $user['phone_num'] }}">
-                <span style="color: red">
-                    @error('price')
-                        {{ $message }}
-                    @enderror
-                </span>
+                <input type="text" class="form-control" name="phone_num" placeholder="Phone Number" value="{{ $user->phone_num }}">
+                <span style="color: red">@error('phone_num') {{ $message }} @enderror</span>
             </div>
             <div class="form-group">
                 <label for="formGroupExampleInput2">Email</label>
-                {{-- <div class="input-group"><button type="button" wire:loading.attr="disabled" wire:click="decrementQuantity({{ $inventory['quantity'] }})" class= "btn btn1">-</button> --}}
-                <input type="text" class="form-control" name="email" placeholder="In stock quantity"
-                    value="{{ $user['email'] }}">
-                    {{-- <button type="button" wire:loading.attr="disabled" wire:click="incrementQuantity({{ $inventory['quantity'] }})" class= "btn btn1">+</button></div> --}}
-                <span style="color: red">
-                    @error('quantity')
-                        {{ $message }}
-                    @enderror
-                </span>
+                <input type="text" class="form-control" name="email" placeholder="Email" value="{{ $user->email }}">
+                <span style="color: red">@error('email') {{ $message }} @enderror</span>
             </div>
             <div class="form-group">
                 <label for="formGroupExampleInput2">Role</label>
-                {{-- <div class="input-group"><button type="button" wire:loading.attr="disabled" wire:click="decrementQuantity({{ $inventory['quantity'] }})" class= "btn btn1">-</button> --}}
-                <input type="text" class="form-control" name="role" placeholder="In stock quantity"
-                    value="{{ $user['role'] }}">
-                    {{-- <button type="button" wire:loading.attr="disabled" wire:click="incrementQuantity({{ $inventory['quantity'] }})" class= "btn btn1">+</button></div> --}}
-                <span style="color: red">
-                    @error('quantity')
-                        {{ $message }}
-                    @enderror
-                </span>
+                <input type="text" class="form-control" name="role" placeholder="Role" value="{{ $user->role }}">
+                <span style="color: red">@error('role') {{ $message }} @enderror</span>
             </div>
             <div class="form-group">
                 <label for="formGroupExampleInput2">Password</label>
-                {{-- <div class="input-group"><button type="button" wire:loading.attr="disabled" wire:click="decrementQuantity({{ $inventory['quantity'] }})" class= "btn btn1">-</button> --}}
-                <input type="text" class="form-control" name="password" 
-                value="{{ old('confirm_password') }}">
-                    {{-- <button type="button" wire:loading.attr="disabled" wire:click="incrementQuantity({{ $inventory['quantity'] }})" class= "btn btn1">+</button></div> --}}
-                <span style="color: red">
-                    @error('quantity')
-                        {{ $message }}
-                    @enderror
-                </span>
+                <input type="password" class="form-control" name="password" placeholder="Password">
+                <span style="color: red">@error('password') {{ $message }} @enderror</span>
             </div>
             <div class="form-group">
                 <label for="formGroupExampleInput2">Confirm Password</label>
-                <input type="password" class="form-control" name="confirm_password" 
-                    value="{{ old('confirm_password') }}">
-                <span style="color: red">
-                    @error('confirm_password')
-                        {{ $message }}
-                    @enderror
-                </span>
+                <input type="password" class="form-control" name="password_confirmation" placeholder="Confirm Password">
+                <span style="color: red">@error('password_confirmation') {{ $message }} @enderror</span>
             </div>
             
             <div style="margin: 50px; align-items: center; justify-content: center; display: flex;">
@@ -112,7 +70,7 @@
 
     </div>
     <div style="margin: 50px; align-items: center; justify-content: center; display: flex;">
-        <form method="POST" action="{{ route('inventory.delete', $user->id) }}">
+        <form method="POST" action="{{ route('User.delete', $user->id) }}">
             @csrf
             <input name="_method" type="hidden" value="DELETE">
             <button

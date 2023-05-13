@@ -70,3 +70,5 @@ Route::get('/edit_user/{id}', [user_controller::class, 'index']);
 
 //Access edit user page by calling the func in controller
 Route::post('/update-user/{id}', [user_controller::class, 'update']);
+
+Route::delete('/delete-user/{id}', [user_controller::class, 'delete'])->name('User.delete');
