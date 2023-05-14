@@ -31,7 +31,7 @@
                 {{-- <x-polaris-major-inventory style="color: black"/> --}}
                 <span><a class="nav-link active" href="/inventory">Inventory</a></span>
             </li>
-            <li class="nav-item" >
+            <li class="nav-item">
                 <a class="flex-sm-fill text-sm-center nav-link" href="/schedule">Schedule</a>            </li>
             <li class="nav-item">
                 <a class="flex-sm-fill text-sm-center nav-link" href="#">Sales Report</a>
@@ -39,13 +39,22 @@
             <li class="nav-item">
                 <a class="flex-sm-fill text-sm-center nav-link" href="/payment">Payment</a>
             </li>
-            <li class="nav-item">
-                <a class="flex-sm-fill text-sm-center nav-link" href="/users">User Registration</a>
+            <li class="nav-item ">
+                <a class="flex-sm-fill text-sm-center nav-link active" href="/users">User Registration</a>
             </li>
           </ul>
-          <span class="navbar-text">
-            Logout
-          </span>
+          {{-- <span class="navbar-text">
+            <a href="/logout">Logout</a> 
+          </span> --}}
+
+          <form action="/logout" method="POST" >
+            @csrf
+            {{-- <span class="navbar-text">
+            Logout 
+          </span> --}}
+          <button type="submit" class="btn btn-link black" style="color:grey;">Logout</button>
+        </form>
+        
         </div>
       </nav>
     {{-- <nav class="navbar navbar-light flex-column flex-sm-row" style="background-color: #e3f2fd;">
