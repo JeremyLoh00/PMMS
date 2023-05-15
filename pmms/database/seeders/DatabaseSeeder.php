@@ -15,8 +15,17 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        \App\Models\User::factory(1)->create();
-
+        \App\Models\User::factory()->create(
+        [
+            'username' => "CB20182",
+            'name' => "AHMAD KHAIRUL IMAN BIN AHMAD SAYUTI",
+            'address' => "No19, jln teratai, tmn idaman, 48200 serendah selangor.",
+            'phone_num' => "0182617468",
+            'email' => "admin@admin.com",
+            'password' => bcrypt("admin1234"), // password
+            'role' => "Admin",
+        ]);
+        
         Inventory::factory(10)->create();
         // Inventory::create([
         //     'name' => 'Coca Cola',
