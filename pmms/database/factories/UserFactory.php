@@ -15,7 +15,7 @@ class UserFactory extends Factory
     public function definition()
     {
       
-    
+   
        
         return [
             'username' => "CB20182",
