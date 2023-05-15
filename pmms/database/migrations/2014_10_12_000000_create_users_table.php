@@ -22,8 +22,7 @@ class CreateUsersTable extends Migration
             $table->string('email')->unique();
             $table->string('password');
             $table->string('role');
-            $table->timestamp('updated_at');
-            $table->timestamp('created_at');
+            $table->timestamps();
            
         });
     }
