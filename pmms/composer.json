@@ -13,6 +13,7 @@
         "codeat3/blade-govicons": "^1.3",
         "codeat3/blade-mono-icons": "^1.3",
         "codeat3/blade-unicons": "^1.7",
+        "components/font-awesome": "^6.2",
         "eduard9969/blade-polaris-icons": "^1.3",
         "fruitcake/laravel-cors": "^2.0",
         "guzzlehttp/guzzle": "^7.0.1",

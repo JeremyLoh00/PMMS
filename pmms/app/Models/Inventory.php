@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class Inventory extends Model
 {
     use HasFactory;
-    public $timestamps=false;
+    public $timestamps=true;
     protected $fillable = ['name', 'category', 'cost', 'price', 'quantity'];
     function scopeFilter($query, array $filters){
         if($filters['search'] ?? false){

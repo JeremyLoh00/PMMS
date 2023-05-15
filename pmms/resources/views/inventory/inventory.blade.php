@@ -50,17 +50,17 @@
             Item List
         </h3>
         <div style="margin: 5px; padding: 5px;">
-            <form action="" method="GET">
+            <form action="/search" method="GET">
                 <input type="text" name="query" placeholder="Search..." value="{{ request('query') }}">
-                <button type="submit" style="width: 35px; height: 35px; border: none; background-color: none">
-                    <x-ri-search-line style="color: #00A3D8" />
+                <button type="submit" style="width: 30px; height: 30px; border: none; background-color: white; bottom: 5%;">
+                    <x-ri-search-line style="color: #98dde2" />
                 </button>
             </form>
             
         </div>
 
         <table class="table">
-            <thead class="thead-dark">
+            <thead style="background-color: #98dde2">
                 <tr>
                     <th scope="col">Item Name</th>
                     <th scope="col">Category</th>
