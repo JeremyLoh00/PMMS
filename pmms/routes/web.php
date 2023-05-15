@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\user_controller;
 use App\Http\Controllers\InventoryController;
+use App\Http\Controllers\roster_controller;
 use App\Http\Controllers\LogoutController;
 
 /*
@@ -101,5 +102,16 @@ Route::post('/login', [App\Http\Controllers\Auth\LoginController::class, 'login'
 
 Route::post('/logout', [App\Http\Controllers\Auth\LogoutController::class, 'logout'])->name('logout');
 
+//SCHEDULE
+//redirect to view_user page
+Route::get('/roster', [roster_controller::class, 'show']);
 
+//Access add schedule time page by calling the func in controller
+Route::get('/add_schedule_time_page', [roster_controller::class, 'create']);
+
+//Access update schedule time page by calling the func in controller
+Route::post('/update-schedule-time', [roster_controller::class, 'update']);
+
+//Access edit schedule time page by calling the func in controller
+Route::get('/edit_schedule_time', [roster_controller::class, 'index']);
 
