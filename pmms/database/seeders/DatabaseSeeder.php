@@ -41,5 +41,9 @@ class DatabaseSeeder extends Seeder
         //     'price' => 2.5,
         //     'quantity' => 20,
         // ]);
+
+        $this->call(PaymentSeeder::class);
+        $this->call(CartSeeder::class);
+        
     }
 }

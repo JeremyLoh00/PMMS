@@ -52,7 +52,7 @@
         <a class="nav-link active" href="/inventory"><span><x-polaris-major-inventory class="h-1 w-1" style="color: green"/></span><span class="d-none d-md-inline">Inventory</span></a>
         <a class="flex-sm-fill text-sm-center nav-link" href="/schedule">Schedule</a>
         <a class="flex-sm-fill text-sm-center nav-link" href="#">Sales Report</a>
-        <a class="flex-sm-fill text-sm-center nav-link" href="/payment">Payment</a>
+        <a class="flex-sm-fill text-sm-center nav-link" href="/cart">Payment</a>
         <a class="flex-sm-fill text-sm-center nav-link" href="#">User Registration</a>
       </nav>
     <nav class="nav nav-pills  ">

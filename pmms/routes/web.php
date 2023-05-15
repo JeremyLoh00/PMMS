@@ -6,6 +6,8 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\user_controller;
 use App\Http\Controllers\InventoryController;
 use App\Http\Controllers\LogoutController;
+use App\Http\Controllers\PaymentController;
+use App\Http\Controllers\CartController;
 
 /*
 |--------------------------------------------------------------------------
@@ -19,7 +21,7 @@ use App\Http\Controllers\LogoutController;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return Redirect::to('login');
 });
 
 // Route::get('/inventory', function () {
@@ -30,9 +32,11 @@ Route::get('/schedule', function () {
     return view('schedule');
 });
 
-Route::get('/payment', function () {
-    return view('payment');
+//Access to Cart Page
+Route::get('/cart', function () {
+    return view('payment.cart');
 });
+
 // Route::get('/users', function () {
 //     return view('User.view_user');
 // });
@@ -101,5 +105,4 @@ Route::post('/login', [App\Http\Controllers\Auth\LoginController::class, 'login'
 
 Route::post('/logout', [App\Http\Controllers\Auth\LogoutController::class, 'logout'])->name('logout');
 
-
-
+//PAYMENT & CART
