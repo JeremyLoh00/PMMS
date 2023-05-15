@@ -10,48 +10,30 @@ use Illuminate\Support\Facades\Session;
 class InventoryController extends Controller
 {
     //Access inventory page and read data to list out on table
-    function index(Request $request)
+    function index()
     {
         // if (empty($request->all())) {
-            $data = Inventory::paginate(5);
-            $threshold = 5;
+        $data = Inventory::paginate(5);
+        $threshold = 5;
 
-            // Retrieve items with low stock
-            $lowStockItems = Inventory::where('quantity', '<=', $threshold)->get();
-            if ($lowStockItems->count() > 0) {
-                $message = 'Low stock alert:';
+        // Retrieve items with low stock
+        $lowStockItems = Inventory::where('quantity', '<=', $threshold)->get();
+        if ($lowStockItems->count() > 0) {
+            $message = 'Low stock alert for items: ';
 
-                // Build the message with item names and stock quantities
-                foreach ($lowStockItems as $item) {
-                    $message .= "\nItem '{$item->name}' has only {$item->quantity} items left.";
-                }
-
-                // Store the alert message in the session
-                Session::flash('alert', $message);
-                Session::flash('alert-type', 'warning');
+            // Build the message with item names and stock quantities
+            foreach ($lowStockItems as $item) {
+                $message .= "\n'{$item->name}'";
+                // "\nItem '{$item->name}' has only {$item->quantity} items left.";
             }
-            
-        // $query = $request->input('query');
-        
-        // $products = Inventory::when($query, function ($queryBuilder) use ($query) {
-        //         $queryBuilder->where('name', 'like', '%'.$query.'%')
-        //             ->orWhere('category', 'like', '%'.$query.'%');
-        //     })
-        //     ->paginate(10);
-        
-        // return view('inventory.inventory', compact('products', 'query'));
 
-            return view('inventory.inventory', ['inventory' => $data]);
-        // } else {
-        //     // $data = Inventory::paginate(5);
-        //     // return view('inventory.inventory', ['inventory' => $data -> filter(request(['search']))->get()]);
-        //     $this->authorize('list', Inventory::class);
-        //     $search = $request->get('search', '');
-        //     $data = Inventory::where('name', 'like', "%{$search}%")->paginate(10);
-        //     return view('inventory.inventory')
-        //         ->with('inventory', $data)
-        //         ->with('search', $search);
-        // }
+            // Store the alert message in the session
+            Session::flash('alert', $message);
+            Session::flash('alert-type', 'warning');
+        }
+
+
+        return view('inventory.inventory', ['inventory' => $data]);
     }
 
     //Access add inventory page
@@ -153,13 +135,28 @@ class InventoryController extends Controller
         }
     }
 
-    public function search(Request $request)
+    // public function search(Request $request)
+    // {
+    //     $query = $request->input('query');
+
+    //     $items = Inventory::where('name', 'like', '%' . $query . '%')
+    //         ->paginate(10);
+
+    //     return view('inventory.inventory', compact('items'));
+    // }
+
+    //Access inventory page and read data to list out on table
+    function search(Request $request)
     {
+
         $query = $request->input('query');
 
-        $items = Inventory::where('name', 'like', '%' . $query . '%')
+        $data = Inventory::when($query, function ($queryBuilder) use ($query) {
+            $queryBuilder->where('name', 'like', '%' . $query . '%')
+                ->orWhere('category', 'like', '%' . $query . '%');
+        })
             ->paginate(10);
 
-        return view('inventory.inventory', compact('items'));
+        return view('inventory.inventory', ['inventory' => $data]);
     }
 }

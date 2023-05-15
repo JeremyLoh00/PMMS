@@ -18,9 +18,13 @@ class User extends Authenticatable
      * @var array<int, string>
      */
     protected $fillable = [
-        'name',
-        'email',
+        'username',
+         'name' ,
+        'address' ,
+        'phone_num' ,
+        'email' ,
         'password',
+        'role',
     ];
 
     /**
@@ -46,4 +50,5 @@ class User extends Authenticatable
     {
         return $this->hasMany(Roster::class);
     }
+   
 }
