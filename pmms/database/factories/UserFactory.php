@@ -18,13 +18,13 @@ class UserFactory extends Factory
    
        
         return [
-            'username' => "CB20182",
-            'name' => "AHMAD KHAIRUL IMAN BIN AHMAD SAYUTI",
-            'address' => "No19, jln teratai, tmn idaman, 48200 serendah selangor.",
-            'phone_num' => "0182617468",
-            'email' => "akmafarah84@gmail.com",
-            'password' => 'iman2617', // password
-            'role' => "Admin",
+            // 'username' => "CB20182",
+            // 'name' => "AHMAD KHAIRUL IMAN BIN AHMAD SAYUTI",
+            // 'address' => "No19, jln teratai, tmn idaman, 48200 serendah selangor.",
+            // 'phone_num' => "0182617468",
+            // 'email' => "akmafarah84@gmail.com",
+            // 'password' => 'iman2617', // password
+            // 'role' => "Admin",
          
         ];
     }
