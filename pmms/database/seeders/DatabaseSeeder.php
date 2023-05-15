@@ -23,7 +23,7 @@ class DatabaseSeeder extends Seeder
             'phone_num' => "0182617468",
             'email' => "admin@admin.com",
             'password' => bcrypt("admin1234"), // password
-            'role' => "Admin",
+            'role' => "Cashier",
         ]);
         
         Inventory::factory(10)->create();
