@@ -49,6 +49,8 @@ class LoginController extends Controller
             return redirect(RouteServiceProvider::HOME);
         }
     }
+
+    
     
     
 
