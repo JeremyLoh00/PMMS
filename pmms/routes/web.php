@@ -7,7 +7,7 @@ use App\Http\Controllers\user_controller;
 use App\Http\Controllers\InventoryController;
 use App\Http\Controllers\LogoutController;
 use App\Http\Controllers\PaymentController;
-use App\Http\Controllers\CartController;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -20,9 +20,12 @@ use App\Http\Controllers\CartController;
 |
 */
 
+// Route::get('/', function () {
+//     return redirect('/login');
+// });
 Route::get('/', function () {
-    return Redirect::to('login');
-});
+        return redirect('/login');
+    });
 
 // Route::get('/inventory', function () {
 //     return view('inventory');
@@ -32,10 +35,7 @@ Route::get('/schedule', function () {
     return view('schedule');
 });
 
-//Access to Cart Page
-Route::get('/cart', function () {
-    return view('payment.cart');
-});
+
 
 // Route::get('/users', function () {
 //     return view('User.view_user');
@@ -106,3 +106,14 @@ Route::post('/login', [App\Http\Controllers\Auth\LoginController::class, 'login'
 Route::post('/logout', [App\Http\Controllers\Auth\LogoutController::class, 'logout'])->name('logout');
 
 //PAYMENT & CART
+Route::get('/cart',[PaymentController::class,'index']);
+
+Route::post('/cart/search',[PaymentController::class,'showInventory'])->name('inventory.search');
+
+Route::get('/payment', function () {
+    return view('payment.payment');
+});
+
+Route::get('/refund', function () {
+    return view('payment.refund');
+});

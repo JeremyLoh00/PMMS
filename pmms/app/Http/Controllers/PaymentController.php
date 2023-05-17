@@ -2,20 +2,30 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Http\Request;
+use App\Models\Inventory;
+use App\Models\Cart;
 use App\Models\Payment;
 use App\Http\Requests\StorePaymentRequest;
 use App\Http\Requests\UpdatePaymentRequest;
 
 class PaymentController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+    //Display the cart page
     public function index()
     {
-        //
+        return view ('payment.cart');
+    }
+
+    
+    public function showInventory(Request $request)
+    {
+        //Search Result from Inventory
+        $inventories = Inventory::all();
+        if ($request->keyword != ''){
+        $inventories = Inventory::where('name', 'LIKE', '%'.$request->keyword.'%')->get();
+        }
+        return response()->json(['inventories' => $inventories]);
     }
 
     /**

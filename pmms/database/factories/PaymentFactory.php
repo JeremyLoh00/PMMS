@@ -29,7 +29,7 @@ class PaymentFactory extends Factory
             'method' => \Arr::random([
                 'Cash',
                 'Card',
-                'QR Code',
+                'E-Wallet',
             ]),
         ];
     }

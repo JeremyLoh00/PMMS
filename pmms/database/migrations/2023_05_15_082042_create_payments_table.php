@@ -18,7 +18,7 @@ class CreatePaymentsTable extends Migration
             $table->foreignId('user_id')->references('id')->on('users');
             $table->decimal('totalPrice', 5, 2);
             $table->enum('method', 
-            ['Cash', 'Card', 'QR Code']);
+            ['Cash', 'Card', 'E-Wallet']);
             
             $table->timestamps();
         });
