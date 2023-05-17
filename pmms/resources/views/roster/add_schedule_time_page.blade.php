@@ -20,12 +20,21 @@
 
             <div class="form-group">
                 <label for="formGroupExampleInput">Date</label>
-                <input type="text" class="form-control" name="date" placeholder="date" value="" >
+                <input type="text" class="form-control" name="date" placeholder="" value="" >
             </div>
 
             <div class="form-group">
-                <label for="formGroupExampleInput">Day</label>
-                <input type="text" class="form-control" name="day" placeholder="day" value="" >
+                <label for="formGroupExampleInput2">Day</label>
+                <select name="day" class="form-control"  value="">
+                <option value="0">Please select</option>
+                <option value="Monday">Monday</option>
+                <option value="Tuesday">Tuesday</option>
+                <option value="Wednesday">Wednesday</option>
+                <option value="Thursday">Thursday</option>
+                <option value="Friday">Friday</option>
+                <option value="Saturday">Saturday</option>
+                <option value="Sunday">Sunday</option>
+                </select> 
             </div>
 
             <div class="form-group">
@@ -62,24 +71,20 @@
                 <span style="color: red">@error('week'){{ $message }} @enderror</span>
             </div>
 
-            <div class="form-group">
-                <label for="formGroupExampleInput">Day</label>
-                <input type="text" class="form-control" name="day" placeholder="">
-                <span style="color: red">@error('day'){{ $message }} @enderror</span>
-            </div>
+         
             <div class="form-group">
                 <label for="formGroupExampleInput2">From</label>
-                <input type="text" class="form-control" name="time_in" placeholder="">
+                <input type="text" class="form-control" name="time_in" placeholder="0800">
                 <span style="color: red">@error('time_in'){{ $message }} @enderror</span>
             </div>
             <div class="form-group">
                 <label for="formGroupExampleInput2">Until</label>
-                <input type="text" class="form-control" name="time_out" placeholder="">
+                <input type="text" class="form-control" name="time_out" placeholder="1300">
                 <span style="color: red">@error('time_out'){{ $message }} @enderror</span>
             </div>
             
             <div style="margin: 50px; align-items: center; justify-content: center; display: flex;">
-            <span style="margin-right: 10px"><a href="/roster"><button type="button" class="btn btn-outline-primary"
+            <span style="margin-right: 10px"><a href="/rosterAdmin"><button type="button" class="btn btn-outline-primary"
                         style="width: 130px; border-radius: 5px">Cancel</button></a></span>
             <span><button type="submit" class="btn btn-primary"
                         style="width: 130px; border-radius: 5px">Add</button></span>

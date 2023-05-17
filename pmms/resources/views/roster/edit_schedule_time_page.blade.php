@@ -87,7 +87,7 @@
               
             
             <div style="margin: 50px; align-items: center; justify-content: center; display: flex;">
-                <span style="margin-right: 10px"><a href="/roster"><button type="button"
+                <span style="margin-right: 10px"><a href="/rosterAdmin"><button type="button"
                             class="btn btn-outline-primary"
                             style="width: 130px; border-radius: 5px">Cancel</button></a></span>
                 <span><button type="submit" class="btn btn-primary"

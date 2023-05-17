@@ -20,8 +20,8 @@ class RosterFactory extends Factory
             'day' => "Monday",
             'week' => "2",
             'month' => "May",
-            'time_in' => "8",
-            'time_out' => "10",
+            'time_in' => "0800",
+            'time_out' => "1300",
             'total_hour' => "5",
             'rate' => "5.20",
             

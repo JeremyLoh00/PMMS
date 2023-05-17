@@ -31,7 +31,7 @@
 <body style="background-color: #98dde2;">
     <div style="margin: 50px; background-color: white; padding: 30px; border-radius: 10px; box-shadow: 3px 9px rgba(0, 0, 0, 0.02);">
       <h3>
-        Schedule
+        Schedule (Admin)
       </h3>
         <table class="table">
         <div style="margin: 5px; padding: 5px;">
@@ -84,6 +84,11 @@
                             <a href='/edit_schedule_time'>
                                 <x-uni-pen-o style="width: 30px; height: 30px; color: #00A3D8;" />
                             </a>
+
+                            <a href=''>
+                                    <x-uni-trash-o style="width: 30px; height: 30px; color: red;" />
+                            </a>
+                            
                         </td>
                         {{-- <td>
                             <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#incrementModal">+</button>
@@ -92,6 +97,10 @@
             </tbody>
         </table>
         
+                            <a href='/rosterCommittee'>
+                                <x-uni-pen-o style="width: 30px; height: 30px; color: orange;" />
+                            </a>
+
     </div>
     <div style="margin: 50px; align-items: center; justify-content: center; display: flex;">
     <a href="/add_schedule_time_page"><button style="width: 60px; height: 60px; padding: 15px; border-radius: 50%; background-color: #00A3D8; border: none; left: 50%; box-shadow: 3px 3px rgba(0, 0, 0, 0.02); active: none"><x-monoicon-add style="color: white;"/></button></a>
