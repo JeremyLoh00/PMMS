@@ -40,21 +40,22 @@
             <div class="col-1">
                 <h5>Month</h5>
             </div>
+            
             <div class="col-5">
-                <select class="form-control" name="month">
-                <option selected>Choose Month</option>
-                <option value="January">January</option>
-                <option value="February">February</option>
-                <option value="March">March</option>
-                <option value="April">April</option>
-                <option value="May">May</option>
-                <option value="June">June</option>
-                <option value="July">July</option>
-                <option value="August">August</option>
-                <option value="September">September</option>
-                <option value="October">October</option>
-                <option value="November">November</option>
-                <option value="December">December</option>
+                <select class="form-control" name="month" id="monthSelect">
+                    <option selected>Choose Month</option>
+                    <option value="January">January</option>
+                    <option value="February">February</option>
+                    <option value="March">March</option>
+                    <option value="April">April</option>
+                    <option value="May">May</option>
+                    <option value="June">June</option>
+                    <option value="July">July</option>
+                    <option value="August">August</option>
+                    <option value="September">September</option>
+                    <option value="October">October</option>
+                    <option value="November">November</option>
+                    <option value="December">December</option>
                 </select>
             </div>
             </div>
@@ -103,7 +104,7 @@
 
     </div>
     <div style="margin: 50px; align-items: center; justify-content: center; display: flex;">
-    <a href="/add_schedule"><button style="width: 60px; height: 60px; padding: 15px; border-radius: 50%; background-color: #00A3D8; border: none; left: 50%; box-shadow: 3px 3px rgba(0, 0, 0, 0.02); active: none"><x-monoicon-add style="color: white;"/></button></a>
+        <a href="#" id="scheduleLink"><button style="width: 60px; height: 60px; padding: 15px; border-radius: 50%; background-color: #00A3D8; border: none; left: 50%; box-shadow: 3px 3px rgba(0, 0, 0, 0.02); active: none" type="submit"><x-monoicon-add style="color: white;"/></button></a>
     </div>
 </body>
 {{-- Increment --}}
@@ -132,5 +133,18 @@
       </div>
     </div>
   </div>
+  <script>
+    // Get the select element
+    const monthSelect = document.getElementById('monthSelect');
+    // Get the link element
+    const scheduleLink = document.getElementById('scheduleLink');
 
+    // Add an event listener to the select element
+    monthSelect.addEventListener('change', function() {
+        // Get the selected month value
+        const selectedMonth = monthSelect.value;
+        // Update the href attribute of the link with the selected month value
+        scheduleLink.href = "/add_schedule?month=" + selectedMonth;
+    });
+</script>
 </html>

@@ -10,40 +10,76 @@
 
 <body style="background-color: #98dde2;">
     <div
-        style="margin: 50px; background-color: white; padding: 30px; border-radius: 10px; box-shadow: 3px 9px rgba(0, 0, 0, 0.02);">
+        style=" margin: 0 auto; width:50%;background-color: white; padding: 30px; border-radius: 10px; box-shadow: 3px 9px rgba(0, 0, 0, 0.02);">
         
-        <h3>
+        <h3 style="text-align: center;">
             Add Schedule Time
         </h3>
         <!-- separate-month-into-weeks.blade.php -->
 
 
 
-        <!-- <table>
-          <tbody>
-            <tr>
-                <td>Month</td>
-                <td>March</td>
-                <td>Week</td>
-            </tr>
-            <tr>
-                <td>Monday ()</td>
-                <td>March</td>
-                <td>Week</td>
-            </tr>
-            <tr>
-                <td>Month</td>
-                <td>March</td>
-                <td>Week</td>
-            </tr>
-            <tr>
-                <td>Month</td>
-                <td>March</td>
-                <td>Week</td>
-            </tr>
-          </tbody>
-        </table> -->
-        <form action="/store" method="POST">
+        <table style="width: 100%">
+            <tbody>
+                <tr>
+                    <td>Month: {{ $month }}</td>
+                  
+                    <td><label>Week</label></td>
+                    <td>
+                        <div class="form-group" style="display: grid; grid-template-columns: max-content 1fr;">
+                            <select name="week" class="form-control" style="width: 100%" onchange="showSelectedWeek(this)">
+                                <option value="0">Please select</option>
+                                <option value="1" selected>1</option>
+                                <option value="2">2</option>
+                                <option value="3">3</option>
+                                <option value="4">4</option>
+                                <option value="5">5</option>
+                            </select>
+                            <span style="color: red">@error('week'){{ $message }}@enderror</span>
+                        </div>
+                    </td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td colspan="4">
+                        @php
+                            $weekCounter = 1; // Counter for tracking the week number
+                        @endphp
+        
+                        @foreach ($dates as $index => $date)
+                            @if ($index % 7 === 0)
+                                <div class="week-container" data-week="{{ $weekCounter }}" @if ($weekCounter !== 1) style="display: none" @endif>
+                                    Week {{ $weekCounter }}:<br>
+                                    @php
+                                        $weekCounter++;
+                                    @endphp
+                            @endif
+                            <div style="display: flex; align-items: center;">
+                                <div>
+                                    <span style="margin-right: 10px;">{{ $days[$index] }}:</span>
+                                    <br>
+                                    <span style="margin-right: 10px;">{{ $date }}</span>
+                                </div>
+                                <div style="display: flex; align-items: center; margin-left: 20px;">
+                                    <span style="margin-right: 10px;">From</span>
+                                    <input type="text" class="form-control" name="time_in" placeholder="0800" style="margin-right: 10px;">
+                                    <span style="margin-right: 10px;">Until</span>
+                                    <input type="text" class="form-control" name="time_out" placeholder="0800">
+                                </div>
+                            </div>
+                            <br>
+                            @if (($index + 1) % 7 === 0)
+                                </div>
+                            @endif
+                        @endforeach
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        
+        
+        
+        {{-- <form action="/store" method="POST">
             @csrf
 
             <div class="form-group">
@@ -117,9 +153,24 @@
             <span><button type="submit" class="btn btn-primary"
                         style="width: 130px; border-radius: 5px">Add</button></span>
         </div>
-        </form>
+        </form> --}}
         
     </div>
 </body>
+<script>
+    function showSelectedWeek(selectElement) {
+        const selectedWeek = selectElement.value;
+        const weekContainers = document.querySelectorAll('.week-container');
+
+        weekContainers.forEach(container => {
+            const weekNumber = container.getAttribute('data-week');
+            if (weekNumber === selectedWeek) {
+                container.style.display = 'block';
+            } else {
+                container.style.display = 'none';
+            }
+        });
+    }
+</script>
 
 </html>
