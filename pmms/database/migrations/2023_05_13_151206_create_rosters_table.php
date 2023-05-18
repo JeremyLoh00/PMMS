@@ -24,7 +24,7 @@ class CreateRostersTable extends Migration
             $table->integer('time_out');
             $table->integer('total_hour');
             $table->double('rate', 5, 2);
-            // $table->dropTimestamps();
+            $table->timestamps();
 
         });
     }

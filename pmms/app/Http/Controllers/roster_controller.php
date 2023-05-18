@@ -8,12 +8,15 @@ use Illuminate\Http\Request;
 class roster_controller extends Controller
 {
     //
-    public function create1(){
-        return view('roster.add_schedule_time_page');
-    }
+    public function create(){
+        $userRole = session('role');
 
-    public function create2(){
+    if ($userRole === 'Admin') {
+        return view('roster.add_schedule_time_page');
+    } else {
         return view('roster.add_schedule_page');
+    }
+        
     }
 
     public function showlistadmin(){

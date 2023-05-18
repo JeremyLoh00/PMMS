@@ -64,7 +64,7 @@
                     </td>
                     <td>
                       <a href={{"edit_user/".$user2['id']}}><x-uni-pen-o style="width: 30px; height: 30px; color: #00A3D8;"/></a>
-                      <a href={{"edit_user/".$user2['id']}}><x-uni-pen-o style="width: 30px; height: 30px; color: #00A3D8;"/></a>
+                      <a href={{"edit_user/".$user2['id']}}><x-uni-trash-o style="width: 30px; height: 30px; color: red;"/></a>
                     </td>
                   </tr>
                    

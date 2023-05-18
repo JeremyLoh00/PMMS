@@ -15,12 +15,40 @@
         <h3>
             Add Schedule Time
         </h3>
+        <!-- separate-month-into-weeks.blade.php -->
+
+
+
+        <!-- <table>
+          <tbody>
+            <tr>
+                <td>Month</td>
+                <td>March</td>
+                <td>Week</td>
+            </tr>
+            <tr>
+                <td>Monday ()</td>
+                <td>March</td>
+                <td>Week</td>
+            </tr>
+            <tr>
+                <td>Month</td>
+                <td>March</td>
+                <td>Week</td>
+            </tr>
+            <tr>
+                <td>Month</td>
+                <td>March</td>
+                <td>Week</td>
+            </tr>
+          </tbody>
+        </table> -->
         <form action="/store" method="POST">
             @csrf
 
             <div class="form-group">
                 <label for="formGroupExampleInput">Date</label>
-                <input type="text" class="form-control" name="date" placeholder="" value="" >
+                <input type="date" class="form-control" name="date" placeholder="" value="" >
             </div>
 
             <div class="form-group">
@@ -59,7 +87,7 @@
 
             <div class="form-group">
                 <label for="formGroupExampleInput2">Week</label>
-                <select name="month" class="form-control"  value="">
+                <select name="week" class="form-control"  value="">
                 <option value="0">Please select</option>
                 <option value="1">1</option>
                 <option value="2">2</option>

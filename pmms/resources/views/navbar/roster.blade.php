@@ -32,7 +32,12 @@
                 <span><a class="nav-link " href="/inventory">Inventory</a></span>
             </li>
             <li class="nav-item">
-                <a class="flex-sm-fill text-sm-center nav-link active" href="/schedule">Schedule</a>            </li>
+            @if (session('role') === 'Admin')
+            <a class="flex-sm-fill text-sm-center nav-link active" href="/schedule">Schedule</a>
+            @else 
+            <a class="flex-sm-fill text-sm-center nav-link active" href="/rosterCommittee">Schedule</a>
+            @endif
+                           </li>
             <li class="nav-item">
                 <a class="flex-sm-fill text-sm-center nav-link" href="#">Sales Report</a>
             </li>

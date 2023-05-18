@@ -106,8 +106,8 @@ Route::post('/logout', [App\Http\Controllers\Auth\LogoutController::class, 'logo
 //redirect to roster admin page
 Route::get('/rosterAdmin', [roster_controller::class, 'showlistadmin']);
 
-//Access add schedule time page by calling the func in controller
-Route::get('/add_schedule_time_page', [roster_controller::class, 'create1']);
+//Access add schedule for both admin and committee by calling the func in controller
+Route::get('/add_schedule', [roster_controller::class, 'create']);
 
 //Access update schedule time page by calling the func in controller
 Route::post('/update-schedule-time', [roster_controller::class, 'update']);
@@ -117,9 +117,6 @@ Route::get('/edit_schedule_time', [roster_controller::class, 'indexadmin']);
 
 //redirect to roster committee page
 Route::get('/rosterCommittee', [roster_controller::class, 'showlistcommittee']);
-
-//Access add schedule page by calling the func in controller
-Route::get('/add_schedule_page', [roster_controller::class, 'create2']);
 
 //Access update schedule time page by calling the func in controller
 Route::post('/update-schedule-page', [roster_controller::class, 'update']);

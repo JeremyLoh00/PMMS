@@ -16,7 +16,7 @@ class RosterFactory extends Factory
         return [
             //
             'user_id' => "1",
-            'date' => "13/5/2023",
+            'date' => "2023-05-13",
             'day' => "Monday",
             'week' => "2",
             'month' => "May",
