@@ -24,8 +24,7 @@ class CreateRostersTable extends Migration
             $table->integer('time_out');
             $table->integer('total_hour');
             $table->double('rate', 5, 2);
-            $table->timestamp('updated_at');
-            $table->timestamp('created_at');
+            // $table->dropTimestamps();
 
         });
     }
@@ -37,6 +36,10 @@ class CreateRostersTable extends Migration
      */
     public function down()
     {
+        // Schema::table('rosters', function (Blueprint $table) {
+        //     $table->dropForeign(['user_id']);
+        // });
         Schema::dropIfExists('rosters');
+        
     }
 }
