@@ -124,3 +124,9 @@ Route::post('/update-schedule-page', [roster_controller::class, 'update']);
 //Access edit schedule  page by calling the func in controller
 Route::get('/edit_schedule_page', [roster_controller::class, 'indexcommittee']);
 
+
+
+Route::post('/admin-schedule-store', [roster_controller::class, 'store'])->name('admin-schedule-store');
+
+// Route::resource('schedules', [roster_controller::class, 'store']);
+
