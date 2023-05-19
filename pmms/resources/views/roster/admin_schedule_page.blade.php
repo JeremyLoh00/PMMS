@@ -75,28 +75,46 @@
             </thead>
             <tbody>
                 
-            <th scope="row"> </th>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                       
-                        <td>
-                            <a href='/edit_schedule_time'>
-                                <x-uni-pen-o style="width: 30px; height: 30px; color: #00A3D8;" />
-                            </a>
+         
+                @foreach ($rosters as $roster)
+                <tr>
+                  <td>
+                    {{$roster->date}}
+                  </td>
+                  <td>
+                    {{$roster->day}}
+                  </td>
+                  <td>
+                    {{$roster->time_in}}
+                  </td>
+                  <td>
+                    {{$roster->time_out}}
+                  </td>
+                  <td>
+                    {{$roster->total_hour}}
+                  </td>
+                  <td>
+                    <a href='/edit_schedule_time'>
+                        <x-uni-pen-o style="width: 30px; height: 30px; color: #00A3D8;" />
+                    </a>
 
-                            <a href=''>
-                                    <x-uni-trash-o style="width: 30px; height: 30px; color: red;" />
-                            </a>
-                            
-                        </td>
+                    <a href=''>
+                            <x-uni-trash-o style="width: 30px; height: 30px; color: red;" />
+                    </a>
+                    
+                </td>
+                </tr>
+                 
+             @endforeach
+                       
+                  
                         {{-- <td>
                             <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#incrementModal">+</button>
                         </td> --}}
                     </tr>
             </tbody>
         </table>
+        {{$rosters->links()}}
         
                             <!-- <a href='/rosterCommittee'>
                                 <x-uni-pen-o style="width: 30px; height: 30px; color: orange;" />

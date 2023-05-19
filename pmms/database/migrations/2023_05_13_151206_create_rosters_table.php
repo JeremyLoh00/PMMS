@@ -20,12 +20,11 @@ class CreateRostersTable extends Migration
             $table->string('day');
             $table->integer('week');
             $table->string('month');
-            $table->integer('time_in');
-            $table->integer('time_out');
+            $table->time('time_in');
+            $table->time('time_out');
             $table->integer('total_hour');
             $table->double('rate', 5, 2);
             $table->timestamps();
-
         });
     }
 

@@ -104,7 +104,10 @@ Route::post('/logout', [App\Http\Controllers\Auth\LogoutController::class, 'logo
 
 //SCHEDULE
 //redirect to roster admin page
-Route::get('/rosterAdmin', [roster_controller::class, 'showlistadmin']);
+// Route::get('/rosterAdmin', [roster_controller::class, 'showlistadmin']);
+
+Route::get('/rosterAdmin', [roster_controller::class, 'showlistadmin'])->name('rosterAdmin');
+
 
 //Access add schedule for both admin and committee by calling the func in controller
 Route::get('/add_schedule', [roster_controller::class, 'create']);
@@ -126,7 +129,13 @@ Route::get('/edit_schedule_page', [roster_controller::class, 'indexcommittee']);
 
 
 
-Route::post('/admin-schedule-store', [roster_controller::class, 'store'])->name('admin-schedule-store');
+
 
 // Route::resource('schedules', [roster_controller::class, 'store']);
 
+//call store func in the controller to store data into database
+
+
+
+
+Route::post('/store', [roster_controller::class, 'store'])->name('store');

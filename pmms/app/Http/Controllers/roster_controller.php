@@ -84,8 +84,8 @@ class roster_controller extends Controller
 
     public function showlistadmin()
     {
-        //$roster = roster::paginate(5);
-        return view('roster.admin_schedule_page', []);
+        $roster = roster::paginate(5);
+        return view('roster.admin_schedule_page', ['rosters' => $roster]);
     }
 
     public function indexadmin()
@@ -106,89 +106,70 @@ class roster_controller extends Controller
         return view('roster.edit_schedule_page');
     }
 
+
+
+
     public function store(Request $request)
     {
-        //dd($request);
+        $weekCounter = 1;
         $userId = Auth::id();
-        $validatedData = $request->validate([
-            'week' => 'required|array',
-            'week.*' => 'required|integer',
-            'time_in' => 'required|array',
-            'time_in.*' => 'required|date_format:H:i',
-            'time_out' => 'required|array',
-            'time_out.*' => 'required|date_format:H:i',
-        ]);
+        $timeInInputs = $request->input('time_in');
+        $timeOutInputs = $request->input('time_out');
+        $days = $request->input('days');
+        $dates = $request->input('dates');
+        $month = $request->input('month');
     
-        $weeks = $request->input('week');
-        $timeIn = $request->input('time_in');
-        $timeOut = $request->input('time_out');
+        // Loop through the weeks and process the inputs
+        foreach ($timeInInputs as $week => $timeIns) {
+            foreach ($timeIns as $index => $timeIn) {
+                $timeOut = $timeOutInputs[$week][$index];
+                $day = $days[$index]; // Access the specific day based on the index
     
-        $numOfWeeks = count($weeks);
+                // Check if both time in and time out are not null
+                if ($timeIn !== null && $timeOut !== null) {
+                    $date = Carbon::createFromFormat('m/d/Y', $dates[$index])->format('Y-m-d');// Access the specific date based on the index
     
-        // Only process and save data for "week1"
-        if ($numOfWeeks >= 1) {
-            $week = $weeks[0];
-            $timeInWeek = $timeIn[0];
-            $timeOutWeek = $timeOut[0];
+                    // Convert time to desired format
+                    $timeIn = $timeIn . ':00';
+                    $timeOut = $timeOut . ':00';
     
-            if ($week < 1 || $week > 5) {
-                return redirect('/rosterAdmin')->with('message', 'Invalid week!');
-            }
+                    // Create a new Roster instance
+                    $roster = new Roster();
+                    $roster->user_id = $userId;
+                    $roster->day = $day;
+                    $roster->date = $date;
+                    $roster->month = $month; // Assuming $month is available
+                    $roster->week = $week - 1;
+                    $roster->time_in = $timeIn;
+                    $roster->time_out = $timeOut;
     
-            $currentYear = Carbon::now()->year;
-            $monthNumber = Carbon::parse($request->query('month'))->month;
+                    // Calculate total hours (assuming time in and time out are in the same day)
+                    $totalHours = Carbon::createFromFormat('H:i', $timeOut)->diffInHours(Carbon::createFromFormat('H:i', $timeIn));
+                    $roster->total_hour = $totalHours;
+                    $roster->rate = 5;
     
-            $startDate = Carbon::createFromDate($currentYear, $monthNumber, 1)->startOfMonth();
-            $endDate = Carbon::createFromDate($currentYear, $monthNumber, 1)->endOfMonth();
+                    // Save the roster entry to the database
+                    if($roster->save()){
+                        return redirect('/rosterAdmin')->with('message', 'Add successful!'); //redirect back to inventory page, call the route   
+                    }
+                    else{
+                        return redirect('/rosterAdmin')->with('message', 'Add failed!'); //redirect back to inventory page, call the route
+                    }
     
-            $currentDate = $startDate;
-            $days = [];
-            $dates = [];
+                    // Optionally, you can perform additional processing or validation here
     
-            while ($currentDate <= $endDate) {
-                $days[] = $currentDate->format('l');
-                $dates[] = $currentDate->format('Y-m-d');
-                $currentDate->addDay();
-            }
-    
-            $startDay = ($week - 1) * 7;
-            $totalHours = 0;
-    
-            for ($j = 0; $j < 7; $j++) {
-                $day = $days[$startDay + $j];
-                $date = $dates[$startDay + $j];
-    
-                // Calculate the difference in hours between time_in and time_out
-                $timeInCarbon = Carbon::createFromFormat('H:i', $timeInWeek[$j]);
-                $timeOutCarbon = Carbon::createFromFormat('H:i', $timeOutWeek[$j]);
-                $hoursDiff = $timeInCarbon->diffInHours($timeOutCarbon);
-    
-                // Add the hours difference to the total hours
-                $totalHours += $hoursDiff;
-    
-                $roster = new Roster();
-                $roster->user_id = $userId;
-                $roster->day = $day;
-                $roster->date = $date;
-                $roster->week = $week;
-                $roster->month = $monthNumber;
-                $roster->total_hour = $totalHours;
-                $roster->time_in = $timeInWeek[$j];
-                $roster->time_out = $timeOutWeek[$j];
-    
-                if ($roster->save()) {
-                    // Data saved successfully
-                    return redirect('/rosterAdmin')->with('message', 'Add successful!');
-                } else {
-                    // Failed to save data
-                    return redirect('/rosterAdmin')->with('message', 'Failed to save data!');
+                    //dump("Week: " . ($week - 1), "Dates: $date", "Day: $day", "Time In: $timeIn", "Time Out: $timeOut");
                 }
             }
         }
-    
-        return redirect('/schedule')->with('message', 'No data to process!');
     }
+    
 
-
+    
+    
+    
+    
+    
+    
     
 }

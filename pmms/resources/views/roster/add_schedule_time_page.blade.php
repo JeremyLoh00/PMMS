@@ -18,23 +18,26 @@
         <!-- separate-month-into-weeks.blade.php -->
 
 
-        <form method="POST" action="/admin-schedule-store">
+      
+        <form action="{{ route('store') }}" method="POST">
             @csrf
             <table style="width: 100%">
                 <tbody>
                     <tr>
                         <td>Month: {{ $month }}</td>
+                        <input type="hidden" name="month" value="{{ $month }}">
                         <td><label>Week</label></td>
                         <td>
                             <div class="form-group" style="display: grid; grid-template-columns: max-content 1fr;">
-                                <select name="week[]" class="form-control" style="width: 100%" onchange="showSelectedWeek(this)">
+                                <select name="week" class="form-control" style="width: 100%" onchange="showSelectedWeek(this)">
                                     <option value="0">Please select</option>
-                                    <option value="1" selected>1</option>
+                                    <option value="1">1</option>
                                     <option value="2">2</option>
                                     <option value="3">3</option>
                                     <option value="4">4</option>
                                     <option value="5">5</option>
                                 </select>
+                                <span style="color: red">@error('week'){{ $message }} @enderror</span>
                             </div>
                         </td>
                         <td></td>
@@ -44,40 +47,47 @@
                             @php
                                 $weekCounter = 1; // Counter for tracking the week number
                             @endphp
+            
+            @foreach ($dates as $index => $date)
+            @if ($index % 7 === 0)
+                <div class="week-container" data-week="{{ $weekCounter }}" @if ($weekCounter !== 1) style="display: none" @endif>
+                    Week {{ $weekCounter }}:<br>
+                    @php
+                        $weekCounter++;
+                    @endphp
+            @endif
+            <input type="hidden" name="week_counter" value="{{ $weekCounter }}">
+            <div style="display: flex; align-items: center;">
+                <div>
+                    <span style="margin-right: 10px;">{{ $days[$index] }}:</span>
+                    <input type="hidden" name="days[]" value="{{ $days[$index] }}">
+                    <br>
+                    <span style="margin-right: 10px;">{{ $date }}</span>
+                    <input type="hidden" name="dates[]" value="{{$date}}">
+                </div>
+                <div style="display: flex; align-items: center; margin-left: 20px;">
+                    <span style="margin-right: 10px;">From</span>
+                    <input type="text" class="form-control" name="time_in[{{ $weekCounter }}][]" placeholder="0800" style="margin-right: 10px;">
+                    <span style="color: red">@error("time_in.{$weekCounter}.{$index}"){{ $message }} @enderror</span>
+                    <span style="margin-right: 10px;">Until</span>
+                    <input type="text" class="form-control" name="time_out[{{ $weekCounter }}][]" placeholder="0800">
+                    <span style="color: red">@error("time_out.{$weekCounter}.{$index}"){{ $message }} @enderror</span>
+                </div>
+            </div>
+            <br>
+            @if (($index + 1) % 7 === 0)
+                </div>
+            @endif
+        @endforeach
         
-                            @foreach ($dates as $index => $date)
-                                @if ($index % 7 === 0)
-                                    <div class="week-container" data-week="{{ $weekCounter }}" @if ($weekCounter !== 1) style="display: none" @endif>
-                                        Week {{ $weekCounter }}:<br>
-                                        @php
-                                            $weekCounter++;
-                                        @endphp
-                                @endif
-                                <div style="display: flex; align-items: center;">
-                                    <div>
-                                        <span style="margin-right: 10px;">{{ $days[$index] }}:</span>
-                                        <br>
-                                        <span style="margin-right: 10px;">{{ $date }}</span>
-                                    </div>
-                                    <div style="display: flex; align-items: center; margin-left: 20px;">
-                                        <span style="margin-right: 10px;">From</span>
-                                        <input type="text" class="form-control" name="time_in[{{ $index }}]" placeholder="0800" style="margin-right: 10px;">
-                                        <span style="margin-right: 10px;">Until</span>
-                                        <input type="text" class="form-control" name="time_out[{{ $index }}]" placeholder="0800">
-                                    </div>
-                                </div>
-                                <br>
-                                @if (($index + 1) % 7 === 0)
-                                    </div>
-                                @endif
-                            @endforeach
                         </td>
                     </tr>
                 </tbody>
             </table>
+            
             <div style="margin: 50px; align-items: center; justify-content: center; display: flex;">
                 <span style="margin-right: 10px">
-                    <a href="/users">
+                    <a href="/rosterAdmin">
                         <button type="button" class="btn btn-outline-primary" style="width: 130px; border-radius: 5px">Cancel</button>
                     </a>
                 </span>
@@ -86,6 +96,13 @@
                 </span>
             </div>
         </form>
+        
+        
+        
+        
+        
+        
+        
         
         
         {{-- <form action="/store" method="POST">
