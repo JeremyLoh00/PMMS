@@ -174,6 +174,13 @@ class roster_controller extends Controller
         // Pass the filtered rosters to your view for display
         return view('roster.admin_schedule_page', compact('rosters'));
     }
+
+    function delete($id)
+    {
+        roster::find($id)->delete();
+  
+        return redirect('rosterAdmin')->with('message', 'Delete successful!');
+    }
     
     
 

@@ -87,9 +87,14 @@
                     <a href="/edit_schedule_time">
                         <x-uni-pen-o style="width: 30px; height: 30px; color: #00A3D8;" />
                     </a>
-                    <a href="">
-                        <x-uni-trash-o style="width: 30px; height: 30px; color: red;" />
-                    </a>
+                    <form method="POST" action="{{ route('roster.delete', $roster->id) }}">
+                        @csrf
+                       
+                        <input name="_method" type="hidden" value="DELETE">
+                        <button type="submit" style="background:white; border:none">
+                            <x-tabler-trash style="color: red" />
+                        </button>
+                    </form>
                 </td>
             </tr>
         @endforeach
