@@ -178,8 +178,9 @@ class roster_controller extends Controller
     function delete($id)
     {
         roster::find($id)->delete();
-  
-        return redirect('rosterAdmin')->with('message', 'Delete successful!');
+        
+        return redirect('/rosterAdmin')->with('message', 'Delete successful!'); //redirect back to inventory page, call the route   
+        //return redirect('rosterAdmin')->with('message', 'Delete successful!');
     }
     
     

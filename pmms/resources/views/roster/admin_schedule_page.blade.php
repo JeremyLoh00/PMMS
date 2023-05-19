@@ -87,7 +87,7 @@
                     <a href="/edit_schedule_time">
                         <x-uni-pen-o style="width: 30px; height: 30px; color: #00A3D8;" />
                     </a>
-                    <form method="POST" action="{{ route('roster.delete', $roster->id) }}">
+                    <form method="POST" action="/roster-delete/ {{$roster->id }}">
                         @csrf
                        
                         <input name="_method" type="hidden" value="DELETE">
@@ -166,5 +166,28 @@
         // Update the href attribute of the link with the selected month value
         scheduleLink.href = "/add_schedule?month=" + selectedMonth;
     });
+</script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.0/sweetalert.min.js"></script>
+<script type="text/javascript">
+ 
+     $('.show_confirm').click(function(event) {
+          var form =  $(this).closest("form");
+          var name = $(this).data("name");
+          event.preventDefault();
+          swal({
+              title: `Are you sure you want to delete this item?`,
+              text: "If you delete this, it will be gone forever.",
+              icon: "warning",
+              buttons: true,
+              dangerMode: true,
+          })
+          .then((willDelete) => {
+            if (willDelete) {
+              form.submit();
+            }
+          });
+      });
+  
 </script>
 </html>
