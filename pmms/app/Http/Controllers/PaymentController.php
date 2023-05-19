@@ -141,8 +141,16 @@ class PaymentController extends Controller
             $cart->payment_id = $payment->id;
             $cart->save();
         });  
+
         $carts->each(function ($cart) {
             $cart->total = $cart->price * $cart->quantity;
+        });
+
+        //Deduct the inventory quantity
+        $carts->each(function ($cart) {
+            $inventory = Inventory::find($cart->inventory_id);
+            $inventory->quantity = $inventory->quantity - $cart->quantity;
+            $inventory->save();
         });
 
         return view('payment.refund',compact('carts','payment','refund'));

@@ -82,14 +82,12 @@
         <div style="margin: 50px; align-items: center; justify-content: center; display: flex;">
             <div>
                 <form action="{{ route('cart.deleteAll') }}" method="post">
-                    @csrf
-                    @method('delete')
-                    {{-- Confirmation to delete all items in the cart --}}
-                    <span style="margin-right: 10px">
-                        <button type="button" class="btn btn-outline-primary"
-                            style="margin-right:2cm;width: 120px;height:auto; background-color: white; bottom: 5%; color:#03c2fc; border-color:#03c2fc;cursor: pointer;"
-                            onclick="return confirm('Are you sure to cancel this payment? ')">Cancel</button>
-                    </span>
+                @csrf
+                
+                @method('delete')
+                {{-- Confirmation to delete all items in the cart --}}
+                <span style="margin-right: 10px"><button type="submit" class="btn btn-outline-primary"
+                    style="margin-right:2cm;width: 120px;height:auto; background-color: white; bottom: 5%; color:#03c2fc; border-color:#03c2fc;cursor: pointer;" onclick="return confirm('Are you sure you want to cancel the payment?')">Cancel</button></span>
                 </form>
             </div>
             <div>
@@ -104,4 +102,3 @@
     </h4>
 </body>
 </html>
-
