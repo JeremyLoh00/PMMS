@@ -33,88 +33,85 @@
       <h3>
       Schedule ({{ session('role') }})
       </h3>
-        <table class="table">
+      <table class="table">
         <div style="margin: 5px; padding: 5px;">
-            <form action="" method="">
-            <div class="row align-items-center">
-            <div class="col-1">
-                <h5>Month</h5>
-            </div>
-            
-            <div class="col-5">
-                <select class="form-control" name="month" id="monthSelect">
-                    <option selected>Choose Month</option>
-                    <option value="January">January</option>
-                    <option value="February">February</option>
-                    <option value="March">March</option>
-                    <option value="April">April</option>
-                    <option value="May">May</option>
-                    <option value="June">June</option>
-                    <option value="July">July</option>
-                    <option value="August">August</option>
-                    <option value="September">September</option>
-                    <option value="October">October</option>
-                    <option value="November">November</option>
-                    <option value="December">December</option>
-                </select>
-            </div>
-            </div>
-                
+            <form action="{{ route('roster.filter') }}" method="POST">
+                @csrf
+                <div class="row align-items-center">
+                    <div class="col-2">
+                        <h5>Month</h5>
+                    </div>
+                    <div class="col-4">
+                        <select class="form-control" name="month" id="monthSelect">
+                            <option selected>Choose Month</option>
+                            <option value="January">January</option>
+                            <option value="February">February</option>
+                            <option value="March">March</option>
+                            <option value="April">April</option>
+                            <option value="May">May</option>
+                            <option value="June">June</option>
+                            <option value="July">July</option>
+                            <option value="August">August</option>
+                            <option value="September">September</option>
+                            <option value="October">October</option>
+                            <option value="November">November</option>
+                            <option value="December">December</option>
+                        </select>
+                    </div>
+                    <div class="col-2">
+                        <button type="submit" class="btn btn-primary">Filter</button>
+                    </div>
+                </div>
             </form>
             
         </div>
-            <thead class="thead-dark">
-                <tr>
-                    <th scope="col">Date</th>
-                    <th scope="col">Day</th>
-                    <th scope="col">Time In</th>
-                    <th scope="col">Time Out</th>
-                    <th scope="col">Total Hour</th>
-                    <th scope="col">Action </th>
-                </tr>
-            </thead>
-            <tbody>
-                
-         
-                @foreach ($rosters as $roster)
-                <tr>
-                  <td>
-                    {{$roster->date}}
-                  </td>
-                  <td>
-                    {{$roster->day}}
-                  </td>
-                  <td>
-                    {{$roster->time_in}}
-                  </td>
-                  <td>
-                    {{$roster->time_out}}
-                  </td>
-                  <td>
-                    {{$roster->total_hour}}
-                  </td>
-                  <td>
-                    <a href='/edit_schedule_time'>
+        <thead class="thead-dark">
+            <tr>
+                <th scope="col">Date</th>
+                <th scope="col">Day</th>
+                <th scope="col">Time In</th>
+                <th scope="col">Time Out</th>
+                <th scope="col">Total Hour</th>
+                <th scope="col">Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach ($rosters as $roster)
+            <tr>
+                <td>{{ $roster->date }}</td>
+                <td>{{ $roster->day }}</td>
+                <td>{{ $roster->time_in }}</td>
+                <td>{{ $roster->time_out }}</td>
+                <td>{{ $roster->total_hour }}</td>
+                <td>
+                    <a href="/edit_schedule_time">
                         <x-uni-pen-o style="width: 30px; height: 30px; color: #00A3D8;" />
                     </a>
-
-                    <a href=''>
-                            <x-uni-trash-o style="width: 30px; height: 30px; color: red;" />
+                    <a href="">
+                        <x-uni-trash-o style="width: 30px; height: 30px; color: red;" />
                     </a>
-                    
                 </td>
-                </tr>
-                 
-             @endforeach
-                       
-                  
-                        {{-- <td>
-                            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#incrementModal">+</button>
-                        </td> --}}
-                    </tr>
-            </tbody>
-        </table>
-        {{$rosters->links()}}
+            </tr>
+        @endforeach
+        
+        @if ($rosters == null)
+            <tr>
+                <td></td>
+                <td>No data found</td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr>
+        @endif
+        
+          
+     
+        
+        </tbody>
+    </table>
+    {{ $rosters->links() }}
+    
         
                             <!-- <a href='/rosterCommittee'>
                                 <x-uni-pen-o style="width: 30px; height: 30px; color: orange;" />

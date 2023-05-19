@@ -163,6 +163,18 @@ class roster_controller extends Controller
             }
         }
     }
+
+    public function filter(Request $request)
+    {
+        $month = $request->input('month');
+    
+        // Perform the query to filter the roster data by month
+        $rosters = Roster::where('month', $month)->paginate(10);
+    
+        // Pass the filtered rosters to your view for display
+        return view('roster.admin_schedule_page', compact('rosters'));
+    }
+    
     
 
     

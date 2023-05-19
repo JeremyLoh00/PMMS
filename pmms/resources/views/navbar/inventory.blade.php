@@ -34,7 +34,7 @@
             
             <li class="nav-item">
             @if (session('role') === 'Admin')
-            <a class="flex-sm-fill text-sm-center nav-link active" href="/schedule">Schedule</a>
+            <a class="flex-sm-fill text-sm-center nav-link active" href="/rosterAdmin">Schedule</a>
             @else 
             <a class="flex-sm-fill text-sm-center nav-link active" href="/rosterCommittee">Schedule</a>
             @endif         
