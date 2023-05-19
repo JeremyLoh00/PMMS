@@ -20,11 +20,8 @@ use App\Http\Controllers\PaymentController;
 |
 */
 
-// Route::get('/', function () {
-//     return redirect('/login');
-// });
 Route::get('/', function () {
-        return redirect('/login');
+        return redirect()->route('login');
     });
 
 // Route::get('/inventory', function () {
@@ -106,14 +103,19 @@ Route::post('/login', [App\Http\Controllers\Auth\LoginController::class, 'login'
 Route::post('/logout', [App\Http\Controllers\Auth\LogoutController::class, 'logout'])->name('logout');
 
 //PAYMENT & CART
-Route::get('/cart',[PaymentController::class,'index']);
+Route::get('/cart',[PaymentController::class,'index'])->name('cart');
+//Add Item into Cart
+Route::post('/cart',[PaymentController::class,'addItem'])->name('cart.add_item');
+//Add Quantity in cart
+Route::get('/cart/{id}/add',[PaymentController::class,'addQuantity'])->name('cart.increment');
+//Minus Quantity in cart
+Route::get('/cart/{id}/minus',[PaymentController::class,'minusQuantity'])->name('cart.decrement');
+//Delete Item in cart
+Route::delete('/cart/{id}',[PaymentController::class,'destroy'])->name('cart.delete');
+//Delete All Item in cart
+Route::delete('/cart',[PaymentController::class,'destroyAll'])->name('cart.deleteAll');
+//Proceed to Payment
+Route::post('/payment',[PaymentController::class,'proceedPayment'])->name('payment');
+//Proceed to Refund
+Route::post('/refund',[PaymentController::class,'storePayment'])->name('payment.refund');
 
-Route::post('/cart/search',[PaymentController::class,'showInventory'])->name('inventory.search');
-
-Route::get('/payment', function () {
-    return view('payment.payment');
-});
-
-Route::get('/refund', function () {
-    return view('payment.refund');
-});

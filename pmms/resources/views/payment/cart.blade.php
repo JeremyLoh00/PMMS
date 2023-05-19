@@ -15,14 +15,15 @@
             Cart
         </h3>
         
-            <form action="/search" method="POST">
+            <form action="{{ route('cart.add_item') }}" method="post">
+                @csrf
                 <div style="display:flex; justify-content:space-between ">
                 <div>
-                    <input type="text" placeholder="Item Code" style="height:auto">
+                    <input type="text" placeholder="Item Code" name="item" id="item" style="height:auto">
                 </div>
                 <div>
-                    <input type="submit" style="width: 100px;height:auto; border: none; background-color: lightgreen; bottom: 5%;cursor: pointer;" value =" Add ">
-                
+                    <span><button type="submit" class="btn btn-primary"
+                        style="width: 130px; border-radius: 5px">Add</button></span>
                 </div>
             </div>
             </form>
@@ -32,34 +33,70 @@
                 <tr>
                 <th>Item Name</th>
                 <th>Category</th>
-                <th>Unit Price</th>
+                <th>Unit Price (RM)</th>
                 <th>Quantity</th>
-                <th>Total Price</th>
+                <th>Total Price (RM)</th>
                 <th>Action</th>
+                <th></th>
                 </tr>
                 </thead>
                 <tbody>
-                
+                    @foreach ($carts as $cart)
+                    <tr>
+                        <td>{{$cart->name}}</td>
+                        <td>{{$cart->category}}</td>
+                        <td>{{$cart->price}}</td>
+                        <td>{{ $cart->quantity }}</td>
+                        <td>{{number_format($cart->total,2)}}</td>
+                        <td> 
+                            <a href= "{{ route('cart.increment', $cart->id) }}">
+                                <x-ri-add-fill style="width: 30px; height: 30px; color: #00A3D8; margin-right:5px" />
+                            </a>
+                            <a href="{{ route('cart.decrement',$cart->id) }}">
+                                <x-feathericon-minus style="width: 30px; height: 30px; color: #00A3D8" />
+                            </a>
+                        </td>
+                        <td>
+                            <form action="{{ route('cart.delete',$cart->id) }}" method="post">
+                                @csrf
+                                @method('delete')
+                                <button type="submit" style="background-color:white; border:none;cursor: pointer;">    
+                                <x-feathericon-trash-2 style="width: 30px; height: 30px; color: red;text-align:right" />
+                                </button>
+                            </form>
+                        </td>
+                    @endforeach
                 </tbody>
                 </table>
                 <br>
 
     <div  style="font-size:20px; display:flex; justify-content:space-between">
         <div>Total Amount</div>
-        <div>RM20.00</div>
+        <div>RM {{ number_format($amount,2) }}</div>
     </div>
     
 </div>
 </body>
     <h4>
-        <div style="display:flex;justify-content:center">
+        <div style="margin: 50px; align-items: center; justify-content: center; display: flex;">
             <div>
-                <input type="submit" style="margin-right:2cm;width: 120px;height:auto; background-color: white; bottom: 5%; color:#03c2fc; border-color:#03c2fc;cursor: pointer;" value =" Cancel ">
+                <form action="{{ route('cart.deleteAll') }}" method="post">
+                @csrf
+                @method('delete')
+                {{-- Confirmation to delete all items in the cart --}}
+                <span style="margin-right: 10px"><button type="button" class="btn btn-outline-primary"
+                    style="margin-right:2cm;width: 120px;height:auto; background-color: white; bottom: 5%; color:#03c2fc; border-color:#03c2fc;cursor: pointer;" onclick="return confirm('Are you sure to cancel this payment? ')">Cancel</button></a></span>
+                </form>
             </div>
             <div>
-                <input type="submit" style="width: 120px;height:auto; border-color:#03c2fc; background-color:#03c2fc;color:white; bottom: 5%;cursor: pointer; " value =" Proceed ">
+                <form action="{{ route('payment') }}" method="post">
+                @csrf
+                {{-- Proceed to payment --}}
+                    <span><button type="submit" class="btn btn-primary"
+                        style="width: 130px; border-radius: 5px">Proceed</button></span>
+                        <input type="hidden" name="amount" value="{{ $amount }}">
+                </form>
             </div>
         </div>
-       
     </h4>
 </html>

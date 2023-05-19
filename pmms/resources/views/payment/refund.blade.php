@@ -30,7 +30,12 @@
             <br>
             <div  style="font-size:20px; display:flex; justify-content:space-between">
                 <div>Change</div>
-                <div>RM30.00</div>
+                <div>RM {{ number_format($refund,2)}}</div>
+            </div>
+            <br>
+            <div  style="font-size:20px; display:flex; justify-content:space-between">
+                <div>Payment Method: </div>
+                <div>{{ $payment->method }}</div>
             </div>
             <table style="width:100%">
                 <thead style="background-color: #98dde2; height:1cm">
@@ -40,26 +45,35 @@
                     <th>Unit Price</th>
                     <th>Quantity</th>
                     <th>Total Price</th>
-                    <th>Action</th>
                     </tr>
                     </thead>
                     <tbody>
-                    
+                    @foreach ($carts as $cart)
+                    <tr>
+                    <td>{{$cart->name}}</td>
+                    <td>{{$cart->category}}</td>
+                    <td>{{$cart->price}}</td>
+                    <td>{{$cart->quantity}}</td>
+                    <td>{{number_format($cart->total,2)}}</td>
+                    </td>
+                    @endforeach
                     </tbody>
                     </table>
                 <br>
-                
+                <div  style="font-size:20px; display:flex; justify-content:space-between">
+                    <div>Total Amount</div>
+                    <div>RM {{ number_format($payment->totalPrice,2) }}</div>
+                </div>
                 <br>
                 
     
 </div>
 </body>
     <h4>
-        <div style="display:flex;justify-content:center">
-            <div>
-                <input type="button" class="next" value =">">
-            </div>
+        <div style="margin: 50px; align-items: center; justify-content: center; display: flex;">
+            <a href="/cart"><button
+                    style="width: 60px; height: 60px; padding: 15px; border-radius: 50%; background-color: #00A3D8; border: none; left: 50%; box-shadow: 3px 3px rgba(0, 0, 0, 0.02); cursor: pointer;font-weight:1000; color:white" value=">">
+                </button></a>
         </div>
-       
     </h4>
 </html>

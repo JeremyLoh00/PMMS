@@ -18,4 +18,5 @@ class Payment extends Model
     {
         return $this->hasMany(Cart::class, 'cart_id');
     }
+
 }

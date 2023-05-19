@@ -38,7 +38,7 @@
                 <a class="flex-sm-fill text-sm-center nav-link" href="#">Sales Report</a>
             </li>
             <li class="nav-item">
-                <a class="flex-sm-fill text-sm-center nav-link active" href="/payment">Payment</a>
+                <a class="flex-sm-fill text-sm-center nav-link active" href="/cart">Payment</a>
             </li>
             <li class="nav-item">
                 <a class="flex-sm-fill text-sm-center nav-link" href="/users">User Registration</a>
