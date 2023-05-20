@@ -147,7 +147,7 @@ class roster_controller extends Controller
                     $totalHours = Carbon::createFromFormat('H:i', $timeOut)->diffInHours(Carbon::createFromFormat('H:i', $timeIn));
                     $roster->total_hour = $totalHours;
                     $roster->rate = 5;
-                     $roster->save();
+                     //$roster->save();
                   
     
                     dump("Week: " . ($week - 1), "Dates: $date", "Day: $day", "Time In: $timeIn", "Time Out: $timeOut");
