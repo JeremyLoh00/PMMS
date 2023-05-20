@@ -84,7 +84,7 @@ class roster_controller extends Controller
 
     public function showlistadmin()
     {
-        $roster = roster::paginate(5);
+        $roster = roster::paginate(7);
         return view('roster.admin_schedule_page', ['rosters' => $roster]);
     }
 
@@ -109,9 +109,10 @@ class roster_controller extends Controller
 
 
 
+
+
     public function store(Request $request)
     {
-        $weekCounter = 1;
         $userId = Auth::id();
         $timeInInputs = $request->input('time_in');
         $timeOutInputs = $request->input('time_out');
@@ -120,6 +121,7 @@ class roster_controller extends Controller
         $month = $request->input('month');
     
         // Loop through the weeks and process the inputs
+        $weekCounter = 1;
         foreach ($timeInInputs as $week => $timeIns) {
             foreach ($timeIns as $index => $timeIn) {
                 $timeOut = $timeOutInputs[$week][$index];
@@ -127,46 +129,59 @@ class roster_controller extends Controller
     
                 // Check if both time in and time out are not null
                 if ($timeIn !== null && $timeOut !== null) {
-                    $date = Carbon::createFromFormat('m/d/Y', $dates[$index])->format('Y-m-d');// Access the specific date based on the index
-    
+                    $date = Carbon::createFromFormat('d/m/Y', $dates[$week][$index])->format('Y-m-d'); // Access the specific date based on the week and index
+                    
+                    //dump($date);
                     // Convert time to desired format
                     $timeIn = $timeIn . ':00';
                     $timeOut = $timeOut . ':00';
-    
+                    
+                    if (Roster::where('date', $date)->exists()) {
+                        //return redirect('/rosterAdmin')->with('error', 'Data already exists for date ' . $date);
+                    } else {
+                        $roster = new Roster();
+                        $roster->user_id = $userId;
+                        $roster->day = $day;
+                        $roster->date = $date;
+                        $roster->month = $month; // Assuming $month is available
+                        $roster->week = $week - 1;
+                        $roster->time_in = $timeIn;
+                        $roster->time_out = $timeOut;
+                    
+                        // Calculate total hours (assuming time in and time out are in the same day)
+                        $totalHours = Carbon::createFromFormat('H:i', $timeOut)->diffInHours(Carbon::createFromFormat('H:i', $timeIn));
+                        $roster->total_hour = $totalHours;
+                        $roster->rate = 5;
+                        $roster->save();
+                    }
+                    
+                        
+
+                        
+                    
                     // Create a new Roster instance
-                    $roster = new Roster();
-                    $roster->user_id = $userId;
-                    $roster->day = $day;
-                    $roster->date = $date;
-                    $roster->month = $month; // Assuming $month is available
-                    $roster->week = $week - 1;
-                    $roster->time_in = $timeIn;
-                    $roster->time_out = $timeOut;
-    
-                    // Calculate total hours (assuming time in and time out are in the same day)
-                    $totalHours = Carbon::createFromFormat('H:i', $timeOut)->diffInHours(Carbon::createFromFormat('H:i', $timeIn));
-                    $roster->total_hour = $totalHours;
-                    $roster->rate = 5;
-                     //$roster->save();
                   
     
-                    dump("Week: " . ($week - 1), "Dates: $date", "Day: $day", "Time In: $timeIn", "Time Out: $timeOut");
+                    // dump("Week: " . ($week - 1), "Date: $date", "Day: $day", "Time In: $timeIn", "Time Out: $timeOut");
                 }
             }
         }
-        //return redirect('/rosterAdmin')->with('message', 'Add successful!');
+         return redirect('/rosterAdmin')->with('message', 'Add successful!');
     }
+    
 
+    
     public function filter(Request $request)
     {
         $month = $request->input('month');
     
         // Perform the query to filter the roster data by month
-        $rosters = Roster::where('month', $month)->paginate(10);
+        $rosters = Roster::where('month', $month)->paginate(7);
     
         // Pass the filtered rosters to your view for display
         return view('roster.admin_schedule_page', compact('rosters'));
     }
+    
 
     function delete($id)
     {

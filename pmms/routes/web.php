@@ -142,6 +142,8 @@ Route::post('/store', [roster_controller::class, 'store'])->name('store');
 
 Route::post('/roster/filter', [roster_controller::class, 'filter'])->name('roster.filter');
 
+
+
 Route::delete('/roster-delete/{id}', [roster_controller::class, 'delete'])->name('delete');
 // Route::POST('/roster/filter', 'roster_controller@filter')->name('roster.filter');
 

@@ -10,6 +10,11 @@
     <div class="alert alert-success">{{session('message')}}
     <button type="button" class="close", data-dismiss="alert"><x-govicon-times style="color: black"/></button></div>
     @endif
+
+    @if(session('error'))
+    <div class="alert alert-failed">{{session('error')}}
+    <button type="button" class="close", data-dismiss="alert"><x-govicon-times style="color: black"/></button></div>
+    @endif
     
 
     <!-- Fonts --->
@@ -60,6 +65,7 @@
                     </div>
                     <div class="col-2">
                         <button type="submit" class="btn btn-primary">Filter</button>
+                        @method('POST')
                     </div>
                 </div>
             </form>
@@ -99,23 +105,25 @@
             </tr>
         @endforeach
         
-        @if ($rosters == null)
-            <tr>
-                <td></td>
-                <td>No data found</td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-            </tr>
-        @endif
+        @if ($rosters->isEmpty())
+    <tr>
+        <td></td>
+        <td>No data found</td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+    </tr>
+@endif
+
         
           
      
         
         </tbody>
     </table>
-    {{ $rosters->links() }}
+    {!! $rosters->appends(['_method' => 'POST'])->links() !!}
+
     
         
                             <!-- <a href='/rosterCommittee'>

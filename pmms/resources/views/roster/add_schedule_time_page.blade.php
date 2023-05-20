@@ -63,7 +63,7 @@
                     <input type="hidden" name="days[]" value="{{ $days[$index] }}">
                     <br>
                     <span style="margin-right: 10px;">{{ $date }}</span>
-                    <input type="hidden" name="dates[]" value="{{$date}}">
+                    <input type="hidden" name="dates[{{ $weekCounter }}][]" value="{{$date}}">
                 </div>
                 <div style="display: flex; align-items: center; margin-left: 20px;">
                     <span style="margin-right: 10px;">From</span>
