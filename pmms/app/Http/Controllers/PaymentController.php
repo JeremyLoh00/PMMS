@@ -14,9 +14,9 @@ class PaymentController extends Controller
     public function index()
     {
         //Check the user is being authenticated or not
-        if (!auth()->user()) {
-            return redirect()->route('login');
-        }
+        // if (!auth()->user()) {
+        //     return redirect()->route('login');
+        // }
 
         //Get the cart data from database
         $carts = Cart::join('inventories', 'carts.inventory_id', '=', 'inventories.id')
