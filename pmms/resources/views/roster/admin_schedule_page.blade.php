@@ -38,9 +38,10 @@
       <h3>
       Schedule ({{ session('role') }})
       </h3>
+      @if (isset($rosters))
       <table class="table">
         <div style="margin: 5px; padding: 5px;">
-            <form action="{{ route('roster.filter') }}" method="POST">
+            <form action="{{ route('roster.filter') }}" method="GET">
                 @csrf
                 <div class="row align-items-center">
                     <div class="col-2">
@@ -63,13 +64,12 @@
                             <option value="December">December</option>
                         </select>
                     </div>
+                    {{-- <input type="hidden" name="page" value="{{ $page }}"> --}}
                     <div class="col-2">
                         <button type="submit" class="btn btn-primary">Filter</button>
-                        @method('POST')
                     </div>
                 </div>
             </form>
-            
         </div>
         <thead class="thead-dark">
             <tr>
@@ -82,47 +82,45 @@
             </tr>
         </thead>
         <tbody>
+            @if (!empty($rosters) && count($rosters) > 0)
             @foreach ($rosters as $roster)
+                <tr>
+                    <td>{{ $roster->date }}</td>
+                    <td>{{ $roster->day }}</td>
+                    <td>{{ $roster->time_in }}</td>
+                    <td>{{ $roster->time_out }}</td>
+                    <td>{{ $roster->total_hour }}</td>
+                    <td>
+                        <div style="display: flex; align-items: center;">
+                            <a href="/edit_schedule_time">
+                                <x-uni-pen-o style="width: 30px; height: 30px; color: #00A3D8;" />
+                            </a>
+                            <form method="POST" action="/roster-delete/{{ $roster->id }}">
+                                @csrf
+                                @method('DELETE')
+                                <button type="submit" style="background:white; border:none">
+                                    <x-tabler-trash style="color: red" />
+                                </button>
+                            </form>
+                        </div>
+                    </td>
+                    
+                </tr>
+            @endforeach
+            @else
             <tr>
-                <td>{{ $roster->date }}</td>
-                <td>{{ $roster->day }}</td>
-                <td>{{ $roster->time_in }}</td>
-                <td>{{ $roster->time_out }}</td>
-                <td>{{ $roster->total_hour }}</td>
-                <td>
-                    <a href="/edit_schedule_time">
-                        <x-uni-pen-o style="width: 30px; height: 30px; color: #00A3D8;" />
-                    </a>
-                    <form method="POST" action="/roster-delete/ {{$roster->id }}">
-                        @csrf
-                       
-                        <input name="_method" type="hidden" value="DELETE">
-                        <button type="submit" style="background:white; border:none">
-                            <x-tabler-trash style="color: red" />
-                        </button>
-                    </form>
-                </td>
+                <td colspan="6">No data found.</td>
             </tr>
-        @endforeach
-        
-        @if ($rosters->isEmpty())
-    <tr>
-        <td></td>
-        <td>No data found</td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-    </tr>
-@endif
+        @endif
 
-        
           
-     
-        
         </tbody>
     </table>
-    {!! $rosters->appends(['_method' => 'POST'])->links() !!}
+    {{$rosters->links()}}
+    @endif
+    {{-- {{ $rosters->appends(['month' => $month])->links() }} --}}
+
+    
 
     
         

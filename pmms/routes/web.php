@@ -140,7 +140,10 @@ Route::get('/edit_schedule_page', [roster_controller::class, 'indexcommittee']);
 
 Route::post('/store', [roster_controller::class, 'store'])->name('store');
 
-Route::post('/roster/filter', [roster_controller::class, 'filter'])->name('roster.filter');
+Route::get('/roster/filter', [roster_controller::class, 'filter'])->name('roster.filter');
+
+//Route::match(['get', 'post'], '/roster/filter', [roster_controller::class, 'filter'])->name('roster.filter');
+
 
 
 
