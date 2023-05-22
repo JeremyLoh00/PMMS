@@ -18,6 +18,7 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js"
         integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous">
     </script>
+        <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
 
 </head>
 
@@ -34,10 +35,10 @@
             <li class="nav-item">
                 <a class="flex-sm-fill text-sm-center nav-link" href="/schedule">Schedule</a>            </li>
             <li class="nav-item">
-                <a class="flex-sm-fill text-sm-center nav-link" href="#">Sales Report</a>
+                <a class="flex-sm-fill text-sm-center nav-link" href="/show">Sales Report</a>
             </li>
             <li class="nav-item">
-                <a class="flex-sm-fill text-sm-center nav-link active" href="/payment">Payment</a>
+                <a class="flex-sm-fill text-sm-center nav-link active" href="/cart">Payment</a>
             </li>
             <li class="nav-item">
                 <a class="flex-sm-fill text-sm-center nav-link" href="/users">User Registration</a>
@@ -51,7 +52,7 @@
     {{-- <nav class="navbar navbar-light flex-column flex-sm-row" style="background-color: #e3f2fd;">
         <a class="nav-link active" href="/inventory"><span><x-polaris-major-inventory class="h-1 w-1" style="color: green"/></span><span class="d-none d-md-inline">Inventory</span></a>
         <a class="flex-sm-fill text-sm-center nav-link" href="/schedule">Schedule</a>
-        <a class="flex-sm-fill text-sm-center nav-link" href="#">Sales Report</a>
+        <a class="flex-sm-fill text-sm-center nav-link" href="/report">Sales Report</a>
         <a class="flex-sm-fill text-sm-center nav-link" href="/cart">Payment</a>
         <a class="flex-sm-fill text-sm-center nav-link" href="#">User Registration</a>
       </nav>

@@ -28,14 +28,15 @@ Route::get('/', function () {
 //     return view('inventory');
 // });
 
+//  Route::get('/report', function () {
+//     return view('report');
+//  });
+
 Route::get('/schedule', function () {
     return view('schedule');
 });
 
-//Access to Cart Page
-Route::get('/cart', function () {
-    return view('payment.cart');
-});
+
 
 // Route::get('/users', function () {
 //     return view('User.view_user');
@@ -76,6 +77,8 @@ Route::post('/decrement/{id}', [InventoryController::class, 'Decrement']);
 //Access the function of delete inside con
 Route::delete('/delete/{id}', [InventoryController::class, 'delete'])->name('inventory.delete');
 
+
+
 //USERS
 //redirect to view_user page
 Route::get('/users', [user_controller::class, 'show']);
@@ -106,3 +109,26 @@ Route::post('/login', [App\Http\Controllers\Auth\LoginController::class, 'login'
 Route::post('/logout', [App\Http\Controllers\Auth\LogoutController::class, 'logout'])->name('logout');
 
 //PAYMENT & CART
+Route::get('/cart',[PaymentController::class,'index'])->name('cart');
+//Add Item into Cart
+Route::post('/cart',[PaymentController::class,'addItem'])->name('cart.add_item');
+//Add Quantity in cart
+Route::get('/cart/{id}/add',[PaymentController::class,'addQuantity'])->name('cart.increment');
+//Minus Quantity in cart
+Route::get('/cart/{id}/minus',[PaymentController::class,'minusQuantity'])->name('cart.decrement');
+//Delete Item in cart
+Route::delete('/cart/{id}',[PaymentController::class,'destroy'])->name('cart.delete');
+//Delete All Item in cart
+Route::delete('/cart',[PaymentController::class,'destroyAll'])->name('cart.deleteAll');
+//Proceed to Payment
+Route::post('/payment',[PaymentController::class,'proceedPayment'])->name('payment');
+//Proceed to Refund
+Route::post('/refund',[PaymentController::class,'storePayment'])->name('payment.refund');
+
+
+//Report
+//Access report in view and call index func in controller 
+Route::get('/show', [ReportController::class, 'show']);
+//Access report in view and call func in controller 
+Route::get('/searchReport', [ReportController::class, 'searchReport']);
+Route::get('/data', [ReportController::class, 'show']);

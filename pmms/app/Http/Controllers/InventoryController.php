@@ -15,6 +15,8 @@ class InventoryController extends Controller
         // if (empty($request->all())) {
         $data = Inventory::paginate(5);
         $threshold = 5;
+        
+      
 
         // Retrieve items with low stock
         $lowStockItems = Inventory::where('quantity', '<=', $threshold)->get();

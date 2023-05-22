@@ -21,7 +21,9 @@ class Cart extends Model
 
     public function inventory()
     {
-        return $this->hasMany(Inventory::class, 'inventory_id');
+        return $this->belongsTo(Inventory::class, 'inventory_id');
     }
+
+
 
 }
