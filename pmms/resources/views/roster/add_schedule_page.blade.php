@@ -27,7 +27,7 @@
             <div class="form-group">
                 <label for="formGroupExampleInput">Name</label>
                 <input type="hidden" name="id" value="{{$user->id}}">
-                <input type="text" class="form-control" name="name" placeholder="{{$user->name}}" value="" readonly>
+                <input type="text" class="form-control" name="name" placeholder="{{$user->name}}" value="{{$user->name}}" readonly>
             </div>
 
             <div class="form-group">
@@ -50,38 +50,16 @@
             <form action="/roster/store" method="POST">
             @csrf
             <div class="form-group">
-                <label for="formGroupExampleInput2">Time In</label>
-                <select name="time_in" id="" class="form-control">
-                    <option value="8">0800</option>
-                    <option value="9">0900</option>
-                    <option value="10">1000</option>
-                    <option value="11">1100</option>
-                    <option value="12">1200</option>
-                    <option value="13">1300</option>
-                    <option value="14">1400</option>
-                    <option value="15">1500</option>
-                    <option value="16">1600</option>
-                    <option value="17">1700</option>
-                   
+                <label for="formGroupExampleInput2">Available Time</label>
+                <input type="hidden" name="date" value="{{ session('date2') }}">     
+                <select name="time" id="" class="form-control">
+                    @foreach ($timeRangesFormatted as $time)
+                    <option value="{{$time}}">{{$time}}</option>
+                    @endforeach
                 </select>
                 <span style="color: red">@error('time_in'){{ $message }} @enderror</span>
             </div>
-            <div class="form-group">
-                <label for="formGroupExampleInput2">Time Out</label>
-                <select name="time_out" id="" class="form-control">
-                <option value="9">0900</option>
-                    <option value="10">1000</option>
-                    <option value="11">1100</option>
-                    <option value="12">1200</option>
-                <option value="13">1300</option>
-                <option value="14">1400</option>
-                <option value="15">1500</option>
-                <option value="16">1600</option>
-                <option value="17">1700</option>
-                <option value="18" selected>1800</option>
-                </select>
-                <span style="color: red">@error('time_out'){{ $message }} @enderror</span>
-            </div>
+        
             
             <div style="margin: 50px; align-items: center; justify-content: center; display: flex;">
             <span style="margin-right: 10px"><a href="/rosterCommittee"><button type="button" class="btn btn-outline-primary"

@@ -104,9 +104,12 @@ class roster_controller extends Controller
     public function showlistcommittee()
     {
         //$roster = roster::paginate(5);
-        //$user = Auth::id();
-        $user = User::find(Auth::id());
-        return view('roster.schedule_page', ['user' => $user]);
+        $user = Auth::user();
+        $rosters = DB::table('rosters')
+        ->where('user_id', $user->id)
+        ->get();
+        //var_dump($roster);
+        return view('roster.schedule_page', compact('user', 'rosters'));
     }
 
     public function indexcommittee()
@@ -186,43 +189,49 @@ class roster_controller extends Controller
                 return redirect('/rosterAdmin')->with('error', $e->getMessage());
             }
         } else {
-            $date = $request->input('date2');
-            $rosterDate = Roster::whereDate('date', $date)->get();
-
-            if ($rosterDate->isEmpty()) {
-               
-                return view('roster.add_schedule_page')
-                ->with('message', 'Date not added by admin')
-                ->with(compact('user'));
-
-            } else {
-                $timeIn = $request->input('time_in');
-                $timeOut = $request->input('time_out');
-                $timeIn = $timeIn . ':00';
-                $timeOut = $timeOut . ':00';
-                dd($timeIn,$timeOut);
+          
+                $time = $request->input('time');
+                list($startTime, $endTime) = explode('-', $time);
+                $dateString = $request->input('date');
+                $date = Carbon::parse($dateString);
+                $day = $date->format('l');
+                
+                // Extract the month
+                $month = $date->format('F');
+                $week = $date->weekOfMonth;
+               // dd($week);
+                
+                //dd($startTime);
                 // Roster record(s) exist for the given date
                 //return view('roster.add_schedule_page', compact('roster'));
                 $schedule = new Roster();
                 $schedule->user_id = Auth::id();
-                //$schedule->day = $day;
+                $schedule->day = $day;
                 $schedule->date = $date;
-                //$schedule->month = $month; // Assuming $month is available
-                //$schedule->week = $week - 1; // Subtract 1 from $week to get the correct week number
-                $schedule->time_in = $timeIn;
-                $schedule->time_out = $timeOut;
+                $schedule->month = $month; // Assuming $month is available
+                $schedule->week = $week ; // Subtract 1 from $week to get the correct week number
+                $schedule->time_in = $startTime;
+                $schedule->time_out = $endTime;
 
                 // Calculate total hours (assuming time in and time out are on the same day)
-                $totalHours = Carbon::createFromFormat('H:i', $timeOut)->diffInHours(Carbon::createFromFormat('H:i', $timeIn));
+                $totalHours = Carbon::createFromFormat('H:i', $endTime)->diffInHours(Carbon::createFromFormat('H:i', $startTime));
                 $schedule->total_hour = $totalHours;
                 $schedule->rate = 5;
                 $schedule->save();
-                return redirect('/rosterCommittee')->with('message', 'Add sucessful!');
+
+                $user = Auth::user();
+                // $roster = DB::table('rosters')
+                // ->where('user_id', $user->id)
+                // ->first();
+
+                $roster = Roster::find(Auth::id());
+                return redirect('/rosterCommittee')->with('message', 'Add successful!')->with('roster', $roster);
+
 
             }
 
            
-        }
+        
     }
 
 //    public function store(Request $request)
@@ -325,38 +334,44 @@ public function filter(Request $request)
        return view('roster.admin_schedule_page', ["rosters" => $rosters]);
     }
     elseif(isset($_GET['date2'])){
-        
         $user = User::find($_GET['id']);
         $date = $request->input('date2');
+        //dd($date);
         session(['date2' => $date]);
         $date2 = session('date2');
-        
+
         $schedule = DB::table('rosters')->where('date', 'LIKE', '%' . $date . '%')->paginate(10);
         $schedule2 = DB::table('rosters')->select('time_in', 'time_out')->where('date', 'LIKE', '%' . $date . '%')->get();
-        
+
         $schedule->appends($request->all());
-        
-        $timeInArray = [];
-        $timeOutArray = [];
-        
-        foreach ($schedule2 as $row) {
-            $timeInArray[] = $row->time_in;
-            $timeOutArray[] = $row->time_out;
-        }
-        
+
         $timeRange = [];
-        
-        // Generate the time range array
-        foreach ($timeInArray as $index => $timeIn) {
-            $timeOut = $timeOutArray[$index];
-            $timeRange = array_merge($timeRange, range($timeIn, $timeOut, '1 hour'));
+
+        $timeRangesFormatted = [];
+
+        foreach ($schedule2 as $row) {
+            $timeIn = $row->time_in;
+            $timeOut = $row->time_out;
+            
+            $timeInTimestamp = strtotime($timeIn);
+            $timeOutTimestamp = strtotime($timeOut);
+            
+            $step = 60 * 60; // 1 hour in seconds
+            $range = range($timeInTimestamp, $timeOutTimestamp - $step, $step);
+            
+            $rangeFormatted = array_map(function ($timestamp) {
+                return date('H:i', $timestamp) . '-' . date('H:i', strtotime('+1 hour', $timestamp));
+            }, $range);
+            
+            $timeRangesFormatted = array_merge($timeRangesFormatted, $rangeFormatted);
         }
+
+        //dd($timeRangesFormatted);
+
         
-        dd($timeRange);
-        
-        return view('roster.add_schedule_page', compact('schedule', 'user', 'date2'));
-        
-        
+
+        //dd($timeRange);
+         return view('roster.add_schedule_page', compact('schedule', 'user', 'date2', 'timeRangesFormatted'));        
     }
     
    

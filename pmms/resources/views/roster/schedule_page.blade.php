@@ -60,23 +60,72 @@
                 </thead>
                 <tbody>
                     
-                <th scope="row"> </th>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                        
+             
+                    @if ($rosters)
+                @if (is_iterable($rosters))
+                    @foreach ($rosters as $roster)
+                        <tr>
+                            <td>{{ $roster->date }}</td>
+                            <td>{{ $roster->day }}</td>
+                            <td>{{ $roster->time_in }}</td>
+                            <td>{{ $roster->time_out }}</td>
+                            <td>{{ $roster->total_hour }}</td>
+                            <td>{{ $roster->rate }}</td>
                             <td>
-                                <a href='/edit_schedule_page'>
+                                <div style="display: flex; align-items: center;">
+                                    <a href="/edit_schedule_time">
+                                        <x-uni-pen-o style="width: 30px; height: 30px; color: #00A3D8;" />
+                                    </a>
+                                    <form method="POST" action="/roster-delete/{{ $roster->id }}">
+                                        @csrf
+                                        @method('DELETE')
+                                        <button type="submit" style="background:white; border:none">
+                                            <x-tabler-trash style="color: red" />
+                                        </button>
+                                    </form>
+                                </div>
+                            </td>
+                        </tr>
+                    @endforeach
+                @else
+                    <tr>
+                        <td>{{ $rosters->date }}</td>
+                        <td>{{ $rosters->day }}</td>
+                        <td>{{ $rosters->time_in }}</td>
+                        <td>{{ $rosters->time_out }}</td>
+                        <td>{{ $rosters->rate }}</td>
+                        <td>
+                            <div style="display: flex; align-items: center;">
+                                <a href="/edit_schedule_time">
                                     <x-uni-pen-o style="width: 30px; height: 30px; color: #00A3D8;" />
                                 </a>
+                                <form method="POST" action="/roster-delete/{{ $roster->id }}">
+                                    @csrf
+                                    @method('DELETE')
+                                    <button type="submit" style="background:white; border:none">
+                                        <x-tabler-trash style="color: red" />
+                                    </button>
+                                </form>
+                            </div>
+                        </td>
+                    </tr>
+                @endif
+            @else
+                <tr>
+                    <td>No list available</td>
+                </tr>
+@endif
 
-                                <a href=''>
-                                    <x-uni-trash-o style="width: 30px; height: 30px; color: red;" />
-                                </a>
+                
+                
+                
+                
 
-                            </td>
+                
+                    {{-- @endforeach --}}
+           
+                        
+                           
                             {{-- <td>
                                 <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#incrementModal">+</button>
                             </td> --}}
