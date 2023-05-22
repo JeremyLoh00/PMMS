@@ -26,6 +26,7 @@
                     <tr>
                         <td>Month: {{ $month }}</td>
                         <input type="hidden" name="month" value="{{ $month }}">
+                       
                         <td><label>Week</label></td>
                         <td>
                             <div class="form-group" style="display: grid; grid-template-columns: max-content 1fr;">
@@ -57,6 +58,8 @@
                     @endphp
             @endif
             <input type="hidden" name="week_counter" value="{{ $weekCounter }}">
+            <input type="hidden" name="selected_dates[{{ $weekCounter }}][{{ $index }}]" value="{{ $date }}">
+
             <div style="display: flex; align-items: center;">
                 <div>
                     <span style="margin-right: 10px;">{{ $days[$index] }}:</span>
@@ -67,10 +70,24 @@
                 </div>
                 <div style="display: flex; align-items: center; margin-left: 20px;">
                     <span style="margin-right: 10px;">From</span>
-                    <input type="text" class="form-control" name="time_in[{{ $weekCounter }}][]" placeholder="0800" style="margin-right: 10px;">
-                    <span style="color: red">@error("time_in.{$weekCounter}.{$index}"){{ $message }} @enderror</span>
-                    <span style="margin-right: 10px;">Until</span>
-                    <input type="text" class="form-control" name="time_out[{{ $weekCounter }}][]" placeholder="0800">
+                    <select name="time_in[{{ $weekCounter }}][]" style="margin-right: 10px;" class="form-control">
+                                    <option value="8">0800</option>
+                                    <option value="9">0900</option>
+                                    <option value="10">1000</option>
+                                    <option value="11">1100</option>
+                                    <option value="12">1200</option>
+                                    <option value="13">1300</option>
+                                </select>
+                                <span style="color: red">@error("time_in.{$weekCounter}.{$index}"){{ $message }} @enderror</span>
+                                <span style="margin-right: 10px;">Until</span>
+                                <select name="time_out[{{ $weekCounter }}][]" style="margin-right: 10px;" class="form-control">
+                                    <option value="13">1300</option>
+                                    <option value="14">1400</option>
+                                    <option value="15">1500</option>
+                                    <option value="16">1600</option>
+                                    <option value="17">1700</option>
+                                    <option value="18" selected>1800</option>
+                                </select>
                     <span style="color: red">@error("time_out.{$weekCounter}.{$index}"){{ $message }} @enderror</span>
                 </div>
             </div>
@@ -96,90 +113,8 @@
                 </span>
             </div>
         </form>
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        {{-- <form action="/store" method="POST">
-            @csrf
 
-            <div class="form-group">
-                <label for="formGroupExampleInput">Date</label>
-                <input type="date" class="form-control" name="date" placeholder="" value="" >
-            </div>
-
-            <div class="form-group">
-                <label for="formGroupExampleInput2">Day</label>
-                <select name="day" class="form-control"  value="">
-                <option value="0">Please select</option>
-                <option value="Monday">Monday</option>
-                <option value="Tuesday">Tuesday</option>
-                <option value="Wednesday">Wednesday</option>
-                <option value="Thursday">Thursday</option>
-                <option value="Friday">Friday</option>
-                <option value="Saturday">Saturday</option>
-                <option value="Sunday">Sunday</option>
-                </select> 
-            </div>
-
-            <div class="form-group">
-                <label for="formGroupExampleInput2">Month</label>
-                <select name="month" class="form-control"  value="">
-                <option value="0">Please select</option>
-                <option value="January">January</option>
-                <option value="February">February</option>
-                <option value="March">March</option>
-                <option value="April">April</option>
-                <option value="May">May</option>
-                <option value="June">June</option>
-                <option value="July">July</option>
-                <option value="August">August</option>
-                <option value="September">September</option>
-                <option value="October">October</option>
-                <option value="November">November</option>
-                <option value="December">December</option>
-                </select> 
-                <span style="color: red">@error('month'){{ $message }} @enderror</span>
-            </div>
-
-            <div class="form-group">
-                <label for="formGroupExampleInput2">Week</label>
-                <select name="week" class="form-control"  value="">
-                <option value="0">Please select</option>
-                <option value="1">1</option>
-                <option value="2">2</option>
-                <option value="3">3</option>
-                <option value="4">4</option>
-                <option value="5">5</option>
-                
-                </select> 
-                <span style="color: red">@error('week'){{ $message }} @enderror</span>
-            </div>
-
-         
-            <div class="form-group">
-                <label for="formGroupExampleInput2">From</label>
-                <input type="text" class="form-control" name="time_in" placeholder="0800">
-                <span style="color: red">@error('time_in'){{ $message }} @enderror</span>
-            </div>
-            <div class="form-group">
-                <label for="formGroupExampleInput2">Until</label>
-                <input type="text" class="form-control" name="time_out" placeholder="1300">
-                <span style="color: red">@error('time_out'){{ $message }} @enderror</span>
-            </div>
-            
-            <div style="margin: 50px; align-items: center; justify-content: center; display: flex;">
-            <span style="margin-right: 10px"><a href="/rosterAdmin"><button type="button" class="btn btn-outline-primary"
-                        style="width: 130px; border-radius: 5px">Cancel</button></a></span>
-            <span><button type="submit" class="btn btn-primary"
-                        style="width: 130px; border-radius: 5px">Add</button></span>
-        </div>
-        </form> --}}
+        
         
     </div>
 </body>

@@ -6,6 +6,12 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <!--Add successfully alert-->
+    @if(session('message'))
+    <div class="alert alert-success">{{session('message')}}
+    <button type="button" class="close", data-dismiss="alert"><x-govicon-times style="color: black"/></button></div>
+    @endif
+
 </head>
 
 <body style="background-color: #98dde2;">
@@ -15,27 +21,65 @@
         <h3>
             Add New Schedule
         </h3>
-        <form action="/roster/store" method="POST">
-            @csrf
-
+       
+        <form action="{{ route('roster.filter') }}" method="GET">
+                @csrf
             <div class="form-group">
                 <label for="formGroupExampleInput">Name</label>
+                <input type="hidden" name="id" value="{{$user->id}}">
                 <input type="text" class="form-control" name="name" placeholder="{{$user->name}}" value="" readonly>
             </div>
 
             <div class="form-group">
                 <label for="formGroupExampleInput">Date</label>
-                <input type="date" class="form-control" name="date2" placeholder="" >
+               
+             
+                <div style="display: flex; align-items: center;">
+                @if (session()->has('date2'))
+                    <input type="date" class="form-control" name="date2" style="margin-right: 10px;" value="{{ session('date2') }}">
+                @else
+                     <input type="date" class="form-control" name="date2" style="margin-right: 10px;">
+                @endif
+                <!-- <input type="date" class="form-control" name="date2" style="margin-right: 10px;"> -->
+                <button type="submit" class="btn btn-primary" style="width: 130px; border-radius: 5px;">Test</button>
+                </div>
+               </form>
+               
             </div>
-         
+            @if(isset($schedule) && $schedule->isNotEmpty())
+            <form action="/roster/store" method="POST">
+            @csrf
             <div class="form-group">
                 <label for="formGroupExampleInput2">Time In</label>
-                <input type="text" class="form-control" name="time_in" placeholder="0800">
+                <select name="time_in" id="" class="form-control">
+                    <option value="8">0800</option>
+                    <option value="9">0900</option>
+                    <option value="10">1000</option>
+                    <option value="11">1100</option>
+                    <option value="12">1200</option>
+                    <option value="13">1300</option>
+                    <option value="14">1400</option>
+                    <option value="15">1500</option>
+                    <option value="16">1600</option>
+                    <option value="17">1700</option>
+                   
+                </select>
                 <span style="color: red">@error('time_in'){{ $message }} @enderror</span>
             </div>
             <div class="form-group">
                 <label for="formGroupExampleInput2">Time Out</label>
-                <input type="text" class="form-control" name="time_out" placeholder="1300">
+                <select name="time_out" id="" class="form-control">
+                <option value="9">0900</option>
+                    <option value="10">1000</option>
+                    <option value="11">1100</option>
+                    <option value="12">1200</option>
+                <option value="13">1300</option>
+                <option value="14">1400</option>
+                <option value="15">1500</option>
+                <option value="16">1600</option>
+                <option value="17">1700</option>
+                <option value="18" selected>1800</option>
+                </select>
                 <span style="color: red">@error('time_out'){{ $message }} @enderror</span>
             </div>
             
@@ -46,7 +90,7 @@
                         style="width: 130px; border-radius: 5px">Add</button></span>
         </div>
         </form>
-        
+        @endif
     </div>
 </body>
 
