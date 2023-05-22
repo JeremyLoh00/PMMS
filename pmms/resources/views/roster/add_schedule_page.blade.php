@@ -25,7 +25,7 @@
 
             <div class="form-group">
                 <label for="formGroupExampleInput">Date</label>
-                <input type="date" class="form-control" name="date2" placeholder="" value="" >
+                <input type="date" class="form-control" name="date2" placeholder="" >
             </div>
          
             <div class="form-group">

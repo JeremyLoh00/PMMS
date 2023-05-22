@@ -116,81 +116,81 @@ class roster_controller extends Controller
 
 
     public function store(Request $request)
-{
-    $user = User::find(Auth::id());
-    if($user->role ==='Admin'){
-        $userId = Auth::id();
-        $timeInInputs = $request->input('time_in');
-        $timeOutInputs = $request->input('time_out');
-        $days = $request->input('days');
-        $dates = $request->input('dates');
-        $month = $request->input('month');
-        $report = '';
+    {
+        $userRole = session('role');
+        $user = User::find(Auth::id());
     
-        // Loop through the weeks and process the inputs
-        $weekCounter = 1;
-        foreach ($timeInInputs as $week => $timeIns) {
-            foreach ($timeIns as $index => $timeIn) {
-                $timeOut = $timeOutInputs[$week][$index];
-                $day = $days[$index]; // Access the specific day based on the index
+        if ($userRole === 'Admin') {
+            $userId = Auth::id();
+            $timeInInputs = $request->input('time_in');
+            $timeOutInputs = $request->input('time_out');
+            $days = $request->input('days');
+            $dates = $request->input('dates');
+            $month = $request->input('month');
+            $report = '';
     
-                // Check if both time in and time out are not null
-                if ($timeIn !== null && $timeOut !== null) {
-                    $date = Carbon::createFromFormat('d/m/Y', $dates[$week][$index])->format('Y-m-d'); // Access the specific date based on the week and index
+            // Loop through the weeks and process the inputs
+            $weekCounter = 1;
+            foreach ($timeInInputs as $week => $timeIns) {
+                foreach ($timeIns as $index => $timeIn) {
+                    $timeOut = $timeOutInputs[$week][$index];
+                    $day = $days[$index]; // Access the specific day based on the index
     
-                    // Convert time to desired format
-                    $timeIn = $timeIn . ':00';
-                    $timeOut = $timeOut . ':00';
+                    // Check if both time in and time out are not null
+                    if ($timeIn !== null && $timeOut !== null) {
+                        $date = Carbon::createFromFormat('d/m/Y', $dates[$week][$index])->format('Y-m-d'); // Access the specific date based on the week and index
     
-                    try {
-                        if (Roster::where('date', $date)->exists()) {
-                            //return redirect('/rosterAdmin')->with('error', 'Data already exists for date ' . $date);
-                            $report .= "Data for date " . $date . " already exists. ";
-                        } else {
-                            $roster = new Roster();
-                            $roster->user_id = $userId;
-                            $roster->day = $day;
-                            $roster->date = $date;
-                            $roster->month = $month; // Assuming $month is available
-                            $roster->week = $week - 1;
-                            $roster->time_in = $timeIn;
-                            $roster->time_out = $timeOut;
+                        // Convert time to desired format
+                        $timeIn = $timeIn . ':00';
+                        $timeOut = $timeOut . ':00';
     
-                            // Calculate total hours (assuming time in and time out are in the same day)
-                            $totalHours = Carbon::createFromFormat('H:i', $timeOut)->diffInHours(Carbon::createFromFormat('H:i', $timeIn));
-                            $roster->total_hour = $totalHours;
-                            $roster->rate = 5;
-                            $roster->save();
+                        try {
+                            if (Roster::where('date', $date)->exists()) {
+                                $report .= "Data for date " . $date . " already exists. ";
+                            } else {
+                                $roster = new Roster();
+                                $roster->user_id = $userId;
+                                $roster->day = $day;
+                                $roster->date = $date;
+                                $roster->month = $month; // Assuming $month is available
+                                $roster->week = $week - 1;
+                                $roster->time_in = $timeIn;
+                                $roster->time_out = $timeOut;
+    
+                                // Calculate total hours (assuming time in and time out are in the same day)
+                                $totalHours = Carbon::createFromFormat('H:i', $timeOut)->diffInHours(Carbon::createFromFormat('H:i', $timeIn));
+                                $roster->total_hour = $totalHours;
+                                $roster->rate = 5;
+                                $roster->save();
+                            }
+                        } catch (Exception $e) {
+                            return redirect('/rosterAdmin')->with('error', $e->getMessage());
                         }
-                    } catch (Exception $e) {
-                        return redirect('/rosterAdmin')->with('error', $e->getMessage());
                     }
                 }
             }
-        }
     
-        try {
-            if ($report) {
-                return redirect('/rosterAdmin')->with('message', $report);
-            } elseif ($roster && $report) {
-                return redirect('/rosterAdmin')->with('message', 'Add successful! and ' . $report);
-            } elseif ($roster) {
-                return redirect('/rosterAdmin')->with('message', 'Add successful!');
-            } else {
-                throw new Exception('Something went wrong!');
+            try {
+                if ($report) {
+                    return redirect('/rosterAdmin')->with('message', $report);
+                } elseif ($roster && $report) {
+                    return redirect('/rosterAdmin')->with('message', 'Add successful! and ' . $report);
+                } elseif ($roster) {
+                    return redirect('/rosterAdmin')->with('message', 'Add successful!');
+                } else {
+                    throw new Exception('Something went wrong!');
+                }
+            } catch (Exception $e) {
+                return redirect('/rosterAdmin')->with('error', $e->getMessage());
             }
-        } catch (Exception $e) {
-            return redirect('/rosterAdmin')->with('error', $e->getMessage());
+        } else {
+            $test = $request->input('date2');
+            // Do something with $test...
+            dd($test);
+            // Return a response or redirect if needed
         }
     }
-    else{
-        $test = "test";
-        $date = $request->input('date2');
-        dd($request->$test);
-    }
-
-
-}
+    
 
     
 
