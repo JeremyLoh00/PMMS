@@ -15,7 +15,7 @@
         <h3>
             Add New Schedule
         </h3>
-        <form action="/store" method="POST">
+        <form action="/roster/store" method="POST">
             @csrf
 
             <div class="form-group">
@@ -25,7 +25,7 @@
 
             <div class="form-group">
                 <label for="formGroupExampleInput">Date</label>
-                <input type="text" class="form-control" name="date" placeholder="" value="" >
+                <input type="date" class="form-control" name="date2" placeholder="" value="" >
             </div>
          
             <div class="form-group">

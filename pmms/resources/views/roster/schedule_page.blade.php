@@ -33,14 +33,14 @@
       <h3>
       Schedule ({{ session('role') }})
       </h3>
-      <input type="hidden" id="id" value="{{$user}}">
+      <input type="hidden" id="id" value="{{$user->id}}">
         <table class="table">
             <div style="margin: 5px; padding: 5px;">
                 <form action="" method="">
                     <div class="row align-items-center">
-                        <div class="col-1">
-                            <h5 label for="" input type="text" class="" name="name" placeholder="" value="" readonly>Name</h5>
-                            <h5 label for="" input type="text" class="" name="role" placeholder="" value="" readonly>Role</h5>
+                        <div class="col-6">
+                            <h5 label for="" input type="text" class="" name="name" placeholder="" value="" readonly>Name :{{$user->name}}</h5>
+                            <h5 label for="" input type="text" class="" name="role" placeholder="" value="" readonly>Role   :{{$user->role}}</h5>
                             
                         </div>
                     </div>  
