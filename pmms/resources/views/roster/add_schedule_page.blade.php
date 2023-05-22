@@ -20,7 +20,7 @@
 
             <div class="form-group">
                 <label for="formGroupExampleInput">Name</label>
-                <input type="text" class="form-control" name="name" placeholder="" value="" readonly>
+                <input type="text" class="form-control" name="name" placeholder="{{$user->name}}" value="" readonly>
             </div>
 
             <div class="form-group">

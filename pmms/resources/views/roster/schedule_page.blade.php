@@ -33,6 +33,7 @@
       <h3>
       Schedule ({{ session('role') }})
       </h3>
+      <input type="hidden" id="id" value="{{$user}}">
         <table class="table">
             <div style="margin: 5px; padding: 5px;">
                 <form action="" method="">
@@ -85,7 +86,7 @@
         
     </div>
     <div style="margin: 50px; align-items: center; justify-content: center; display: flex;">
-    <a href="/add_schedule"><button style="width: 60px; height: 60px; padding: 15px; border-radius: 50%; background-color: #00A3D8; border: none; left: 50%; box-shadow: 3px 3px rgba(0, 0, 0, 0.02); active: none"><x-monoicon-add style="color: white;"/></button></a>
+        <a href="#" id="scheduleLink"><button style="width: 60px; height: 60px; padding: 15px; border-radius: 50%; background-color: #00A3D8; border: none; left: 50%; box-shadow: 3px 3px rgba(0, 0, 0, 0.02); active: none" type="submit"><x-monoicon-add style="color: white;"/></button></a>
     </div>
 </body>
 {{-- Increment --}}
@@ -114,5 +115,26 @@
       </div>
     </div>
   </div>
+  <script>
+    // Get the hidden input element
+    const idElement = document.getElementById('id');
 
+    // Get the link element
+    const scheduleLink = document.getElementById('scheduleLink');
+
+    // Add an event listener to the link element
+    scheduleLink.addEventListener('click', function(event) {
+        // Prevent the default link behavior
+        event.preventDefault();
+
+        // Get the value of the hidden input element
+        const id = idElement.value;
+
+        // Construct the URL with the id parameter
+        const url = "/add_schedule?id=" + id;
+
+        // Redirect to the URL
+        window.location.href = url;
+    });
+</script>
 </html>

@@ -19,7 +19,7 @@
 
 
       
-        <form action="{{ route('store') }}" method="POST">
+        <form action="{{ route('roster/store') }}" method="POST">
             @csrf
             <table style="width: 100%">
                 <tbody>

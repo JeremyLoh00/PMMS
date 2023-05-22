@@ -7,6 +7,7 @@ use Carbon\Carbon;
 use App\Models\Roster;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Foundation\Auth\User;
 use Illuminate\Support\Facades\Auth;
 
 class roster_controller extends Controller
@@ -18,6 +19,7 @@ class roster_controller extends Controller
     {
         $userRole = session('role');
         $month = $request->query('month');
+        $id = $request->query('id');
 
         $monthNumber = null;
 
@@ -75,10 +77,12 @@ class roster_controller extends Controller
             $currentDate->addDay();
         }
 
+        $user = User::find($id);
         if ($userRole === 'Admin') {
             return view('roster.add_schedule_time_page', ['month' => $month, 'dates' => $this->dates, 'days' => $this->days]);
         } elseif ($userRole === 'Cashier') {
-            return view('roster.add_schedule_page');
+
+            return view('roster.add_schedule_page',['user' => $user]);
         } else {
             return view('auth.login');
         }
@@ -99,7 +103,8 @@ class roster_controller extends Controller
     public function showlistcommittee()
     {
         //$roster = roster::paginate(5);
-        return view('roster.schedule_page', []);
+        $user = Auth::id();
+        return view('roster.schedule_page', ['user' => $user]);
     }
 
     public function indexcommittee()
@@ -195,18 +200,7 @@ public function filter(Request $request)
 
     }
     
-    // $month = $request->input('month');
-    // $rosters = null; // Initialize $rosters variable
-
-    // if ($month != null) {
-    //     // Perform the query to filter the roster data by month
-    //     $rosters = Roster::where('month', $month)->paginate(7)->appends(['month' => $month]);
-    // } else {
-    //     $rosters = Roster::paginate(10)->appends(['month' => null]); // Get all rosters with pagination
-    // }
-
-    // // Pass the filtered rosters and month to your view for display
-    // return view('roster.admin_schedule_page', compact('rosters', 'month'));
+   
 }
 
 

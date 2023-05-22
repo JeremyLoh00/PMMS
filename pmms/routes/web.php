@@ -112,6 +112,7 @@ Route::get('/rosterAdmin', [roster_controller::class, 'showlistadmin'])->name('r
 //Access add schedule for both admin and committee by calling the func in controller
 Route::get('/add_schedule', [roster_controller::class, 'create']);
 
+
 //Access update schedule time page by calling the func in controller
 Route::post('/update-schedule-time', [roster_controller::class, 'update']);
 
@@ -138,7 +139,7 @@ Route::get('/edit_schedule_page', [roster_controller::class, 'indexcommittee']);
 
 
 
-Route::post('/store', [roster_controller::class, 'store'])->name('store');
+Route::post('/roster/store', [roster_controller::class, 'store'])->name('roster/store');
 
 Route::get('/roster/filter', [roster_controller::class, 'filter'])->name('roster.filter');
 
