@@ -7,7 +7,7 @@ use App\Http\Controllers\user_controller;
 use App\Http\Controllers\InventoryController;
 use App\Http\Controllers\LogoutController;
 use App\Http\Controllers\PaymentController;
-
+use App\Http\Controllers\CartController;
 
 /*
 |--------------------------------------------------------------------------
@@ -21,12 +21,16 @@ use App\Http\Controllers\PaymentController;
 */
 
 Route::get('/', function () {
-        return redirect()->route('login');
-    });
+    return Redirect::to('login');
+});
 
 // Route::get('/inventory', function () {
 //     return view('inventory');
 // });
+
+//  Route::get('/report', function () {
+//     return view('report');
+//  });
 
 Route::get('/schedule', function () {
     return view('schedule');
@@ -72,6 +76,8 @@ Route::post('/decrement/{id}', [InventoryController::class, 'Decrement']);
 
 //Access the function of delete inside con
 Route::delete('/delete/{id}', [InventoryController::class, 'delete'])->name('inventory.delete');
+
+
 
 //USERS
 //redirect to view_user page
@@ -119,3 +125,10 @@ Route::post('/payment',[PaymentController::class,'proceedPayment'])->name('payme
 //Proceed to Refund
 Route::post('/refund',[PaymentController::class,'storePayment'])->name('payment.refund');
 
+
+//Report
+//Access report in view and call index func in controller 
+Route::get('/show', [ReportController::class, 'show']);
+//Access report in view and call func in controller 
+Route::get('/searchReport', [ReportController::class, 'searchReport']);
+Route::get('/data', [ReportController::class, 'show']);
