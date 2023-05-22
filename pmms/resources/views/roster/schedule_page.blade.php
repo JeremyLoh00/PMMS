@@ -31,7 +31,7 @@
 <body style="background-color: #98dde2;">
     <div style="margin: 50px; background-color: white; padding: 30px; border-radius: 10px; box-shadow: 3px 9px rgba(0, 0, 0, 0.02);">
       <h3>
-      Schedule ({{ session('role') }})
+      Schedule
       </h3>
       <input type="hidden" id="id" value="{{$user->id}}">
         <table class="table">
@@ -70,7 +70,7 @@
                             <td>{{ $roster->time_in }}</td>
                             <td>{{ $roster->time_out }}</td>
                             <td>{{ $roster->total_hour }}</td>
-                            <td>{{ $roster->rate }}</td>
+                            <td>RM {{ $roster->rate }}</td>
                             <td>
                                 <div style="display: flex; align-items: center;">
                                     <a href="/edit_schedule_time">
