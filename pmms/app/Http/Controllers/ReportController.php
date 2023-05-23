@@ -14,8 +14,7 @@ class ReportController extends Controller
     function show(){
 
         
-
-         
+       
 
         
          //$Data = $this->belongsTo('');
@@ -38,10 +37,20 @@ class ReportController extends Controller
         //dd($data);
       
 
-        $items = DB::table('inventories')->join('carts', 'inventories.id', '=', 'carts.inventory_id')->paginate(10);
+        $items = DB::table('inventories')->join('carts', 'inventories.id', '=', 'carts.inventory_id')->paginate(8);
+
+        $total = DB::table('inventories')->join('carts', 'inventories.id', '=', 'carts.inventory_id')->get();
+
+        $totalProfit = 0;
+		foreach ($total as $total) {
+			$profitSum = ($total->cost - $total->price) * $total->cart_quantity;
+			$totalProfit += $profitSum;
+		}
+
+
        
         //$InventoryQuantity = DB::table('inventories')->join('carts','inventories.id','=','carts.inventory_id')->select('inventories.quantity')->get();
-		return view("report.report", ['items' => $items]);
+		return view("report.report", ['items' => $items,'totalProfit' => $totalProfit]);
 
         //['inventory' => $InventoryData],['cart' => $CartDate]
        // ['name' => $name],['category' => $category],['invQuantity' => $invQuantity],['cartQuantity' => $cartQuantity],['cartQuantity' => $cartQuantity],['price' => $price], ['cost' => $cost]  
@@ -53,14 +62,26 @@ class ReportController extends Controller
 
         $query = $request->input('query');
 
-        $data = Inventory::when($query, function ($queryBuilder) use ($query) {
+
+        $data = DB::table('inventories')->join('carts', 'inventories.id', '=', 'carts.inventory_id')->when($query, function ($queryBuilder) use ($query) {
             $queryBuilder->where('name', 'like', '%' . $query . '%')
                 ->orWhere('category', 'like', '%' . $query . '%');
         })
             ->paginate(10);
 
-        return view('inventory.inventory', ['inventory' => $data]);
+            
+        return view('report.report', ['items' => $data]);
+
+        // $data = Inventory::when($query, function ($queryBuilder) use ($query) {
+        //     $queryBuilder->where('name', 'like', '%' . $query . '%')
+        //         ->orWhere('category', 'like', '%' . $query . '%');
+        // })
+        //     ->paginate(10);
+
     }
+
+ 
+     
 
     
 }

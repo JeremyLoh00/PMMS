@@ -77,31 +77,39 @@
 				</tr>
 			</thead>
 			<tbody>
-				@foreach ($items as $row)
-                
+				@php
+				$sum=0;
+				@endphp
+				@foreach ($items as $item)
+				@php
+				$itemSum = ($item->cost - $item->price) * $item->cart_quantity;
+				$sum += $itemSum;
+				@endphp
 				<tr>
 					<th>{{ $loop->iteration }}</th>
-
-					<td> {{ $row->name }}</td>
-
-					<td>{{ $row->category }}</td>
-
-					<td>{{ $row->cost - $row->price }}</td>
-                   
-					<td>{{ $row->cart_quantity }}</td>
-                 
-					<td>{{ $row->quantity }}</td>
-                 
-                    <td>{{ $row->quantity - $row->cart_quantity }}</td>
-
-                    <td>{{ ($row->cost - $row->price) * $row->cart_quantity }}</td>
+					<td> {{ $item->name }}</td>
+					<td>{{ $item->category }}</td>
+					<td>{{ $item->cost - $item->price }}</td>
+					<td>{{ $item->cart_quantity }}</td>
+					<td>{{ $item->quantity }}</td>
+					<td>{{ $item->quantity - $item->cart_quantity }}</td>
+					<td>{{ $itemSum }}</td>
 				</tr>
-				
-                @endforeach
+				@endforeach
+				<tr>
+					<td colspan="7"></td>
+					<th>Sum: RM {{ $sum }}</th>
+                    
+				</tr>
 			</tbody>
            
 		</table>
         {{ $items->links() }}
+        
+            
+            <h3 style="text-align: center">
+                Total Profit Earned: RM {{ $totalProfit }}
+            </h3>
 
       
     
@@ -111,6 +119,7 @@
 
    
 </body>
+
 
 
 </html>
