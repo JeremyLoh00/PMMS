@@ -135,6 +135,8 @@ Route::get('/show', [ReportController::class, 'show']);
 Route::get('/searchReport', [ReportController::class, 'searchReport']);
 Route::get('/inventory1', [ReportController::class, 'show']);
 Route::get('/cart1', [ReportController::class, 'show']);
+Route::post('/show', [ReportController::class, 'show'])->name('show.show');
+
 
 
 
