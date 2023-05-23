@@ -26,7 +26,7 @@ class ReportController extends Controller
          //$Data = $this->belongsTo('');
 
   
-        // $data = DB::table('inventories')->join('carts','inventories.id','=','carts.inventory_id')->get();
+         $data = DB::table('inventories')->join('carts','inventories.id','=','carts.inventory_id')->get();
        
 
         // $name = DB::table('inventories')->join('carts','inventories.id','=','carts.inventory_id')->select('name')->get();

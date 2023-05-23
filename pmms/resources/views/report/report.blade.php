@@ -79,6 +79,7 @@
                
                 @foreach ($inventory1 as $inv)
                 @foreach ($cart1 as $cart)
+                
                
                     <tr>
                     <th scope="row"> {{ $inv['name']}}</th>
