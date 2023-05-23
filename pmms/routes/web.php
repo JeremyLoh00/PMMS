@@ -1,6 +1,7 @@
 <?php
 
 use App\Models\Inventory;
+use App\Models\Cart;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\user_controller;
@@ -8,6 +9,7 @@ use App\Http\Controllers\InventoryController;
 use App\Http\Controllers\LogoutController;
 use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\CartController;
+use App\Http\Controllers\ReportController;
 
 /*
 |--------------------------------------------------------------------------
@@ -21,16 +23,16 @@ use App\Http\Controllers\CartController;
 */
 
 Route::get('/', function () {
-    return Redirect::to('login');
+    return Redirect::to('show');
 });
 
 // Route::get('/inventory', function () {
 //     return view('inventory');
 // });
 
-//  Route::get('/report', function () {
-//     return view('report');
-//  });
+  Route::get('/report', function () {
+     return view('report');
+  });
 
 Route::get('/schedule', function () {
     return view('schedule');
@@ -131,4 +133,6 @@ Route::post('/refund',[PaymentController::class,'storePayment'])->name('payment.
 Route::get('/show', [ReportController::class, 'show']);
 //Access report in view and call func in controller 
 Route::get('/searchReport', [ReportController::class, 'searchReport']);
+Route::get('/inventory1', [ReportController::class, 'show']);
+Route::get('/cart1', [ReportController::class, 'show']);
 Route::get('/data', [ReportController::class, 'show']);

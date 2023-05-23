@@ -13,20 +13,30 @@ class ReportController extends Controller
 {
     function show(){
 
-        // $InventoryData = Inventory::paginate(10);
-        // $CartDate = Cart::paginate(10);
-        // $threshold = 5;
-  
-        $data = DB::table('inventories')->join('carts','inventories.id','=','carts.inventory_id')->get();
-  
+         $inventory  = Inventory::paginate(10);
+         $carts = Cart::paginate(10);
 
-        $name = DB::table('inventories')->join('carts','inventories.id','=','carts.inventory_id')->select('name')->get();
-        $category = DB::table('inventories')->join('carts','inventories.id','=','carts.inventory_id')->select('category')->get();
-        $invQuantity = DB::table('inventories')->join('carts','inventories.id','=','carts.inventory_id')->select('inventories.quantity')->get();
-        $cartQuantity = DB::table('inventories')->join('carts','inventories.id','=','carts.inventory_id')->select('carts.quantity')->get();
+     
+      
+         $threshold = 5;
+
+         
+
         
-        $price = DB::table('inventories')->join('carts','inventories.id','=','carts.inventory_id')->select('inventories.price')->get();
-        $cost = DB::table('inventories')->join('carts','inventories.id','=','carts.inventory_id')->select('inventories.cost')->get();
+         //$Data = $this->belongsTo('');
+
+  
+        // $data = DB::table('inventories')->join('carts','inventories.id','=','carts.inventory_id')->get();
+       
+
+        // $name = DB::table('inventories')->join('carts','inventories.id','=','carts.inventory_id')->select('name')->get();
+        // $category = DB::table('inventories')->join('carts','inventories.id','=','carts.inventory_id')->select('category')->get();
+        // $invQuantity = DB::table('inventories')->join('carts','inventories.id','=','carts.inventory_id')->select('inventories.quantity')->get();
+        // $cartQuantity = DB::table('inventories')->join('carts','inventories.id','=','carts.inventory_id')->select('carts.quantity')->get();
+        
+        // $price = DB::table('inventories')->join('carts','inventories.id','=','carts.inventory_id')->select('inventories.price')->get();
+        // $cost = DB::table('inventories')->join('carts','inventories.id','=','carts.inventory_id')->select('inventories.cost')->get();
+        
         
         
         //dd($InvQuantity);
@@ -34,7 +44,7 @@ class ReportController extends Controller
         //dd($data);
       
 
-        return view("report/report", ['data' => $data]);
+        return view("report/report",['inventory1' => $inventory],['cart1' => $carts] );
         //['inventory' => $InventoryData],['cart' => $CartDate]
        // ['name' => $name],['category' => $category],['invQuantity' => $invQuantity],['cartQuantity' => $cartQuantity],['cartQuantity' => $cartQuantity],['price' => $price], ['cost' => $cost]  
     }

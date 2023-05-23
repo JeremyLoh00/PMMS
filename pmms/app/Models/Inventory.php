@@ -16,4 +16,9 @@ class Inventory extends Model
             ->orWhere('category', 'like', '%'.request('search').'%');
         }
     }
+
+    public function carts()
+    {
+        return $this->hasMany(Cart::class);
+    }
 }

@@ -76,21 +76,26 @@
                 </tr>
             </thead>
             <tbody>
-                @foreach ($data as $data)
+               
+                @foreach ($inventory1 as $inv)
+                @foreach ($cart1 as $cart)
                
                     <tr>
-                    <th scope="row"> {{ $data['cost']}}</th>
+                    <th scope="row"> {{ $inv['name']}}</th>
+                    <td>{{ $cart['id'] }}</td>
                       
                         
                     </tr>
                    
                     @endforeach
+                    @endforeach
              
             </tbody>
             
         </table>
-        {{ $data->links() }}
-        
+      
+        {{ $inventory1->links() }}
+        {{ $cart1->links() }}
       
     </div>
 
