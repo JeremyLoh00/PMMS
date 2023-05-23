@@ -61,42 +61,51 @@
         </div>
 
         <table class="table">
-            <thead style="background-color: #98dde2">
-                <tr>
-                    <th scope="col">Item Name</th>
-                    <th scope="col">Category</th>
-                    <th scope="col">Profit Price</th>
-                    <th scope="col">Quantity Sold</th>
-                   
-                    <th scope="col">Quantity Sold Before</th>
-                    <th scope="col">Quantity Sold After</th>
-          
-                    <th scope="col">Profit Earned</th>
-                    <th scope="col"> </th>
-                </tr>
-            </thead>
-            <tbody>
-               
-                @foreach ($inventory1 as $inv)
-                @foreach ($cart1 as $cart)
+			<thead style="background-color: #98dde2">
+				<tr>
+					<th scope="col">No.</th>
+					<th scope="col">Item Name</th>
+					<th scope="col">Category</th>
+					<th scope="col">Profit Price</th>
+					<th scope="col">Quantity Sold</th>
+
+					<th scope="col">Quantity Sold Before</th>
+					<th scope="col">Quantity Sold After</th>
+
+					<th scope="col">Profit Earned</th>
+					<th scope="col"> </th>
+				</tr>
+			</thead>
+			<tbody>
+				@foreach ($items as $row)
                 
-               
-                    <tr>
-                    <th scope="row"> {{ $inv['name']}}</th>
-                    <td>{{ $cart['id'] }}</td>
-                      
-                        
-                    </tr>
+				<tr>
+					<th>{{ $loop->iteration }}</th>
+
+					<td> {{ $row->name }}</td>
+
+					<td>{{ $row->category }}</td>
+
+					<td>{{ $row->cost - $row->price }}</td>
                    
-                    @endforeach
-                    @endforeach
-             
-            </tbody>
-            
-        </table>
+					<td>{{ $row->cart_quantity }}</td>
+                 
+					<td>{{ $row->quantity }}</td>
+                 
+                    <td>{{ $row->quantity - $row->cart_quantity }}</td>
+
+                    <td>{{ ($row->cost - $row->price) * $row->cart_quantity }}</td>
+				</tr>
+				
+                @endforeach
+			</tbody>
+           
+		</table>
+        {{ $items->links() }}
+
       
-        {{ $inventory1->links() }}
-        {{ $cart1->links() }}
+    
+     
       
     </div>
 

@@ -13,12 +13,7 @@ class ReportController extends Controller
 {
     function show(){
 
-         $inventory  = Inventory::paginate(10);
-         $carts = Cart::paginate(10);
-
-     
-      
-         $threshold = 5;
+        
 
          
 
@@ -26,7 +21,6 @@ class ReportController extends Controller
          //$Data = $this->belongsTo('');
 
   
-         $data = DB::table('inventories')->join('carts','inventories.id','=','carts.inventory_id')->get();
        
 
         // $name = DB::table('inventories')->join('carts','inventories.id','=','carts.inventory_id')->select('name')->get();
@@ -44,7 +38,11 @@ class ReportController extends Controller
         //dd($data);
       
 
-        return view("report/report",['inventory1' => $inventory],['cart1' => $carts] );
+        $items = DB::table('inventories')->join('carts', 'inventories.id', '=', 'carts.inventory_id')->paginate(10);
+       
+        //$InventoryQuantity = DB::table('inventories')->join('carts','inventories.id','=','carts.inventory_id')->select('inventories.quantity')->get();
+		return view("report.report", ['items' => $items]);
+
         //['inventory' => $InventoryData],['cart' => $CartDate]
        // ['name' => $name],['category' => $category],['invQuantity' => $invQuantity],['cartQuantity' => $cartQuantity],['cartQuantity' => $cartQuantity],['price' => $price], ['cost' => $cost]  
     }

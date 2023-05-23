@@ -135,4 +135,4 @@ Route::get('/show', [ReportController::class, 'show']);
 Route::get('/searchReport', [ReportController::class, 'searchReport']);
 Route::get('/inventory1', [ReportController::class, 'show']);
 Route::get('/cart1', [ReportController::class, 'show']);
-Route::get('/data', [ReportController::class, 'show']);
+
