@@ -8,16 +8,11 @@ use App\Models\Payment;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Session;
+use Carbon\Carbon;
 
 class ReportController extends Controller
 {
     function show(){
-
-        
-       
-
-        
-         //$Data = $this->belongsTo('');
 
   
        
@@ -35,6 +30,8 @@ class ReportController extends Controller
         //dd($InvQuantity);
         // dd($profitPrice); 
         //dd($data);
+
+
       
 
         $items = DB::table('inventories')->join('carts', 'inventories.id', '=', 'carts.inventory_id')->paginate(8);
@@ -48,10 +45,10 @@ class ReportController extends Controller
 		}
 
 
-       
-        //$InventoryQuantity = DB::table('inventories')->join('carts','inventories.id','=','carts.inventory_id')->select('inventories.quantity')->get();
+        
 		return view("report.report", ['items' => $items,'totalProfit' => $totalProfit]);
 
+        //$InventoryQuantity = DB::table('inventories')->join('carts','inventories.id','=','carts.inventory_id')->select('inventories.quantity')->get();
         //['inventory' => $InventoryData],['cart' => $CartDate]
        // ['name' => $name],['category' => $category],['invQuantity' => $invQuantity],['cartQuantity' => $cartQuantity],['cartQuantity' => $cartQuantity],['price' => $price], ['cost' => $cost]  
     }
@@ -72,13 +69,12 @@ class ReportController extends Controller
             
         return view('report.report', ['items' => $data]);
 
-        // $data = Inventory::when($query, function ($queryBuilder) use ($query) {
-        //     $queryBuilder->where('name', 'like', '%' . $query . '%')
-        //         ->orWhere('category', 'like', '%' . $query . '%');
-        // })
-        //     ->paginate(10);
+
 
     }
+
+   
+
 
  
      

@@ -59,6 +59,7 @@
             </form>
             
         </div>
+        
 
         <table class="table">
 			<thead style="background-color: #98dde2">
@@ -111,11 +112,10 @@
                 Total Profit Earned: RM {{ $totalProfit }}
             </h3>
 
-      
-    
-     
+
       
     </div>
+   
 
    
 </body>
