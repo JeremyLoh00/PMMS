@@ -23,7 +23,7 @@ use App\Http\Controllers\ReportController;
 */
 
 Route::get('/', function () {
-    return Redirect::to('reports');
+    return Redirect::to('login');
 });
 
 // Route::get('/inventory', function () {
