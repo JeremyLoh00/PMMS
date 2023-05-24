@@ -23,15 +23,15 @@ use App\Http\Controllers\ReportController;
 */
 
 Route::get('/', function () {
-    return Redirect::to('show');
+    return Redirect::to('reports');
 });
 
 // Route::get('/inventory', function () {
 //     return view('inventory');
 // });
 
-  Route::get('/report', function () {
-     return view('report');
+  Route::get('/reports', function () {
+     return view('reports');
   });
 
 Route::get('/schedule', function () {
@@ -130,12 +130,11 @@ Route::post('/refund',[PaymentController::class,'storePayment'])->name('payment.
 
 //Report
 //Access report in view and call index func in controller 
-Route::get('/show', [ReportController::class, 'show']);
+Route::get('/reports', [ReportController::class, 'reports']);
 //Access report in view and call func in controller 
 Route::get('/searchReport', [ReportController::class, 'searchReport']);
-Route::get('/inventory1', [ReportController::class, 'show']);
-Route::get('/cart1', [ReportController::class, 'show']);
-Route::post('/show', [ReportController::class, 'show'])->name('show.show');
+//get report select time period request
+Route::post('/reports', [ReportController::class, 'reports'])->name('reports.reports');
 
 
 

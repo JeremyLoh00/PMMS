@@ -12,7 +12,7 @@ use Carbon\Carbon;
 
 class ReportController extends Controller
 {
-    function show(Request $request){
+    function reports(Request $request){
 
         
         $filter = $request->input('filter');

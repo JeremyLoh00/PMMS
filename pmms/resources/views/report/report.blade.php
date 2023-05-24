@@ -64,7 +64,7 @@
                
 
                 
-                <form id='selectDate' action="{{ route('show.show') }}" method="POST">
+                <form id='selectDate' action="{{ route('reports.reports') }}" method="POST">
                         @csrf
                     <select name="filter" id="filterSelect" onchange="select()">
                      
