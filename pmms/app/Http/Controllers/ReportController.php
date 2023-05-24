@@ -16,9 +16,10 @@ class ReportController extends Controller
 
         
         $filter = $request->input('filter');
-
-       
+      
         $dateRange = $this->getDateRange($filter);
+
+        $selectText = $dateRange['selectText'];
         
        
         $items = DB::table('inventories')
@@ -37,48 +38,8 @@ class ReportController extends Controller
             $totalProfit += $profitSum;
         }
      
-        return view("report.report", ['items' => $items, 'totalProfit' => $totalProfit]);
+        return view("report.report", ['items' => $items, 'totalProfit' => $totalProfit, 'selectText'=>$selectText ]);
     
-
-
-
-  
-       
-
-        // $name = DB::table('inventories')->join('carts','inventories.id','=','carts.inventory_id')->select('name')->get();
-        // $category = DB::table('inventories')->join('carts','inventories.id','=','carts.inventory_id')->select('category')->get();
-        // $invQuantity = DB::table('inventories')->join('carts','inventories.id','=','carts.inventory_id')->select('inventories.quantity')->get();
-        // $cartQuantity = DB::table('inventories')->join('carts','inventories.id','=','carts.inventory_id')->select('carts.quantity')->get();
-        
-        // $price = DB::table('inventories')->join('carts','inventories.id','=','carts.inventory_id')->select('inventories.price')->get();
-        // $cost = DB::table('inventories')->join('carts','inventories.id','=','carts.inventory_id')->select('inventories.cost')->get();
-        
-        
-        
-        //dd($InvQuantity);
-        // dd($profitPrice); 
-        //dd($data);
-
-
-      
-
-        // $items = DB::table('inventories')->join('carts', 'inventories.id', '=', 'carts.inventory_id')->paginate(8);
-
-        // $total = DB::table('inventories')->join('carts', 'inventories.id', '=', 'carts.inventory_id')->get();
-
-        // $totalProfit = 0;
-		// foreach ($total as $total) {
-		// 	$profitSum = ($total->cost - $total->price) * $total->cart_quantity;
-		// 	$totalProfit += $profitSum;
-		// }
-
-
-        
-		//return view("report.report", ['items' => $items,'totalProfit' => $totalProfit]);
-
-        //$InventoryQuantity = DB::table('inventories')->join('carts','inventories.id','=','carts.inventory_id')->select('inventories.quantity')->get();
-        //['inventory' => $InventoryData],['cart' => $CartDate]
-       // ['name' => $name],['category' => $category],['invQuantity' => $invQuantity],['cartQuantity' => $cartQuantity],['cartQuantity' => $cartQuantity],['price' => $price], ['cost' => $cost]  
     }
 
    
@@ -106,30 +67,36 @@ class ReportController extends Controller
     {
         
         $start = null;
+        $end = null;
+        $selectText= 'Today';
 
         if($filter == 'Daily'){
 
             $start = Carbon::now()->startOfDay();
             $end= Carbon::now()->endOfDay();
+            $selectText ='Today';
 
         }elseif ($filter == 'weekly') {
 
             $start = Carbon::now()->startOfWeek();
             $end= Carbon::now()->endOfWeek();
+            $selectText ='This Week';
 
         } elseif ($filter == 'monthly') {
 
             $start = Carbon::now()->startOfMonth();
             $end=Carbon::now()->endOfMonth();
+            $selectText ='This Month';
 
         } elseif ($filter == 'yearly') {
 
             $start = Carbon::now()->startOfYear();
             $end=Carbon::now()->endOfYear();
+            $selectText ='This Year';
 
         }
 
-        return ['start' => $start, 'end' => $end];
+        return ['start' => $start, 'end' => $end, 'selectText'=>$selectText];
     }
 
    
