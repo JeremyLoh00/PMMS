@@ -24,11 +24,15 @@ class ReportController extends Controller
        
         $items = DB::table('inventories')
             ->join('carts', 'inventories.id', '=', 'carts.inventory_id')
+            ->select('inventories.quantity as inventory_quantity','carts.quantity as cart_quantity',
+            'inventories.name as name','inventories.category as category', 'inventories.cost as cost', 'inventories.price as price')
             ->whereBetween('carts.created_at', [$dateRange['start'], $dateRange['end']])
             ->paginate(8);
 
         $total = DB::table('inventories')
             ->join('carts', 'inventories.id', '=', 'carts.inventory_id')
+            ->select('inventories.quantity as inventory_quantity','carts.quantity as cart_quantity',
+            'inventories.name as name','inventories.category as category', 'inventories.cost as cost', 'inventories.price as price')
             ->whereBetween('carts.created_at', [$dateRange['start'], $dateRange['end']])
             ->get();
 

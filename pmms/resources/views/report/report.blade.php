@@ -133,8 +133,8 @@
 					<td>{{ $item->category }}</td>
 					<td>{{ $item->cost - $item->price }}</td>
 					<td>{{ $item->cart_quantity }}</td>
-					<td>{{ $item->quantity }}</td>
-					<td>{{ $item->quantity - $item->cart_quantity }}</td>
+					<td>{{ $item->inventory_quantity  }}</td>
+					<td>{{ $item->inventory_quantity - $item->cart_quantity }}</td>
 					<td>{{ $itemSum }}</td>
 				</tr>
 				@endforeach
