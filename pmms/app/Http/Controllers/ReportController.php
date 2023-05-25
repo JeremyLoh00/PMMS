@@ -11,7 +11,8 @@ use Illuminate\Support\Facades\Session;
 use Carbon\Carbon;
 
 class ReportController extends Controller
-{
+{   
+    //main function
     function reports(Request $request){
 
         
@@ -46,7 +47,7 @@ class ReportController extends Controller
     
     }
 
-   
+    //search function of report list page
         function searchReport(Request $request)
     {
 
@@ -67,6 +68,7 @@ class ReportController extends Controller
 
     }
 
+    //gat the time range for the use selected
     private function getDateRange($filter)
     {
         
