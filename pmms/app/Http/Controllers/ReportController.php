@@ -38,7 +38,7 @@ class ReportController extends Controller
 
         $totalProfit = 0;
         foreach ($total as $total) {
-            $profitSum = ($total->cost - $total->price) * $total->cart_quantity;
+            $profitSum = ($total->price - $total->cost) * $total->cart_quantity;
             $totalProfit += $profitSum;
         }
      

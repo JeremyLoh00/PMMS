@@ -77,15 +77,10 @@
                          
                     </select>
                    
-                </form>
-
-                
-                
+                </form>           
                 
             </div>
-            
-        
-
+                  
             <script>
               
 
@@ -99,8 +94,6 @@
             </script>
           
       
-        
-        
 
         <table class="table">
 			<thead style="background-color: #98dde2">
@@ -124,14 +117,14 @@
 				@endphp
 				@foreach ($items as $item)
 				@php
-				$itemSum = ($item->cost - $item->price) * $item->cart_quantity;
+				$itemSum = ($item->price - $item->cost) * $item->cart_quantity;
 				$sum += $itemSum;
 				@endphp
 				<tr>
 					<th>{{ $loop->iteration }}</th>
 					<td> {{ $item->name }}</td>
 					<td>{{ $item->category }}</td>
-					<td>{{ $item->cost - $item->price }}</td>
+					<td>{{ $item->price - $item->cost }}</td>
 					<td>{{ $item->cart_quantity }}</td>
 					<td>{{ $item->inventory_quantity  }}</td>
 					<td>{{ $item->inventory_quantity - $item->cart_quantity }}</td>
