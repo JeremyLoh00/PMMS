@@ -22,8 +22,12 @@ class UserTypeMiddleware
 
         // Check if the user's role matches the allowed role
         if (auth()->user()->role !== $role) {
-            abort(403, 'Unauthorized');
-            //return redirect('/login');
+            // Unauthorized: Show popup message
+            echo "<script>
+                      alert('Unauthorized user');
+                      window.location.href = '/login'; // Redirect to login page
+                  </script>";
+            exit;
         }
 
         return $next($request);
