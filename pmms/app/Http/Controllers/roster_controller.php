@@ -202,38 +202,47 @@ class roster_controller extends Controller
                 $dateString = $request->input('date');
                 $date = Carbon::parse($dateString);
                 $day = $date->format('l');
-                
+                $roster = Roster::find(Auth::id());
                 // Extract the month
                 $month = $date->format('F');
                 $week = $date->weekOfMonth;
                // dd($week);
-                
+               $check = Roster::where('time_in', $startTime)
+               ->where('time_out', $endTime)
+               ->where('date', $date)
+               ->whereHas('user', function ($query) {
+                   $query->where('role', '!=', 'admin');
+               })
+               ->first();
+           
+           if ($check) {
+               return redirect('/rosterCommittee')->with('message', 'Date ' . $date . ' for ' . $startTime . '-' . $endTime . ' already booked!')->with('roster', $roster);
+           } else {
+               $schedule = new Roster();
+               $schedule->user_id = Auth::id();
+               $schedule->day = $day;
+               $schedule->date = $date;
+               $schedule->month = $month; // Assuming $month is available
+               $schedule->week = $week ; // Subtract 1 from $week to get the correct week number
+               $schedule->time_in = $startTime;
+               $schedule->time_out = $endTime;
+           
+               // Calculate total hours (assuming time in and time out are on the same day)
+               $totalHours = Carbon::createFromFormat('H:i', $endTime)->diffInHours(Carbon::createFromFormat('H:i', $startTime));
+               $schedule->total_hour = $totalHours;
+               $schedule->rate = 5;
+               $schedule->save();
+           
+               $user = Auth::user();
+               $roster = Roster::where('user_id', $user->id)->first();
+           
+               return redirect('/rosterCommittee')->with('message', 'Add successful!')->with('roster', $roster);
+           }
+           
                 //dd($startTime);
                 // Roster record(s) exist for the given date
                 //return view('roster.add_schedule_page', compact('roster'));
-                $schedule = new Roster();
-                $schedule->user_id = Auth::id();
-                $schedule->day = $day;
-                $schedule->date = $date;
-                $schedule->month = $month; // Assuming $month is available
-                $schedule->week = $week ; // Subtract 1 from $week to get the correct week number
-                $schedule->time_in = $startTime;
-                $schedule->time_out = $endTime;
-
-                // Calculate total hours (assuming time in and time out are on the same day)
-                $totalHours = Carbon::createFromFormat('H:i', $endTime)->diffInHours(Carbon::createFromFormat('H:i', $startTime));
-                $schedule->total_hour = $totalHours;
-                $schedule->rate = 5;
-                $schedule->save();
-
-                $user = Auth::user();
-                // $roster = DB::table('rosters')
-                // ->where('user_id', $user->id)
-                // ->first();
-
-                $roster = Roster::find(Auth::id());
-                return redirect('/rosterCommittee')->with('message', 'Add successful!')->with('roster', $roster);
-
+              
 
             }
 
