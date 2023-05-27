@@ -43,8 +43,6 @@ class LoginController extends Controller
         // dd($authenticatedUser->role);
         if ($authenticatedUser->role === 'Admin') {
             return redirect('/inventory');
-        } elseif ($authenticatedUser->role === 'Cashier') {
-            return redirect('/users');
         } else {
             return redirect(RouteServiceProvider::HOME);
         }
