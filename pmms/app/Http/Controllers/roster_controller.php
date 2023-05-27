@@ -91,7 +91,14 @@ class roster_controller extends Controller
 
     public function showlistadmin()
     {
-        $roster = roster::paginate(7);
+        $userId = Auth::id(); // Retrieve the ID of the currently authenticated user
+        $userRole = Auth::user()->role; // Retrieve the role of the currently authenticated user
+        
+        $roster = Roster::where('user_id', $userId)
+                        ->whereHas('user', function ($query) use ($userRole) {
+                            $query->where('role', $userRole);
+                        })
+                        ->paginate(7);
         return view('roster.admin_schedule_page', ['rosters' => $roster]);
     }
 
@@ -328,9 +335,13 @@ class roster_controller extends Controller
 public function filter(Request $request)
 {
     if(isset($_GET['month'])){
-       $month = $_GET['month'];
-       $rosters = DB::table('rosters')->where('month','LIKE','%'.$month.'%')->paginate(7);
-       $rosters->appends($request->all());
+        $month = $request->query('month');
+        $rosters = DB::table('rosters')
+            ->join('users', 'users.id', '=', 'rosters.user_id')
+            ->where('rosters.month', 'LIKE', '%' . $month . '%')
+            ->where('users.role', 'Admin')
+            ->paginate(7)
+            ->appends($request->query());
        return view('roster.admin_schedule_page', ["rosters" => $rosters]);
     }
     elseif(isset($_GET['date2'])){
@@ -377,21 +388,35 @@ public function filter(Request $request)
    
 }
 
-function update(Request $request, $id){
-    $rosters = roster::find($id);
+public function update(Request $request, $id)
+{
     $validatedData = $request->validate([
-        'time_in' =>'required',
+        'time_in' => 'required',
         'time_out' => 'required',
-        
     ]);
 
-        if($rosters->update($validatedData)){
-            return redirect('/rosterAdmin')->with('message', 'Update successful!');
-        } else {
-            return redirect('/rosterAdmin')->with('error', 'Update failed!');
-        }
+    
 
+    $time_in = $request->input('time_in');
+    $time_out = $request->input('time_out');
+
+    $start = Carbon::parse($time_in);
+    $end = Carbon::parse($time_out);
+
+    $total_hour = intval($end->diffInHours($start));
+    //dd($total_hour);
+    $roster = Roster::find($id);
+    $roster->time_in = $request->input('time_in');
+    $roster->time_out = $request->input('time_out');
+    $roster->total_hour = $total_hour;
+
+    if ($roster->save()) {
+        return redirect('/rosterAdmin')->with('message', 'Update successful!');
+    } else {
+        return redirect('/rosterAdmin')->with('error', 'Update failed!');
     }
+}
+
 
     function delete($id)
     {
