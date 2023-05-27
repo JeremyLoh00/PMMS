@@ -106,6 +106,7 @@ Route::post('/logout', [App\Http\Controllers\Auth\LogoutController::class, 'logo
 //redirect to roster admin page
 // Route::get('/rosterAdmin', [roster_controller::class, 'showlistadmin']);
 
+//Access schedule page for admin by calling the func in controller
 Route::get('/rosterAdmin', [roster_controller::class, 'showlistadmin'])->name('rosterAdmin');
 
 
@@ -114,16 +115,16 @@ Route::get('/add_schedule', [roster_controller::class, 'create']);
 
 
 //Access update schedule time page by calling the func in controller
-Route::post('/update-schedule-time', [roster_controller::class, 'update']);
+Route::post('/update-schedule-time/{id}', [roster_controller::class, 'update']);
 
 //Access edit schedule time page by calling the func in controller
-Route::get('/edit_schedule_time', [roster_controller::class, 'indexadmin']);
+Route::get('/edit_schedule_time/{id}', [roster_controller::class, 'indexadmin']);
 
 //redirect to roster committee page
 Route::get('/rosterCommittee', [roster_controller::class, 'showlistcommittee']);
 
-//Access update schedule time page by calling the func in controller
-Route::post('/update-schedule-page', [roster_controller::class, 'update']);
+// //Access update schedule time page by calling the func in controller
+// Route::post('/update-schedule-page', [roster_controller::class, 'update']);
 
 //Access edit schedule  page by calling the func in controller
 Route::get('/edit_schedule_page', [roster_controller::class, 'indexcommittee']);

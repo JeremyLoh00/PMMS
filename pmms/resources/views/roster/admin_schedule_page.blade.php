@@ -92,9 +92,8 @@
                     <td>{{ $roster->total_hour }}</td>
                     <td>
                         <div style="display: flex; align-items: center;">
-                            <a href="/edit_schedule_time">
-                                <x-uni-pen-o style="width: 30px; height: 30px; color: #00A3D8;" />
-                            </a>
+                            <a href="/edit_schedule_time/{{$roster->id}}"><x-uni-pen-o style="width: 30px; height: 30px; color: #00A3D8;" /></a>
+
                             <form method="POST" action="/roster-delete/{{ $roster->id }}">
                                 @csrf
                                 @method('DELETE')

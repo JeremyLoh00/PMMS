@@ -95,10 +95,10 @@ class roster_controller extends Controller
         return view('roster.admin_schedule_page', ['rosters' => $roster]);
     }
 
-    public function indexadmin()
+    public function indexadmin($id)
     {
-        //$data = roster::find($id);
-        return view('roster.edit_schedule_time_page');
+        $data = roster::find($id);
+        return view('roster.edit_schedule_time_page', ['roster' => $data]); //selected data pass inside the 'rosters' key used in edit_roster
     }
 
     public function showlistcommittee()
@@ -377,15 +377,21 @@ public function filter(Request $request)
    
 }
 
+function update(Request $request, $id){
+    $rosters = roster::find($id);
+    $validatedData = $request->validate([
+        'time_in' =>'required',
+        'time_out' => 'required',
+        
+    ]);
 
+        if($rosters->update($validatedData)){
+            return redirect('/rosterAdmin')->with('message', 'Update successful!');
+        } else {
+            return redirect('/rosterAdmin')->with('error', 'Update failed!');
+        }
 
-
-
-
-
-
-
-    
+    }
 
     function delete($id)
     {
