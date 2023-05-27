@@ -352,7 +352,13 @@ public function filter(Request $request)
         $date2 = session('date2');
 
         $schedule = DB::table('rosters')->where('date', 'LIKE', '%' . $date . '%')->paginate(10);
-        $schedule2 = DB::table('rosters')->select('time_in', 'time_out')->where('date', 'LIKE', '%' . $date . '%')->get();
+        $schedule2 = DB::table('rosters')
+                    ->select('rosters.time_in', 'rosters.time_out')
+                    ->join('users', 'rosters.user_id', '=', 'users.id')
+                    ->where('rosters.date', 'LIKE', '%' . $date . '%')
+                    ->where('users.role', 'Admin')
+                    ->get();
+
 
         $schedule->appends($request->all());
 
