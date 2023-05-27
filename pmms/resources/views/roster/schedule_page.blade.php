@@ -73,7 +73,7 @@
                             <td>RM {{ $roster->rate }}</td>
                             <td>
                                 <div style="display: flex; align-items: center;">
-                                    <a href="/edit_schedule_time">
+                                <a href="/edit_schedule_page?id={{ $roster->id }}&date={{ $roster->date }}">
                                         <x-uni-pen-o style="width: 30px; height: 30px; color: #00A3D8;" />
                                     </a>
                                     <form method="POST" action="/roster-delete/{{ $roster->id }}">
@@ -96,7 +96,8 @@
                         <td>{{ $rosters->rate }}</td>
                         <td>
                             <div style="display: flex; align-items: center;">
-                                <a href="/edit_schedule_time">
+                            <a href="/edit_schedule_page?id={{ $rosters->id }}&date={{ $rosters->date }}">
+
                                     <x-uni-pen-o style="width: 30px; height: 30px; color: #00A3D8;" />
                                 </a>
                                 <form method="POST" action="/roster-delete/{{ $roster->id }}">

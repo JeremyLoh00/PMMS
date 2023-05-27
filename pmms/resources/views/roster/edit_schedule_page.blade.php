@@ -17,27 +17,27 @@
         <h3>
             Edit Schedule
         </h3>
-        <form action="/update-schedule-page" method="POST">
+        
+      
+
+          
+            <form action="/update-schedule-page/{{$roster->id}}" method="POST">
             @csrf
             <div class="form-group">
-                <label for="formGroupExampleInput">Name</label>
-                <input type="text" class="form-control" name="date" placeholder="" value="" readonly>
-            </div>
-
-            <div class="form-group">
-                <label for="formGroupExampleInput">Date</label>
-                <input type="text" class="form-control" name="date" placeholder="" value="">
-            </div>
-
-            <div class="form-group">
-                <label for="formGroupExampleInput2">Time In</label>
-                <input type="text" class="form-control" name="time_in" placeholder="" value="">
+                <label for="formGroupExampleInput2">Date</label>
+                <input type="date" name="date"  class="form-control" value="{{ $roster->date }}" readonly>     
+              
                 <span style="color: red">@error('time_in'){{ $message }} @enderror</span>
             </div>
             <div class="form-group">
-                <label for="formGroupExampleInput2">Time Out</label>
-                <input type="text" class="form-control" name="time_out" placeholder="" value="">
-                <span style="color: red">@error('time_out'){{ $message }} @enderror</span>
+                <label for="formGroupExampleInput2">Available Time</label>
+                <input type="hidden" name="date" value="{{ $roster->date }}">     
+                <select name="time" id="" class="form-control">
+                    @foreach ($slot as $time)
+                    <option value="{{$time}}">{{$time}}</option>
+                    @endforeach
+                </select>
+                <span style="color: red">@error('time_in'){{ $message }} @enderror</span>
             </div>
 
             <div style="margin: 50px; align-items: center; justify-content: center; display: flex;">
@@ -48,7 +48,7 @@
                         style="width: 130px; border-radius: 5px">Update</button></span>
             </div>
         </form>
-
+    
     </div>
   
 

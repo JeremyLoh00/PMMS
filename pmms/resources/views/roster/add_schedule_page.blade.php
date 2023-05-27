@@ -32,8 +32,7 @@
 
             <div class="form-group">
                 <label for="formGroupExampleInput">Date</label>
-               
-             
+                           
                 <div style="display: flex; align-items: center;">
                 @if (session()->has('date2'))
                     <input type="date" class="form-control" name="date2" style="margin-right: 10px;" value="{{ session('date2') }}">
@@ -41,22 +40,27 @@
                      <input type="date" class="form-control" name="date2" style="margin-right: 10px;">
                 @endif
                 <!-- <input type="date" class="form-control" name="date2" style="margin-right: 10px;"> -->
-                <button type="submit" class="btn btn-primary" style="width: 130px; border-radius: 5px;">Test</button>
+                <button type="submit" class="btn btn-primary" style="width: 130px; border-radius: 5px;">Check Date</button>
                 </div>
-               </form>
+        </form>
                
             </div>
+
             @if(isset($schedule) && $schedule->isNotEmpty())
             <form action="/roster/store" method="POST">
             @csrf
             <div class="form-group">
                 <label for="formGroupExampleInput2">Available Time</label>
+                
                 <input type="hidden" name="date" value="{{ session('date2') }}">     
                 <select name="time" id="" class="form-control">
-                    @foreach ($timeRangesFormatted as $time)
+                    @foreach ($slot as $time)
                     <option value="{{$time}}">{{$time}}</option>
                     @endforeach
                 </select>
+
+    
+
                 <span style="color: red">@error('time_in'){{ $message }} @enderror</span>
             </div>
         

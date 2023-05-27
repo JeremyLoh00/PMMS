@@ -102,17 +102,13 @@ Route::post('/login', [App\Http\Controllers\Auth\LoginController::class, 'login'
 
 Route::post('/logout', [App\Http\Controllers\Auth\LogoutController::class, 'logout'])->name('logout');
 
-//SCHEDULE
-//redirect to roster admin page
-// Route::get('/rosterAdmin', [roster_controller::class, 'showlistadmin']);
 
+//SCHEDULE
 //Access schedule page for admin by calling the func in controller
 Route::get('/rosterAdmin', [roster_controller::class, 'showlistadmin'])->name('rosterAdmin');
 
-
 //Access add schedule for both admin and committee by calling the func in controller
 Route::get('/add_schedule', [roster_controller::class, 'create']);
-
 
 //Access update schedule time page by calling the func in controller
 Route::post('/update-schedule-time/{id}', [roster_controller::class, 'update']);
@@ -124,35 +120,13 @@ Route::get('/edit_schedule_time/{id}', [roster_controller::class, 'indexadmin'])
 Route::get('/rosterCommittee', [roster_controller::class, 'showlistcommittee']);
 
 // //Access update schedule time page by calling the func in controller
-// Route::post('/update-schedule-page', [roster_controller::class, 'update']);
+ Route::post('/update-schedule-page/{id}', [roster_controller::class, 'update']);
 
 //Access edit schedule  page by calling the func in controller
 Route::get('/edit_schedule_page', [roster_controller::class, 'indexcommittee']);
 
-
-
-
-
-// Route::resource('schedules', [roster_controller::class, 'store']);
-
-//call store func in the controller to store data into database
-
-
-
-
 Route::post('/roster/store', [roster_controller::class, 'store'])->name('roster/store');
-//Route::match(['GET', 'POST'], '/roster/store', [roster_controller::class, 'store']);
-
 
 Route::get('/roster/filter', [roster_controller::class, 'filter'])->name('roster.filter');
 
-
-
-//Route::match(['get', 'post'], '/roster/filter', [roster_controller::class, 'filter'])->name('roster.filter');
-
-
-
-
 Route::delete('/roster-delete/{id}', [roster_controller::class, 'delete'])->name('delete');
-// Route::POST('/roster/filter', 'roster_controller@filter')->name('roster.filter');
-

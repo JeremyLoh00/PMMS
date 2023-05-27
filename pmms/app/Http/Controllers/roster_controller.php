@@ -9,6 +9,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Foundation\Auth\User;
 use Illuminate\Support\Facades\Auth;
+use DateTime;
 
 class roster_controller extends Controller
 {
@@ -119,10 +120,72 @@ class roster_controller extends Controller
         return view('roster.schedule_page', compact('user', 'rosters'));
     }
 
-    public function indexcommittee()
+    public function indexcommittee(Request $request)
     {
-        //$data = roster::find($id);
-        return view('roster.edit_schedule_page');
+        $rosterId = $request->query('id');
+         $date = $request->query('date');
+        $data = roster::find($rosterId);
+        $user = $data->user;
+        // $date = $request->input('date');
+
+        $schedule2 = DB::table('rosters')
+        ->select('rosters.time_in', 'rosters.time_out')
+        ->join('users', 'rosters.user_id', '=', 'users.id')
+        ->where('rosters.date', 'LIKE', '%' . $date . '%')
+        ->where('users.role', 'Admin')
+        ->get();
+
+        $timeRange = [];
+
+        $timeRangesFormatted = [];
+
+        foreach ($schedule2 as $row) {
+        $timeIn = $row->time_in;
+        $timeOut = $row->time_out;
+
+        $timeInTimestamp = strtotime($timeIn);
+        $timeOutTimestamp = strtotime($timeOut);
+
+        $step = 60 * 60; // 1 hour in seconds
+        $range = range($timeInTimestamp, $timeOutTimestamp - $step, $step);
+
+        $rangeFormatted = array_map(function ($timestamp) {
+            return date('H:i', $timestamp) . '-' . date('H:i', strtotime('+1 hour', $timestamp));
+        }, $range);
+
+        $timeRangesFormatted = array_merge($timeRangesFormatted, $rangeFormatted);
+        }
+        $check = Roster::select('rosters.time_in', 'rosters.time_out')
+        ->where('rosters.date', 'LIKE', '%' . $date . '%')
+        ->whereHas('user', function ($query) {
+        $query->where('role', '!=', 'admin');
+        })
+        ->get();
+
+        $timeRange2 = [];
+
+        $timeRangesFormatted2 = [];
+
+        foreach ($check as $row) {
+        $timeIn = $row->time_in;
+        $timeOut = $row->time_out;
+
+        $timeInTimestamp = strtotime($timeIn);
+        $timeOutTimestamp = strtotime($timeOut);
+
+        $step = 60 * 60; // 1 hour in seconds
+        $range = range($timeInTimestamp, $timeOutTimestamp - $step, $step);
+
+        $rangeFormatted = array_map(function ($timestamp) {
+            return date('H:i', $timestamp) . '-' . date('H:i', strtotime('+1 hour', $timestamp));
+        }, $range);
+
+        $timeRangesFormatted2 = array_merge($timeRangesFormatted2, $rangeFormatted);
+        }
+
+        $slot = array_merge(array_diff($timeRangesFormatted, $timeRangesFormatted2), array_diff($timeRangesFormatted2, $timeRangesFormatted));
+        return view('roster.edit_schedule_page', ['roster' => $data, 'user' => $user, 'slot' => $slot]); //selected data pass inside the 'rosters' key used in edit_roster
+        
     }
 
 
@@ -216,7 +279,9 @@ class roster_controller extends Controller
                ->first();
            
            if ($check) {
-               return redirect('/rosterCommittee')->with('message', 'Date ' . $date . ' for ' . $startTime . '-' . $endTime . ' already booked!')->with('roster', $roster);
+              // Clear the session
+                session()->forget('date2');
+               return redirect('/rosterCommittee')->with('message', 'Date ' . $date->format('Y-m-d') . ' for ' . $startTime . '-' . $endTime . ' already booked!')->with('roster', $roster);
            } else {
                $schedule = new Roster();
                $schedule->user_id = Auth::id();
@@ -235,7 +300,8 @@ class roster_controller extends Controller
            
                $user = Auth::user();
                $roster = Roster::where('user_id', $user->id)->first();
-           
+             // Clear the session
+                session()->forget('date2');
                return redirect('/rosterCommittee')->with('message', 'Add successful!')->with('roster', $roster);
            }
            
@@ -391,13 +457,42 @@ public function filter(Request $request)
             
             $timeRangesFormatted = array_merge($timeRangesFormatted, $rangeFormatted);
         }
+        $check = Roster::select('rosters.time_in', 'rosters.time_out')
+        ->where('rosters.date', 'LIKE', '%' . $date . '%')
+        ->whereHas('user', function ($query) {
+            $query->where('role', '!=', 'admin');
+        })
+        ->get();
+
+        $timeRange2 = [];
+
+        $timeRangesFormatted2 = [];
+
+        foreach ($check as $row) {
+            $timeIn = $row->time_in;
+            $timeOut = $row->time_out;
+            
+            $timeInTimestamp = strtotime($timeIn);
+            $timeOutTimestamp = strtotime($timeOut);
+            
+            $step = 60 * 60; // 1 hour in seconds
+            $range = range($timeInTimestamp, $timeOutTimestamp - $step, $step);
+            
+            $rangeFormatted = array_map(function ($timestamp) {
+                return date('H:i', $timestamp) . '-' . date('H:i', strtotime('+1 hour', $timestamp));
+            }, $range);
+            
+            $timeRangesFormatted2 = array_merge($timeRangesFormatted2, $rangeFormatted);
+        }
+
+        $slot = array_merge(array_diff($timeRangesFormatted, $timeRangesFormatted2), array_diff($timeRangesFormatted2, $timeRangesFormatted));
+
+       
 
         //dd($timeRangesFormatted);
 
-        
-
         //dd($timeRange);
-         return view('roster.add_schedule_page', compact('schedule', 'user', 'date2', 'timeRangesFormatted'));        
+         return view('roster.add_schedule_page', compact('schedule', 'user', 'date2', 'slot'));        
     }
     
    
@@ -405,6 +500,10 @@ public function filter(Request $request)
 
 public function update(Request $request, $id)
 {
+    $userRole = session('role');
+    $user = User::find(Auth::id());
+
+    if ($userRole === 'Admin') {
     $validatedData = $request->validate([
         'time_in' => 'required',
         'time_out' => 'required',
@@ -430,14 +529,52 @@ public function update(Request $request, $id)
     } else {
         return redirect('/rosterAdmin')->with('error', 'Update failed!');
     }
+    }
+    else{
+        $roster = Roster::find($id);
+        $time = $request->input('time');
+        $date = $request->input('date');
+
+        [$startTime, $endTime] = explode('-', $time);
+
+        // Create DateTime objects for the start and end times
+        $startDateTime = DateTime::createFromFormat('H:i', trim($startTime));
+        $endDateTime = DateTime::createFromFormat('H:i', trim($endTime));
+
+        // Calculate the interval between the start and end times
+        $interval = $startDateTime->diff($endDateTime);
+
+        // Get the total hours from the interval
+        $totalHours = $interval->h;
+        //dd($startDateTime, $endDateTime, $totalHours);
+        $roster->time_in = $startTime;
+        $roster->time_out = $endTime;
+        $roster->total_hour = $totalHours;
+        if ($roster->save()) {
+            return redirect('/rosterCommittee')->with('message', 'Update successful!');
+        } else {
+            return redirect('/rosterCommittee')->with('error', 'Update failed!');
+        }
+    
+
+
+
+    }
 }
 
 
     function delete($id)
     {
         roster::find($id)->delete();
-        
-        return redirect('/rosterAdmin')->with('message', 'Delete successful!'); //redirect back to inventory page, call the route   
+        $userRole = session('role');
+        $user = User::find(Auth::id());
+    
+        if ($userRole === 'Admin') {
+            return redirect('/rosterAdmin')->with('message', 'Delete successful!'); //redirect back to inventory page, call the route   
+        }
+        else {
+            return redirect('/rosterCommittee')->with('message', 'Delete successful!'); //redirect back to inventory page, call the route   
+        }
         //return redirect('rosterAdmin')->with('message', 'Delete successful!');
     }
     
