@@ -104,7 +104,7 @@ Route::group(['middleware' => 'role:Secretary'], function () {
 
 });
 
-Route::group(['middleware' => 'role:Trasurer'], function () {
+Route::group(['middleware' => 'role:Treasurer'], function () {
 
 });
 
