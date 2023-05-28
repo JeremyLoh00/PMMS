@@ -48,9 +48,17 @@
                 <a class="flex-sm-fill text-sm-center nav-link" href="/users">User Registration</a>
             </li>
           </ul>
-          <span class="navbar-text">
-            Logout
-          </span>
+          {{-- <span class="navbar-text">
+            <a href="/logout">Logout</a> 
+          </span> --}}
+
+          <form action="/logout" method="POST" >
+            @csrf
+            {{-- <span class="navbar-text">
+            Logout 
+          </span> --}}
+          <button type="submit" class="btn btn-link black" style="color:grey;">Logout</button>
+        </form>
         </div>
       </nav>
     {{-- <nav class="navbar navbar-light flex-column flex-sm-row" style="background-color: #e3f2fd;">

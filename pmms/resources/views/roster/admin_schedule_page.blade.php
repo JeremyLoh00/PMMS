@@ -64,7 +64,7 @@
                             <option value="December">December</option>
                         </select>
                     </div>
-                    {{-- <input type="hidden" name="page" value="{{ $page }}"> --}}
+                   
                     <div class="col-2">
                         <button type="submit" class="btn btn-primary">Filter</button>
                     </div>

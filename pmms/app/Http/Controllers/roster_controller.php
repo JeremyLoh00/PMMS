@@ -414,13 +414,15 @@ public function filter(Request $request)
 {
     if(isset($_GET['month'])){
         $month = $request->query('month');
-        $rosters = DB::table('rosters')
-            ->join('users', 'users.id', '=', 'rosters.user_id')
-            ->where('rosters.month', 'LIKE', '%' . $month . '%')
-            ->where('users.role', 'Admin')
-            ->paginate(7)
-            ->appends($request->query());
-       return view('roster.admin_schedule_page', ["rosters" => $rosters]);
+        $rosters = Roster::join('users', 'users.id', '=', 'rosters.user_id')
+        ->where('rosters.month', 'LIKE', '%' . $month . '%')
+        ->where('users.role', 'Admin')
+        ->select('rosters.*') // Select roster columns and user's name and email
+        ->paginate(7)
+        ->appends($request->query());
+
+     
+        return view('roster.admin_schedule_page', ['rosters' => $rosters]);
     }
     elseif(isset($_GET['date2'])){
         $user = User::find($_GET['id']);
