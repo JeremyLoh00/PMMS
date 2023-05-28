@@ -242,6 +242,9 @@ class roster_controller extends Controller
                             return redirect('/rosterAdmin')->with('error', $e->getMessage());
                         }
                     }
+                    else{
+                        continue;
+                    }
                 }
             }
     

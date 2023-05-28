@@ -71,6 +71,7 @@
                 <div style="display: flex; align-items: center; margin-left: 20px;">
                     <span style="margin-right: 10px;">From</span>
                     <select name="time_in[{{ $weekCounter }}][]" style="margin-right: 10px;" class="form-control">
+                                    <option value="" selected>Please Select</option>
                                     <option value="8">0800</option>
                                     <option value="9">0900</option>
                                     <option value="10">1000</option>
@@ -81,12 +82,13 @@
                                 <span style="color: red">@error("time_in.{$weekCounter}.{$index}"){{ $message }} @enderror</span>
                                 <span style="margin-right: 10px;">Until</span>
                                 <select name="time_out[{{ $weekCounter }}][]" style="margin-right: 10px;" class="form-control">
+                                    <option value="" selected>Please Select</option>
                                     <option value="13">1300</option>
                                     <option value="14">1400</option>
                                     <option value="15">1500</option>
                                     <option value="16">1600</option>
                                     <option value="17">1700</option>
-                                    <option value="18" selected>1800</option>
+                                    <option value="18">1800</option>
                                 </select>
                     <span style="color: red">@error("time_out.{$weekCounter}.{$index}"){{ $message }} @enderror</span>
                 </div>
