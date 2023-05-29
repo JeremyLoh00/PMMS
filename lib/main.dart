@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import 'screens/sign_in/sign_in_screen.dart';
+
 void main() {
   runApp(const MyApp());
 }
@@ -31,7 +33,8 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      home: const MyHomePage(title: 'Flutter Demo Home Page'),
+      debugShowCheckedModeBanner: false,
+      home: const SignInScreen(),
     );
   }
 }
