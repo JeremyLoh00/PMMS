@@ -63,8 +63,18 @@
                       {{$user2->phone_num}}
                     </td>
                     <td>
-                      <a href={{"edit_user/".$user2['id']}}><x-uni-pen-o style="width: 30px; height: 30px; color: #00A3D8;"/></a>
-                      <a href={{"edit_user/".$user2['id']}}><x-uni-trash-o style="width: 30px; height: 30px; color: red;"/></a>
+                      <div style="display: flex; align-items: center;">
+                        <a href="{{ 'edit_user/' . $user2['id'] }}"><x-uni-pen-o style="width: 30px; height: 30px; color: #00A3D8;" /></a>
+                        <form method="POST" action="{{ route('User.delete', $user2->id) }}">
+                            @csrf
+                           
+                            <input name="_method" type="hidden" value="DELETE">
+                            <button type="submit" style="background:white; border:none">
+                                <x-tabler-trash style="color: red" />
+                            </button>
+                        </form>
+                    </div>
+                    
                     </td>
                   </tr>
                    
@@ -104,5 +114,26 @@
       </div>
     </div>
   </div>
-
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.0/sweetalert.min.js"></script>
+  <script type="text/javascript">
+   
+       $('.show_confirm').click(function(event) {
+            var form =  $(this).closest("form");
+            var name = $(this).data("name");
+            event.preventDefault();
+            swal({
+                title: `Are you sure you want to delete this item?`,
+                text: "If you delete this, it will be gone forever.",
+                icon: "warning",
+                buttons: true,
+                dangerMode: true,
+            })
+            .then((willDelete) => {
+              if (willDelete) {
+                form.submit();
+              }
+            });
+        });
+    
+  </script>
 </html>

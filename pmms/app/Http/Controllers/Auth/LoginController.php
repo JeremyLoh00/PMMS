@@ -44,9 +44,7 @@ class LoginController extends Controller
         // dd($authenticatedUser);
         // dd($authenticatedUser->role);
         if ($authenticatedUser->role === 'Admin') {
-            return Redirect::to('/inventory')->with('message', 'Welcome, Admin!');
-        } elseif ($authenticatedUser->role === 'Cashier'||'Secretary'||'Treasurer'||'Coordinator') {
-            return redirect('/users');
+            return redirect('/inventory');
         } else {
             return redirect(RouteServiceProvider::HOME);
         }
