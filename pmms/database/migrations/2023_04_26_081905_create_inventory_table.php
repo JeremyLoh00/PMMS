@@ -15,10 +15,8 @@ class CreateInventoryTable extends Migration
     {
         Schema::create('inventories', function (Blueprint $table) {
                 $table->id() ;
-                $table->enum('name', 
-                ['Maggi', 'Massimo', 'Gardenia', 'Sandwich', 'Cake', ]);
-                $table->enum('category', 
-                ['Foods']);
+                $table->string('name');
+                $table->string('category');
                 $table->decimal('price', 8, 2);
                 $table->decimal('cost', 8, 2);
                 $table->integer('quantity');

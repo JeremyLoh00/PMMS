@@ -14,16 +14,8 @@ class InventoryFactory extends Factory
     public function definition()
     {
         return [
-            'name' => \Arr::random([
-                'Maggi',
-                'Massimo',
-                'Gardenia',
-                'Sandwich',
-                'Cake',
-            ]),
-            'category' => \Arr::random([
-                'Foods',
-            ]),
+            'name' => $this->faker->word(),
+            'category' => $this->faker->randomElement(['Food', 'Stationary', 'Drinks']),
             'cost' => $this->faker->randomDigit(),
             'price' => $this->faker->randomDigit(),
             'quantity' => $this->faker->randomDigit(),

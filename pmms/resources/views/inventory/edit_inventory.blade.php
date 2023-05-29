@@ -17,7 +17,7 @@
         <h3>
             Edit Inventory
         </h3>
-        <form action="/update/{{ $inventory->id }}" method="POST">
+        <form action="/update_inventory/{{ $inventory->id }}" method="POST">
             {!! csrf_field() !!}
             <div class="form-group">
                 <label for="formGroupExampleInput">Item name</label>
