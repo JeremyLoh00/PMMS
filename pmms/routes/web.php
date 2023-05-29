@@ -128,7 +128,7 @@ Route::post('/payment',[PaymentController::class,'proceedPayment'])->name('payme
 //Proceed to Refund
 Route::post('/refund',[PaymentController::class,'storePayment'])->name('payment.refund');
 
-//SCHEDULE
+//SCHEDULE sini
 //Access schedule page for admin by calling the func in controller
 Route::get('/rosterAdmin', [roster_controller::class, 'showlistadmin'])->name('rosterAdmin');
 
