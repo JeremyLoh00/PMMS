@@ -145,7 +145,7 @@ Route::get('/edit_schedule_time/{id}', [roster_controller::class, 'indexadmin'])
 Route::get('/rosterCommittee', [roster_controller::class, 'showlistcommittee']);
 
 // //Access update schedule time page by calling the func in controller
- Route::post('/update-schedule-page/{id}', [roster_controller::class, 'update']);
+Route::post('/update-schedule-page/{id}', [roster_controller::class, 'update']);
 
 //Access edit schedule  page by calling the func in controller
 Route::get('/edit_schedule_page', [roster_controller::class, 'indexcommittee']);
