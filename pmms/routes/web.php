@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\user_controller;
 use App\Http\Controllers\InventoryController;
+use App\Http\Controllers\roster_controller;
 use App\Http\Controllers\LogoutController;
 use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\CartController;
@@ -33,7 +34,7 @@ Route::get('/', function () {
 //  });
 
 Route::get('/schedule', function () {
-    return view('schedule');
+    return view('/roster/admin_schedule_page');
 });
 
 
@@ -125,6 +126,9 @@ Route::post('/payment',[PaymentController::class,'proceedPayment'])->name('payme
 //Proceed to Refund
 Route::post('/refund',[PaymentController::class,'storePayment'])->name('payment.refund');
 
+//SCHEDULE
+//Access schedule page for admin by calling the func in controller
+Route::get('/rosterAdmin', [roster_controller::class, 'showlistadmin'])->name('rosterAdmin');
 
 //Report
 //Access report in view and call index func in controller 

@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 use App\Models\Inventory;
+use App\Models\Roster;
 use App\Models\InventoryList;
 use Illuminate\Database\Seeder;
 
@@ -27,6 +28,7 @@ class DatabaseSeeder extends Seeder
         ]);
         
         Inventory::factory(10)->create();
+        Roster::factory(1)->create();
         // Inventory::create([
         //     'name' => 'Coca Cola',
         //     'category' => 'Drinks',

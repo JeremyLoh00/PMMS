@@ -8,6 +8,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
+use Illuminate\Support\Facades\Redirect;
 
 
 class LoginController extends Controller
@@ -38,12 +39,13 @@ class LoginController extends Controller
     protected function authenticated(Request $request, $user)
     {
         $authenticatedUser = Auth::user();
+        session(['role' => $authenticatedUser->role]);
     
         // dd($authenticatedUser);
         // dd($authenticatedUser->role);
         if ($authenticatedUser->role === 'Admin') {
-            return redirect('/inventory');
-        } elseif ($authenticatedUser->role === 'Cashier') {
+            return Redirect::to('/inventory')->with('message', 'Welcome, Admin!');
+        } elseif ($authenticatedUser->role === 'Cashier'||'Secretary'||'Treasurer'||'Coordinator') {
             return redirect('/users');
         } else {
             return redirect(RouteServiceProvider::HOME);
