@@ -103,7 +103,7 @@ Route::post('/login', [App\Http\Controllers\Auth\LoginController::class, 'login'
 Route::post('/logout', [App\Http\Controllers\Auth\LogoutController::class, 'logout'])->name('logout');
 
 
-//SCHEDULE
+//SCHEDULE sini
 //Access schedule page for admin by calling the func in controller
 Route::get('/rosterAdmin', [roster_controller::class, 'showlistadmin'])->name('rosterAdmin');
 
