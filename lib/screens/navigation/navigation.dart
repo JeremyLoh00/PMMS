@@ -6,6 +6,7 @@ import 'package:private_nurse_for_client/constant.dart';
 import 'package:private_nurse_for_client/helpers/general_method.dart';
 import 'package:private_nurse_for_client/public_components/space.dart';
 import 'package:private_nurse_for_client/screens/profile/profile_screen.dart';
+import 'package:private_nurse_for_client/screens/sign_in/sign_in_screen.dart';
 
 class Navigation extends StatefulWidget {
   const Navigation({super.key});
@@ -239,7 +240,10 @@ class _NavigationState extends State<Navigation> {
                 ),
                 ScaleTap(
                   onPressed: () {
-                    print("logout");
+                      
+                          Navigator.pop(context);
+                          navigateTo(context, SignInScreen());
+                        
                   },
                   child: Container(
                     padding: EdgeInsets.all(15),
@@ -309,7 +313,7 @@ class _NavigationState extends State<Navigation> {
             ),
             ScaleTap(
               onPressed: () {
-                // navigateTo(context, ProfileScreen());
+                navigateTo(context, ProfileScreen());
               },
               child: Padding(
                 padding: EdgeInsets.only(right: 15),
