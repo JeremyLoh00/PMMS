@@ -166,6 +166,46 @@ Route::post('/reports', [ReportController::class, 'reports'])->name('reports.rep
 
 
 
+// Routes middleware 
+Route::group(['middleware' => 'role:Admin'], function () {
+    // Your admin-only routes
+    //USERS
+    //redirect to view_user page
+    Route::get('/users', [user_controller::class, 'show']);
+
+    //Access add add_user page by calling the func in controller
+    Route::get('/add_user', [user_controller::class, 'create']);
+
+    //call store func in the controller to store data into database
+    Route::POST('/store', [user_controller::class, 'store']);
+
+    //Access edit inventory page by calling the func in controller
+    Route::get('/edit_user/{id}', [user_controller::class, 'index']);
+
+    //Access edit user page by calling the func in controller
+    Route::post('/update-user/{id}', [user_controller::class, 'update']);
+
+    //Access the function of delete inside con
+    Route::delete('/delete-user/{id}', [user_controller::class, 'delete'])->name('User.delete');
+});
+
+Route::group(['middleware' => 'role:Cashier'], function () {
+
+});
+
+Route::group(['middleware' => 'role:Secretary'], function () {
+
+});
+
+Route::group(['middleware' => 'role:Treasurer'], function () {
+
+});
+
+Route::group(['middleware' => 'role:Coordinator'], function () {
+
+});
+
+
 
 
 
