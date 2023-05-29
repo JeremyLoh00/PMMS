@@ -15,7 +15,7 @@
         <h3>
             Add Inventory
         </h3>
-        <form action="store" method="POST">
+        <form action="/store_inventory" method="POST">
             @csrf
             <div class="form-group">
                 <label for="formGroupExampleInput">Item name</label>
