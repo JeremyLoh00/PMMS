@@ -50,7 +50,7 @@
             Item List
         </h3>
         <div style="margin: 5px; padding: 5px;">
-            <form action="/search" method="GET">
+            <form action="/search_inventory" method="GET">
                 <input type="text" name="query" placeholder="Search..." value="{{ request('query') }}">
                 <button type="submit" style="width: 30px; height: 30px; border: none; background-color: white; bottom: 5%;">
                     <x-ri-search-line style="color: #98dde2" />

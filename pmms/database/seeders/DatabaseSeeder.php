@@ -17,16 +17,28 @@ class DatabaseSeeder extends Seeder
     public function run()
     {
         \App\Models\User::factory()->create(
-        [
-            'username' => "CB20182",
-            'name' => "AHMAD KHAIRUL IMAN BIN AHMAD SAYUTI",
-            'address' => "No19, jln teratai, tmn idaman, 48200 serendah selangor.",
-            'phone_num' => "0182617468",
-            'email' => "admin@admin.com",
-            'password' => bcrypt("admin1234"), // password
-            'role' => "Cashier",
-        ]);
-        
+            [
+                'username' => "CB20182",
+                'name' => "AHMAD KHAIRUL IMAN BIN AHMAD SAYUTI",
+                'address' => "No19, jln teratai, tmn idaman, 48200 serendah selangor.",
+                'phone_num' => "0182617468",
+                'email' => "admin@admin.com",
+                'password' => bcrypt("admin1234"), // password
+                'role' => "Admin",
+            ]
+        );
+        \App\Models\User::factory()->create(
+            [
+                'username' => "CB20184",
+                'name' => "AHMAD KHAIRUL IMAN ",
+                'address' => "No19, jln teratai, tmn idaman, 48200 serendah selangor.",
+                'phone_num' => "0182617441",
+                'email' => "cashier@cashier.com",
+                'password' => bcrypt("test1234"), // password
+                'role' => "Cashier",
+            ]
+        );
+
         Inventory::factory(10)->create();
         Roster::factory(1)->create();
         // Inventory::create([
@@ -46,6 +58,5 @@ class DatabaseSeeder extends Seeder
 
         $this->call(PaymentSeeder::class);
         $this->call(CartSeeder::class);
-        
     }
 }

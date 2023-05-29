@@ -47,29 +47,6 @@ Route::get('/schedule', function () {
 
 
 
-
-
-
-//USERS
-//redirect to view_user page
-Route::get('/users', [user_controller::class, 'show']);
-
-//Access add add_user page by calling the func in controller
-Route::get('/add_user', [user_controller::class, 'create']);
-
-//call store func in the controller to store data into database
-Route::POST('/store', [user_controller::class, 'store']);
-
-//Access edit inventory page by calling the func in controller
-Route::get('/edit_user/{id}', [user_controller::class, 'index']);
-
-//Access edit user page by calling the func in controller
-Route::post('/update-user/{id}', [user_controller::class, 'update']);
-
-//Access the function of delete inside con
-Route::delete('/delete-user/{id}', [user_controller::class, 'delete'])->name('User.delete');
-Auth::routes();
-
 // Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
 
@@ -123,14 +100,6 @@ Route::post('/roster/store', [roster_controller::class, 'store'])->name('roster/
 Route::get('/roster/filter', [roster_controller::class, 'filter'])->name('roster.filter');
 
 Route::delete('/roster-delete/{id}', [roster_controller::class, 'delete'])->name('delete');
-//Report
-//Access report in view and call index func in controller 
-Route::get('/reports', [ReportController::class, 'reports']);
-//Access report in view and call func in controller 
-Route::get('/searchReport', [ReportController::class, 'searchReport']);
-//get report select time period request
-Route::post('/reports', [ReportController::class, 'reports'])->name('reports.reports');
-
 
 
 
@@ -189,6 +158,14 @@ Route::group(['middleware' => 'role:Admin'], function () {
 
     //Access the function of delete inside con
     Route::delete('/delete/{id}', [InventoryController::class, 'delete'])->name('inventory.delete');
+
+    //Report
+    //Access report in view and call index func in controller 
+    Route::get('/reports', [ReportController::class, 'reports']);
+    //Access report in view and call func in controller 
+    Route::get('/searchReport', [ReportController::class, 'searchReport']);
+    //get report select time period request
+    Route::post('/reports', [ReportController::class, 'reports'])->name('reports.reports');
 });
 
 Route::group(['middleware' => 'role:Cashier'], function () {
