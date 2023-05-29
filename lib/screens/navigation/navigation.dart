@@ -240,10 +240,8 @@ class _NavigationState extends State<Navigation> {
                 ),
                 ScaleTap(
                   onPressed: () {
-                      
-                          Navigator.pop(context);
-                          navigateTo(context, SignInScreen());
-                        
+                    Navigator.pop(context);
+                    navigateTo(context, SignInScreen());
                   },
                   child: Container(
                     padding: EdgeInsets.all(15),
