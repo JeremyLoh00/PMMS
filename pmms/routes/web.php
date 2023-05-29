@@ -132,6 +132,29 @@ Route::post('/refund',[PaymentController::class,'storePayment'])->name('payment.
 //Access schedule page for admin by calling the func in controller
 Route::get('/rosterAdmin', [roster_controller::class, 'showlistadmin'])->name('rosterAdmin');
 
+//Access add schedule for both admin and committee by calling the func in controller
+Route::get('/add_schedule', [roster_controller::class, 'create']);
+
+//Access update schedule time page by calling the func in controller
+Route::post('/update-schedule-time/{id}', [roster_controller::class, 'update']);
+
+//Access edit schedule time page by calling the func in controller
+Route::get('/edit_schedule_time/{id}', [roster_controller::class, 'indexadmin']);
+
+//redirect to roster committee page
+Route::get('/rosterCommittee', [roster_controller::class, 'showlistcommittee']);
+
+// //Access update schedule time page by calling the func in controller
+ Route::post('/update-schedule-page/{id}', [roster_controller::class, 'update']);
+
+//Access edit schedule  page by calling the func in controller
+Route::get('/edit_schedule_page', [roster_controller::class, 'indexcommittee']);
+
+Route::post('/roster/store', [roster_controller::class, 'store'])->name('roster/store');
+
+Route::get('/roster/filter', [roster_controller::class, 'filter'])->name('roster.filter');
+
+Route::delete('/roster-delete/{id}', [roster_controller::class, 'delete'])->name('delete');
 //Report
 //Access report in view and call index func in controller 
 Route::get('/reports', [ReportController::class, 'reports']);
