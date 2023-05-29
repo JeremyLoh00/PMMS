@@ -50,52 +50,111 @@
         <h3>
             Report List
         </h3>
-        <div style="margin: 5px; padding: 5px;">
-            <form action="/searchReport" method="GET">
-                <input type="text" name="query" placeholder="Search" value="{{ request('query') }}">
-                <button type="submit" style="width: 30px; height: 30px; border: none; background-color: white; bottom: 5%;">
-                    <x-ri-search-line style="color: #98dde2" />
-                </button>
-            </form>
             
-        </div>
+            <div  style="margin: 5px; padding: 5px; display: flex; justify-content: space-between;" >
+            
+                
+                <form action="/searchReport" method="GET">
+                    <input type="text" name="query" placeholder="Search" value="{{ request('query') }}">
+                    <button type="submit" style="width: 30px; height: 30px; border: none; background-color: white; bottom: 5%;">
+                        <x-ri-search-line style="color: #98dde2" />
+                    </button>
+                </form>
+
+               
+
+                
+                <form id='selectDate' action="{{ route('reports.reports') }}" method="POST">
+                        @csrf
+                    <select name="filter" id="filterSelect" onchange="select()">
+                     
+                             <option id="selectText" value="selectText" hidden selected>{{ $selectText }}</option> 
+                            <option  value="Daily"  {{ old('filter')=='Daily' ? 'selected' : '' }}>Today</option>
+                            <option  value="weekly" {{ old('filter')=='weekly' ? 'selected' : '' }}>This Week</option>
+                            <option  value="monthly" {{ old('filter')=='monthly' ? 'selected' : '' }}>This Month</option>
+                            <option  value="yearly"  {{ old('filter')=='yearly' ? 'selected' : '' }}>This Year</option>
+                     
+                         
+                    </select>
+                   
+                </form>           
+                
+            </div>
+                  
+            <script>
+              
+
+                function select(){
+                    document.getElementById('selectDate').submit();
+
+
+                }
+    
+
+            </script>
+          
+      
 
         <table class="table">
-            <thead style="background-color: #98dde2">
-                <tr>
-                    <th scope="col">Item Name</th>
-                    <th scope="col">Category</th>
-                    <th scope="col">Profit Price</th>
-                    <th scope="col">Quantity Sold</th>
-                   
-                    <th scope="col">Quantity Sold Before</th>
-                    <th scope="col">Quantity Sold After</th>
-          
-                    <th scope="col">Profit Earned</th>
-                    <th scope="col"> </th>
-                </tr>
-            </thead>
-            <tbody>
-                @foreach ($data as $data)
-               
-                    <tr>
-                    <th scope="row"> {{ $data['cost']}}</th>
-                      
-                        
-                    </tr>
-                   
-                    @endforeach
-             
-            </tbody>
-            
-        </table>
-        {{ $data->links() }}
+			<thead style="background-color: #98dde2">
+				<tr>
+					<th scope="col">No.</th>
+					<th scope="col">Item Name</th>
+					<th scope="col">Category</th>
+					<th scope="col">Profit Price</th>
+					<th scope="col">Quantity Sold</th>
+
+					<th scope="col">Quantity Sold Before</th>
+					<th scope="col">Quantity Sold After</th>
+
+					<th scope="col">Profit Earned</th>
+					<th scope="col"> </th>
+				</tr>
+			</thead>
+			<tbody>
+				@php
+				$sum=0;
+				@endphp
+				@foreach ($items as $item)
+				@php
+				$itemSum = ($item->price - $item->cost) * $item->cart_quantity;
+				$sum += $itemSum;
+				@endphp
+				<tr>
+					<th>{{ $loop->iteration }}</th>
+					<td> {{ $item->name }}</td>
+					<td>{{ $item->category }}</td>
+					<td>{{ $item->price - $item->cost }}</td>
+					<td>{{ $item->cart_quantity }}</td>
+					<td>{{ $item->inventory_quantity  }}</td>
+					<td>{{ $item->inventory_quantity - $item->cart_quantity }}</td>
+					<td>{{ $itemSum }}</td>
+				</tr>
+				@endforeach
+				<tr>
+					<td colspan="7"></td>
+					<th>Sum: RM {{ $sum }}</th>
+                    
+				</tr>
+			</tbody>
+           
+		</table>
+        {{ $items->links() }}
         
+            
+            <h3 style="text-align: center">
+                Total Profit Earned: RM {{ $totalProfit }}
+            </h3>
+
       
     </div>
 
+ 
+   
+
    
 </body>
+
 
 
 </html>

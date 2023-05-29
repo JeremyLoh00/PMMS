@@ -1,6 +1,7 @@
 <?php
 
 use App\Models\Inventory;
+use App\Models\Cart;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\user_controller;
@@ -9,6 +10,7 @@ use App\Http\Controllers\roster_controller;
 use App\Http\Controllers\LogoutController;
 use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\CartController;
+use App\Http\Controllers\ReportController;
 
 /*
 |--------------------------------------------------------------------------
@@ -29,9 +31,9 @@ Route::get('/', function () {
 //     return view('inventory');
 // });
 
-//  Route::get('/report', function () {
-//     return view('report');
-//  });
+  Route::get('/reports', function () {
+     return view('reports');
+  });
 
 Route::get('/schedule', function () {
     return view('/roster/admin_schedule_page');
@@ -132,7 +134,16 @@ Route::get('/rosterAdmin', [roster_controller::class, 'showlistadmin'])->name('r
 
 //Report
 //Access report in view and call index func in controller 
-Route::get('/show', [ReportController::class, 'show']);
+Route::get('/reports', [ReportController::class, 'reports']);
 //Access report in view and call func in controller 
 Route::get('/searchReport', [ReportController::class, 'searchReport']);
-Route::get('/data', [ReportController::class, 'show']);
+//get report select time period request
+Route::post('/reports', [ReportController::class, 'reports'])->name('reports.reports');
+
+
+
+
+
+
+
+

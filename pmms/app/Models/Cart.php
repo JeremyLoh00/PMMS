@@ -11,7 +11,9 @@ class Cart extends Model
     protected $fillable = [
         'payment_id',
         'inventory_id',
-        'quantity'
+        'quantity',
+
+    
     ];
 
     public function payment()
@@ -23,6 +25,7 @@ class Cart extends Model
     {
         return $this->belongsTo(Inventory::class, 'inventory_id');
     }
+    
 
 
 

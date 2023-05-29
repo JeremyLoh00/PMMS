@@ -8,51 +8,108 @@ use App\Models\Payment;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Session;
+use Carbon\Carbon;
 
 class ReportController extends Controller
-{
-    function show(){
+{   
+    //main function
+    function reports(Request $request){
 
-        // $InventoryData = Inventory::paginate(10);
-        // $CartDate = Cart::paginate(10);
-        // $threshold = 5;
-  
-        $data = DB::table('inventories')->join('carts','inventories.id','=','carts.inventory_id')->get();
-  
-
-        $name = DB::table('inventories')->join('carts','inventories.id','=','carts.inventory_id')->select('name')->get();
-        $category = DB::table('inventories')->join('carts','inventories.id','=','carts.inventory_id')->select('category')->get();
-        $invQuantity = DB::table('inventories')->join('carts','inventories.id','=','carts.inventory_id')->select('inventories.quantity')->get();
-        $cartQuantity = DB::table('inventories')->join('carts','inventories.id','=','carts.inventory_id')->select('carts.quantity')->get();
         
-        $price = DB::table('inventories')->join('carts','inventories.id','=','carts.inventory_id')->select('inventories.price')->get();
-        $cost = DB::table('inventories')->join('carts','inventories.id','=','carts.inventory_id')->select('inventories.cost')->get();
-        
-        
-        //dd($InvQuantity);
-        // dd($profitPrice); 
-        //dd($data);
+        $filter = $request->input('filter');
       
+        $dateRange = $this->getDateRange($filter);
 
-        return view("report/report", ['data' => $data]);
-        //['inventory' => $InventoryData],['cart' => $CartDate]
-       // ['name' => $name],['category' => $category],['invQuantity' => $invQuantity],['cartQuantity' => $cartQuantity],['cartQuantity' => $cartQuantity],['price' => $price], ['cost' => $cost]  
+        $selectText = $dateRange['selectText'];
+        
+       
+        $items = DB::table('inventories')
+            ->join('carts', 'inventories.id', '=', 'carts.inventory_id')
+            ->select('inventories.quantity as inventory_quantity','carts.quantity as cart_quantity',
+            'inventories.name as name','inventories.category as category', 'inventories.cost as cost', 'inventories.price as price')
+            ->whereBetween('carts.created_at', [$dateRange['start'], $dateRange['end']])
+            ->paginate(8);
+
+        $total = DB::table('inventories')
+            ->join('carts', 'inventories.id', '=', 'carts.inventory_id')
+            ->select('inventories.quantity as inventory_quantity','carts.quantity as cart_quantity',
+            'inventories.name as name','inventories.category as category', 'inventories.cost as cost', 'inventories.price as price')
+            ->whereBetween('carts.created_at', [$dateRange['start'], $dateRange['end']])
+            ->get();
+
+        $totalProfit = 0;
+        foreach ($total as $total) {
+            $profitSum = ($total->price - $total->cost) * $total->cart_quantity;
+            $totalProfit += $profitSum;
+        }
+     
+        return view("report.report", ['items' => $items, 'totalProfit' => $totalProfit, 'selectText'=>$selectText ]);
+    
     }
 
-   
+    //search function of report list page
         function searchReport(Request $request)
     {
 
         $query = $request->input('query');
 
-        $data = Inventory::when($query, function ($queryBuilder) use ($query) {
+
+        $data = DB::table('inventories')->join('carts', 'inventories.id', '=', 'carts.inventory_id')->when($query, function ($queryBuilder) use ($query) {
             $queryBuilder->where('name', 'like', '%' . $query . '%')
                 ->orWhere('category', 'like', '%' . $query . '%');
         })
             ->paginate(10);
 
-        return view('inventory.inventory', ['inventory' => $data]);
+            
+        return view('report.report', ['items' => $data]);
+
+
+
+
     }
+
+    //gat the time range for the use selected
+    private function getDateRange($filter)
+    {
+        
+        $start = null;
+        $end = null;
+        $selectText= 'Today';
+
+        if($filter == 'Daily'){
+
+            $start = Carbon::now()->startOfDay();
+            $end= Carbon::now()->endOfDay();
+            $selectText ='Today';
+
+        }elseif ($filter == 'weekly') {
+
+            $start = Carbon::now()->startOfWeek();
+            $end= Carbon::now()->endOfWeek();
+            $selectText ='This Week';
+
+        } elseif ($filter == 'monthly') {
+
+            $start = Carbon::now()->startOfMonth();
+            $end=Carbon::now()->endOfMonth();
+            $selectText ='This Month';
+
+        } elseif ($filter == 'yearly') {
+
+            $start = Carbon::now()->startOfYear();
+            $end=Carbon::now()->endOfYear();
+            $selectText ='This Year';
+
+        }
+
+        return ['start' => $start, 'end' => $end, 'selectText'=>$selectText];
+    }
+
+   
+
+
+ 
+     
 
     
 }

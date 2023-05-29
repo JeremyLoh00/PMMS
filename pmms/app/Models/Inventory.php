@@ -16,4 +16,6 @@ class Inventory extends Model
             ->orWhere('category', 'like', '%'.request('search').'%');
         }
     }
+
+    
 }
