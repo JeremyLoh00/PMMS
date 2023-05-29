@@ -4,6 +4,7 @@ import 'package:flutter_scale_tap/flutter_scale_tap.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:private_nurse_for_client/constant.dart';
+import 'package:private_nurse_for_client/edit_profile/edit_profile_screen.dart';
 import 'package:private_nurse_for_client/helpers/general_method.dart';
 import 'package:private_nurse_for_client/public_components/space.dart';
 import 'package:private_nurse_for_client/public_components/theme_app_bar.dart';
@@ -29,11 +30,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
           padding: const EdgeInsets.only(right: 15),
           child: ScaleTap(
             onPressed: () {
-              // navigateTo(
-              //     context,
-              //     EditProfileScreen(
-              //       userModel: _userModel,
-              //     ));
+              navigateTo(context, EditProfileScreen());
             },
             child: const Icon(
               Iconsax.edit,
@@ -49,7 +46,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              verifiedRow(),
               profilePic(),
               Space(20),
               Text(
@@ -83,29 +79,10 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 sub: "123, Jalan Peramu Permai",
               ),
               profileInformation(
-                title: "Education",
-                icon: Icons.school,
-                sub: "Malaysia Nursing College",
-                description: "Degree in Nursing",
-              ),
-              profileInformation(
-                title: "Working",
-                icon: Icons.business_center,
-                sub: "Sri Kota Hospital",
-                description: "5 years",
-              ),
-              profileInformation(
                 title: "Bank Information",
                 icon: Iconsax.bank,
                 sub: "Maybank",
                 description: "3454623454564",
-              ),
-              profileInformation(
-                title: "Emergency Contact",
-                icon: Icons.person,
-                sub: "Ali",
-                relation: "father",
-                description: "012-2343543254",
               ),
             ],
           ),
@@ -211,40 +188,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
           errorWidget: (context, url, error) => const Icon(Icons.error),
         ),
       ),
-    );
-  }
-
-  Row verifiedRow() {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.end,
-      children: [
-        Container(
-          padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 2),
-          decoration: BoxDecoration(
-            color: kPrimaryColor,
-            borderRadius: BorderRadius.circular(10),
-          ),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: const [
-              Icon(
-                Icons.check,
-                color: kWhite,
-                size: 18,
-              ),
-              SizedBox(width: 5),
-              Text(
-                "Verified",
-                style: TextStyle(
-                  color: kWhite,
-                  fontSize: 12,
-                  fontWeight: FontWeight.w500,
-                ),
-              )
-            ],
-          ),
-        )
-      ],
     );
   }
 }
