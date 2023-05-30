@@ -1,4 +1,5 @@
 <?php
+<<<<<<< Updated upstream
 
 use App\Models\Inventory;
 use Illuminate\Support\Facades\Auth;
@@ -6,6 +7,21 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\user_controller;
 use App\Http\Controllers\InventoryController;
 use App\Http\Controllers\LogoutController;
+=======
+use App\Models\Cart;
+use App\Models\Inventory;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Route;
+
+use App\Http\Controllers\CartController;
+use Illuminate\Support\Facades\Redirect;
+use App\Http\Controllers\user_controller;
+use App\Http\Controllers\LogoutController;
+use App\Http\Controllers\ReportController;
+use App\Http\Controllers\PaymentController;
+use App\Http\Controllers\roster_controller;
+use App\Http\Controllers\InventoryController;
+>>>>>>> Stashed changes
 
 /*
 |--------------------------------------------------------------------------
