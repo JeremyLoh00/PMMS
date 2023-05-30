@@ -23,9 +23,9 @@ use App\Http\Controllers\ReportController;
 |
 */
 
-Route::get('/', function () {
-    return Redirect::to('login');
-});
+// Route::get('/', function () {
+//     return Redirect::to('login');
+// });
 
 // Route::get('/inventory', function () {
 //     return view('inventory');
@@ -52,8 +52,8 @@ Route::get('/schedule', function () {
 
 //LOGIN
 
-Route::post('/login', [App\Http\Controllers\Auth\LoginController::class, 'login'])->name('login');
-
+Route::get('/login', [App\Http\Controllers\Auth\LoginController::class, 'showLoginForm'])->name('login');
+Route::post('/login', [App\Http\Controllers\Auth\LoginController::class, 'login']);
 Route::post('/logout', [App\Http\Controllers\Auth\LogoutController::class, 'logout'])->name('logout');
 
 //PAYMENT & CART
