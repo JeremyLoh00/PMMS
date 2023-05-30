@@ -27,14 +27,20 @@
     <nav class="navbar navbar-expand-lg navbar-light bg-light" style="background-color: white; box-shadow: 3px 9px rgba(0, 0, 0, 0.02);">
         <div class="collapse navbar-collapse" id="navbarText">
           <ul class="navbar-nav mr-auto">
-            <li class="nav-item active">
+            <li class="nav-item ">
                 {{-- <x-polaris-major-inventory style="color: black"/> --}}
-                <span><a class="nav-link" href="/inventory" >Inventory</a></span>
+                <span><a class="nav-link active" href="/inventory" style="color: #00A3D8">Inventory</a></span>
             </li>
-            <li class="nav-item" >
-                <a class="flex-sm-fill text-sm-center nav-link" href="/schedule">Schedule</a>            </li>
+            
             <li class="nav-item">
-                <a class="flex-sm-fill text-sm-center nav-link active" style="color: #00A3D8" href="/reports">Sales Report</a>
+            @if (session('role') === 'Admin')
+            <a class="flex-sm-fill text-sm-center nav-link " href="/rosterAdmin">Schedule</a>
+            @else 
+            <a class="flex-sm-fill text-sm-center nav-link " href="/rosterCommittee">Schedule</a>
+            @endif         
+         </li>
+            <li class="nav-item ">
+                <a class="flex-sm-fill text-sm-center nav-link active" href="/reports">Sales Report</a>
             </li>
             <li class="nav-item">
                 <a class="flex-sm-fill text-sm-center nav-link" href="/cart">Payment</a>
@@ -43,9 +49,10 @@
                 <a class="flex-sm-fill text-sm-center nav-link" href="/users">User Registration</a>
             </li>
           </ul>
-          <span class="navbar-text">
-            Logout
-          </span>
+          <form action="/logout" method="POST" >
+            @csrf
+          <button type="submit" class="btn btn-link black" style="color:grey;">Logout</button>
+        </form>
         </div>
       </nav>
     {{-- <nav class="navbar navbar-light flex-column flex-sm-row" style="background-color: #e3f2fd;">

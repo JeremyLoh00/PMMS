@@ -16,20 +16,14 @@ class UserTypeMiddleware
      */
     public function handle(Request $request, Closure $next, $role)
     {
-        if (!auth()->check()) {
-            return redirect('/login');
-        }
 
         // Check if the user's role matches the allowed role
-        if (auth()->user()->role !== $role) {
-            // Unauthorized: Show popup message
-            echo "<script>
-                      alert('Unauthorized user');
-                      window.location.href = '/login'; // Redirect to login page
-                  </script>";
-            exit;
+        if (auth()->check() && auth()->user()->role === $role) {
+            return $next($request);
         }
-
-        return $next($request);
+    
+        session()->flash('message', 'Unauthorized user');
+        return redirect('/inventory');
+  
     }
 }
