@@ -49,7 +49,7 @@
                     </div>
                     <div class="col-4">
                         <select class="form-control" name="month" id="monthSelect">
-                            <option selected>Choose Month</option>
+                            <option value="Choose Month"selected>Choose Month</option>
                             <option value="January">January</option>
                             <option value="February">February</option>
                             <option value="March">March</option>
@@ -159,25 +159,32 @@
     </div>
   </div>
   <script>
-    // Get the select element
-    const monthSelect = document.getElementById('monthSelect');
-    // Get the link element
-    const scheduleLink = document.getElementById('scheduleLink');
+const monthSelect = document.getElementById('monthSelect');
+const scheduleLink = document.getElementById('scheduleLink');
 
-    // Add an event listener to the select element
-
-  monthSelect.addEventListener('change', function() {
-    // Get the selected month value
-    const selectedMonth = monthSelect.value;
-    if (selectedMonth = null){
-        alert("monthSelect is null!");
+scheduleLink.addEventListener('click', function(event) {
+    event.preventDefault(); // Prevent the default link behavior
+    
+    const href = scheduleLink.getAttribute('href');
+    
+    if (href === '#') {
+        // Display the popup
+        alert('Please Select Month First!');
+    } else {
+        // Redirect to the specified href
+        window.location.href = href;
     }
-    else {
+});
+
+
+monthSelect.addEventListener('change', function() {
+    const selectedMonth = monthSelect.value;
+
         // Update the href attribute of the link with the selected month value
         scheduleLink.href = "/add_schedule?month=" + selectedMonth;
-    }
-    
-  });
+   
+});
+
 
 
 </script>
