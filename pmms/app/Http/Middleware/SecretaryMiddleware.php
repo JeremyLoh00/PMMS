@@ -5,7 +5,7 @@ namespace App\Http\Middleware;
 use Closure;
 use Illuminate\Http\Request;
 
-class UserTypeMiddleware
+class SecretaryMiddleware
 {
     /**
      * Handle an incoming request.
@@ -14,16 +14,14 @@ class UserTypeMiddleware
      * @param  \Closure(\Illuminate\Http\Request): (\Illuminate\Http\Response|\Illuminate\Http\RedirectResponse)  $next
      * @return \Illuminate\Http\Response|\Illuminate\Http\RedirectResponse
      */
-    public function handle(Request $request, Closure $next, $role)
+    public function handle(Request $request, Closure $next)
     {
+        $userRole = $request->user()->role;
 
-        // Check if the user's role matches the allowed role
-        if (auth()->check() && auth()->user()->role === $role) {
+        if ($userRole === 'Secretary' || $userRole === 'Treasurer' || $userRole === 'Coordinator') {
             return $next($request);
         }
-    
-        session()->flash('message', 'Unauthorized user');
-        return redirect('/inventory');
-  
+        
+        return redirect('/'); 
     }
 }
