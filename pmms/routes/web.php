@@ -12,6 +12,7 @@ use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\ReportController;
 use Illuminate\Support\Facades\Redirect;
+use App\Http\Middleware\UserAuthorizedMiddleware;
 
 /*
 |--------------------------------------------------------------------------
@@ -27,12 +28,16 @@ use Illuminate\Support\Facades\Redirect;
 // Route::get('/', function () {
 //     return Redirect::to('login');
 // });
+//LOGIN
 
-// Routes accessible to Admin
-Route::group(['middleware' => 'admin'], function () {
+Route::get('/login', [App\Http\Controllers\Auth\LoginController::class, 'showLoginForm'])->name('login');
+Route::post('/login', [App\Http\Controllers\Auth\LoginController::class, 'login']);
+Route::post('/logout', [App\Http\Controllers\Auth\LogoutController::class, 'logout'])->name('logout');
+
+Route::group(['middleware' => ['auth', 'user.authorized:Admin']], function () {
     // Define routes here
      // Your admin-only routes
- //USERS
+    //USERS
     //redirect to view_user page
     Route::get('/users', [user_controller::class, 'show']);
     //Access add add_user page by calling the func in controller
@@ -97,7 +102,8 @@ Route::group(['middleware' => 'admin'], function () {
     //get report select time period request
     Route::post('/reports', [ReportController::class, 'reports'])->name('reports.reports'); 
 });
-Route::group(['middleware' => 'secretary'], function () {
+Route::group(['middleware' => ['auth', 'user.authorized:Secretary,Coordinator,Treasurer']], function () {
+//secretary,coordinator,
     // Define routes here
     Route::get('/inventory', [InventoryController::class, 'Index']);
     //Access inventory in view and call index func in controller 
@@ -143,10 +149,16 @@ Route::group(['middleware' => 'secretary'], function () {
     Route::post('/reports', [ReportController::class, 'reports'])->name('reports.reports');
 });
 
+// Routes accessible to Admin
+
+
+
+
+
 
 
 // Routes accessible to Cashier
-Route::group(['middleware' => 'cashier'], function () {
+Route::group(['middleware' => ['auth', 'user.authorized:Cashier']], function () {
     // Define routes here
      //INVENTORY
     //Access inventory in view and call index func in controller 
@@ -206,10 +218,6 @@ Route::group(['middleware' => 'cashier'], function () {
     Route::delete('/roster-delete/{id}', [roster_controller::class, 'delete'])->name('delete');
 });
 
-//LOGIN
 
-Route::get('/login', [App\Http\Controllers\Auth\LoginController::class, 'showLoginForm'])->name('login');
-Route::post('/login', [App\Http\Controllers\Auth\LoginController::class, 'login']);
-Route::post('/logout', [App\Http\Controllers\Auth\LogoutController::class, 'logout'])->name('logout');
 
 
