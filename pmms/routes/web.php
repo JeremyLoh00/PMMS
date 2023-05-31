@@ -25,16 +25,16 @@ use App\Http\Middleware\UserAuthorizedMiddleware;
 |
 */
 
-// Route::get('/', function () {
-//     return Redirect::to('login');
-// });
+Route::get('/', function () {
+    return Redirect::to('login');
+});
 //LOGIN
 
 Route::get('/login', [App\Http\Controllers\Auth\LoginController::class, 'showLoginForm'])->name('login');
 Route::post('/login', [App\Http\Controllers\Auth\LoginController::class, 'login']);
 Route::post('/logout', [App\Http\Controllers\Auth\LogoutController::class, 'logout'])->name('logout');
 
-Route::group(['middleware' => ['auth', 'user.authorized:Admin']], function () {
+ Route::group(['middleware' => ['user.authorized:Admin']], function () {
     // Define routes here
      // Your admin-only routes
     //USERS
@@ -102,52 +102,7 @@ Route::group(['middleware' => ['auth', 'user.authorized:Admin']], function () {
     //get report select time period request
     Route::post('/reports', [ReportController::class, 'reports'])->name('reports.reports'); 
 });
-Route::group(['middleware' => ['auth', 'user.authorized:Secretary,Coordinator,Treasurer']], function () {
-//secretary,coordinator,
-    // Define routes here
-    Route::get('/inventory', [InventoryController::class, 'Index']);
-    //Access inventory in view and call index func in controller 
-    Route::get('/search_inventory', [InventoryController::class, 'search']);
-    //Access add inventory page by calling the func in controller
-    Route::get('/add_inventory', [InventoryController::class, 'Create']);
-    //call store func in the controller to store data into database
-    Route::POST('/store_inventory', [InventoryController::class, 'Store']);
-    //Access edit inventory page by calling the func in controller
-    Route::get('/edit_inventory/{id}', [InventoryController::class, 'Edit']);
-    //Access edit inventory page by calling the func in controller
-    Route::post('/update_inventory/{id}', [InventoryController::class, 'Update']);
-    //Access add stock page by calling the func in controller
-    Route::get('/add_stock/{id}', [InventoryController::class, 'Add']);
-    //Access add stock update func by calling the func in controller
-    Route::post('/increment/{id}', [InventoryController::class, 'Increment']);
-    //Access deduct stock page by calling the func in controller
-    Route::get('/deduct_stock/{id}', [InventoryController::class, 'Deduct']);
-    //Access deduct stock func by calling the func in controller
-    Route::post('/decrement/{id}', [InventoryController::class, 'Decrement']);
-    //Access the function of delete inside con
-    Route::delete('/delete/{id}', [InventoryController::class, 'delete'])->name('inventory.delete');
-    
-    //Schedule
-    //redirect to roster committee page
-    Route::get('/rosterCommittee', [roster_controller::class, 'showlistcommittee']);
-    // //Access update schedule page by calling the func in controller for committee
-    Route::post('/update-schedule-page/{id}', [roster_controller::class, 'update']);
-    //Access edit schedule  page by calling the func in controller for committee
-    Route::get('/edit_schedule_page', [roster_controller::class, 'indexcommittee']);
-    //Access add schedule for both admin and committee by calling the func in controller
-    Route::get('/add_schedule', [roster_controller::class, 'create']);
-    Route::post('/roster/store', [roster_controller::class, 'store'])->name('roster/store');
-    Route::get('/roster/filter', [roster_controller::class, 'filter'])->name('roster.filter');
-    Route::delete('/roster-delete/{id}', [roster_controller::class, 'delete'])->name('delete');
 
-    //Report
-    //Access report in view and call index func in controller 
-    Route::get('/reports', [ReportController::class, 'reports']);
-    //Access report in view and call func in controller 
-    Route::get('/searchReport', [ReportController::class, 'searchReport']);
-    //get report select time period request
-    Route::post('/reports', [ReportController::class, 'reports'])->name('reports.reports');
-});
 
 // Routes accessible to Admin
 
@@ -216,6 +171,53 @@ Route::group(['middleware' => ['auth', 'user.authorized:Cashier']], function () 
     Route::get('/roster/filter', [roster_controller::class, 'filter'])->name('roster.filter');
     //Access delete for both admin and committee by calling the func in controller
     Route::delete('/roster-delete/{id}', [roster_controller::class, 'delete'])->name('delete');
+});
+
+ Route::group(['middleware' => ['user.authorized:Secretary,Coordinator,Treasurer']], function () {
+//secretary,coordinator,
+    // Define routes here
+    Route::get('/inventory', [InventoryController::class, 'Index']);
+    //Access inventory in view and call index func in controller 
+    Route::get('/search_inventory', [InventoryController::class, 'search']);
+    //Access add inventory page by calling the func in controller
+    Route::get('/add_inventory', [InventoryController::class, 'Create']);
+    //call store func in the controller to store data into database
+    Route::POST('/store_inventory', [InventoryController::class, 'Store']);
+    //Access edit inventory page by calling the func in controller
+    Route::get('/edit_inventory/{id}', [InventoryController::class, 'Edit']);
+    //Access edit inventory page by calling the func in controller
+    Route::post('/update_inventory/{id}', [InventoryController::class, 'Update']);
+    //Access add stock page by calling the func in controller
+    Route::get('/add_stock/{id}', [InventoryController::class, 'Add']);
+    //Access add stock update func by calling the func in controller
+    Route::post('/increment/{id}', [InventoryController::class, 'Increment']);
+    //Access deduct stock page by calling the func in controller
+    Route::get('/deduct_stock/{id}', [InventoryController::class, 'Deduct']);
+    //Access deduct stock func by calling the func in controller
+    Route::post('/decrement/{id}', [InventoryController::class, 'Decrement']);
+    //Access the function of delete inside con
+    Route::delete('/delete/{id}', [InventoryController::class, 'delete'])->name('inventory.delete');
+    
+    //Schedule
+    //redirect to roster committee page
+    Route::get('/rosterCommittee', [roster_controller::class, 'showlistcommittee']);
+    // //Access update schedule page by calling the func in controller for committee
+    Route::post('/update-schedule-page/{id}', [roster_controller::class, 'update']);
+    //Access edit schedule  page by calling the func in controller for committee
+    Route::get('/edit_schedule_page', [roster_controller::class, 'indexcommittee']);
+    //Access add schedule for both admin and committee by calling the func in controller
+    Route::get('/add_schedule', [roster_controller::class, 'create']);
+    Route::post('/roster/store', [roster_controller::class, 'store'])->name('roster/store');
+    Route::get('/roster/filter', [roster_controller::class, 'filter'])->name('roster.filter');
+    Route::delete('/roster-delete/{id}', [roster_controller::class, 'delete'])->name('delete');
+
+    //Report
+    //Access report in view and call index func in controller 
+    Route::get('/reports', [ReportController::class, 'reports']);
+    //Access report in view and call func in controller 
+    Route::get('/searchReport', [ReportController::class, 'searchReport']);
+    //get report select time period request
+    Route::post('/reports', [ReportController::class, 'reports'])->name('reports.reports');
 });
 
 
