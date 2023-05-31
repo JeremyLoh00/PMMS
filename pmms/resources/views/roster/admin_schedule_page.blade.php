@@ -165,12 +165,21 @@
     const scheduleLink = document.getElementById('scheduleLink');
 
     // Add an event listener to the select element
-    monthSelect.addEventListener('change', function() {
-        // Get the selected month value
-        const selectedMonth = monthSelect.value;
+
+  monthSelect.addEventListener('change', function() {
+    // Get the selected month value
+    const selectedMonth = monthSelect.value;
+    if (selectedMonth = null){
+        alert("monthSelect is null!");
+    }
+    else {
         // Update the href attribute of the link with the selected month value
         scheduleLink.href = "/add_schedule?month=" + selectedMonth;
-    });
+    }
+    
+  });
+
+
 </script>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.0/sweetalert.min.js"></script>
