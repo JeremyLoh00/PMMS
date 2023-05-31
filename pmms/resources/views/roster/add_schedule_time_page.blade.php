@@ -38,8 +38,10 @@
                                     <option value="4">4</option>
                                     <option value="5">5</option>
                                 </select>
+    
                                 <span style="color: red">@error('week'){{ $message }} @enderror</span>
                             </div>
+
                         </td>
                         <td></td>
                     </tr>
@@ -52,7 +54,8 @@
             @foreach ($dates as $index => $date)
             @if ($index % 7 === 0)
                 <div class="week-container" data-week="{{ $weekCounter }}" @if ($weekCounter !== 1) style="display: none" @endif>
-                    Week {{ $weekCounter }}:<br>
+                <span style="color: red">Your input will be automatically saved once you have entered the time.</span><br>    
+                Week {{ $weekCounter }}:<br>
                     @php
                         $weekCounter++;
                     @endphp

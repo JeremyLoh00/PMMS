@@ -39,7 +39,7 @@ class UserAuthorizedMiddleware
         $popupScript = "
             <script>
                 alert('Unauthorized access. You are not allowed to access this page.');
-                window.location.href = '/'; // Redirect to home page or any other appropriate page
+                history.back(); // This will navigate the user back to the previous page.
             </script>
         ";
 
