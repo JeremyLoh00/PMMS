@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\Inventory;
 use App\Models\Cart;
 use App\Models\Payment;
-
+use Illuminate\Support\Facades\Session;
 
 class PaymentController extends Controller
 {
@@ -45,7 +45,8 @@ class PaymentController extends Controller
             $checkItem->quantity++;
             $checkItem->save();
         } else 
-        //Check the item is exist in inventory or not
+        {
+            //Check the item is exist in inventory or not
         $checkInventory = Inventory::where('id', '=', $request->item)->first();
         if ($checkInventory) {
             //If the item is exist in the inventory and not exist in the cart, add the item into cart
@@ -53,7 +54,8 @@ class PaymentController extends Controller
             $cart->inventory_id = $request->item;
             $cart->quantity = 1;
             $cart->save();
-        } 
+            }
+        }
         
         return redirect()->route('cart');
     }
@@ -109,10 +111,20 @@ class PaymentController extends Controller
     }
 
     //Proceed to payment page
-    public function proceedPayment(REQUEST $request)
+    public function proceedPayment()
     {
-        $amount = $request->amount;
-        return view('payment.payment', compact('amount'));
+        $carts = Cart::join('inventories', 'carts.inventory_id', '=', 'inventories.id')
+            ->select('carts.*', 'inventories.name','inventories.category', 'inventories.price')
+            ->where('carts.payment_id', '=',null)
+            ->get();
+        //Get the total price of the cart
+        $carts->each(function ($cart) {
+            $cart->total = $cart->price * $cart->quantity;
+        });
+        //Calculate the total amount of the carts
+        $amount = $carts->sum('total');
+
+        return view ('payment.payment', compact('carts','amount'));
     }
 
     //Store the payment data into database
@@ -121,7 +133,8 @@ class PaymentController extends Controller
         $amountPaid = floatval($request->answer);
         //Check the amount paid is more than the total amount of the cart
         if ($request->answer < $request->amount) {
-            session()->flash('error', 'The amount paid is not enough!');
+            //using session error to display the error message
+            return redirect()->route('payment')->with('error', 'Amount Paid is not enough!');
         }
         //Get the cart data from database
         $carts = Cart::join('inventories', 'carts.inventory_id', '=', 'inventories.id')

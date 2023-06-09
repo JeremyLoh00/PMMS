@@ -25,10 +25,10 @@
     <div style="margin: 50px; background-color: white; padding: 30px; border-radius: 10px; box-shadow: 3px 9px rgba(0, 0, 0, 0.02);">
         <h3 style="text-align: center">Payment</h3>
         <br>
-            @if(session('error'))
-            <div class="alert alert-danger">
-                {{ session('error') }}
-            </div>
+            @if (session('error'))
+                <div class="alert alert-danger" style="text-align: center">
+                    {{ session('error') }}
+                </div>
         @endif
         <form action="{{ route('payment.refund') }}" method="post" id="proceedForm">
             @csrf

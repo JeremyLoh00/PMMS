@@ -153,6 +153,8 @@ Route::group(['middleware' => ['auth', 'user.authorized:Cashier']], function () 
     Route::delete('/cart', [PaymentController::class, 'destroyAll'])->name('cart.deleteAll');
     //Proceed to Payment
     Route::post('/payment', [PaymentController::class, 'proceedPayment'])->name('payment');
+    //Proceed to Payment
+    Route::get('/payment', [PaymentController::class, 'proceedPayment'])->name('payment.back');
     //Proceed to Refund
     Route::post('/refund', [PaymentController::class, 'storePayment'])->name('payment.refund');
 
