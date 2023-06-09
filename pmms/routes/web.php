@@ -1,4 +1,6 @@
 <?php
+<<<<<<< Updated upstream
+<<<<<<< Updated upstream
 
 use App\Models\Inventory;
 use App\Models\Cart;
@@ -8,6 +10,30 @@ use App\Http\Controllers\user_controller;
 use App\Http\Controllers\InventoryController;
 use App\Http\Controllers\roster_controller;
 use App\Http\Controllers\LogoutController;
+=======
+use App\Models\Cart;
+use App\Models\Inventory;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Route;
+
+=======
+use App\Models\Cart;
+use App\Models\Inventory;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Route;
+>>>>>>> Stashed changes
+use App\Http\Controllers\CartController;
+use Illuminate\Support\Facades\Redirect;
+use App\Http\Controllers\user_controller;
+use App\Http\Controllers\LogoutController;
+use App\Http\Controllers\ReportController;
+use App\Http\Controllers\PaymentController;
+use App\Http\Controllers\roster_controller;
+use App\Http\Controllers\InventoryController;
+<<<<<<< Updated upstream
+>>>>>>> Stashed changes
+=======
+>>>>>>> Stashed changes
 use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\ReportController;
@@ -23,9 +49,16 @@ use App\Http\Controllers\ReportController;
 |
 */
 
+<<<<<<< Updated upstream
 Route::get('/', function () {
     return Redirect::to('login');
 });
+=======
+// Route::get('/', function () {
+//     return redirect()->route('login');
+// });
+
+>>>>>>> Stashed changes
 
 // Route::get('/inventory', function () {
 //     return view('inventory');
@@ -52,7 +85,12 @@ Route::get('/schedule', function () {
 
 //LOGIN
 
-Route::post('/login', [App\Http\Controllers\Auth\LoginController::class, 'login'])->name('login');
+ //Route::post('/login', [App\Http\Controllers\Auth\LoginController::class, 'login'])->name('login');
+
+ Route::get('/login', [App\Http\Controllers\Auth\LoginController::class, 'showLoginForm'])->name('login');
+Route::post('/login', [App\Http\Controllers\Auth\LoginController::class, 'login']);
+
+//Route::match(['get', 'post'], '/login', [App\Http\Controllers\Auth\LoginController::class, 'login'])->name('login');
 
 Route::post('/logout', [App\Http\Controllers\Auth\LogoutController::class, 'logout'])->name('logout');
 
