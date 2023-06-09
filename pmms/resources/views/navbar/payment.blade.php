@@ -28,16 +28,22 @@
     <nav class="navbar navbar-expand-lg navbar-light bg-light" style="background-color: white; box-shadow: 3px 9px rgba(0, 0, 0, 0.02);">
         <div class="collapse navbar-collapse" id="navbarText">
           <ul class="navbar-nav mr-auto">
-            <li class="nav-item active">
+            <li class="nav-item ">
                 {{-- <x-polaris-major-inventory style="color: black"/> --}}
-                <span><a class="nav-link" href="/inventory">Inventory</a></span>
+                <span><a class="nav-link active" href="/inventory" style="color: #00A3D8">Inventory</a></span>
             </li>
+            
             <li class="nav-item">
-                <a class="flex-sm-fill text-sm-center nav-link" href="/schedule">Schedule</a>            </li>
+            @if (session('role') === 'Admin')
+            <a class="flex-sm-fill text-sm-center nav-link " href="/rosterAdmin">Schedule</a>
+            @else 
+            <a class="flex-sm-fill text-sm-center nav-link " href="/rosterCommittee">Schedule</a>
+            @endif         
+         </li>
             <li class="nav-item">
                 <a class="flex-sm-fill text-sm-center nav-link" href="/reports">Sales Report</a>
             </li>
-            <li class="nav-item">
+            <li class="nav-item ">
                 <a class="flex-sm-fill text-sm-center nav-link active" href="/cart">Payment</a>
             </li>
             <li class="nav-item">

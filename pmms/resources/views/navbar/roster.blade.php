@@ -25,42 +25,36 @@
     <div style="margin-bottom: 50px" >
     <!--Navigation bar-->
     <nav class="navbar navbar-expand-lg navbar-light bg-light" style="background-color: white; box-shadow: 3px 9px rgba(0, 0, 0, 0.02);">
-        <div class="collapse navbar-collapse" id="navbarText">
-          <ul class="navbar-nav mr-auto">
-            <li class="nav-item active">
-                {{-- <x-polaris-major-inventory style="color: black"/> --}}
-                <span><a class="nav-link " href="/inventory">Inventory</a></span>
-            </li>
-            <li class="nav-item">
-            @if (session('role') === 'Admin')
-            <a class="flex-sm-fill text-sm-center nav-link active" href="/rosterAdmin">Schedule</a>
-            @else 
-            <a class="flex-sm-fill text-sm-center nav-link active" href="/rosterCommittee">Schedule</a>
-            @endif
-                           </li>
-            <li class="nav-item">
-                <a class="flex-sm-fill text-sm-center nav-link" href="#">Sales Report</a>
-            </li>
-            <li class="nav-item">
-                <a class="flex-sm-fill text-sm-center nav-link" href="/payment">Payment</a>
-            </li>
-            <li class="nav-item">
-                <a class="flex-sm-fill text-sm-center nav-link" href="/users">User Registration</a>
-            </li>
-          </ul>
-          {{-- <span class="navbar-text">
-            <a href="/logout">Logout</a> 
-          </span> --}}
-
-          <form action="/logout" method="POST" >
-            @csrf
-            {{-- <span class="navbar-text">
-            Logout 
-          </span> --}}
-          <button type="submit" class="btn btn-link black" style="color:grey;">Logout</button>
-        </form>
-        </div>
-      </nav>
+      <div class="collapse navbar-collapse" id="navbarText">
+        <ul class="navbar-nav mr-auto">
+          <li class="nav-item active">
+              {{-- <x-polaris-major-inventory style="color: black"/> --}}
+              <span><a class="nav-link active" href="/inventory" style="color: #00A3D8">Inventory</a></span>
+          </li>
+          
+          <li class="nav-item">
+          @if (session('role') === 'Admin')
+          <a class="flex-sm-fill text-sm-center nav-link active" href="/rosterAdmin">Schedule</a>
+          @else 
+          <a class="flex-sm-fill text-sm-center nav-link active" href="/rosterCommittee">Schedule</a>
+          @endif         
+       </li>
+          <li class="nav-item">
+              <a class="flex-sm-fill text-sm-center nav-link" href="/reports">Sales Report</a>
+          </li>
+          <li class="nav-item">
+              <a class="flex-sm-fill text-sm-center nav-link" href="/cart">Payment</a>
+          </li>
+          <li class="nav-item">
+              <a class="flex-sm-fill text-sm-center nav-link" href="/users">User Registration</a>
+          </li>
+        </ul>
+        <form action="/logout" method="POST" >
+          @csrf
+        <button type="submit" class="btn btn-link black" style="color:grey;">Logout</button>
+      </form>
+      </div>
+    </nav>
     {{-- <nav class="navbar navbar-light flex-column flex-sm-row" style="background-color: #e3f2fd;">
         <a class="nav-link active" href="/inventory"><span><x-polaris-major-inventory class="h-1 w-1" style="color: green"/></span><span class="d-none d-md-inline">Inventory</span></a>
         <a class="flex-sm-fill text-sm-center nav-link" href="/schedule">Schedule</a>

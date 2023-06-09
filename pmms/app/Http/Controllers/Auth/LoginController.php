@@ -36,19 +36,18 @@ class LoginController extends Controller
     
 
 
-    protected function authenticated(Request $request, $user)
+    protected function authenticated()
     {
         $authenticatedUser = Auth::user();
         session(['role' => $authenticatedUser->role]);
-    
-        // dd($authenticatedUser);
-        // dd($authenticatedUser->role);
+        //dd($authenticatedUser->role);
         if ($authenticatedUser->role === 'Admin') {
-            return redirect('/inventory');
+            return redirect()->to('/inventory');
         } else {
-            return redirect(RouteServiceProvider::HOME);
+            return redirect()->to(RouteServiceProvider::HOME);
         }
     }
+    
 
     
     
@@ -62,5 +61,6 @@ class LoginController extends Controller
     public function __construct()
     {
         $this->middleware('guest')->except('logout');
+        session()->flush();
     }
 }

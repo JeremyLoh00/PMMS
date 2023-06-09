@@ -23,6 +23,21 @@
     
     <style>
     [x-cloak] { display: none !important; }
+    .card-header {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: white;
+    }
+
+    .card-header img {
+        width: 100px;
+        height: 100px;
+        margin-right: 10px;
+    }
+    body {
+        background-color: #98dde2;
+    }
     </style>
 </head>
 <body>
