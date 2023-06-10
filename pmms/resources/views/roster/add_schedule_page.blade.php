@@ -35,9 +35,9 @@
                            
                 <div style="display: flex; align-items: center;">
                 @if (session()->has('date2'))
-                    <input type="date" class="form-control" name="date2" style="margin-right: 10px;" value="{{ session('date2') }}">
+                    <input type="date" class="form-control" name="date2" style="margin-right: 10px;" value="{{ session('date2') }}" required>
                 @else
-                     <input type="date" class="form-control" name="date2" style="margin-right: 10px;">
+                     <input type="date" class="form-control" name="date2" style="margin-right: 10px;" required>
                 @endif
                 <!-- <input type="date" class="form-control" name="date2" style="margin-right: 10px;"> -->
                 <button type="submit" class="btn btn-primary" style="width: 130px; border-radius: 5px;">Check Date</button>
