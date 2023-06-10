@@ -20,12 +20,16 @@ class UserAuthorizedMiddleware
                 }
                 return $next($request);
             } elseif ($role === 'Cashier') {
-                if ($request->is('users')) {
+                if ($request->is('users','add_inventory','edit_inventory/*','add_stock/*','deduct_stock/*')) {
                     // Cashier-specific logic for the '/users' route
                     return $this->showUnauthorizedPopup();
                 }
                 return $next($request);
             } elseif (in_array($role, $roles)) {
+                if ($request->is('users','add_inventory','edit_inventory/*','add_stock/*','deduct_stock/*')) {
+                    // Cashier-specific logic for the '/users' route
+                    return $this->showUnauthorizedPopup();
+                }
                 return $next($request);
             }
         }
