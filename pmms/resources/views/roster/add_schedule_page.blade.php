@@ -7,10 +7,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <!--Add successfully alert-->
-    @if(session('message'))
-    <div class="alert alert-success">{{session('message')}}
-    <button type="button" class="close", data-dismiss="alert"><x-govicon-times style="color: black"/></button></div>
-    @endif
+    @if(isset($message))
+    <div class="alert alert-danger">{{ $message }}
+        <button type="button" class="close" data-dismiss="alert">
+            <x-govicon-times style="color: black"/>
+        </button>
+    </div>
+@endif
+
 
 </head>
 
@@ -35,9 +39,9 @@
                            
                 <div style="display: flex; align-items: center;">
                 @if (session()->has('date2'))
-                    <input type="date" class="form-control" name="date2" style="margin-right: 10px;" value="{{ session('date2') }}">
+                    <input type="date" class="form-control" name="date2" style="margin-right: 10px;" value="{{ session('date2') }}" required>
                 @else
-                     <input type="date" class="form-control" name="date2" style="margin-right: 10px;">
+                     <input type="date" class="form-control" name="date2" style="margin-right: 10px;" required>
                 @endif
                 <!-- <input type="date" class="form-control" name="date2" style="margin-right: 10px;"> -->
                 <button type="submit" class="btn btn-primary" style="width: 130px; border-radius: 5px;">Check Date</button>

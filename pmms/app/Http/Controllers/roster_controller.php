@@ -396,9 +396,14 @@ public function filter(Request $request)
        
 
         //dd($timeRangesFormatted);
-
+        if($slot == null){
+            $message = 'The schedule time for the date '.$date.' is not available yet.';
+            return view('roster.add_schedule_page', compact('schedule', 'user', 'date2', 'slot', 'message')); 
+        }else{
+            return view('roster.add_schedule_page', compact('schedule', 'user', 'date2', 'slot'));  
+        }
         //dd($timeRange);
-         return view('roster.add_schedule_page', compact('schedule', 'user', 'date2', 'slot'));        
+               
     }
     
    
