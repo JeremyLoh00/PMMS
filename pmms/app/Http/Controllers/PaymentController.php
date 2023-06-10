@@ -43,7 +43,7 @@ class PaymentController extends Controller
         if ($checkItem) {
             //If the inventory quantity is less than the cart quantity, return error message
             $checkQuantity = Inventory::where('id', '=', $request->item)->first();
-            if ($checkItem->quantity > $checkQuantity->quantity) {
+            if ($checkItem->quantity >= $checkQuantity->quantity) {
                 Session::flash('error', 'The quantity of the item is not enough!');
                 return redirect()->back();
             }
@@ -57,7 +57,7 @@ class PaymentController extends Controller
         if ($checkInventory) {
             //If the inventory quantity is less than the cart quantity, return error message
             $checkQuantity = Inventory::where('id', '=', $request->item)->first();
-            if ($checkItem->quantity > $checkQuantity->quantity) {
+            if ($checkItem->quantity >= $checkQuantity->quantity) {
                 Session::flash('error', 'The quantity of the item is not enough!');
                 return redirect()->back();
             }
