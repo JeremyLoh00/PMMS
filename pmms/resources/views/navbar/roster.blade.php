@@ -29,14 +29,14 @@
         <ul class="navbar-nav mr-auto">
           <li class="nav-item active">
               {{-- <x-polaris-major-inventory style="color: black"/> --}}
-              <span><a class="nav-link active" href="/inventory" style="color: #00A3D8">Inventory</a></span>
+              <span><a class="nav-link active" href="/inventory">Inventory</a></span>
           </li>
           
           <li class="nav-item">
           @if (session('role') === 'Admin')
-          <a class="flex-sm-fill text-sm-center nav-link active" href="/rosterAdmin">Schedule</a>
+          <a class="flex-sm-fill text-sm-center nav-link active" href="/rosterAdmin" style="color: #00A3D8">Schedule</a>
           @else 
-          <a class="flex-sm-fill text-sm-center nav-link active" href="/rosterCommittee">Schedule</a>
+          <a class="flex-sm-fill text-sm-center nav-link active" href="/rosterCommittee" style="color: #00A3D8">Schedule</a>
           @endif         
        </li>
           <li class="nav-item">
@@ -51,7 +51,7 @@
         </ul>
         <form action="/logout" method="POST" >
           @csrf
-        <button type="submit" class="btn btn-link black" style="color:grey;">Logout</button>
+        <button type="submit" class="btn btn-link black" style="color:red;">Logout</button>
       </form>
       </div>
     </nav>

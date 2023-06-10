@@ -18,7 +18,7 @@ class InventoryFactory extends Factory
             'category' => $this->faker->randomElement(['Food', 'Stationary', 'Drinks']),
             'cost' => $this->faker->randomFloat(2, 1, 10),
             'price' => $this->faker->randomFloat(2, 11, 20),
-            'quantity' => $this->faker->randomDigit(),
+            'quantity' => $this->faker->numberBetween(3, 20),
         ];
     }
 }

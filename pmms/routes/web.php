@@ -120,24 +120,24 @@ Route::group(['middleware' => ['auth', 'user.authorized:Cashier']], function () 
     Route::get('/inventory', [InventoryController::class, 'Index']);
     //Access inventory in view and call index func in controller 
     Route::get('/search_inventory', [InventoryController::class, 'search']);
-    //Access add inventory page by calling the func in controller
-    Route::get('/add_inventory', [InventoryController::class, 'Create']);
-    //call store func in the controller to store data into database
-    Route::POST('/store_inventory', [InventoryController::class, 'Store']);
-    //Access edit inventory page by calling the func in controller
-    Route::get('/edit_inventory/{id}', [InventoryController::class, 'Edit']);
-    //Access edit inventory page by calling the func in controller
-    Route::post('/update_inventory/{id}', [InventoryController::class, 'Update']);
-    //Access add stock page by calling the func in controller
-    Route::get('/add_stock/{id}', [InventoryController::class, 'Add']);
-    //Access add stock update func by calling the func in controller
-    Route::post('/increment/{id}', [InventoryController::class, 'Increment']);
-    //Access deduct stock page by calling the func in controller
-    Route::get('/deduct_stock/{id}', [InventoryController::class, 'Deduct']);
-    //Access deduct stock func by calling the func in controller
-    Route::post('/decrement/{id}', [InventoryController::class, 'Decrement']);
-    //Access the function of delete inside con
-    Route::delete('/delete/{id}', [InventoryController::class, 'delete'])->name('inventory.delete');
+    // //Access add inventory page by calling the func in controller
+    // Route::get('/add_inventory', [InventoryController::class, 'Create']);
+    // //call store func in the controller to store data into database
+    // Route::POST('/store_inventory', [InventoryController::class, 'Store']);
+    // //Access edit inventory page by calling the func in controller
+    // Route::get('/edit_inventory/{id}', [InventoryController::class, 'Edit']);
+    // //Access edit inventory page by calling the func in controller
+    // Route::post('/update_inventory/{id}', [InventoryController::class, 'Update']);
+    // //Access add stock page by calling the func in controller
+    // Route::get('/add_stock/{id}', [InventoryController::class, 'Add']);
+    // //Access add stock update func by calling the func in controller
+    // Route::post('/increment/{id}', [InventoryController::class, 'Increment']);
+    // //Access deduct stock page by calling the func in controller
+    // Route::get('/deduct_stock/{id}', [InventoryController::class, 'Deduct']);
+    // //Access deduct stock func by calling the func in controller
+    // Route::post('/decrement/{id}', [InventoryController::class, 'Decrement']);
+    // //Access the function of delete inside con
+    // Route::delete('/delete/{id}', [InventoryController::class, 'delete'])->name('inventory.delete');
 
     //PAYMENT & CART
     Route::get('/cart', [PaymentController::class, 'index'])->name('cart');
@@ -181,24 +181,7 @@ Route::group(['middleware' => ['auth', 'user.authorized:Cashier']], function () 
     Route::get('/inventory', [InventoryController::class, 'Index']);
     //Access inventory in view and call index func in controller 
     Route::get('/search_inventory', [InventoryController::class, 'search']);
-    //Access add inventory page by calling the func in controller
-    Route::get('/add_inventory', [InventoryController::class, 'Create']);
-    //call store func in the controller to store data into database
-    Route::POST('/store_inventory', [InventoryController::class, 'Store']);
-    //Access edit inventory page by calling the func in controller
-    Route::get('/edit_inventory/{id}', [InventoryController::class, 'Edit']);
-    //Access edit inventory page by calling the func in controller
-    Route::post('/update_inventory/{id}', [InventoryController::class, 'Update']);
-    //Access add stock page by calling the func in controller
-    Route::get('/add_stock/{id}', [InventoryController::class, 'Add']);
-    //Access add stock update func by calling the func in controller
-    Route::post('/increment/{id}', [InventoryController::class, 'Increment']);
-    //Access deduct stock page by calling the func in controller
-    Route::get('/deduct_stock/{id}', [InventoryController::class, 'Deduct']);
-    //Access deduct stock func by calling the func in controller
-    Route::post('/decrement/{id}', [InventoryController::class, 'Decrement']);
-    //Access the function of delete inside con
-    Route::delete('/delete/{id}', [InventoryController::class, 'delete'])->name('inventory.delete');
+    
     
     //Schedule
     //redirect to roster committee page

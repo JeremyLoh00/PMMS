@@ -29,7 +29,7 @@
           <ul class="navbar-nav mr-auto">
             <li class="nav-item ">
                 {{-- <x-polaris-major-inventory style="color: black"/> --}}
-                <span><a class="nav-link active" href="/inventory" style="color: #00A3D8">Inventory</a></span>
+                <span><a class="nav-link active" href="/inventory">Inventory</a></span>
             </li>
             
             <li class="nav-item">
@@ -40,7 +40,7 @@
             @endif         
          </li>
             <li class="nav-item ">
-                <a class="flex-sm-fill text-sm-center nav-link active" href="/reports">Sales Report</a>
+                <a class="flex-sm-fill text-sm-center nav-link active" href="/reports" style="color: #00A3D8">Sales Report</a>
             </li>
             <li class="nav-item">
                 <a class="flex-sm-fill text-sm-center nav-link" href="/cart">Payment</a>
@@ -51,7 +51,7 @@
           </ul>
           <form action="/logout" method="POST" >
             @csrf
-          <button type="submit" class="btn btn-link black" style="color:grey;">Logout</button>
+          <button type="submit" class="btn btn-link black" style="color:red;">Logout</button>
         </form>
         </div>
       </nav>

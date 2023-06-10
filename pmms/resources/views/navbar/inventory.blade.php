@@ -51,7 +51,7 @@
           </ul>
           <form action="/logout" method="POST" >
             @csrf
-          <button type="submit" class="btn btn-link black" style="color:grey;">Logout</button>
+          <button type="submit" class="btn btn-link black" style="color:red;">Logout</button>
         </form>
         </div>
       </nav>
