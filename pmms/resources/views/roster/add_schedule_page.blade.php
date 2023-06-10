@@ -7,10 +7,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <!--Add successfully alert-->
-    @if(session('message'))
-    <div class="alert alert-success">{{session('message')}}
-    <button type="button" class="close", data-dismiss="alert"><x-govicon-times style="color: black"/></button></div>
-    @endif
+    @if(isset($message))
+    <div class="alert alert-danger">{{ $message }}
+        <button type="button" class="close" data-dismiss="alert">
+            <x-govicon-times style="color: black"/>
+        </button>
+    </div>
+@endif
+
 
 </head>
 
