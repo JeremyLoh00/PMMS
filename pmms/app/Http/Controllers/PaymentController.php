@@ -41,6 +41,12 @@ class PaymentController extends Controller
             ->where('payment_id', '=', null)
             ->first();
         if ($checkItem) {
+            //If the inventory quantity is less than the cart quantity, return error message
+            $checkQuantity = Inventory::where('id', '=', $request->item)->first();
+            if ($checkItem->quantity > $checkQuantity->quantity) {
+                Session::flash('error', 'The quantity of the item is not enough!');
+                return redirect()->back();
+            }
             //If the item is exist, update the quantity
             $checkItem->quantity++;
             $checkItem->save();
@@ -49,6 +55,12 @@ class PaymentController extends Controller
             //Check the item is exist in inventory or not
         $checkInventory = Inventory::where('id', '=', $request->item)->first();
         if ($checkInventory) {
+            //If the inventory quantity is less than the cart quantity, return error message
+            $checkQuantity = Inventory::where('id', '=', $request->item)->first();
+            if ($checkItem->quantity > $checkQuantity->quantity) {
+                Session::flash('error', 'The quantity of the item is not enough!');
+                return redirect()->back();
+            }
             //If the item is exist in the inventory and not exist in the cart, add the item into cart
             $cart = new Cart();
             $cart->inventory_id = $request->item;
@@ -65,6 +77,12 @@ class PaymentController extends Controller
     {
         //Get the cart data from database
         $cart = Cart::find($id);
+        //If the inventory quantity is less than the cart quantity, return error message
+        $checkQuantity = Inventory::where('id', '=', $cart->inventory_id)->first();
+        if ($cart->quantity >= $checkQuantity->quantity) {
+            Session::flash('error', 'The quantity of the item is not enough!');
+            return redirect()->back();
+        }
         //Update the quantity
         $cart->quantity++;
         $cart->save();

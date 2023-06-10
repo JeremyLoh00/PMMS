@@ -14,7 +14,11 @@
         <h3 style="text-align:center">
             Cart
         </h3>
-        
+        @if (session('error'))
+                <div class="alert alert-danger" style="text-align: center">
+                    {{ session('error') }}
+                </div>
+        @endif
             <form action="{{ route('cart.add_item') }}" method="post">
                 @csrf
                 <div style="display:flex; justify-content:space-between ">
