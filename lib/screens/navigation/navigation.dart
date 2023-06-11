@@ -5,6 +5,7 @@ import 'package:iconsax/iconsax.dart';
 import 'package:private_nurse_for_client/constant.dart';
 import 'package:private_nurse_for_client/helpers/general_method.dart';
 import 'package:private_nurse_for_client/public_components/space.dart';
+import 'package:private_nurse_for_client/screens/dashboard/home_screen.dart';
 import 'package:private_nurse_for_client/screens/profile/profile_screen.dart';
 import 'package:private_nurse_for_client/screens/sign_in/sign_in_screen.dart';
 
@@ -461,7 +462,7 @@ class _NavigationState extends State<Navigation> {
   Widget _buildBody() {
     switch (_selectedIndex) {
       case 0:
-      // return HomeScreen();
+        return HomeScreen();
       case 1:
       // return ContactUsScreen();
       case 2:
