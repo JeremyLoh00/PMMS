@@ -141,3 +141,46 @@ Future<bool> showExitAppPopup(BuildContext context) async {
       // If show dialog return null, return false
       false;
 }
+
+
+// Popup if user want to cancel registration
+Future<bool> showCancelRegistrationPopup(BuildContext context) async {
+  // If cant pop then show this dialog
+  // Unfocus from input field
+  FocusScope.of(context).unfocus();
+  // Show dialog
+  return await CustomDialog.show(
+        context,
+        title: "Cancel Registration",
+        description: "Are you sure to cancel the registration?",
+        btnCancelText: "No",
+        btnOkText: "Yes",
+        btnCancelOnPress: () => Navigator.of(context).pop(),
+        btnOkOnPress: () => Navigator.of(context).pop(true),
+        icon: Iconsax.info_circle,
+        // dialogType: DialogType.warning,
+      ) ??
+      // If show dialog return null, return false
+      false;
+}
+
+// Popup if user want to cancel forgot password
+Future<bool> showCancelForgotPasswordPopup(BuildContext context) async {
+  // If cant pop then show this dialog
+  // Unfocus from input field
+  FocusScope.of(context).unfocus();
+  // Show dialog
+  return await CustomDialog.show(
+        context,
+        title: "Cancel Reset Password",
+        description: "Are you sure to cancel the reset password process?",
+        btnCancelText: "No",
+        btnOkText: "Yes",
+        btnCancelOnPress: () => Navigator.of(context).pop(),
+        btnOkOnPress: () => Navigator.of(context).pop(true),
+        icon: Iconsax.info_circle,
+        // dialogType: DialogType.warning,
+      ) ??
+      // If show dialog return null, return false
+      false;
+}

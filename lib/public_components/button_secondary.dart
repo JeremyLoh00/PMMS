@@ -54,11 +54,11 @@ class ButtonSecondary extends StatelessWidget {
           child: Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              icon == null ? SizedBox() : Icon(icon),
+              icon == null ? SizedBox() : Icon(icon, color: kPrimaryColor,),
               const SizedBox(
                 width: 5,
               ),
-              Text(text),
+              Text(text, style: TextStyle(color: kPrimaryColor),),
             ],
           ),
         ),

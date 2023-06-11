@@ -4,7 +4,9 @@ import 'package:iconsax/iconsax.dart';
 import 'package:private_nurse_for_client/constant.dart';
 import 'package:private_nurse_for_client/helpers/general_method.dart';
 import 'package:private_nurse_for_client/public_components/button_primary.dart';
+import 'package:private_nurse_for_client/screens/forgot_password/forgot_password_screen.dart';
 import 'package:private_nurse_for_client/screens/navigation/navigation.dart';
+import 'package:private_nurse_for_client/screens/sign_up/sign_up_screen.dart';
 
 class SignInScreen extends StatefulWidget {
   // static const routeName = '/sign-in-screen';
@@ -98,7 +100,7 @@ class _SignInScreenState extends State<SignInScreen> {
         ),
         ScaleTap(
           onPressed: () {
-            //navigateTo(context, ForgotPasswordScreen());
+            navigateTo(context, ForgotPasswordScreen());
           },
           child: Row(
             mainAxisAlignment: MainAxisAlignment.end,
@@ -142,7 +144,7 @@ class _SignInScreenState extends State<SignInScreen> {
               SizedBox(width: 0),
               GestureDetector(
                   onTap: () {
-                    // navigateTo(context, SignUpScreen());
+                    navigateTo(context, SignUpScreen());
                   },
                   child: Padding(
                     padding: const EdgeInsets.only(

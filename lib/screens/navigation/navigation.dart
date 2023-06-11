@@ -5,6 +5,8 @@ import 'package:iconsax/iconsax.dart';
 import 'package:private_nurse_for_client/constant.dart';
 import 'package:private_nurse_for_client/helpers/general_method.dart';
 import 'package:private_nurse_for_client/public_components/space.dart';
+import 'package:private_nurse_for_client/screens/about_us/about_us_screen.dart';
+import 'package:private_nurse_for_client/screens/contact_us/contact_us_screen.dart';
 import 'package:private_nurse_for_client/screens/dashboard/home_screen.dart';
 import 'package:private_nurse_for_client/screens/profile/profile_screen.dart';
 import 'package:private_nurse_for_client/screens/sign_in/sign_in_screen.dart';
@@ -155,6 +157,92 @@ class _NavigationState extends State<Navigation> {
                     setState(() {
                       Navigator.pop(context);
                       setState(() {
+                        _selectedIndex == 3;
+                      });
+                      _selectDrawerItem(3);
+                    });
+                  },
+                  child: Container(
+                    decoration: BoxDecoration(
+                      color: _selectedIndex == 3
+                          ? kPrimary100Color
+                          : Colors.transparent,
+                    ),
+                    width: double.infinity,
+                    child: Row(
+                      children: [
+                        Container(
+                          padding:
+                              EdgeInsets.symmetric(horizontal: 2, vertical: 25),
+                          decoration: BoxDecoration(
+                            color: _selectedIndex == 3 ? kPrimaryColor : kWhite,
+                            borderRadius: BorderRadius.circular(2),
+                          ),
+                        ),
+                        SizedBox(width: _selectedIndex == 3 ? 13 : 15),
+                        Icon(
+                          Icons.history_sharp,
+                          color: _selectedIndex == 3 ? kPrimaryColor : kGrey,
+                        ),
+                        SizedBox(width: 10),
+                        Text(
+                          "Nurse History",
+                          style: TextStyle(
+                            color: _selectedIndex == 3 ? kPrimaryColor : kGrey,
+                          ),
+                        )
+                      ],
+                    ),
+                  ),
+                ),
+                ScaleTap(
+                  onPressed: () {
+                    setState(() {
+                      Navigator.pop(context);
+                      setState(() {
+                        _selectedIndex == 4;
+                      });
+                      _selectDrawerItem(4);
+                    });
+                  },
+                  child: Container(
+                    decoration: BoxDecoration(
+                      color: _selectedIndex == 4
+                          ? kPrimary100Color
+                          : Colors.transparent,
+                    ),
+                    width: double.infinity,
+                    child: Row(
+                      children: [
+                        Container(
+                          padding:
+                              EdgeInsets.symmetric(horizontal: 4, vertical: 25),
+                          decoration: BoxDecoration(
+                            color: _selectedIndex == 4 ? kPrimaryColor : kWhite,
+                            borderRadius: BorderRadius.circular(2),
+                          ),
+                        ),
+                        SizedBox(width: _selectedIndex == 4 ? 13 : 15),
+                        Icon(
+                          Icons.subscriptions_outlined,
+                          color: _selectedIndex == 4 ? kPrimaryColor : kGrey,
+                        ),
+                        SizedBox(width: 10),
+                        Text(
+                          "Subscription",
+                          style: TextStyle(
+                            color: _selectedIndex == 4 ? kPrimaryColor : kGrey,
+                          ),
+                        )
+                      ],
+                    ),
+                  ),
+                ),
+                ScaleTap(
+                  onPressed: () {
+                    setState(() {
+                      Navigator.pop(context);
+                      setState(() {
                         _selectedIndex == 1;
                       });
                       _selectDrawerItem(1);
@@ -241,7 +329,7 @@ class _NavigationState extends State<Navigation> {
                 ),
                 ScaleTap(
                   onPressed: () {
-                    print("logout");
+                    Navigator.pop(context);
                     navigateTo(context, SignInScreen());
                   },
                   child: Container(
@@ -390,6 +478,52 @@ class _NavigationState extends State<Navigation> {
                     )),
           ),
         );
+      case 3:
+        // about us
+        return AppBar(
+          elevation: 0,
+          centerTitle: true,
+          title: Text(
+            "Nurse History",
+            style: TextStyle(
+              color: kWhite,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+          backgroundColor: Colors.transparent,
+          leading: Builder(
+            builder: (context) => // Ensure Scaffold is in context
+                ScaleTap(
+                    onPressed: () => Scaffold.of(context).openDrawer(),
+                    child: Icon(
+                      Icons.menu,
+                      color: kBlack,
+                    )),
+          ),
+        );
+      case 4:
+        // about us
+        return AppBar(
+          elevation: 0,
+          centerTitle: true,
+          title: Text(
+            "Subscription",
+            style: TextStyle(
+              color: kWhite,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+          backgroundColor: Colors.transparent,
+          leading: Builder(
+            builder: (context) => // Ensure Scaffold is in context
+                ScaleTap(
+                    onPressed: () => Scaffold.of(context).openDrawer(),
+                    child: Icon(
+                      Icons.menu,
+                      color: kBlack,
+                    )),
+          ),
+        );
       default:
         return AppBar(
           elevation: 0,
@@ -464,9 +598,13 @@ class _NavigationState extends State<Navigation> {
       case 0:
         return HomeScreen();
       case 1:
-      // return ContactUsScreen();
+        return ContactUsScreen();
       case 2:
-      //  return AboutUsScreen();
+        return AboutUsScreen();
+      case 3:
+      //  return NurseHistory();
+      case 4:
+      //  return Subscription();
       default:
         return Placeholder();
     }
