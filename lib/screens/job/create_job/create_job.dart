@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:private_nurse_for_client/constant.dart';
-import 'package:private_nurse_for_client/screens/create_job/components/create_job_header.dart';
+import 'package:private_nurse_for_client/screens/job/create_job/components/create_job_header.dart';
 
 class CreateJob extends StatefulWidget {
   const CreateJob({super.key});

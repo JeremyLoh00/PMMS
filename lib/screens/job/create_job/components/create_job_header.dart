@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:private_nurse_for_client/constant.dart';
-import 'package:private_nurse_for_client/screens/create_job/components/ceate_job_info.dart';
+import 'package:private_nurse_for_client/helpers/general_method.dart';
+import 'package:private_nurse_for_client/screens/job/create_job/components/ceate_job_info.dart';
+import 'package:private_nurse_for_client/screens/job/create_job/components/create_patient_info.dart';
+import 'package:private_nurse_for_client/screens/job/create_job/components/create_service_info.dart';
+import 'package:private_nurse_for_client/screens/job/payment/payment.dart';
 
 class CreateJobHeader extends StatefulWidget {
   const CreateJobHeader({super.key});
@@ -24,7 +28,7 @@ class _CreateJobHeaderState extends State<CreateJobHeader> {
           final isLastStep = currentStep == getSteps().length - 1;
 
           if (isLastStep) {
-            print('Complete');
+            navigateTo(context, Payment());
 
             //send the data to the server
           } else {
@@ -83,13 +87,15 @@ class _CreateJobHeaderState extends State<CreateJobHeader> {
           isActive: currentStep >= 1,
           label: Text("Service Info"),
           title: SizedBox(),
-          content: Container(),
+          content: CreateServiceInfo(),
         ),
         Step(
           isActive: currentStep >= 2,
           label: Text("Patient Info"),
           title: SizedBox(),
-          content: Container(),
+          content: Container(
+            child: CreatePatientInfo(),
+          ),
         ),
       ];
 }

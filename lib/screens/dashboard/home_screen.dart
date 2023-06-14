@@ -7,7 +7,7 @@ import 'package:private_nurse_for_client/helpers/general_method.dart';
 import 'package:private_nurse_for_client/public_components/button_secondary.dart';
 import 'package:private_nurse_for_client/public_components/input_decoration.dart';
 import 'package:private_nurse_for_client/public_components/space.dart';
-import 'package:private_nurse_for_client/screens/create_job/create_job.dart';
+import 'package:private_nurse_for_client/screens/job/create_job/create_job.dart';
 import 'package:private_nurse_for_client/screens/dashboard/component/job_list.dart';
 import 'package:private_nurse_for_client/theme.dart';
 
