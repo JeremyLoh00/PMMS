@@ -3,7 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_scale_tap/flutter_scale_tap.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:private_nurse_for_client/constant.dart';
+import 'package:private_nurse_for_client/helpers/general_method.dart';
 import 'package:private_nurse_for_client/public_components/space.dart';
+import 'package:private_nurse_for_client/screens/job/job_detail.dart';
 import 'package:private_nurse_for_client/theme.dart';
 
 class JobList extends StatefulWidget {
@@ -28,6 +30,7 @@ class _JobListState extends State<JobList> {
         return ScaleTap(
           onPressed: () {
             // navigateTo(context, InformationDetailsScreen(selectedTabIndex: widget.selectedTabIndex,));
+            navigateTo(context, JobDetail());
           },
           child: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 15),

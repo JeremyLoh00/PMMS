@@ -3,9 +3,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_scale_tap/flutter_scale_tap.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:private_nurse_for_client/constant.dart';
+import 'package:private_nurse_for_client/helpers/general_method.dart';
 import 'package:private_nurse_for_client/public_components/button_secondary.dart';
 import 'package:private_nurse_for_client/public_components/input_decoration.dart';
 import 'package:private_nurse_for_client/public_components/space.dart';
+import 'package:private_nurse_for_client/screens/job/create_job/create_job.dart';
 import 'package:private_nurse_for_client/screens/dashboard/component/job_list.dart';
 import 'package:private_nurse_for_client/theme.dart';
 
@@ -154,12 +156,17 @@ class _HomeScreenState extends State<HomeScreen>
                 ),
               ),
               SizedBox(
-                  width: MediaQuery.of(context).size.width / 2.5,
-                ),
-                Expanded(
+                width: MediaQuery.of(context).size.width / 2.5,
+              ),
+              Expanded(
                   flex: 1,
-                  child: 
-              ButtonSecondary(onPressed: null, text: "New", icon: Icons.add,))
+                  child: ButtonSecondary(
+                    onPressed: () {
+                      navigateTo(context, CreateJob());
+                    },
+                    text: "New",
+                    icon: Icons.add,
+                  ))
             ],
           ),
         ),

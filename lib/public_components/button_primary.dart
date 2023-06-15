@@ -9,16 +9,20 @@ class ButtonPrimary extends StatefulWidget {
   final String loadingText;
   final bool isDisabled;
   final Color? primaryColor;
+  final bool? rounded;
 
   final Function() onPressed;
 
-  const ButtonPrimary(this.title,
-      {super.key,
-      required this.onPressed,
-      this.isLoading = false,
-      this.isDisabled = false,
-      this.loadingText = "",
-      this.primaryColor = kPrimaryColor});
+  const ButtonPrimary(
+    this.title, {
+    super.key,
+    required this.onPressed,
+    this.isLoading = false,
+    this.isDisabled = false,
+    this.loadingText = "",
+    this.primaryColor = kPrimaryColor,
+    this.rounded = true,
+  });
 
   @override
   _ButtonPrimaryState createState() => _ButtonPrimaryState();
@@ -53,8 +57,10 @@ class _ButtonPrimaryState extends State<ButtonPrimary> {
                   ? kDisabledBg
                   : widget.primaryColor,
               borderRadius: BorderRadius.horizontal(
-                left: Radius.circular(15),
-                right: Radius.circular(15),
+                left:
+                    widget.rounded! ? Radius.circular(15) : Radius.circular(30),
+                right:
+                    widget.rounded! ? Radius.circular(15) : Radius.circular(30),
               )),
           child: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 60, vertical: 17.5),
