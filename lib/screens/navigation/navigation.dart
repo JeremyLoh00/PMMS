@@ -8,6 +8,7 @@ import 'package:private_nurse_for_client/public_components/space.dart';
 import 'package:private_nurse_for_client/screens/about_us/about_us_screen.dart';
 import 'package:private_nurse_for_client/screens/contact_us/contact_us_screen.dart';
 import 'package:private_nurse_for_client/screens/dashboard/home_screen.dart';
+import 'package:private_nurse_for_client/screens/notification/notification_screen.dart';
 import 'package:private_nurse_for_client/screens/profile/profile_screen.dart';
 import 'package:private_nurse_for_client/screens/sign_in/sign_in_screen.dart';
 
@@ -36,8 +37,8 @@ class _NavigationState extends State<Navigation> {
     });
   }
 
-  String src =
-      "https://c1.wallpaperflare.com/preview/547/839/590/accident-bleed-bleeding-bleeding-finger.jpg";
+ String src =
+      "https://c4.wallpaperflare.com/wallpaper/246/739/689/digital-digital-art-artwork-illustration-abstract-hd-wallpaper-preview.jpg";
 
   @override
   Widget build(BuildContext context) {
@@ -388,7 +389,7 @@ class _NavigationState extends State<Navigation> {
           actions: [
             ScaleTap(
               onPressed: () {
-                print("notification");
+                navigateTo(context, NotificationScreen());
               },
               child: const Padding(
                 padding: EdgeInsets.only(right: 15),
