@@ -16,6 +16,7 @@ class _CreateJobState extends State<CreateJob> {
       backgroundColor: kWhite,
       drawerEnableOpenDragGesture: true,
       appBar: AppBar(
+        scrolledUnderElevation: 0,
         title: Text(
           "Create Job",
           style: TextStyle(

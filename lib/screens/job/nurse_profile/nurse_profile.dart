@@ -4,29 +4,25 @@ import 'package:flutter_scale_tap/flutter_scale_tap.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:private_nurse_for_client/constant.dart';
 import 'package:private_nurse_for_client/helpers/general_method.dart';
-import 'package:private_nurse_for_client/public_components/h1.dart';
-import 'package:private_nurse_for_client/screens/job/components/job_description.dart';
-import 'package:private_nurse_for_client/screens/job/components/job_header.dart';
-import 'package:private_nurse_for_client/screens/job/components/job_application_list.dart';
-import 'package:private_nurse_for_client/screens/job/components/job_patient.dart';
-import 'package:private_nurse_for_client/screens/job/components/your_progress.dart';
+import 'package:private_nurse_for_client/screens/job/nurse_profile/components/nurse_profile_description.dart';
+import 'package:private_nurse_for_client/screens/job/nurse_profile/components/nurse_profile_header.dart';
 import 'package:private_nurse_for_client/screens/profile/profile_screen.dart';
 
-class JobDetail extends StatefulWidget {
-  const JobDetail({super.key});
+class NurseProfile extends StatefulWidget {
+  final String src;
+  const NurseProfile({
+    super.key,
+    required this.src,
+  });
 
   @override
-  State<JobDetail> createState() => _JobDetailState();
+  State<NurseProfile> createState() => _NurseProfileState();
 }
 
-class _JobDetailState extends State<JobDetail> {
-  String src =
-      "https://c1.wallpaperflare.com/preview/547/839/590/accident-bleed-bleeding-bleeding-finger.jpg";
-
+class _NurseProfileState extends State<NurseProfile> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: kWhite,
       appBar: _buildAppBar(),
       body: SafeArea(
         child: Padding(
@@ -48,7 +44,7 @@ class _JobDetailState extends State<JobDetail> {
                           // child: Text("data"),
                           child: Container(
                             child: CachedNetworkImage(
-                              imageUrl: src,
+                              imageUrl: widget.src,
                               imageBuilder: (context, imageProvider) =>
                                   Container(
                                 decoration: BoxDecoration(
@@ -65,36 +61,25 @@ class _JobDetailState extends State<JobDetail> {
                         ),
                       ),
                       const SizedBox(height: 15.0),
-                      JobHeader(
+                      NurseProfileHeader(
                         title: "Wound Dressing",
                         name: "Mr. John Doe",
+                        sufname: "(Son)",
                         phoneNum: "012-3456789",
-                        //Job Detail Information
-                        location:
-                            "1, Jalan XXX, Taman YYY, 56600 Pekan, Pahang",
-                        date: "21/5/2023 - 24/5/2023 (4 days)",
-                        time: "10.00 A.M - 7.00 P.M. (9 hours)",
                       ),
-                      const SizedBox(height: 15.0),
-
-                      //Patient Part
-                      JobPatient(
-                        src: src,
-                      ),
-                      const SizedBox(height: 15.0),
-                      JobDescription(
-                          description:
-                              "Rorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc vulputate libero et velit interdum."),
-                      const SizedBox(height: 15.0),
                       Divider(
                         color: kGrey,
                         thickness: 0.5,
                       ),
                       const SizedBox(height: 15.0),
-                      // //contest winner list
-                      NurseApplication(
-                        src: src,
-                      ),
+
+                      //Description
+                      NurseProfileDescription(
+                          description:
+                              "Rorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc vulputate libero et velit interdum."),
+                      const SizedBox(height: 15.0),
+
+                      const SizedBox(height: 15.0),
                     ],
                   ),
                 ),
@@ -135,7 +120,7 @@ class _JobDetailState extends State<JobDetail> {
                 shape: BoxShape.circle,
               ),
               child: CachedNetworkImage(
-                imageUrl: src,
+                imageUrl: widget.src,
                 imageBuilder: (context, imageProvider) => Container(
                   decoration: BoxDecoration(
                     shape: BoxShape.circle,

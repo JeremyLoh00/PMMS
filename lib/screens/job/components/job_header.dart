@@ -4,12 +4,20 @@ import 'package:private_nurse_for_client/constant.dart';
 class JobHeader extends StatelessWidget {
   JobHeader({
     Key? key,
+    required this.title,
     required this.name,
-    required this.dateTime,
+    required this.phoneNum,
+    required this.location,
+    required this.date,
+    required this.time,
   }) : super(key: key);
 
+  final String title;
   final String name;
-  final String dateTime;
+  final String phoneNum;
+  final String location;
+  final String date;
+  final String time;
 
   @override
   Widget build(BuildContext context) {
@@ -22,17 +30,17 @@ class JobHeader extends StatelessWidget {
             // Contest Name
             Expanded(
               child: Text(
-                name,
+                title,
                 style: const TextStyle(
-                  color: kPrimaryColor,
-                  fontSize: 24.0,
+                  color: kBlack,
+                  fontSize: 28.0,
                   fontFamily: "Poppins",
-                  fontWeight: FontWeight.w600,
+                  fontWeight: FontWeight.w900,
                 ),
               ),
             ),
 
-            // Green Badge
+            // Badge
             Container(
               padding: const EdgeInsets.symmetric(
                 vertical: 2.0,
@@ -40,12 +48,12 @@ class JobHeader extends StatelessWidget {
               ),
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(20.0),
-                color: const Color.fromRGBO(152, 255, 200, 1),
+                color: Color.fromARGB(255, 255, 152, 152),
               ),
               height: 20.0,
               alignment: Alignment.center,
               child: const Text(
-                "dfdfdf",
+                "Cancelled",
                 textAlign: TextAlign.center,
                 style: TextStyle(
                   color: kDarkGrey,
@@ -57,14 +65,95 @@ class JobHeader extends StatelessWidget {
             )
           ],
         ),
+        SizedBox(
+          height: 10,
+        ),
 
-        //Contest due
+        //Detail Information
         Text(
-          dateTime,
+          name,
+          style: TextStyle(
+            color: kPrimaryColor,
+            fontFamily: "Poppins",
+            fontSize: 20,
+            fontWeight: FontWeight.w700,
+          ),
+        ),
+        Text(
+          phoneNum,
           style: const TextStyle(
             color: kGrey,
             fontSize: 12.0,
           ),
+        ),
+        SizedBox(
+          height: 20,
+        ),
+
+        //Job Detail Information
+        Row(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Icon(
+              Icons.location_on,
+              color: kPrimaryColor,
+            ),
+            SizedBox(
+              width: 5,
+            ),
+            Text(
+              location,
+              style: TextStyle(
+                fontFamily: "Poppins",
+                fontSize: 12,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+          ],
+        ),
+        SizedBox(
+          height: 10,
+        ),
+        Row(
+          children: [
+            Icon(
+              Icons.calendar_today_outlined,
+              color: kPrimaryColor,
+            ),
+            SizedBox(
+              width: 5,
+            ),
+            Text(
+              date,
+              style: TextStyle(
+                fontFamily: "Poppins",
+                fontSize: 12,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+          ],
+        ),
+        SizedBox(
+          height: 10,
+        ),
+        Row(
+          children: [
+            Icon(
+              Icons.access_time,
+              color: kPrimaryColor,
+            ),
+            SizedBox(
+              width: 5,
+            ),
+            Text(
+              time,
+              style: TextStyle(
+                fontFamily: "Poppins",
+                fontSize: 12,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+          ],
         ),
       ],
     );

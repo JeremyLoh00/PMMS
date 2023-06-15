@@ -105,6 +105,8 @@ class _CreateServiceInfoState extends State<CreateServiceInfo> {
                 },
                 items: _nurse(),
                 decoration: InputDecoration(
+                  contentPadding: const EdgeInsets.symmetric(
+                      vertical: 5.0, horizontal: 10.0),
                   prefixIcon: Icon(
                     Icons.person_4_outlined,
                   ),

@@ -46,7 +46,7 @@ class _JobDescriptionState extends State<JobDescription> {
         const Padding(
           padding: EdgeInsets.only(bottom: 5.0),
           child: Text(
-            "Description",
+            "Job Description",
             style: TextStyle(
               fontWeight: FontWeight.bold,
               fontSize: 12.0,
@@ -65,7 +65,7 @@ class _JobDescriptionState extends State<JobDescription> {
               ),
               children: [
                 TextSpan(
-                  text: "  $initialText",
+                  text: "$initialText",
                 ),
                 TextSpan(
                   text: hide ? "..." : extendedText,

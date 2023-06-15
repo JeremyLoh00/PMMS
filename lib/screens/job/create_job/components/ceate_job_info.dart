@@ -46,6 +46,8 @@ class _CreateJobInfoState extends State<CreateJobInfo> {
           controller: date,
           decoration: InputDecoration(
             suffixIcon: Icon(Icons.calendar_month_outlined),
+            contentPadding:
+                const EdgeInsets.symmetric(vertical: 5.0, horizontal: 10.0),
             enabled: true,
             hintText: 'Date',
             labelText: 'Date',
@@ -79,6 +81,8 @@ class _CreateJobInfoState extends State<CreateJobInfo> {
           format: format,
           decoration: InputDecoration(
             suffixIcon: Icon(Icons.access_time),
+            contentPadding:
+                const EdgeInsets.symmetric(vertical: 5.0, horizontal: 10.0),
             enabled: true,
             hintText: 'Time',
             labelText: 'Time',
@@ -126,6 +130,8 @@ class _CreateJobInfoState extends State<CreateJobInfo> {
                 },
                 items: _week(),
                 decoration: InputDecoration(
+                  contentPadding: const EdgeInsets.symmetric(
+                      vertical: 5.0, horizontal: 10.0),
                   border: OutlineInputBorder(
                     borderSide: BorderSide(
                       width: 3,
@@ -148,6 +154,8 @@ class _CreateJobInfoState extends State<CreateJobInfo> {
                 },
                 items: _days(),
                 decoration: InputDecoration(
+                  contentPadding: const EdgeInsets.symmetric(
+                      vertical: 5.0, horizontal: 10.0),
                   border: OutlineInputBorder(
                     borderSide: BorderSide(
                       width: 3,
