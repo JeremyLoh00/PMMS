@@ -46,7 +46,7 @@ class _CurrentSubscriptionScreenState extends State<CurrentSubscriptionScreen> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                            "Curren Subscription",
+                            "Current Subscription",
                             style: TextStyle(
                               fontWeight: FontWeight.bold,
                             ),
