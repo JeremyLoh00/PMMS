@@ -109,7 +109,7 @@ class _CreateJobInfoState extends State<CreateJobInfo> {
           height: 10,
         ),
         Text(
-          "PReferred Period",
+          "Preferred Period",
           style: TextStyle(fontWeight: FontWeight.bold),
         ),
         SizedBox(
@@ -118,8 +118,7 @@ class _CreateJobInfoState extends State<CreateJobInfo> {
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            Container(
-              width: 200,
+            Expanded(
               child: DropdownButtonFormField(
                 hint: Text("Preferred Week"),
                 value: pref_week,
@@ -142,8 +141,10 @@ class _CreateJobInfoState extends State<CreateJobInfo> {
                 ),
               ),
             ),
-            Container(
-              width: 200,
+            SizedBox(
+              width: 10,
+            ),
+            Expanded(
               child: DropdownButtonFormField(
                 hint: Text("Preferred Days"),
                 value: pref_day,
