@@ -30,7 +30,11 @@ class _JobListState extends State<JobList> {
         return ScaleTap(
           onPressed: () {
             // navigateTo(context, InformationDetailsScreen(selectedTabIndex: widget.selectedTabIndex,));
-            navigateTo(context, JobDetail());
+            navigateTo(
+                context,
+                JobDetail(
+                  hasComment: false,
+                ));
           },
           child: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 15),

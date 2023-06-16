@@ -6,6 +6,7 @@ import 'package:private_nurse_for_client/helpers/general_method.dart';
 import 'package:private_nurse_for_client/public_components/custom_list_tile.dart';
 import 'package:private_nurse_for_client/public_components/space.dart';
 import 'package:private_nurse_for_client/screens/job/nurse_profile/nurse_profile.dart';
+import 'package:private_nurse_for_client/screens/job/patient_profile/patient_profile.dart';
 import 'package:private_nurse_for_client/theme.dart';
 
 class NurseApplication extends StatefulWidget {
@@ -19,14 +20,15 @@ class NurseApplication extends StatefulWidget {
   State<NurseApplication> createState() => _NurseApplicationState();
 }
 
-List<String> status = [
-  'Accepted',
-  'Cancelled',
-  'Awaiting',
-  'On-going',
-];
-
 class _NurseApplicationState extends State<NurseApplication> {
+  List<String> status = [
+    'Accepted',
+    'Cancelled',
+    'Awaiting',
+    'On-going',
+    'plant',
+  ];
+
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -47,6 +49,47 @@ class _NurseApplicationState extends State<NurseApplication> {
             return ScaleTap(
               onPressed: () {
                 // navigateTo(context, InformationDetailsScreen(selectedTabIndex: widget.selectedTabIndex,));
+                setState(() {
+                  if (status[index] == 'Accepted') {
+                    navigateTo(
+                      context,
+                      NurseProfile(
+                        src: widget.src,
+                        hasButton: true,
+                      ),
+                    );
+                  } else if (status[index] == 'Cancelled') {
+                    navigateTo(
+                      context,
+                      NurseProfile(
+                        src: widget.src,
+                      ),
+                    );
+                  } else if (status[index] == 'Awaiting') {
+                    navigateTo(
+                      context,
+                      NurseProfile(
+                        src: widget.src,
+                        hasButton: true,
+                      ),
+                    );
+                  } else if (status[index] == 'On-going') {
+                    navigateTo(
+                      context,
+                      NurseProfile(
+                        src: widget.src,
+                        hasButton: true,
+                      ),
+                    );
+                  } else {
+                    navigateTo(
+                      context,
+                      NurseProfile(
+                        src: widget.src,
+                      ),
+                    );
+                  }
+                });
               },
               child: Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 15),

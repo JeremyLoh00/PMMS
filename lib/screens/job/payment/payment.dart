@@ -104,49 +104,6 @@ class _PaymentState extends State<Payment> {
           Navigator.pop(context);
         },
       ),
-      actions: [
-        ScaleTap(
-          onPressed: () {
-            print("notification");
-          },
-          child: const Padding(
-            padding: EdgeInsets.only(right: 15),
-            child: Icon(
-              Iconsax.notification,
-              color: kDarkGrey,
-            ),
-          ),
-        ),
-        ScaleTap(
-          onPressed: () {
-            navigateTo(context, ProfileScreen());
-          },
-          child: Padding(
-            padding: EdgeInsets.only(right: 15),
-            child: Container(
-              width: 25,
-              height: 25,
-              padding: const EdgeInsets.all(0.5),
-              decoration: BoxDecoration(
-                shape: BoxShape.circle,
-              ),
-              child: CachedNetworkImage(
-                imageUrl: src,
-                imageBuilder: (context, imageProvider) => Container(
-                  decoration: BoxDecoration(
-                    shape: BoxShape.circle,
-                    image: DecorationImage(
-                      image: imageProvider,
-                      fit: BoxFit.cover,
-                    ),
-                  ),
-                ),
-                errorWidget: (context, url, error) => const Icon(Icons.error),
-              ),
-            ),
-          ),
-        ),
-      ],
     );
   }
 }

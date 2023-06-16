@@ -1,88 +1,187 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_scale_tap/flutter_scale_tap.dart';
-import 'package:iconsax/iconsax.dart';
 import 'package:private_nurse_for_client/constant.dart';
-import 'package:private_nurse_for_client/helpers/general_method.dart';
-import 'package:private_nurse_for_client/screens/job/nurse_profile/components/nurse_profile_description.dart';
+import 'package:private_nurse_for_client/public_components/button_primary.dart';
+import 'package:private_nurse_for_client/public_components/button_secondary.dart';
+import 'package:private_nurse_for_client/public_components/delete_dialog.dart';
+import 'package:private_nurse_for_client/screens/job/nurse_profile/components/nurse_profile_review.dart';
 import 'package:private_nurse_for_client/screens/job/nurse_profile/components/nurse_profile_header.dart';
-import 'package:private_nurse_for_client/screens/profile/profile_screen.dart';
+import 'package:private_nurse_for_client/theme.dart';
 
 class NurseProfile extends StatefulWidget {
   final String src;
-  const NurseProfile({
-    super.key,
-    required this.src,
-  });
+  final bool? hasButton;
+  const NurseProfile({super.key, required this.src, this.hasButton = false});
 
   @override
   State<NurseProfile> createState() => _NurseProfileState();
 }
 
+final String commentPic =
+    "https://cdn.pixabay.com/photo/2017/12/03/18/04/christmas-balls-2995437_960_720.jpg";
+
 class _NurseProfileState extends State<NurseProfile> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: kWhite,
+      drawerEnableOpenDragGesture: true,
       appBar: _buildAppBar(),
       body: SafeArea(
-        child: Padding(
-          padding: const EdgeInsets.all(10.0),
+        child: SingleChildScrollView(
+          physics: BouncingScrollPhysics(),
           child: Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: CustomScrollView(
-              shrinkWrap: true,
-              physics: BouncingScrollPhysics(),
-              slivers: [
-                SliverList(
-                  delegate: SliverChildListDelegate(
-                    [
-                      SizedBox(
-                        height: MediaQuery.of(context).size.height * 0.25,
-                        width: double.infinity,
-                        child: Hero(
-                          tag: "contest-banner",
-                          // child: Text("data"),
-                          child: Container(
-                            child: CachedNetworkImage(
-                              imageUrl: widget.src,
-                              imageBuilder: (context, imageProvider) =>
-                                  Container(
-                                decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(20.0),
-                                  shape: BoxShape.rectangle,
-                                  image: DecorationImage(
-                                    image: imageProvider,
-                                    fit: BoxFit.cover,
-                                  ),
-                                ),
-                              ),
+            padding: const EdgeInsets.all(18.0),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                SizedBox(
+                  height: MediaQuery.of(context).size.height * 0.3,
+                  width: double.infinity,
+                  child: Hero(
+                    tag: "contest-banner",
+                    // child: Text("data"),
+                    child: Container(
+                      child: CachedNetworkImage(
+                        imageUrl: widget.src,
+                        imageBuilder: (context, imageProvider) => Container(
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(20.0),
+                            shape: BoxShape.rectangle,
+                            image: DecorationImage(
+                              image: imageProvider,
+                              fit: BoxFit.cover,
                             ),
                           ),
                         ),
                       ),
-                      const SizedBox(height: 15.0),
-                      NurseProfileHeader(
-                        title: "Wound Dressing",
-                        name: "Mr. John Doe",
-                        sufname: "(Son)",
-                        phoneNum: "012-3456789",
-                      ),
-                      Divider(
-                        color: kGrey,
-                        thickness: 0.5,
-                      ),
-                      const SizedBox(height: 15.0),
-
-                      //Description
-                      NurseProfileDescription(
-                          description:
-                              "Rorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc vulputate libero et velit interdum."),
-                      const SizedBox(height: 15.0),
-
-                      const SizedBox(height: 15.0),
-                    ],
+                    ),
                   ),
                 ),
+                SizedBox(
+                  height: 20,
+                ),
+                NurseProfileHeader(
+                  title: "Nurse Aida",
+                  totalReview: "4.0 (200 Reviews)",
+                  phoneNum: "012-3456789",
+                  education: "Bachelor Degree in Nursing",
+                  location: "Malaysia Nursing College",
+                  experience: "Sri Kota Hospital",
+                  time: "5 years",
+                ),
+                SizedBox(
+                  height: 10,
+                ),
+                Divider(
+                  thickness: 0.5,
+                  color: kGrey,
+                ),
+                SizedBox(
+                  height: 10,
+                ),
+                NurseProfileReview(
+                  src: widget.src,
+                  description: "Hello",
+                  name: "C***t",
+                  comment: "Good attitude but careless.",
+                  commentPic: commentPic,
+                  date: "21-5-2023 | 5.45 pm",
+                ),
+                SizedBox(
+                  height: 10,
+                ),
+                widget.hasButton == true
+                    ? Row(
+                        children: [
+                          ButtonSecondary(
+                            onPressed: () {
+                              Navigator.pop(context);
+                            },
+                            text: "Reject",
+                          ),
+                          SizedBox(
+                            width: 10,
+                          ),
+                          Expanded(
+                            child: ButtonPrimary(
+                              "Accept",
+                              onPressed: () => showDialog(
+                                context: context,
+                                builder: (context) => AlertDialog(
+                                  backgroundColor: kWhite,
+                                  content: Column(
+                                      mainAxisSize: MainAxisSize.min,
+                                      children: [
+                                        Container(
+                                          padding: const EdgeInsets.all(10),
+                                          decoration: BoxDecoration(
+                                              color: kBgDanger,
+                                              borderRadius:
+                                                  BorderRadius.circular(50)),
+                                          child: const Icon(
+                                            Icons.warning_amber,
+                                            color: Colors.red,
+                                          ),
+                                        ),
+                                        const SizedBox(
+                                          height: 10,
+                                        ),
+                                        Text(
+                                          "Subscription Not Complete",
+                                          style: textStyleH1(),
+                                        ),
+                                        const SizedBox(
+                                          height: 10,
+                                        ),
+                                        Text(
+                                          "Subscription is not complete yet, please subscribe before accepting any nurse.",
+                                          textAlign: TextAlign.center,
+                                          style:
+                                              textStyleNormal(color: kTextGray),
+                                        ),
+                                        const SizedBox(
+                                          height: 10,
+                                        ),
+                                        Row(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          children: [
+                                            Expanded(
+                                              flex: 1,
+                                              child: ButtonPrimary(
+                                                "Pay",
+                                                onPressed: () {},
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                        const SizedBox(
+                                          height: 10,
+                                        ),
+                                        Row(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          children: [
+                                            Expanded(
+                                              flex: 1,
+                                              child: ButtonSecondary(
+                                                onPressed: () {
+                                                  Navigator.pop(context);
+                                                },
+                                                text: "Cancel",
+                                              ),
+                                            ),
+                                          ],
+                                        )
+                                      ]),
+                                ),
+                              ),
+                            ),
+                          ),
+                        ],
+                      )
+                    : SizedBox(),
               ],
             ),
           ),
@@ -93,9 +192,15 @@ class _NurseProfileState extends State<NurseProfile> {
 
   AppBar _buildAppBar() {
     return AppBar(
+      title: Text(
+        "Profile",
+        style: TextStyle(
+          fontFamily: "Poppins",
+          fontWeight: FontWeight.bold,
+        ),
+      ),
       elevation: 0,
       scrolledUnderElevation: 0,
-      centerTitle: true,
       backgroundColor: Colors.transparent,
       leading: IconButton(
         icon: Icon(
@@ -105,49 +210,6 @@ class _NurseProfileState extends State<NurseProfile> {
           Navigator.pop(context);
         },
       ),
-      actions: [
-        ScaleTap(
-          onPressed: () {
-            navigateTo(context, ProfileScreen());
-          },
-          child: Padding(
-            padding: EdgeInsets.only(right: 15),
-            child: Container(
-              width: 25,
-              height: 25,
-              padding: const EdgeInsets.all(0.5),
-              decoration: BoxDecoration(
-                shape: BoxShape.circle,
-              ),
-              child: CachedNetworkImage(
-                imageUrl: widget.src,
-                imageBuilder: (context, imageProvider) => Container(
-                  decoration: BoxDecoration(
-                    shape: BoxShape.circle,
-                    image: DecorationImage(
-                      image: imageProvider,
-                      fit: BoxFit.cover,
-                    ),
-                  ),
-                ),
-                errorWidget: (context, url, error) => const Icon(Icons.error),
-              ),
-            ),
-          ),
-        ),
-        ScaleTap(
-          onPressed: () {
-            print("notification");
-          },
-          child: const Padding(
-            padding: EdgeInsets.only(right: 15),
-            child: Icon(
-              Iconsax.notification,
-              color: kDarkGrey,
-            ),
-          ),
-        ),
-      ],
     );
   }
 }
