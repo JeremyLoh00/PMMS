@@ -2,8 +2,8 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:private_nurse_for_client/constant.dart';
 
-class NurseProfileDescription extends StatefulWidget {
-  const NurseProfileDescription({
+class PatientProfileDescription extends StatefulWidget {
+  const PatientProfileDescription({
     Key? key,
     required this.description,
   }) : super(key: key);
@@ -11,11 +11,11 @@ class NurseProfileDescription extends StatefulWidget {
   final String description;
 
   @override
-  State<NurseProfileDescription> createState() =>
-      _NurseProfileDescriptionState();
+  State<PatientProfileDescription> createState() =>
+      _PatientProfileDescriptionState();
 }
 
-class _NurseProfileDescriptionState extends State<NurseProfileDescription> {
+class _PatientProfileDescriptionState extends State<PatientProfileDescription> {
   final int charactersLimit = 150;
   late String initialText;
   late String extendedText;

@@ -1,26 +1,21 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_scale_tap/flutter_scale_tap.dart';
-import 'package:iconsax/iconsax.dart';
 import 'package:private_nurse_for_client/constant.dart';
 import 'package:private_nurse_for_client/helpers/general_method.dart';
-import 'package:private_nurse_for_client/public_components/h1.dart';
-import 'package:private_nurse_for_client/screens/job/components/job_comment.dart';
-import 'package:private_nurse_for_client/screens/job/components/job_description.dart';
-import 'package:private_nurse_for_client/screens/job/components/job_header.dart';
-import 'package:private_nurse_for_client/screens/job/components/nurse_application.dart';
-import 'package:private_nurse_for_client/screens/job/components/job_patient.dart';
-import 'package:private_nurse_for_client/screens/profile/profile_screen.dart';
+import 'package:private_nurse_for_client/public_components/button_primary.dart';
+import 'package:private_nurse_for_client/screens/job/components/job_review/components/job_review_comment.dart';
+import 'package:private_nurse_for_client/screens/job/components/job_review/components/job_review_header.dart';
+import 'package:private_nurse_for_client/screens/job/components/job_review/components/job_review_nurse_application.dart';
+import 'package:private_nurse_for_client/screens/job/job_detail.dart';
 
-class JobDetail extends StatefulWidget {
-  final bool hasComment;
-  const JobDetail({super.key, this.hasComment = false});
+class JobReview extends StatefulWidget {
+  const JobReview({super.key});
 
   @override
-  State<JobDetail> createState() => _JobDetailState();
+  State<JobReview> createState() => _JobReviewState();
 }
 
-class _JobDetailState extends State<JobDetail> {
+class _JobReviewState extends State<JobReview> {
   String src =
       "https://c1.wallpaperflare.com/preview/547/839/590/accident-bleed-bleeding-bleeding-finger.jpg";
 
@@ -63,46 +58,59 @@ class _JobDetailState extends State<JobDetail> {
                       ),
                     ),
                     const SizedBox(height: 15.0),
-                    JobHeader(
+                    JobReviewHeader(
                       title: "Wound Dressing",
                       name: "Mr. John Doe",
                       phoneNum: "012-3456789",
-                      //Job Detail Information
-                      location: "1, Jalan XXX, Taman YYY, 56600 Pekan, Pahang",
-                      date: "21/5/2023 - 24/5/2023 (4 days)",
-                      time: "10.00 A.M - 7.00 P.M. (9 hours)",
                     ),
-                    const SizedBox(height: 15.0),
 
-                    //Patient Part
-                    JobPatient(
+                    const SizedBox(height: 15.0),
+                    //Nurse Application List
+                    JobReviewNurseApplication(
                       src: src,
                     ),
-                    const SizedBox(height: 15.0),
-                    JobDescription(
-                        description:
-                            "Rorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc vulputate libero et velit interdum."),
                     const SizedBox(height: 15.0),
                     Divider(
                       color: kGrey,
                       thickness: 0.5,
                     ),
                     const SizedBox(height: 15.0),
-                    //Nurse Application List
-                    NurseApplication(
-                      src: src,
-                    ),
-                    const SizedBox(height: 15.0),
                     //User Review
-                    widget.hasComment == false
-                        ? JobComment(
-                            hasReview: false,
-                            comment: "Good Job.",
-                          )
-                        : JobComment(
-                            hasReview: true,
-                            comment: "Good Job.",
+                    JobReviewComment(),
+                    const SizedBox(height: 15.0),
+                    Align(
+                      alignment: Alignment.bottomRight,
+                      child: Padding(
+                        padding: const EdgeInsets.all(10.0),
+                        child: ElevatedButton(
+                          child: Text("Submit".toUpperCase(),
+                              style: TextStyle(fontSize: 14)),
+                          style: ButtonStyle(
+                            foregroundColor:
+                                MaterialStateProperty.all<Color>(Colors.white),
+                            backgroundColor:
+                                MaterialStateProperty.all<Color>(kPrimaryColor),
+                            shape: MaterialStateProperty.all<
+                                RoundedRectangleBorder>(
+                              RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(10.0),
+                                side: BorderSide(color: kPrimaryColor),
+                              ),
+                            ),
                           ),
+                          onPressed: () {
+                            Navigator.pop(context);
+                            Navigator.pop(context);
+                            navigateTo(
+                              context,
+                              JobDetail(
+                                hasComment: true,
+                              ),
+                            );
+                          },
+                        ),
+                      ),
+                    ),
                   ],
                 ),
               ),

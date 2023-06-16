@@ -53,7 +53,7 @@ BoxShadow sectionShadow() {
 
 //TODO: change color shadow, offset, bluradius
 BoxShadow profileShadow(Color color) {
-  return  BoxShadow(
+  return BoxShadow(
     color: color,
     offset: Offset(2, 2),
     blurRadius: 12.0,
@@ -73,4 +73,23 @@ TextStyle listTileTitleStyle() {
     fontSize: 14.0,
     fontWeight: FontWeight.bold,
   );
+}
+
+TextStyle textStyleH1() {
+  return TextStyle(
+    fontSize: 20,
+    color: kDarkGrey,
+    fontFamily: "Poppins",
+    fontWeight: FontWeight.w500,
+  );
+}
+
+TextStyle textStyleNormal(
+    {Color color = Colors.black, double? fontsize, FontWeight? fontWeight}) {
+  return TextStyle(
+      color: color,
+      fontSize: fontsize ?? 14,
+      fontFamily: "Poppins",
+      fontWeight: fontWeight ?? FontWeight.normal,
+      decoration: TextDecoration.none);
 }
