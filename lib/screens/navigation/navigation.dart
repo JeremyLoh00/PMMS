@@ -37,7 +37,7 @@ class _NavigationState extends State<Navigation> {
     });
   }
 
- String src =
+  String src =
       "https://c4.wallpaperflare.com/wallpaper/246/739/689/digital-digital-art-artwork-illustration-abstract-hd-wallpaper-preview.jpg";
 
   @override
@@ -72,39 +72,34 @@ class _NavigationState extends State<Navigation> {
                       ),
                       ScaleTap(
                         onPressed: () {
-                          Navigator.pop(context);
                           navigateTo(context, ProfileScreen());
                         },
-                        child: Icon(
-                          Icons.person_outline,
-                          color: kBlack,
+                        child: Padding(
+                          padding: EdgeInsets.only(right: 15),
+                          child: Container(
+                            width: 25,
+                            height: 25,
+                            padding: const EdgeInsets.all(0.5),
+                            decoration: BoxDecoration(
+                              shape: BoxShape.circle,
+                            ),
+                            child: CachedNetworkImage(
+                              imageUrl: src,
+                              imageBuilder: (context, imageProvider) =>
+                                  Container(
+                                decoration: BoxDecoration(
+                                  shape: BoxShape.circle,
+                                  image: DecorationImage(
+                                    image: imageProvider,
+                                    fit: BoxFit.cover,
+                                  ),
+                                ),
+                              ),
+                              errorWidget: (context, url, error) =>
+                                  const Icon(Icons.error),
+                            ),
+                          ),
                         ),
-                        // child: Padding(
-                        //   padding: EdgeInsets.only(right: 15),
-                        //   child: Container(
-                        //     width: 30,
-                        //     height: 30,
-                        //     padding: const EdgeInsets.all(0.5),
-                        //     decoration: BoxDecoration(
-                        //       shape: BoxShape.circle,
-                        //     ),
-                        //     child: CachedNetworkImage(
-                        //       imageUrl: src,
-                        //       imageBuilder: (context, imageProvider) =>
-                        //           Container(
-                        //         decoration: BoxDecoration(
-                        //           shape: BoxShape.circle,
-                        //           image: DecorationImage(
-                        //             image: imageProvider,
-                        //             fit: BoxFit.cover,
-                        //           ),
-                        //         ),
-                        //       ),
-                        //       errorWidget: (context, url, error) =>
-                        //           const Icon(Icons.error),
-                        //     ),
-                        //   ),
-                        // ),
                       ),
                     ],
                   ),
@@ -399,36 +394,6 @@ class _NavigationState extends State<Navigation> {
                 ),
               ),
             ),
-            ScaleTap(
-              onPressed: () {
-                navigateTo(context, ProfileScreen());
-              },
-              child: Padding(
-                padding: EdgeInsets.only(right: 15),
-                child: Container(
-                  width: 25,
-                  height: 25,
-                  padding: const EdgeInsets.all(0.5),
-                  decoration: BoxDecoration(
-                    shape: BoxShape.circle,
-                  ),
-                  child: CachedNetworkImage(
-                    imageUrl: src,
-                    imageBuilder: (context, imageProvider) => Container(
-                      decoration: BoxDecoration(
-                        shape: BoxShape.circle,
-                        image: DecorationImage(
-                          image: imageProvider,
-                          fit: BoxFit.cover,
-                        ),
-                      ),
-                    ),
-                    errorWidget: (context, url, error) =>
-                        const Icon(Icons.error),
-                  ),
-                ),
-              ),
-            ),
           ],
         );
       case 1:
@@ -556,36 +521,6 @@ class _NavigationState extends State<Navigation> {
                 child: Icon(
                   Iconsax.notification,
                   color: kDarkGrey,
-                ),
-              ),
-            ),
-            ScaleTap(
-              onPressed: () {
-                // navigateTo(context, ProfileScreen());
-              },
-              child: Padding(
-                padding: EdgeInsets.only(right: 15),
-                child: Container(
-                  width: 25,
-                  height: 25,
-                  padding: const EdgeInsets.all(0.5),
-                  decoration: BoxDecoration(
-                    shape: BoxShape.circle,
-                  ),
-                  child: CachedNetworkImage(
-                    imageUrl: src,
-                    imageBuilder: (context, imageProvider) => Container(
-                      decoration: BoxDecoration(
-                        shape: BoxShape.circle,
-                        image: DecorationImage(
-                          image: imageProvider,
-                          fit: BoxFit.cover,
-                        ),
-                      ),
-                    ),
-                    errorWidget: (context, url, error) =>
-                        const Icon(Icons.error),
-                  ),
                 ),
               ),
             ),

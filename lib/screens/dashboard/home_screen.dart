@@ -64,83 +64,68 @@ class _HomeScreenState extends State<HomeScreen>
       children: [
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 15),
-          child: Row(
-            children: [
-              Expanded(
-                flex: 3,
-                child: ScaleTap(
-                  onPressed: () {},
-                  child: DropdownButtonFormField2<String>(
-                    decoration: textFieldInputDecoration2(),
-                    isExpanded: true,
-                    enableFeedback: true,
-                    hint: Row(
-                      children: const [
-                        Expanded(
+          child: Expanded(
+            flex: 3,
+            child: ScaleTap(
+              onPressed: () {},
+              child: DropdownButtonFormField2<String>(
+                decoration: textFieldInputDecoration2(),
+                isExpanded: true,
+                enableFeedback: true,
+                hint: Row(
+                  children: const [
+                    Expanded(
+                      child: Text(
+                        'Job Status',
+                        style: TextStyle(
+                          fontSize: 14,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.black,
+                        ),
+                        overflow: TextOverflow.ellipsis,
+                      ),
+                    ),
+                  ],
+                ),
+                dropdownStyleData: DropdownStyleData(
+                  maxHeight: 200,
+                  //swidth: double.infinity,
+                  padding: null,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(14),
+                    boxShadow: [profileShadow(kGrey.withOpacity(0.3))],
+                    color: kWhite,
+                  ),
+                  elevation: 0,
+                  offset: const Offset(0, 0),
+                  scrollbarTheme: ScrollbarThemeData(
+                    radius: const Radius.circular(2),
+                    thickness: MaterialStateProperty.all<double>(6),
+                    thumbVisibility: MaterialStateProperty.all<bool>(true),
+                  ),
+                ),
+                items: items
+                    .map((item) => DropdownMenuItem<String>(
+                          value: item,
                           child: Text(
-                            'State',
-                            style: TextStyle(
+                            item,
+                            style: const TextStyle(
                               fontSize: 14,
                               fontWeight: FontWeight.bold,
                               color: Colors.black,
                             ),
                             overflow: TextOverflow.ellipsis,
                           ),
-                        ),
-                      ],
-                    ),
-                    dropdownStyleData: DropdownStyleData(
-                      maxHeight: 200,
-                      //swidth: double.infinity,
-                      padding: null,
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(14),
-                        boxShadow: [profileShadow(kGrey.withOpacity(0.3))],
-                        color: kWhite,
-                      ),
-                      elevation: 0,
-                      offset: const Offset(0, 0),
-                      scrollbarTheme: ScrollbarThemeData(
-                        radius: const Radius.circular(2),
-                        thickness: MaterialStateProperty.all<double>(6),
-                        thumbVisibility: MaterialStateProperty.all<bool>(true),
-                      ),
-                    ),
-                    items: items
-                        .map((item) => DropdownMenuItem<String>(
-                              value: item,
-                              child: Text(
-                                item,
-                                style: const TextStyle(
-                                  fontSize: 14,
-                                  fontWeight: FontWeight.bold,
-                                  color: Colors.black,
-                                ),
-                                overflow: TextOverflow.ellipsis,
-                              ),
-                            ))
-                        .toList(),
-                    value: selectedValue,
-                    onChanged: (value) {
-                      setState(() {
-                        selectedValue = value as String;
-                      });
-                    },
-                  ),
-                ),
+                        ))
+                    .toList(),
+                value: selectedValue,
+                onChanged: (value) {
+                  setState(() {
+                    selectedValue = value as String;
+                  });
+                },
               ),
-              SizedBox(width: 4),
-              Expanded(
-                flex: 1,
-                child: ScaleTap(
-                  onPressed: () {},
-                  child: Icon(
-                    Icons.search,
-                    color: kPrimaryColor,
-                  ),
-                ),
-              ),
-            ],
+            ),
           ),
         ),
         Space(10),

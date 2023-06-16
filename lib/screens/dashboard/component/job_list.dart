@@ -35,15 +35,15 @@ class _JobListState extends State<JobList> {
           child: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 15),
             child: Container(
-              padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+              // padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
               margin: EdgeInsets.only(top: 10),
               width: double.infinity,
               decoration: BoxDecoration(
                 color: kWhite,
-                borderRadius: BorderRadius.circular(5),
+                borderRadius: BorderRadius.circular(10),
                 boxShadow: [
                   profileShadow(
-                    kGrey.withOpacity(0.3),
+                    kGrey.withOpacity(0.2),
                   ),
                 ],
               ),

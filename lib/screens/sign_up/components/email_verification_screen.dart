@@ -1,5 +1,4 @@
 import 'dart:async';
-
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:iconsax/iconsax.dart';
@@ -9,6 +8,7 @@ import 'package:private_nurse_for_client/helpers/general_method.dart';
 import 'package:private_nurse_for_client/public_components/h1.dart';
 import 'package:private_nurse_for_client/public_components/theme_app_bar.dart';
 import 'package:private_nurse_for_client/public_components/theme_spinner.dart';
+import 'package:private_nurse_for_client/screens/sign_up/components/body.dart';
 
 class EmailVerificationScreen extends StatefulWidget {
   final String email;
@@ -50,6 +50,9 @@ class _EmailVerificationScreenState extends State<EmailVerificationScreen> {
               padding: const EdgeInsets.symmetric(vertical: 0, horizontal: 30),
               child: Column(
                 children: [
+                  Body(
+                    activeStepper: 2,
+                  ),
                   Container(
                     padding: EdgeInsets.all(30),
                     decoration: BoxDecoration(),
