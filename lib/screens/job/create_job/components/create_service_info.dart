@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:private_nurse_for_client/edit_profile/edit_profile_screen.dart';
+import 'package:private_nurse_for_client/screens/edit_profile/edit_profile_screen.dart';
 
 class CreateServiceInfo extends StatefulWidget {
   const CreateServiceInfo({super.key});

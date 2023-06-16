@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_scale_tap/flutter_scale_tap.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:private_nurse_for_client/constant.dart';
-import 'package:private_nurse_for_client/edit_profile/edit_profile_screen.dart';
+import 'package:private_nurse_for_client/screens/edit_profile/edit_profile_screen.dart';
 import 'package:private_nurse_for_client/public_components/button_primary.dart';
 import 'package:private_nurse_for_client/public_components/input_decoration.dart';
 import 'package:private_nurse_for_client/public_components/space.dart';
