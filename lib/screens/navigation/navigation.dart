@@ -11,6 +11,7 @@ import 'package:private_nurse_for_client/screens/dashboard/home_screen.dart';
 import 'package:private_nurse_for_client/screens/notification/notification_screen.dart';
 import 'package:private_nurse_for_client/screens/profile/profile_screen.dart';
 import 'package:private_nurse_for_client/screens/sign_in/sign_in_screen.dart';
+import 'package:private_nurse_for_client/screens/subscription/subscription_screen.dart';
 
 class Navigation extends StatefulWidget {
   const Navigation({super.key});
@@ -429,7 +430,7 @@ class _NavigationState extends State<Navigation> {
           title: Text(
             "About Us",
             style: TextStyle(
-              color: kWhite,
+              color: kBlack,
               fontWeight: FontWeight.bold,
             ),
           ),
@@ -452,7 +453,7 @@ class _NavigationState extends State<Navigation> {
           title: Text(
             "Nurse History",
             style: TextStyle(
-              color: kWhite,
+              color: kBlack,
               fontWeight: FontWeight.bold,
             ),
           ),
@@ -475,7 +476,7 @@ class _NavigationState extends State<Navigation> {
           title: Text(
             "Subscription",
             style: TextStyle(
-              color: kWhite,
+              color: kBlack,
               fontWeight: FontWeight.bold,
             ),
           ),
@@ -540,7 +541,7 @@ class _NavigationState extends State<Navigation> {
       case 3:
       //  return NurseHistory();
       case 4:
-      //  return Subscription();
+       return SubscriptionScreen();
       default:
         return Placeholder();
     }

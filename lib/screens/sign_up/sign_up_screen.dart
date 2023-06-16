@@ -40,9 +40,11 @@ class _SignUpScreenState extends State<SignUpScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: kWhite,
-      appBar: ThemeAppBar(
-        "Registration",
-        color: Colors.transparent,
+      appBar: AppBar(
+        title: const Text( "Registration"),
+        centerTitle: true,
+        elevation: 0,backgroundColor: Colors.transparent,
+bottomOpacity: 0.0,
       ),
       body: Padding(
         padding: const EdgeInsets.all(15),
