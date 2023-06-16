@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:private_nurse_for_client/constant.dart';
 import 'package:private_nurse_for_client/public_components/button_primary.dart';
+import 'package:private_nurse_for_client/public_components/input_decoration%20copy.dart';
 import 'package:private_nurse_for_client/public_components/space.dart';
 
 class ContactUsScreen extends StatefulWidget {
@@ -74,15 +75,17 @@ class _ContactUsScreenState extends State<ContactUsScreen> {
                 child: TextField(
                   cursorColor: kPrimaryColor,
                   textCapitalization: TextCapitalization.none,
-                  
-                  decoration: InputDecoration(
+                  decoration: textFieldInputDecoration(
+                    "",
                     hintText: "Inquiry",
-                    
                   ),
                 ),
-               
               ),
-              ButtonPrimary("Sumbit", onPressed: () => {},)
+              SizedBox(height: 15,),
+              ButtonPrimary(
+                "Sumbit",
+                onPressed: () => {},
+              )
             ],
           ),
         ),

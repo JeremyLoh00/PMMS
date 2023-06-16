@@ -4,6 +4,7 @@ import 'package:iconsax/iconsax.dart';
 import 'package:private_nurse_for_client/constant.dart';
 import 'package:private_nurse_for_client/helpers/general_method.dart';
 import 'package:private_nurse_for_client/public_components/button_primary.dart';
+import 'package:private_nurse_for_client/public_components/input_decoration%20copy.dart';
 import 'package:private_nurse_for_client/screens/forgot_password/forgot_password_screen.dart';
 import 'package:private_nurse_for_client/screens/navigation/navigation.dart';
 import 'package:private_nurse_for_client/screens/sign_up/sign_up_screen.dart';
@@ -67,14 +68,14 @@ class _SignInScreenState extends State<SignInScreen> {
           inputFormatters: [
             LowerCaseTextFormatter(),
           ],
-          decoration: InputDecoration(
-            labelText: "Email",
-            hintText: "ex: example@aufmbz.com",
-            prefixIcon: const Icon(
-              Iconsax.sms,
-              color: kPrimaryColor,
-            ),
-          ),
+          decoration: textFieldInputDecoration(
+                  "Email",
+                  hintText: "ex: example@aufmbz.com",
+                  prefixIcon: const Icon(
+                    Iconsax.sms,
+                    color: kPrimaryColor,
+                  ),
+                ),
         ),
         const SizedBox(
           height: 10,
@@ -86,14 +87,14 @@ class _SignInScreenState extends State<SignInScreen> {
           inputFormatters: [
             LowerCaseTextFormatter(),
           ],
-          decoration: InputDecoration(
-            labelText: "Password",
-            hintText: "Enter your password",
-            prefixIcon: const Icon(
-             Iconsax.unlock,
-              color: kPrimaryColor,
-            ),
-          ),
+          decoration: textFieldInputDecoration(
+                  "Password",
+                  hintText: "Enter your password",
+                  prefixIcon: const Icon(
+                    Iconsax.unlock,
+                    color: kPrimaryColor,
+                  ),
+                ),
         ),
         SizedBox(
           height: 15,

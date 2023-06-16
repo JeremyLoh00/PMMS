@@ -8,8 +8,10 @@ import 'package:private_nurse_for_client/public_components/space.dart';
 import 'package:private_nurse_for_client/screens/about_us/about_us_screen.dart';
 import 'package:private_nurse_for_client/screens/contact_us/contact_us_screen.dart';
 import 'package:private_nurse_for_client/screens/dashboard/home_screen.dart';
+import 'package:private_nurse_for_client/screens/notification/notification_screen.dart';
 import 'package:private_nurse_for_client/screens/profile/profile_screen.dart';
 import 'package:private_nurse_for_client/screens/sign_in/sign_in_screen.dart';
+import 'package:private_nurse_for_client/screens/subscription/subscription_screen.dart';
 
 class Navigation extends StatefulWidget {
   const Navigation({super.key});
@@ -37,7 +39,7 @@ class _NavigationState extends State<Navigation> {
   }
 
   String src =
-      "https://c1.wallpaperflare.com/preview/547/839/590/accident-bleed-bleeding-bleeding-finger.jpg";
+      "https://c4.wallpaperflare.com/wallpaper/246/739/689/digital-digital-art-artwork-illustration-abstract-hd-wallpaper-preview.jpg";
 
   @override
   Widget build(BuildContext context) {
@@ -71,39 +73,34 @@ class _NavigationState extends State<Navigation> {
                       ),
                       ScaleTap(
                         onPressed: () {
-                          Navigator.pop(context);
                           navigateTo(context, ProfileScreen());
                         },
-                        child: Icon(
-                          Icons.person_outline,
-                          color: kBlack,
+                        child: Padding(
+                          padding: EdgeInsets.only(right: 15),
+                          child: Container(
+                            width: 25,
+                            height: 25,
+                            padding: const EdgeInsets.all(0.5),
+                            decoration: BoxDecoration(
+                              shape: BoxShape.circle,
+                            ),
+                            child: CachedNetworkImage(
+                              imageUrl: src,
+                              imageBuilder: (context, imageProvider) =>
+                                  Container(
+                                decoration: BoxDecoration(
+                                  shape: BoxShape.circle,
+                                  image: DecorationImage(
+                                    image: imageProvider,
+                                    fit: BoxFit.cover,
+                                  ),
+                                ),
+                              ),
+                              errorWidget: (context, url, error) =>
+                                  const Icon(Icons.error),
+                            ),
+                          ),
                         ),
-                        // child: Padding(
-                        //   padding: EdgeInsets.only(right: 15),
-                        //   child: Container(
-                        //     width: 30,
-                        //     height: 30,
-                        //     padding: const EdgeInsets.all(0.5),
-                        //     decoration: BoxDecoration(
-                        //       shape: BoxShape.circle,
-                        //     ),
-                        //     child: CachedNetworkImage(
-                        //       imageUrl: src,
-                        //       imageBuilder: (context, imageProvider) =>
-                        //           Container(
-                        //         decoration: BoxDecoration(
-                        //           shape: BoxShape.circle,
-                        //           image: DecorationImage(
-                        //             image: imageProvider,
-                        //             fit: BoxFit.cover,
-                        //           ),
-                        //         ),
-                        //       ),
-                        //       errorWidget: (context, url, error) =>
-                        //           const Icon(Icons.error),
-                        //     ),
-                        //   ),
-                        // ),
                       ),
                     ],
                   ),
@@ -388,43 +385,13 @@ class _NavigationState extends State<Navigation> {
           actions: [
             ScaleTap(
               onPressed: () {
-                print("notification");
+                navigateTo(context, NotificationScreen());
               },
               child: const Padding(
                 padding: EdgeInsets.only(right: 15),
                 child: Icon(
                   Iconsax.notification,
                   color: kDarkGrey,
-                ),
-              ),
-            ),
-            ScaleTap(
-              onPressed: () {
-                navigateTo(context, ProfileScreen());
-              },
-              child: Padding(
-                padding: EdgeInsets.only(right: 15),
-                child: Container(
-                  width: 25,
-                  height: 25,
-                  padding: const EdgeInsets.all(0.5),
-                  decoration: BoxDecoration(
-                    shape: BoxShape.circle,
-                  ),
-                  child: CachedNetworkImage(
-                    imageUrl: src,
-                    imageBuilder: (context, imageProvider) => Container(
-                      decoration: BoxDecoration(
-                        shape: BoxShape.circle,
-                        image: DecorationImage(
-                          image: imageProvider,
-                          fit: BoxFit.cover,
-                        ),
-                      ),
-                    ),
-                    errorWidget: (context, url, error) =>
-                        const Icon(Icons.error),
-                  ),
                 ),
               ),
             ),
@@ -463,7 +430,7 @@ class _NavigationState extends State<Navigation> {
           title: Text(
             "About Us",
             style: TextStyle(
-              color: kWhite,
+              color: kBlack,
               fontWeight: FontWeight.bold,
             ),
           ),
@@ -486,7 +453,7 @@ class _NavigationState extends State<Navigation> {
           title: Text(
             "Nurse History",
             style: TextStyle(
-              color: kWhite,
+              color: kBlack,
               fontWeight: FontWeight.bold,
             ),
           ),
@@ -509,7 +476,7 @@ class _NavigationState extends State<Navigation> {
           title: Text(
             "Subscription",
             style: TextStyle(
-              color: kWhite,
+              color: kBlack,
               fontWeight: FontWeight.bold,
             ),
           ),
@@ -558,36 +525,6 @@ class _NavigationState extends State<Navigation> {
                 ),
               ),
             ),
-            ScaleTap(
-              onPressed: () {
-                // navigateTo(context, ProfileScreen());
-              },
-              child: Padding(
-                padding: EdgeInsets.only(right: 15),
-                child: Container(
-                  width: 25,
-                  height: 25,
-                  padding: const EdgeInsets.all(0.5),
-                  decoration: BoxDecoration(
-                    shape: BoxShape.circle,
-                  ),
-                  child: CachedNetworkImage(
-                    imageUrl: src,
-                    imageBuilder: (context, imageProvider) => Container(
-                      decoration: BoxDecoration(
-                        shape: BoxShape.circle,
-                        image: DecorationImage(
-                          image: imageProvider,
-                          fit: BoxFit.cover,
-                        ),
-                      ),
-                    ),
-                    errorWidget: (context, url, error) =>
-                        const Icon(Icons.error),
-                  ),
-                ),
-              ),
-            ),
           ],
         );
     }
@@ -604,7 +541,7 @@ class _NavigationState extends State<Navigation> {
       case 3:
       //  return NurseHistory();
       case 4:
-      //  return Subscription();
+       return SubscriptionScreen();
       default:
         return Placeholder();
     }
