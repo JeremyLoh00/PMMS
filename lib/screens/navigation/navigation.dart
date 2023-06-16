@@ -8,6 +8,7 @@ import 'package:private_nurse_for_client/public_components/space.dart';
 import 'package:private_nurse_for_client/screens/about_us/about_us_screen.dart';
 import 'package:private_nurse_for_client/screens/contact_us/contact_us_screen.dart';
 import 'package:private_nurse_for_client/screens/dashboard/home_screen.dart';
+import 'package:private_nurse_for_client/screens/notification/components/notification_list.dart';
 import 'package:private_nurse_for_client/screens/notification/notification_screen.dart';
 import 'package:private_nurse_for_client/screens/profile/profile_screen.dart';
 import 'package:private_nurse_for_client/screens/sign_in/sign_in_screen.dart';
@@ -539,9 +540,21 @@ class _NavigationState extends State<Navigation> {
       case 2:
         return AboutUsScreen();
       case 3:
-      //  return NurseHistory();
+        return Padding(
+          padding: const EdgeInsets.all(15),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Expanded(
+                child: NotificationList(
+                  src: src,
+                ),
+              ),
+            ],
+          ),
+        );
       case 4:
-       return SubscriptionScreen();
+        return SubscriptionScreen();
       default:
         return Placeholder();
     }

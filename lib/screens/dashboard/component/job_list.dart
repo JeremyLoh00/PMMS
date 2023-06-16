@@ -61,8 +61,8 @@ class _JobListState extends State<JobList> {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       SizedBox(
-                        width: 120,
-                        height: 120,
+                        width: 100,
+                        height: 100,
                         child: CachedNetworkImage(
                           imageUrl: widget.src,
                           imageBuilder: (context, imageProvider) => Container(
@@ -84,7 +84,7 @@ class _JobListState extends State<JobList> {
                       ),
                     ],
                   ),
-                  SizedBox(width: 5),
+                  SizedBox(width: 15),
                   Expanded(
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
@@ -92,9 +92,11 @@ class _JobListState extends State<JobList> {
                         Space(7),
                         Row(
                           children: [
-                            Expanded(
-                              child: const Text(
+                            const Expanded(
+                              child: Text(
                                 "Wound Dressing",
+                                maxLines: 1,
+                                overflow: TextOverflow.ellipsis,
                                 style: TextStyle(
                                   color: kBlack,
                                   fontWeight: FontWeight.bold,
@@ -102,26 +104,21 @@ class _JobListState extends State<JobList> {
                               ),
                             ),
                             SizedBox(width: 5),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.end,
-                              children: [
-                                Container(
-                                    padding: const EdgeInsets.symmetric(
-                                        horizontal: 10, vertical: 2),
-                                    decoration: BoxDecoration(
-                                      color: kPrimaryColor,
-                                      borderRadius: BorderRadius.circular(10),
-                                    ),
-                                    child: Text(
-                                      "Completed",
-                                      style: TextStyle(
-                                        color: kWhite,
-                                        fontSize: 12,
-                                        fontWeight: FontWeight.w500,
-                                      ),
-                                    ))
-                              ],
-                            ),
+                            Container(
+                                padding: const EdgeInsets.symmetric(
+                                    horizontal: 10, vertical: 2),
+                                decoration: BoxDecoration(
+                                  color: kPrimaryColor,
+                                  borderRadius: BorderRadius.circular(10),
+                                ),
+                                child: Text(
+                                  "Completed",
+                                  style: TextStyle(
+                                    color: kWhite,
+                                    fontSize: 12,
+                                    fontWeight: FontWeight.w500,
+                                  ),
+                                )),
                           ],
                         ),
                         Space(10),
@@ -138,7 +135,7 @@ class _JobListState extends State<JobList> {
                             Expanded(
                                 child: Text(
                               "Mr John",
-                              maxLines: 2,
+                              maxLines: 1,
                               overflow: TextOverflow.ellipsis,
                               style: TextStyle(
                                 fontSize: 12,

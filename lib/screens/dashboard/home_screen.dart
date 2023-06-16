@@ -132,6 +132,7 @@ class _HomeScreenState extends State<HomeScreen>
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 15),
           child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               const Text(
                 "Job Title",
@@ -140,18 +141,24 @@ class _HomeScreenState extends State<HomeScreen>
                   fontWeight: FontWeight.bold,
                 ),
               ),
-              SizedBox(
-                width: MediaQuery.of(context).size.width / 2.5,
-              ),
-              Expanded(
-                  flex: 1,
-                  child: ButtonSecondary(
-                    onPressed: () {
-                      navigateTo(context, CreateJob());
-                    },
-                    text: "New",
-                    icon: Icons.add,
-                  ))
+              ScaleTap(
+                onPressed: () {
+                  navigateTo(context, CreateJob());
+                },
+                child: Container(
+                  padding: EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+                  decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(15),
+                      border: Border.all(color: kPrimaryColor),
+                      color: kWhite),
+                  child: Text(
+                    "New Job",
+                    style: TextStyle(
+                      color: kPrimaryColor,
+                    ),
+                  ),
+                ),
+              )
             ],
           ),
         ),

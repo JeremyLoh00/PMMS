@@ -130,98 +130,38 @@ class _CreateServiceInfoState extends State<CreateServiceInfo> {
                 SizedBox(
                   width: 10,
                 ),
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: <Widget>[
-                    Text(
-                      "Gender",
-                      style: TextStyle(
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                    Container(
-                      height: 200,
-                      width: 180,
-                      child: Column(
-                        children: [
-                          RadioListTile(
-                            title: Text("Male"),
-                            value: listGender[0],
-                            groupValue: genderOption,
-                            onChanged: (value) {
-                              setState(() {
-                                genderOption = value.toString();
-                              });
-                            },
-                          ),
-                          RadioListTile(
-                            title: Text("Female"),
-                            value: listGender[1],
-                            groupValue: genderOption,
-                            onChanged: (value) {
-                              setState(() {
-                                genderOption = value.toString();
-                              });
-                            },
-                          ),
-                        ],
-                      ),
-                    ),
-                  ],
-                ),
-                Padding(
-                  padding: const EdgeInsets.only(right: 30.0),
+                Expanded(
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
+                    children: <Widget>[
                       Text(
-                        "Race",
+                        "Gender",
                         style: TextStyle(
                           fontWeight: FontWeight.bold,
                         ),
                       ),
                       Container(
-                        height: 250,
-                        width: 200,
+                        height: 200,
+                        width: 180,
                         child: Column(
                           children: [
                             RadioListTile(
-                              title: Text("Malay"),
-                              value: listRace[0],
-                              groupValue: raceOption,
+                              title: Text("Male"),
+                              value: listGender[0],
+                              groupValue: genderOption,
                               onChanged: (value) {
                                 setState(() {
-                                  raceOption = value.toString();
+                                  genderOption = value.toString();
                                 });
                               },
                             ),
                             RadioListTile(
-                              title: Text("Chinese"),
-                              value: listRace[1],
-                              groupValue: raceOption,
+                              title: Text("Female"),
+                              value: listGender[1],
+                              groupValue: genderOption,
                               onChanged: (value) {
                                 setState(() {
-                                  raceOption = value.toString();
-                                });
-                              },
-                            ),
-                            RadioListTile(
-                              title: Text("Indian"),
-                              value: listRace[2],
-                              groupValue: raceOption,
-                              onChanged: (value) {
-                                setState(() {
-                                  raceOption = value.toString();
-                                });
-                              },
-                            ),
-                            RadioListTile(
-                              title: Text("Others"),
-                              value: listRace[3],
-                              groupValue: raceOption,
-                              onChanged: (value) {
-                                setState(() {
-                                  raceOption = value.toString();
+                                  genderOption = value.toString();
                                 });
                               },
                             ),
@@ -229,6 +169,70 @@ class _CreateServiceInfoState extends State<CreateServiceInfo> {
                         ),
                       ),
                     ],
+                  ),
+                ),
+                Expanded(
+                  child: Padding(
+                    padding: const EdgeInsets.only(right: 10.0),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          "Race",
+                          style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                        Container(
+                          height: 250,
+                          width: 200,
+                          child: Column(
+                            children: [
+                              RadioListTile(
+                                title: Text("Malay"),
+                                value: listRace[0],
+                                groupValue: raceOption,
+                                onChanged: (value) {
+                                  setState(() {
+                                    raceOption = value.toString();
+                                  });
+                                },
+                              ),
+                              RadioListTile(
+                                title: Text("Chinese"),
+                                value: listRace[1],
+                                groupValue: raceOption,
+                                onChanged: (value) {
+                                  setState(() {
+                                    raceOption = value.toString();
+                                  });
+                                },
+                              ),
+                              RadioListTile(
+                                title: Text("Indian"),
+                                value: listRace[2],
+                                groupValue: raceOption,
+                                onChanged: (value) {
+                                  setState(() {
+                                    raceOption = value.toString();
+                                  });
+                                },
+                              ),
+                              RadioListTile(
+                                title: Text("Others"),
+                                value: listRace[3],
+                                groupValue: raceOption,
+                                onChanged: (value) {
+                                  setState(() {
+                                    raceOption = value.toString();
+                                  });
+                                },
+                              ),
+                            ],
+                          ),
+                        ),
+                      ],
+                    ),
                   ),
                 ),
               ],
