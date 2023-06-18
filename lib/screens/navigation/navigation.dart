@@ -8,6 +8,8 @@ import 'package:private_nurse_for_client/public_components/space.dart';
 import 'package:private_nurse_for_client/screens/about_us/about_us_screen.dart';
 import 'package:private_nurse_for_client/screens/contact_us/contact_us_screen.dart';
 import 'package:private_nurse_for_client/screens/dashboard/home_screen.dart';
+import 'package:private_nurse_for_client/screens/history/components/blocked_nurse_screen.dart';
+import 'package:private_nurse_for_client/screens/history/nurse_history_screen.dart';
 import 'package:private_nurse_for_client/screens/notification/components/notification_list.dart';
 import 'package:private_nurse_for_client/screens/notification/notification_screen.dart';
 import 'package:private_nurse_for_client/screens/profile/profile_screen.dart';
@@ -468,6 +470,21 @@ class _NavigationState extends State<Navigation> {
                       color: kBlack,
                     )),
           ),
+          actions: [
+            ScaleTap(
+              onPressed: () {
+                navigateTo(context, BlockedNurseScreen());
+              },
+              //trailing to navigate to blocked nurse
+              child: const Padding(
+                  padding: EdgeInsets.only(right: 15),
+                  child: Text(
+                    "Blocked Nurse",
+                    style: TextStyle(
+                        fontWeight: FontWeight.bold, color: kSecondaryColor),
+                  )),
+            ),
+          ],
         );
       case 4:
         // about us
@@ -540,19 +557,7 @@ class _NavigationState extends State<Navigation> {
       case 2:
         return AboutUsScreen();
       case 3:
-        return Padding(
-          padding: const EdgeInsets.all(15),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Expanded(
-                child: NotificationList(
-                  src: src,
-                ),
-              ),
-            ],
-          ),
-        );
+        return NurseHistoryScreen();
       case 4:
         return SubscriptionScreen();
       default:

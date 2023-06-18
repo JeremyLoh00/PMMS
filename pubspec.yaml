@@ -54,6 +54,7 @@ dependencies:
   step_progress_indicator: ^1.0.2
   image_network: ^2.5.2
   getwidget: ^3.1.1
+  flutter_rating_bar: ^4.0.1
 
 dev_dependencies:
   flutter_test:
