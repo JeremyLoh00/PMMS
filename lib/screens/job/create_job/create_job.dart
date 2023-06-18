@@ -17,6 +17,8 @@ class _CreateJobState extends State<CreateJob> {
       drawerEnableOpenDragGesture: true,
       appBar: AppBar(
         scrolledUnderElevation: 0,
+        elevation: 0,
+        centerTitle: true,
         title: Text(
           "Create Job",
           style: TextStyle(
