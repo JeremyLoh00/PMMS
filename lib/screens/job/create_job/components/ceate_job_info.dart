@@ -119,50 +119,54 @@ class _CreateJobInfoState extends State<CreateJobInfo> {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Expanded(
-              child: DropdownButtonFormField(
-                hint: Text("Preferred Week"),
-                value: pref_week,
-                onChanged: (String? newValue) {
-                  setState(() {
-                    pref_week = newValue ?? "";
-                  });
-                },
-                items: _week(),
-                decoration: InputDecoration(
-                  contentPadding: const EdgeInsets.symmetric(
-                      vertical: 5.0, horizontal: 10.0),
-                  border: OutlineInputBorder(
-                    borderSide: BorderSide(
-                      width: 3,
-                      color: Colors.grey,
+              child: Container(
+                width: 200,
+                child: DropdownButtonFormField(
+                  hint: Text("Preferred Week"),
+                  value: pref_week,
+                  onChanged: (String? newValue) {
+                    setState(() {
+                      pref_week = newValue ?? "";
+                    });
+                  },
+                  items: _week(),
+                  decoration: InputDecoration(
+                    contentPadding: const EdgeInsets.symmetric(
+                        vertical: 5.0, horizontal: 10.0),
+                    border: OutlineInputBorder(
+                      borderSide: BorderSide(
+                        width: 3,
+                        color: Colors.grey,
+                      ),
+                      borderRadius: BorderRadius.circular(10.0),
                     ),
-                    borderRadius: BorderRadius.circular(10.0),
                   ),
                 ),
               ),
             ),
-            SizedBox(
-              width: 10,
-            ),
+            SizedBox(width: 5),
             Expanded(
-              child: DropdownButtonFormField(
-                hint: Text("Preferred Days"),
-                value: pref_day,
-                onChanged: (String? newValue) {
-                  setState(() {
-                    pref_day = newValue ?? "";
-                  });
-                },
-                items: _days(),
-                decoration: InputDecoration(
-                  contentPadding: const EdgeInsets.symmetric(
-                      vertical: 5.0, horizontal: 10.0),
-                  border: OutlineInputBorder(
-                    borderSide: BorderSide(
-                      width: 3,
-                      color: Colors.grey,
+              child: Container(
+                width: 200,
+                child: DropdownButtonFormField(
+                  hint: Text("Preferred Days"),
+                  value: pref_day,
+                  onChanged: (String? newValue) {
+                    setState(() {
+                      pref_day = newValue ?? "";
+                    });
+                  },
+                  items: _days(),
+                  decoration: InputDecoration(
+                    contentPadding: const EdgeInsets.symmetric(
+                        vertical: 5.0, horizontal: 10.0),
+                    border: OutlineInputBorder(
+                      borderSide: BorderSide(
+                        width: 3,
+                        color: Colors.grey,
+                      ),
+                      borderRadius: BorderRadius.circular(10.0),
                     ),
-                    borderRadius: BorderRadius.circular(10.0),
                   ),
                 ),
               ),

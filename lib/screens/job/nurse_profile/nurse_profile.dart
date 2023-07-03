@@ -94,11 +94,14 @@ class _NurseProfileState extends State<NurseProfile> {
                 widget.hasButton == true
                     ? Row(
                         children: [
-                          ButtonSecondary(
-                            onPressed: () {
-                              Navigator.pop(context);
-                            },
-                            text: "Reject",
+                          Expanded(
+                            child: ButtonSecondary(
+                              paddingVertical: 17,
+                              onPressed: () {
+                                Navigator.pop(context);
+                              },
+                              text: "Reject",
+                            ),
                           ),
                           SizedBox(
                             width: 10,
