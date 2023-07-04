@@ -147,27 +147,23 @@ class _NurseProfileState extends State<NurseProfile> {
                                           height: 10,
                                         ),
                                         Row(
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.start,
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.spaceBetween,
                                           children: [
                                             Expanded(
-                                              flex: 1,
-                                              child: ButtonPrimary(
-                                                "Pay",
-                                                onPressed: () {},
+                                              child: Container(
+                                                height: 52,
+                                                margin: EdgeInsets.all(10),
+                                                child: ButtonPrimary(
+                                                  "Pay",
+                                                  onPressed: () {},
+                                                ),
                                               ),
                                             ),
-                                          ],
-                                        ),
-                                        const SizedBox(
-                                          height: 10,
-                                        ),
-                                        Row(
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.start,
-                                          children: [
+                                            const SizedBox(
+                                              height: 10,
+                                            ),
                                             Expanded(
-                                              flex: 1,
                                               child: ButtonSecondary(
                                                 onPressed: () {
                                                   Navigator.pop(context);
@@ -176,7 +172,7 @@ class _NurseProfileState extends State<NurseProfile> {
                                               ),
                                             ),
                                           ],
-                                        )
+                                        ),
                                       ]),
                                 ),
                               ),
