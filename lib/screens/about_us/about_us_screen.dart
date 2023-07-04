@@ -160,7 +160,7 @@ class _AboutUsScreenState extends State<AboutUsScreen> {
               ],
             ),
             Space(20),
-            titleBanner(text: "Our Service", icon: Icons.groups),
+            titleBanner(text: "Our Service", icon: Icons.home_repair_service_outlined),
             Space(10),
             Row(
               mainAxisAlignment: MainAxisAlignment.center,

@@ -19,7 +19,6 @@ import 'package:provider/provider.dart';
 import 'package:iconsax/iconsax.dart';
 
 class SignUpScreen extends StatefulWidget {
-  
   SignUpScreen({
     super.key,
   });
@@ -41,10 +40,12 @@ class _SignUpScreenState extends State<SignUpScreen> {
     return Scaffold(
       backgroundColor: kWhite,
       appBar: AppBar(
-        title: const Text( "Registration"),
+        title: const Text("Registration"),
         centerTitle: true,
-        elevation: 0,backgroundColor: Colors.transparent,
-bottomOpacity: 0.0,
+        elevation: 0,
+        backgroundColor: Colors.transparent,
+        scrolledUnderElevation: 0,
+        bottomOpacity: 0.0,
       ),
       body: Padding(
         padding: const EdgeInsets.all(15),
@@ -52,9 +53,7 @@ bottomOpacity: 0.0,
           physics: const BouncingScrollPhysics(),
           child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                PersonalInformationScreen()
-               ]),
+              children: [PersonalInformationScreen()]),
         ),
       ),
     );
