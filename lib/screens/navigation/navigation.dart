@@ -367,6 +367,7 @@ class _NavigationState extends State<Navigation> {
       case 0:
         return AppBar(
           elevation: 0,
+          scrolledUnderElevation: 0,
           centerTitle: true,
           title: Text(
             "Home",
@@ -403,6 +404,7 @@ class _NavigationState extends State<Navigation> {
       case 1:
         return AppBar(
           elevation: 0,
+          scrolledUnderElevation: 0,
           centerTitle: true,
           title: Text(
             "Contact Us",
@@ -429,6 +431,7 @@ class _NavigationState extends State<Navigation> {
         // about us
         return AppBar(
           elevation: 0,
+          scrolledUnderElevation: 0,
           centerTitle: true,
           title: Text(
             "About Us",
@@ -452,6 +455,7 @@ class _NavigationState extends State<Navigation> {
         // about us
         return AppBar(
           elevation: 0,
+          scrolledUnderElevation: 0,
           centerTitle: true,
           title: Text(
             "Nurse History",
@@ -490,6 +494,7 @@ class _NavigationState extends State<Navigation> {
         // about us
         return AppBar(
           elevation: 0,
+          scrolledUnderElevation: 0,
           centerTitle: true,
           title: Text(
             "Subscription",
@@ -512,6 +517,7 @@ class _NavigationState extends State<Navigation> {
       default:
         return AppBar(
           elevation: 0,
+          scrolledUnderElevation: 0,
           centerTitle: true,
           title: Text(
             "Error Page",
