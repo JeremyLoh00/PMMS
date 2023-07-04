@@ -41,7 +41,7 @@ class _CreateJobInfoState extends State<CreateJobInfo> {
         SizedBox(
           height: 5,
         ),
-        TextFormField(
+        TextField(
           readOnly: true,
           controller: date,
           decoration: InputDecoration(

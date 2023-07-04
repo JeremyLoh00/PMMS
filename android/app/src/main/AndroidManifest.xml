@@ -1,6 +1,6 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android">
     <application
-        android:label="private_nurse_for_client"
+        android:label="Private Nurse Client"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
         <activity

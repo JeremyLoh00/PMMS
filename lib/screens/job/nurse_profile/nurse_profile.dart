@@ -147,13 +147,17 @@ class _NurseProfileState extends State<NurseProfile> {
                                           height: 10,
                                         ),
                                         Row(
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.start,
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.spaceBetween,
                                           children: [
                                             Expanded(
-                                              child: ButtonPrimary(
-                                                "Pay",
-                                                onPressed: () {},
+                                              child: Container(
+                                                height: 52,
+                                                margin: EdgeInsets.all(10),
+                                                child: ButtonPrimary(
+                                                  "Pay",
+                                                  onPressed: () {},
+                                                ),
                                               ),
                                             ),
                                             const SizedBox(

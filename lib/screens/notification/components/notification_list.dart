@@ -34,100 +34,96 @@ class _NotificationListState extends State<NotificationList> {
                 child: Column(
                   children: [
                     Container(
-                        padding:
-                            const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 10, vertical: 5),
                         margin: EdgeInsets.only(top: 10),
                         width: double.infinity,
                         decoration: BoxDecoration(
                           color: kWhite,
                           borderRadius: BorderRadius.circular(5),
-                         
                         ),
                         child: Row(
-                            // row for 2 column: image and column
                             mainAxisAlignment: MainAxisAlignment.start,
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              // image
-                             
-                                  SizedBox(
-                                    width: 50,
-                                    height: 50,
-                                    child: Container(
-                                      width: 25,
-                                      height: 25,
-                                      padding: const EdgeInsets.all(0.5),
+                              SizedBox(
+                                width: 50,
+                                height: 50,
+                                child: Container(
+                                  width: 25,
+                                  height: 25,
+                                  padding: const EdgeInsets.all(0.5),
+                                  decoration: BoxDecoration(
+                                    shape: BoxShape.circle,
+                                  ),
+                                  child: CachedNetworkImage(
+                                    imageUrl: widget.src,
+                                    imageBuilder: (context, imageProvider) =>
+                                        Container(
                                       decoration: BoxDecoration(
                                         shape: BoxShape.circle,
-                                      ),
-                                      child: CachedNetworkImage(
-                                        imageUrl: widget.src,
-                                        imageBuilder: (context, imageProvider) =>
-                                            Container(
-                                          decoration: BoxDecoration(
-                                            shape: BoxShape.circle,
-                                            image: DecorationImage(
-                                              image: imageProvider,
-                                              fit: BoxFit.cover,
-                                            ),
-                                          ),
+                                        image: DecorationImage(
+                                          image: imageProvider,
+                                          fit: BoxFit.cover,
                                         ),
-                                        errorWidget: (context, url, error) =>
-                                            const Icon(Icons.error),
                                       ),
                                     ),
+                                    errorWidget: (context, url, error) =>
+                                        const Icon(Icons.error),
                                   ),
-                              
-                             SizedBox(width: 10,),
+                                ),
+                              ),
+                              SizedBox(
+                                width: 10,
+                              ),
                               Expanded(
                                 child: Column(
-                                             crossAxisAlignment: CrossAxisAlignment.start,      
+                                  crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
-                                 RichText(
-                                          text: new TextSpan(
-                                            style: TextStyle(color: Colors.black),
-                                            children: <TextSpan>[
-                                              new TextSpan(
-                                                text: "Your job",
-                                                style: TextStyle(
-                                                  fontSize: 12,
-                                                  fontWeight: FontWeight.w500,
-                                                ),
-                                              ),
-                                              new TextSpan(
-                                                  text: ' "Wound Dressing" ',
-                                                  style: new TextStyle(
-                                                      fontWeight: FontWeight.bold)),
-                                              new TextSpan(
-                                                text:
-                                                    "has been accepted by Nurse Aida. ",
-                                                style: TextStyle(
-                                                  fontSize: 12,
-                                                  fontWeight: FontWeight.w500,
-                                                ),
-                                              ),
-                                            ],
+                                    RichText(
+                                      text: new TextSpan(
+                                        style: TextStyle(color: Colors.black),
+                                        children: <TextSpan>[
+                                          new TextSpan(
+                                            text: "Your job",
+                                            style: TextStyle(
+                                              fontSize: 12,
+                                              fontWeight: FontWeight.w500,
+                                            ),
                                           ),
-                                        ),
-                                                      
+                                          new TextSpan(
+                                              text: ' "Wound Dressing" ',
+                                              style: new TextStyle(
+                                                  fontWeight: FontWeight.bold)),
+                                          new TextSpan(
+                                            text:
+                                                "has been accepted by Nurse Aida. ",
+                                            style: TextStyle(
+                                              fontSize: 12,
+                                              fontWeight: FontWeight.w500,
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+
                                     Text("1 hour",
-                                          style: TextStyle(
-                                              color: kTextGray,
-                                              fontWeight: FontWeight.bold,
-                                              fontSize: 12)),
+                                        style: TextStyle(
+                                            color: kTextGray,
+                                            fontWeight: FontWeight.bold,
+                                            fontSize: 12)),
                                     // Space(10),
                                     // Expanded(
-                                      // child: 
+                                    // child:
                                     // ),
                                   ],
                                 ),
                               )
                             ])),
-                            Divider(
-                    thickness: 1,
-                    color: kPrimary100Color,
-                  ),
-             
+                    Divider(
+                      thickness: 1,
+                      color: kPrimary100Color,
+                    ),
                   ],
                 )),
           );
