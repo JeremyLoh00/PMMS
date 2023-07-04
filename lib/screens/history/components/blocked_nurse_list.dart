@@ -53,19 +53,19 @@ class _BlockedNurseListState extends State<BlockedNurseList> {
               ),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.start,
-                crossAxisAlignment: CrossAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       SizedBox(
                         width: 100,
-                        height: 140,
+                        height: 100,
                         child: CachedNetworkImage(
                           imageUrl: widget.src,
                           imageBuilder: (context, imageProvider) => Container(
                             decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(5),
+                              borderRadius: BorderRadius.circular(50),
                               image: DecorationImage(
                                 image: imageProvider,
                                 fit: BoxFit.cover,
