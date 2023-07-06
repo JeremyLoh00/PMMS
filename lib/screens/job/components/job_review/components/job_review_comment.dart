@@ -1,11 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:private_nurse_for_client/constant.dart';
+import 'package:private_nurse_for_client/form_bloc/store_review_form_bloc.dart';
 import 'package:private_nurse_for_client/helpers/general_method.dart';
 import 'package:private_nurse_for_client/screens/job/components/job_review/job_review.dart';
 
 class JobReviewComment extends StatefulWidget {
-  const JobReviewComment({
+  StoreReviewFormBloc storeReviewFormBloc;
+  JobReviewComment({
     super.key,
+    required this.storeReviewFormBloc,
   });
 
   @override
@@ -14,6 +18,12 @@ class JobReviewComment extends StatefulWidget {
 
 class _JobReviewCommentState extends State<JobReviewComment> {
   TextEditingController comment = TextEditingController();
+  late final _ratingController;
+  late double _rating;
+  final double _commentRating = 1;
+  IconData? _selectedIcon;
+  bool _isVertical = false;
+  double _initialRating = 2.0;
 
   @override
   Widget build(BuildContext context) {
@@ -45,31 +55,27 @@ class _JobReviewCommentState extends State<JobReviewComment> {
                       fontSize: 12.0,
                     ),
                   ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    children: [
-                      Container(
-                        height: 30,
-                        width: 63,
-                        child: ListView.builder(
-                          scrollDirection: Axis.horizontal,
-                          shrinkWrap: true,
-                          itemCount: 4,
-                          itemBuilder: (context, index) {
-                            return Icon(
-                              Icons.star,
-                              color: Color.fromRGBO(148, 0, 0, 0.411),
-                              size: 16,
-                            );
-                          },
-                        ),
-                      ),
-                      Icon(
-                        Icons.star,
-                        color: Color.fromRGBO(148, 0, 0, 0.411),
-                        size: 16,
-                      ),
-                    ],
+                  SizedBox(
+                    width: 25,
+                  ),
+                  RatingBar.builder(
+                    onRatingUpdate: (rating) {
+                      setState(() {
+                        _rating = rating;
+                      });
+                    },
+                    updateOnDrag: true,
+                    minRating: 1,
+                    itemBuilder: (context, index) => Icon(
+                      _selectedIcon ?? Icons.star,
+                      color: kPrimaryColor,
+                    ),
+                    initialRating: _commentRating,
+                    itemCount: 5,
+                    allowHalfRating: true,
+                    itemSize: 20.0,
+                    unratedColor: Color.fromRGBO(4, 99, 128, 0.39),
+                    direction: _isVertical ? Axis.vertical : Axis.horizontal,
                   ),
                 ],
               ),

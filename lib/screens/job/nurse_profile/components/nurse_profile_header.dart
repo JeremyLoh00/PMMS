@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:private_nurse_for_client/constant.dart';
 
 class NurseProfileHeader extends StatelessWidget {
@@ -20,6 +21,8 @@ class NurseProfileHeader extends StatelessWidget {
   final String location;
   final String experience;
   final String time;
+  final double _profileRating = 4.0;
+  IconData? _selectedIcon;
 
   @override
   Widget build(BuildContext context) {
@@ -48,24 +51,18 @@ class NurseProfileHeader extends StatelessWidget {
         Row(
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
-            Container(
-              height: 47,
-              width: 95,
-              child: ListView.builder(
-                scrollDirection: Axis.horizontal,
-                shrinkWrap: true,
-                itemCount: 4,
-                itemBuilder: (context, index) {
-                  return Icon(
-                    Icons.star,
-                    color: kPrimaryColor,
-                  );
-                },
+            RatingBarIndicator(
+              itemBuilder: (context, index) => Icon(
+                _selectedIcon ?? Icons.star,
+                color: kPrimaryColor,
               ),
+              rating: _profileRating,
+              itemCount: 5,
+              itemSize: 25.0,
+              unratedColor: Color.fromRGBO(4, 99, 128, 0.39),
             ),
-            Icon(
-              Icons.star,
-              color: Color.fromRGBO(148, 0, 0, 0.411),
+            SizedBox(
+              width: 5,
             ),
             Text(
               totalReview,

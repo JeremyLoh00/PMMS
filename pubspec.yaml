@@ -27,6 +27,9 @@ environment:
 # dependencies can be manually updated by changing the version numbers below to
 # the latest version available on pub.dev. To see which dependencies have newer
 # versions available, run `flutter pub outdated`.
+dependency_overrides:
+  intl: any
+
 dependencies:
   flutter:
     sdk: flutter
@@ -56,6 +59,9 @@ dependencies:
   step_progress_indicator: ^1.0.2
   image_network: ^2.5.2
   flutter_rating_bar: ^4.0.1
+  form_bloc: ^0.30.0
+  flutter_form_bloc: ^0.30.0
+  image_picker: ^1.0.0
 
 dev_dependencies:
   flutter_test:

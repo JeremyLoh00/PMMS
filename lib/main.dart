@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:private_nurse_for_client/constant.dart';
 
 import 'screens/sign_in/sign_in_screen.dart';
 
@@ -15,7 +16,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Private Nurse Client',
       theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.red.shade900),
+        colorScheme: ColorScheme.fromSeed(seedColor: kPrimaryColor),
         useMaterial3: true,
       ),
       debugShowCheckedModeBanner: false,

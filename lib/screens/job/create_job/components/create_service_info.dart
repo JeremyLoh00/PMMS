@@ -1,8 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:private_nurse_for_client/form_bloc/store_job_form_bloc.dart';
 import 'package:private_nurse_for_client/screens/edit_profile/edit_profile_screen.dart';
 
 class CreateServiceInfo extends StatefulWidget {
-  const CreateServiceInfo({super.key});
+  StoreJobFormBloc storeJobFormBloc;
+  CreateServiceInfo({
+    super.key,
+    required this.storeJobFormBloc,
+  });
 
   @override
   State<CreateServiceInfo> createState() => _CreateServiceInfoState();
@@ -96,7 +101,7 @@ class _CreateServiceInfoState extends State<CreateServiceInfo> {
             Container(
               width: double.infinity,
               child: DropdownButtonFormField(
-                hint: Text("Preferred Days"),
+                hint: Text("Preferred Nurse"),
                 value: nurseDropdown,
                 onChanged: (String? newValue) {
                   setState(() {

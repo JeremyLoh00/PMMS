@@ -1,9 +1,14 @@
 import 'package:datetime_picker_formfield/datetime_picker_formfield.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:private_nurse_for_client/form_bloc/store_job_form_bloc.dart';
 
 class CreateJobInfo extends StatefulWidget {
-  const CreateJobInfo({super.key});
+  StoreJobFormBloc storeJobFormBloc;
+  CreateJobInfo({
+    super.key,
+    required this.storeJobFormBloc,
+  });
 
   @override
   State<CreateJobInfo> createState() => _CreateJobInfoState();

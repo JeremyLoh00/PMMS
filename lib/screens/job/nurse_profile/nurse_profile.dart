@@ -191,11 +191,14 @@ class _NurseProfileState extends State<NurseProfile> {
 
   AppBar _buildAppBar() {
     return AppBar(
-      title: Text(
-        "Profile",
-        style: TextStyle(
-          fontFamily: "Poppins",
-          fontWeight: FontWeight.bold,
+      title: Padding(
+        padding: const EdgeInsets.only(left: 130.0),
+        child: Text(
+          "Profile",
+          style: TextStyle(
+            fontFamily: "Poppins",
+            fontWeight: FontWeight.bold,
+          ),
         ),
       ),
       elevation: 0,
