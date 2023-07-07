@@ -42,6 +42,16 @@ class _SignInScreenState extends State<SignInScreen> {
                       ),
                     ),
                   ),
+                   const SizedBox(
+                    height: 30,
+                  ),
+                  const Text(
+                    "Why Pay Agent Fee? Get Your Nurse in 5 Minutes!",
+                    style: TextStyle(
+                      color: kPrimaryColor,
+                      fontSize: 15,
+                    ),
+                  ),
                   const SizedBox(
                     height: 30,
                   ),
