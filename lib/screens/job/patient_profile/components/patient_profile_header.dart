@@ -24,20 +24,29 @@ class PatientProfileHeader extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             // Contest Name
-            Expanded(
-              child: Text(
-                title,
-                style: const TextStyle(
-                  color: kBlack,
-                  fontSize: 28.0,
-                  fontFamily: "Poppins",
-                  fontWeight: FontWeight.w900,
-                ),
+            Text(
+              title,
+              style: const TextStyle(
+                color: kBlack,
+                fontSize: 28.0,
+                fontFamily: "Poppins",
+                fontWeight: FontWeight.w900,
+              ),
+            ),
+            const SizedBox(
+              width: 10,
+            ),
+            const CircleAvatar(
+              radius: 15.0,
+              backgroundColor: Color.fromRGBO(255, 227, 246, 1),
+              child: Icon(
+                Icons.female_outlined,
+                color: Color.fromRGBO(212, 81, 168, 1),
               ),
             ),
           ],
         ),
-        SizedBox(
+        const SizedBox(
           height: 10,
         ),
 
@@ -46,16 +55,19 @@ class PatientProfileHeader extends StatelessWidget {
           children: [
             Text(
               name,
-              style: TextStyle(
+              style: const TextStyle(
                 color: kPrimaryColor,
                 fontFamily: "Poppins",
                 fontSize: 20,
                 fontWeight: FontWeight.w700,
               ),
             ),
+            const SizedBox(
+              width: 5,
+            ),
             Text(
               sufname,
-              style: TextStyle(
+              style: const TextStyle(
                 color: kGrey,
                 fontFamily: "Poppins",
                 fontSize: 14,
@@ -71,16 +83,12 @@ class PatientProfileHeader extends StatelessWidget {
             fontSize: 12.0,
           ),
         ),
-        SizedBox(
+        const SizedBox(
           height: 20,
         ),
       ],
     );
   }
 
-  // String getDueDate() {
-  //   String dueDateText = DateFormat("d MMMM y").format(dueDate);
-  //   String duration = TimeDifference.inDays(dueDate);
-  //   return "Due $dueDateText. End in $duration";
-  // }
+  
 }

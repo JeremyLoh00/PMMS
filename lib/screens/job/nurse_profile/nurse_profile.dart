@@ -1,11 +1,13 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:private_nurse_for_client/constant.dart';
+import 'package:private_nurse_for_client/helpers/general_method.dart';
 import 'package:private_nurse_for_client/public_components/button_primary.dart';
 import 'package:private_nurse_for_client/public_components/button_secondary.dart';
 import 'package:private_nurse_for_client/public_components/delete_dialog.dart';
 import 'package:private_nurse_for_client/screens/job/nurse_profile/components/nurse_profile_review.dart';
 import 'package:private_nurse_for_client/screens/job/nurse_profile/components/nurse_profile_header.dart';
+import 'package:private_nurse_for_client/screens/job/nurse_profile/components/reject_reason.dart';
 import 'package:private_nurse_for_client/theme.dart';
 
 class NurseProfile extends StatefulWidget {
@@ -98,7 +100,7 @@ class _NurseProfileState extends State<NurseProfile> {
                             child: ButtonSecondary(
                               paddingVertical: 17,
                               onPressed: () {
-                                Navigator.pop(context);
+                                navigateTo(context, RejectReason());
                               },
                               text: "Reject",
                             ),
