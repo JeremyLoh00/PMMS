@@ -62,6 +62,10 @@ dependencies:
   form_bloc: ^0.30.0
   flutter_form_bloc: ^0.30.0
   image_picker: ^1.0.0
+  flutter_secure_storage: ^8.0.0
+  encrypted_shared_preferences: ^3.0.1
+  get_it: ^7.6.0
+  flutter_screenutil: ^5.8.4
 
 dev_dependencies:
   flutter_test:

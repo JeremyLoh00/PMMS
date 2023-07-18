@@ -4,6 +4,7 @@ import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_scale_tap/flutter_scale_tap.dart';
 import 'package:private_nurse_for_client/constant.dart';
+import 'package:private_nurse_for_client/models/user/user_model.dart';
 import 'package:private_nurse_for_client/screens/edit_profile/components/change_password_screen.dart';
 import 'package:private_nurse_for_client/screens/edit_profile/components/file_uploader_edit_profile.dart';
 import 'package:private_nurse_for_client/helpers/general_method.dart';
@@ -19,8 +20,12 @@ import 'package:provider/provider.dart';
 import 'package:iconsax/iconsax.dart';
 
 class SignUpScreen extends StatefulWidget {
+  int activeStepper;
+  final UserModel? userModel;
   SignUpScreen({
     super.key,
+    this.activeStepper = 1,
+    this.userModel,
   });
 
   @override

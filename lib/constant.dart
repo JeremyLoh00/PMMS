@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 
+//TODO: change rootURL
+const rootUrl = "https://private-nurse.mahirandigital.com/api/v1/";
+
 const kPrimaryColor = Color.fromRGBO(4, 99, 128, 1);
 const kPrimary100Color = Color.fromRGBO(197, 231, 241, 1);
 const kSecondaryColor = Color.fromRGBO(4, 8, 116, 1);

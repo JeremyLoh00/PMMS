@@ -2,9 +2,12 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_scale_tap/flutter_scale_tap.dart';
 import 'package:iconsax/iconsax.dart';
+import 'package:private_nurse_for_client/bloc/user_bloc.dart';
 import 'package:private_nurse_for_client/constant.dart';
 import 'package:private_nurse_for_client/helpers/general_method.dart';
+import 'package:private_nurse_for_client/public_components/custom_dialog.dart';
 import 'package:private_nurse_for_client/public_components/space.dart';
+import 'package:private_nurse_for_client/public_components/theme_spinner.dart';
 import 'package:private_nurse_for_client/screens/about_us/about_us_screen.dart';
 import 'package:private_nurse_for_client/screens/contact_us/contact_us_screen.dart';
 import 'package:private_nurse_for_client/screens/dashboard/home_screen.dart';
@@ -17,6 +20,7 @@ import 'package:private_nurse_for_client/screens/sign_in/sign_in_screen.dart';
 import 'package:private_nurse_for_client/screens/subscription/subscription_screen.dart';
 
 class Navigation extends StatefulWidget {
+  static const routeName = '/navigation';
   const Navigation({super.key});
 
   @override
@@ -328,9 +332,16 @@ class _NavigationState extends State<Navigation> {
                   thickness: 1,
                 ),
                 ScaleTap(
-                  onPressed: () {
-                    Navigator.pop(context);
-                    navigateTo(context, SignInScreen());
+                  onPressed: () async {
+                    // Navigator.pop(context);
+                    // navigateTo(context, SignInScreen());
+                    print("logout");
+                    UserBloc userBloc = UserBloc();
+                    CustomDialog.show(context,
+                        dismissOnTouchOutside: false,
+                        description: "Log you out...",
+                        center: ThemeSpinner.spinner());
+                    await userBloc.signOut(context);
                   },
                   child: Container(
                     padding: EdgeInsets.all(15),
