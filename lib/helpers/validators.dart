@@ -55,11 +55,30 @@ class InputValidator {
     return null;
   }
 
+  static String? usernameChar(String username) {
+    // lower case
+    if (!RegExp(r'^[a-z0-9_\(\)\|]+$').hasMatch(username.trim())) {
+      return "Only lowercase and ( , ) , _ , | are allowed";
+    } else if (username.trim().length > 15) {
+      return "The password you enter is too long";
+    }
+    return null;
+  }
+
   static String? passwordChar(String password) {
     if (password.length < 8) {
       return "The password must have at least 8 characters";
     } else if (password.length > 40) {
       return "The password you enter is too long";
+    }
+    return null;
+  }
+
+  static String? nameChar(String name) {
+    if (name.trim().length < 4) {
+      return "The name must have at least 4 characters";
+    } else if (name.trim().length > 40) {
+      return "The name you enter is too long";
     }
     return null;
   }

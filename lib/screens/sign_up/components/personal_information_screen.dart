@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_scale_tap/flutter_scale_tap.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:private_nurse_for_client/constant.dart';
+import 'package:private_nurse_for_client/form_bloc/register_client_form_bloc.dart';
 import 'package:private_nurse_for_client/screens/edit_profile/edit_profile_screen.dart';
 import 'package:private_nurse_for_client/public_components/button_primary.dart';
 import 'package:private_nurse_for_client/public_components/input_decoration.dart';
@@ -13,7 +14,12 @@ import 'package:private_nurse_for_client/screens/sign_up/components/email_verifi
 import 'package:private_nurse_for_client/theme.dart';
 
 class PersonalInformationScreen extends StatefulWidget {
-  const PersonalInformationScreen({super.key});
+  final RegisterClientFormBloc formBloc;
+
+  PersonalInformationScreen({
+    super.key,
+    required this.formBloc,
+  });
 
   @override
   State<PersonalInformationScreen> createState() =>
@@ -22,6 +28,7 @@ class PersonalInformationScreen extends StatefulWidget {
 
 class _PersonalInformationScreenState extends State<PersonalInformationScreen> {
   SingingCharacter? _character = SingingCharacter.male;
+  late RegisterClientFormBloc _nurseFormBloc;
   String? selectedValue;
   String src =
       "https://c4.wallpaperflare.com/wallpaper/246/739/689/digital-digital-art-artwork-illustration-abstract-hd-wallpaper-preview.jpg";
@@ -37,316 +44,323 @@ class _PersonalInformationScreenState extends State<PersonalInformationScreen> {
   ];
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        Body(activeStepper: 1,),
-        profilePic(),
-        Space(20),
-        Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          mainAxisAlignment: MainAxisAlignment.start,
-          children: [
-            Text(
-              "Personal Information",
-              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
-            ),
-          ],
-        ),
-        Space(10),
-        TextField(
-          keyboardType: TextInputType.name,
-          cursorColor: kPrimaryColor,
-          decoration: textFieldInputDecoration(
-            "Name",
-            hintText: "ex: Rolex Dilly",
-            prefixIcon: Icon(
-              Iconsax.profile_circle,
-              color: kPrimaryColor,
-            ),
+    return SingleChildScrollView(
+      physics: const BouncingScrollPhysics(),
+      child: Column(
+        children: [
+          profilePic(),
+          Space(20),
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: [
+              Text(
+                "Personal Information",
+                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
+              ),
+            ],
           ),
-        ),
-        SizedBox(
-          height: 15,
-        ),
-        TextField(
-          keyboardType: TextInputType.name,
-          cursorColor: kPrimaryColor,
-          decoration: textFieldInputDecoration(
-            "Email",
-            hintText: "ex: something@nurse.com",
-            prefixIcon: const Icon(
-              Iconsax.sms,
-              color: kPrimaryColor,
-            ),
-          ),
-        ),
-        SizedBox(
-          height: 15,
-        ),
-        TextField(
-          keyboardType: TextInputType.name,
-          cursorColor: kPrimaryColor,
-          decoration: textFieldInputDecoration(
-            "IC / Passport Number",
-            hintText: "ex:0000000000",
-            prefixIcon: const Icon(
-              Iconsax.personalcard,
-              color: kPrimaryColor,
-            ),
-          ),
-        ),
-        SizedBox(
-          height: 15,
-        ),
-        TextField(
-          keyboardType: TextInputType.name,
-          cursorColor: kPrimaryColor,
-          decoration: textFieldInputDecoration(
-            "Phone Number",
-            hintText: "ex:0123456789",
-            prefixIcon: const Icon(
-              Iconsax.call,
-              color: kPrimaryColor,
-            ),
-          ),
-        ),
-        Space(20),
-        Text(
-          "Gender",
-          style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
-        ),
-        Space(10),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceAround,
-          children: [
-            Expanded(
-              child: ListTile(
-                title: const Text('Male'),
-                leading: Radio<SingingCharacter>(
-                  value: SingingCharacter.male,
-                  groupValue: _character,
-                  onChanged: (SingingCharacter? value) {
-                    setState(() {
-                      _character = value;
-                    });
-                  },
-                ),
+          Space(10),
+          TextField(
+            keyboardType: TextInputType.name,
+            cursorColor: kPrimaryColor,
+            decoration: textFieldInputDecoration(
+              "Name",
+              hintText: "ex: Rolex Dilly",
+              prefixIcon: Icon(
+                Iconsax.profile_circle,
+                color: kPrimaryColor,
               ),
             ),
-            Expanded(
-              child: ListTile(
-                title: const Text('Female'),
-                leading: Radio<SingingCharacter>(
-                  value: SingingCharacter.female,
-                  groupValue: _character,
-                  onChanged: (SingingCharacter? value) {
-                    setState(() {
-                      _character = value;
-                    });
-                  },
-                ),
+          ),
+          SizedBox(
+            height: 15,
+          ),
+          TextField(
+            keyboardType: TextInputType.name,
+            cursorColor: kPrimaryColor,
+            decoration: textFieldInputDecoration(
+              "Email",
+              hintText: "ex: something@nurse.com",
+              prefixIcon: const Icon(
+                Iconsax.sms,
+                color: kPrimaryColor,
               ),
             ),
-          ],
-        ),
-        Space(20),
-        Text(
-          "Address",
-          style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
-        ),
-        Space(10),
-        TextField(
-          keyboardType: TextInputType.name,
-          cursorColor: kPrimaryColor,
-          decoration: textFieldInputDecoration(
+          ),
+          SizedBox(
+            height: 15,
+          ),
+          TextField(
+            keyboardType: TextInputType.name,
+            cursorColor: kPrimaryColor,
+            decoration: textFieldInputDecoration(
+              "IC / Passport Number",
+              hintText: "ex:0000000000",
+              prefixIcon: const Icon(
+                Iconsax.personalcard,
+                color: kPrimaryColor,
+              ),
+            ),
+          ),
+          SizedBox(
+            height: 15,
+          ),
+          TextField(
+            keyboardType: TextInputType.name,
+            cursorColor: kPrimaryColor,
+            decoration: textFieldInputDecoration(
+              "Phone Number",
+              hintText: "ex:0123456789",
+              prefixIcon: const Icon(
+                Iconsax.call,
+                color: kPrimaryColor,
+              ),
+            ),
+          ),
+          Space(20),
+          Text(
+            "Gender",
+            style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
+          ),
+          Space(10),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            children: [
+              Expanded(
+                child: ListTile(
+                  title: const Text('Male'),
+                  leading: Radio<SingingCharacter>(
+                    fillColor: MaterialStateColor.resolveWith(
+                        (states) => kPrimaryColor),
+                    value: SingingCharacter.male,
+                    groupValue: _character,
+                    onChanged: (SingingCharacter? value) {
+                      setState(() {
+                        _character = value;
+                      });
+                    },
+                  ),
+                ),
+              ),
+              Expanded(
+                child: ListTile(
+                  title: const Text('Female'),
+                  leading: Radio<SingingCharacter>(
+                    value: SingingCharacter.female,
+                    groupValue: _character,
+                    onChanged: (SingingCharacter? value) {
+                      setState(() {
+                        _character = value;
+                      });
+                    },
+                  ),
+                ),
+              ),
+            ],
+          ),
+          Space(20),
+          Text(
             "Address",
-            hintText: "Address",
-            prefixIcon: Icon(
-              Iconsax.home,
-              color: kPrimaryColor,
-            ),
+            style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
           ),
-        ),
-        SizedBox(
-          height: 15,
-        ),
-        Row(
-          children: [
-            Expanded(
-              flex: 3,
-              child: ScaleTap(
-                onPressed: () {},
-                child: DropdownButtonFormField2<String>(
-                  decoration: textFieldInputDecoration2(),
-                  isExpanded: true,
-                  enableFeedback: true,
-                  hint: Row(
-                    children: const [
-                      Expanded(
-                        child: Text(
-                          'City',
-                          style: TextStyle(
-                            fontSize: 14,
-                            fontWeight: FontWeight.bold,
-                            color: Colors.black,
-                          ),
-                          overflow: TextOverflow.ellipsis,
-                        ),
-                      ),
-                    ],
-                  ),
-                  dropdownStyleData: DropdownStyleData(
-                    maxHeight: 200,
-                    //swidth: double.infinity,
-                    padding: null,
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(14),
-                      boxShadow: [profileShadow(kGrey.withOpacity(0.3))],
-                      color: kWhite,
-                    ),
-                    elevation: 0,
-                    offset: const Offset(0, 0),
-                    scrollbarTheme: ScrollbarThemeData(
-                      radius: const Radius.circular(2),
-                      thickness: MaterialStateProperty.all<double>(6),
-                      thumbVisibility: MaterialStateProperty.all<bool>(true),
-                    ),
-                  ),
-                  items: items
-                      .map((item) => DropdownMenuItem<String>(
-                            value: item,
-                            child: Text(
-                              item,
-                              style: const TextStyle(
-                                fontSize: 14,
-                                fontWeight: FontWeight.bold,
-                                color: Colors.black,
-                              ),
-                              overflow: TextOverflow.ellipsis,
-                            ),
-                          ))
-                      .toList(),
-                  value: selectedValue,
-                  onChanged: (value) {
-                    setState(() {
-                      selectedValue = value as String;
-                    });
-                  },
-                ),
+          Space(10),
+          TextField(
+            keyboardType: TextInputType.name,
+            cursorColor: kPrimaryColor,
+            decoration: textFieldInputDecoration(
+              "Address",
+              hintText: "Address",
+              prefixIcon: Icon(
+                Iconsax.home,
+                color: kPrimaryColor,
               ),
             ),
-            SizedBox(
-              width: 15,
-            ),
-            Expanded(
-              flex: 3,
-              child: ScaleTap(
-                onPressed: () {},
-                child: DropdownButtonFormField2<String>(
-                  decoration: textFieldInputDecoration2(),
-                  isExpanded: true,
-                  enableFeedback: true,
-                  hint: Row(
-                    children: const [
-                      Expanded(
-                        child: Text(
-                          'State',
-                          style: TextStyle(
-                            fontSize: 14,
-                            fontWeight: FontWeight.bold,
-                            color: Colors.black,
-                          ),
-                          overflow: TextOverflow.ellipsis,
-                        ),
-                      ),
-                    ],
-                  ),
-                  dropdownStyleData: DropdownStyleData(
-                    maxHeight: 200,
-                    //swidth: double.infinity,
-                    padding: null,
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(14),
-                      boxShadow: [profileShadow(kGrey.withOpacity(0.3))],
-                      color: kWhite,
-                    ),
-                    elevation: 0,
-                    offset: const Offset(0, 0),
-                    scrollbarTheme: ScrollbarThemeData(
-                      radius: const Radius.circular(2),
-                      thickness: MaterialStateProperty.all<double>(6),
-                      thumbVisibility: MaterialStateProperty.all<bool>(true),
-                    ),
-                  ),
-                  items: items
-                      .map((item) => DropdownMenuItem<String>(
-                            value: item,
-                            child: Text(
-                              item,
-                              style: const TextStyle(
-                                fontSize: 14,
-                                fontWeight: FontWeight.bold,
-                                color: Colors.black,
-                              ),
-                              overflow: TextOverflow.ellipsis,
+          ),
+          SizedBox(
+            height: 15,
+          ),
+          Row(
+            children: [
+              Expanded(
+                flex: 3,
+                child: ScaleTap(
+                  onPressed: () {},
+                  child: DropdownButtonFormField2<String>(
+                    decoration: textFieldInputDecoration2(),
+                    isExpanded: true,
+                    enableFeedback: true,
+                    hint: Row(
+                      children: const [
+                        Expanded(
+                          child: Text(
+                            'City',
+                            style: TextStyle(
+                              fontSize: 14,
+                              fontWeight: FontWeight.bold,
+                              color: Colors.black,
                             ),
-                          ))
-                      .toList(),
-                  value: selectedValue,
-                  onChanged: (value) {
-                    setState(() {
-                      selectedValue = value as String;
-                    });
-                  },
+                            overflow: TextOverflow.ellipsis,
+                          ),
+                        ),
+                      ],
+                    ),
+                    dropdownStyleData: DropdownStyleData(
+                      maxHeight: 200,
+                      //swidth: double.infinity,
+                      padding: null,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(14),
+                        boxShadow: [profileShadow(kGrey.withOpacity(0.3))],
+                        color: kWhite,
+                      ),
+                      elevation: 0,
+                      offset: const Offset(0, 0),
+                      scrollbarTheme: ScrollbarThemeData(
+                        radius: const Radius.circular(2),
+                        thickness: MaterialStateProperty.all<double>(6),
+                        thumbVisibility: MaterialStateProperty.all<bool>(true),
+                      ),
+                    ),
+                    items: items
+                        .map((item) => DropdownMenuItem<String>(
+                              value: item,
+                              child: Text(
+                                item,
+                                style: const TextStyle(
+                                  fontSize: 14,
+                                  fontWeight: FontWeight.bold,
+                                  color: Colors.black,
+                                ),
+                                overflow: TextOverflow.ellipsis,
+                              ),
+                            ))
+                        .toList(),
+                    value: selectedValue,
+                    onChanged: (value) {
+                      setState(() {
+                        selectedValue = value as String;
+                      });
+                    },
+                  ),
                 ),
               ),
-            ),
-          ],
-        ),
-        Space(20),
-        Text(
-          "Bank Information",
-          style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
-        ),
-        Space(10),
-        TextField(
-          keyboardType: TextInputType.name,
-          cursorColor: kPrimaryColor,
-          decoration: textFieldInputDecoration(
-            "Bank",
-            hintText: "Public Bank",
-            prefixIcon: Icon(
-              Iconsax.bank,
-              color: kPrimaryColor,
+              SizedBox(
+                width: 15,
+              ),
+              Expanded(
+                flex: 3,
+                child: ScaleTap(
+                  onPressed: () {},
+                  child: DropdownButtonFormField2<String>(
+                    decoration: textFieldInputDecoration2(),
+                    isExpanded: true,
+                    enableFeedback: true,
+                    hint: Row(
+                      children: const [
+                        Expanded(
+                          child: Text(
+                            'State',
+                            style: TextStyle(
+                              fontSize: 14,
+                              fontWeight: FontWeight.bold,
+                              color: Colors.black,
+                            ),
+                            overflow: TextOverflow.ellipsis,
+                          ),
+                        ),
+                      ],
+                    ),
+                    dropdownStyleData: DropdownStyleData(
+                      maxHeight: 200,
+                      //swidth: double.infinity,
+                      padding: null,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(14),
+                        boxShadow: [profileShadow(kGrey.withOpacity(0.3))],
+                        color: kWhite,
+                      ),
+                      elevation: 0,
+                      offset: const Offset(0, 0),
+                      scrollbarTheme: ScrollbarThemeData(
+                        radius: const Radius.circular(2),
+                        thickness: MaterialStateProperty.all<double>(6),
+                        thumbVisibility: MaterialStateProperty.all<bool>(true),
+                      ),
+                    ),
+                    items: items
+                        .map((item) => DropdownMenuItem<String>(
+                              value: item,
+                              child: Text(
+                                item,
+                                style: const TextStyle(
+                                  fontSize: 14,
+                                  fontWeight: FontWeight.bold,
+                                  color: Colors.black,
+                                ),
+                                overflow: TextOverflow.ellipsis,
+                              ),
+                            ))
+                        .toList(),
+                    value: selectedValue,
+                    onChanged: (value) {
+                      setState(() {
+                        selectedValue = value as String;
+                      });
+                    },
+                  ),
+                ),
+              ),
+            ],
+          ),
+          Space(20),
+          Text(
+            "Bank Information",
+            style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
+          ),
+          Space(10),
+          TextField(
+            keyboardType: TextInputType.name,
+            cursorColor: kPrimaryColor,
+            decoration: textFieldInputDecoration(
+              "Bank",
+              hintText: "Public Bank",
+              prefixIcon: Icon(
+                Iconsax.bank,
+                color: kPrimaryColor,
+              ),
             ),
           ),
-        ),
-        SizedBox(
-          height: 15,
-        ),
-        TextField(
-          keyboardType: TextInputType.name,
-          cursorColor: kPrimaryColor,
-          decoration: textFieldInputDecoration(
-            "Account",
-            hintText: "631520200",
-            prefixIcon: Icon(
-              Iconsax.card,
-              color: kPrimaryColor,
+          SizedBox(
+            height: 15,
+          ),
+          TextField(
+            keyboardType: TextInputType.name,
+            cursorColor: kPrimaryColor,
+            decoration: textFieldInputDecoration(
+              "Account",
+              hintText: "631520200",
+              prefixIcon: Icon(
+                Iconsax.card,
+                color: kPrimaryColor,
+              ),
             ),
           ),
-        ),
-        Space(20),
-        ButtonPrimary("Next", onPressed: () {
-          Navigator.push(
-            context,
-            MaterialPageRoute(
-              builder: (context) =>
-                  EmailVerificationScreen(email: "izzatnick123@gmail.com"),
-            ),
-          );
-        })
-      ],
+          // Space(20),
+          // ButtonPrimary(
+          //   "Next",
+          //   onPressed: () {
+          //     Navigator.push(
+          //       context,
+          //       MaterialPageRoute(
+          //         builder: (context) =>
+          //             EmailVerificationScreen(email: "izzatnick123@gmail.com"),
+          //       ),
+          //     );
+          //   },
+          // ),
+        ],
+      ),
     );
   }
 }

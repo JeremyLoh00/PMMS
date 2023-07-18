@@ -5,6 +5,7 @@ import 'package:iconsax/iconsax.dart';
 import 'package:pin_code_fields/pin_code_fields.dart';
 import 'package:private_nurse_for_client/constant.dart';
 import 'package:private_nurse_for_client/helpers/general_method.dart';
+import 'package:private_nurse_for_client/models/user/user_model.dart';
 import 'package:private_nurse_for_client/public_components/h1.dart';
 import 'package:private_nurse_for_client/public_components/theme_app_bar.dart';
 import 'package:private_nurse_for_client/public_components/theme_spinner.dart';
@@ -12,7 +13,16 @@ import 'package:private_nurse_for_client/screens/sign_up/components/body.dart';
 
 class EmailVerificationScreen extends StatefulWidget {
   final String email;
-  const EmailVerificationScreen({super.key, required this.email});
+  final int activeStepper;
+  final UserModel userModel;
+  final ValueSetter<int> callBackSetActiveStepper;
+  EmailVerificationScreen({
+    super.key,
+    required this.email,
+    required this.activeStepper,
+    required this.callBackSetActiveStepper,
+    required this.userModel,
+  });
 
   @override
   State<EmailVerificationScreen> createState() =>
@@ -50,9 +60,6 @@ class _EmailVerificationScreenState extends State<EmailVerificationScreen> {
               padding: const EdgeInsets.symmetric(vertical: 0, horizontal: 30),
               child: Column(
                 children: [
-                  Body(
-                    activeStepper: 2,
-                  ),
                   Container(
                     padding: EdgeInsets.all(30),
                     decoration: BoxDecoration(),
