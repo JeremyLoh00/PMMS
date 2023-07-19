@@ -66,6 +66,9 @@ dependencies:
   encrypted_shared_preferences: ^3.0.1
   get_it: ^7.6.0
   flutter_screenutil: ^5.8.4
+  file_picker: ^5.3.2
+  open_filex: ^4.3.2
+  auto_size_text: ^3.0.0
 
 dev_dependencies:
   flutter_test:

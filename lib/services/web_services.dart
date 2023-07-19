@@ -90,22 +90,6 @@ class WebService {
     request.files.add(await http.MultipartFile.fromPath(
         'profile_photo_path', requestModel.profilePhoto!.path));
 
-    request.files.add(await http.MultipartFile.fromPath(
-        'formal_photo_1_path', requestModel.formalPhoto1Path!.path));
-
-    request.files.add(await http.MultipartFile.fromPath(
-        'formal_photo_2_path', requestModel.formalPhoto2Path!.path));
-
-    request.files.add(await http.MultipartFile.fromPath(
-        'id_file_path', requestModel.idFilePath!.path));
-
-    request.files.add(await http.MultipartFile.fromPath(
-        'license_file_path', requestModel.licenseFilePath!.path));
-
-    request.files.add(await http.MultipartFile.fromPath(
-        'work_experience_file_path',
-        requestModel.workExperienceFilePath!.path));
-
     request.headers.addAll(headers);
 
     http.Response response =

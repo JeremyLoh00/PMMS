@@ -14,21 +14,19 @@ class Body extends StatefulWidget {
   final RegisterClientFormBloc formBloc;
   final ValueChanged<bool> callBackSetIsLoading;
 
-  Body({
-    super.key,
-    required this.activeStepper,
+  Body(
+      {super.key,
+      required this.activeStepper,
       required this.callBackSetActiveStepper,
       this.userModel,
       required this.formBloc,
-      required this.callBackSetIsLoading
-  });
+      required this.callBackSetIsLoading});
 
   @override
   State<Body> createState() => _BodyState();
 }
 
 class _BodyState extends State<Body> {
-  
   int totalStepperCount = 2;
   int delayAnimationDuration = 200;
   @override
@@ -81,13 +79,13 @@ class _BodyState extends State<Body> {
       );
     } else if (widget.activeStepper == 2) {
       return EmailVerificationScreen(
-        email: "",
+        email: widget.formBloc.email.value,
         activeStepper: widget.activeStepper,
         userModel: widget.userModel ?? UserModel(email: formBloc.email.value),
         // to change tab
         callBackSetActiveStepper: widget.callBackSetActiveStepper,
       );
-    } 
+    }
     return Space(0);
   }
 }

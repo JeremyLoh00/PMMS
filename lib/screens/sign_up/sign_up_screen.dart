@@ -80,7 +80,7 @@ class _SignUpScreenState extends State<SignUpScreen>
         create: (context) => RegisterClientFormBloc(),
         child: Builder(
           builder: (context) {
-            final formBloc = BlocProvider.of<RegisterClientFormBloc>(context);
+            formBloc ??= BlocProvider.of<RegisterClientFormBloc>(context);
 
             return FormBlocListener<RegisterClientFormBloc, String, String>(
               // On submit
@@ -132,7 +132,7 @@ class _SignUpScreenState extends State<SignUpScreen>
                       _isLoading = value;
                     });
                   },
-                  formBloc: formBloc,
+                  formBloc: formBloc!,
                 ),
               ),
             );
@@ -162,7 +162,7 @@ class _SignUpScreenState extends State<SignUpScreen>
   }
 
   getLoadingText() {
-    if (widget.activeStepper == 3) {
+    if (widget.activeStepper == 1) {
       return "Registering...";
     }
     return "";
@@ -170,33 +170,39 @@ class _SignUpScreenState extends State<SignUpScreen>
 
   handleButtonOnPressed() async {
     if (widget.activeStepper == 1) {
-      // validate all inputs here
-      if (await formBloc!.name.validate() &&
-          await formBloc!.email.validate() &&
-          await formBloc!.password.validate() &&
-          await formBloc!.icNo.validate() &&
-          await formBloc!.phoneNo.validate()) {
-        setState(() {
-          widget.activeStepper = 2;
-        });
-      }
-    } else if (widget.activeStepper == 2) {
-      setState(() {
-        // formBloc!.submit();
-        widget.activeStepper = 2;
+      if (formBloc!.newProfilePhoto == null) {
+        ThemeSnackBar.showSnackBar(context, "Profile photo is required");
+      } else if (formBloc!.cityModel.value == "-1") {
+        null;
+        ThemeSnackBar.showSnackBar(context, "Please select city");
+      } else {
+        // validate all inputs here
+        if (await formBloc!.name.validate() &&
+            await formBloc!.email.validate() &&
+            await formBloc!.password.validate() &&
+            await formBloc!.icNo.validate() &&
+            await formBloc!.phoneNo.validate() &&
+            await formBloc!.address.validate() &&
+            await formBloc!.gender.validate() &&
+            await formBloc!.division.validate() &&
+            await formBloc!.cityModel.validate() &&
+            await formBloc!.bank.validate() &&
+            await formBloc!.accountNo.validate()) {
+          setState(() {
+            widget.activeStepper = 2;
+          });
+        }
         print("email verify");
-      });
 
-      print(formBloc!.toString());
-      return formBloc!.submit();
+        print(formBloc!.toString());
+        return formBloc!.submit();
+      }
     }
   }
 
   String getButtonText() {
     if (widget.activeStepper == 1) {
       return "Next";
-    } else if (widget.activeStepper == 2) {
-      return "Register";
     }
     return "";
   }
