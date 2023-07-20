@@ -1,6 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:flutter_scale_tap/flutter_scale_tap.dart';
 import 'package:private_nurse_for_client/constant.dart';
 import 'package:private_nurse_for_client/helpers/general_method.dart';
@@ -32,6 +33,8 @@ class _NurseProfileReviewState extends State<NurseProfileReview> {
   final int charactersLimit = 150;
   late String initialText;
   late String extendedText;
+  final double _reviewRating = 4.0;
+  IconData? _selectedIcon;
 
   List<String> text1 = [
     'Diabetics',
@@ -108,31 +111,18 @@ class _NurseProfileReviewState extends State<NurseProfileReview> {
                       fontSize: 14,
                       fontWeight: FontWeight.w800),
                 ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: [
-                    Container(
-                      height: 30,
-                      width: 63,
-                      child: ListView.builder(
-                        scrollDirection: Axis.horizontal,
-                        shrinkWrap: true,
-                        itemCount: 4,
-                        itemBuilder: (context, index) {
-                          return Icon(
-                            Icons.star,
-                            color: kPrimaryColor,
-                            size: 16,
-                          );
-                        },
-                      ),
-                    ),
-                    Icon(
-                      Icons.star,
-                      color: Color.fromRGBO(148, 0, 0, 0.411),
-                      size: 16,
-                    ),
-                  ],
+                RatingBarIndicator(
+                  itemBuilder: (context, index) => Icon(
+                    _selectedIcon ?? Icons.star,
+                    color: kPrimaryColor,
+                  ),
+                  rating: _reviewRating,
+                  itemCount: 5,
+                  itemSize: 15.0,
+                  unratedColor: Color.fromRGBO(4, 99, 128, 0.39),
+                ),
+                SizedBox(
+                  width: 5,
                 ),
               ],
             ),

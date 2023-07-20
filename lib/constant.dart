@@ -4,6 +4,8 @@ const kPrimaryColor = Color.fromRGBO(4 , 99, 128, 1);
 const kPrimary100Color = Color.fromRGBO(225 , 244, 250, 1);
 const kCompleted = Color.fromRGBO(6 , 95, 70, 1);
 const k100Completed = Color.fromRGBO(209 , 250, 229, 1);
+//TODO: change rootURL
+const rootUrl = "https://private-nurse.mahirandigital.com/api/v1/";
 const kSecondaryColor = Color.fromRGBO(4, 8, 116, 1);
 const kLightBlue = Color.fromRGBO(244, 247, 255, 1);
 const kDisabledText = Color.fromARGB(255, 152, 152, 152);

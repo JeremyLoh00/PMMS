@@ -1,9 +1,20 @@
+import 'dart:io';
+
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:private_nurse_for_client/constant.dart';
+import 'package:private_nurse_for_client/form_bloc/store_job_form_bloc.dart';
 import 'package:private_nurse_for_client/screens/job/create_job/components/multi_select.dart';
+import 'package:image_picker/image_picker.dart';
 
 class CreatePatientInfo extends StatefulWidget {
-  const CreatePatientInfo({super.key});
+  StoreJobFormBloc storeJobFormBloc;
+  CreatePatientInfo({
+    super.key,
+    required this.storeJobFormBloc,
+  });
 
   @override
   State<CreatePatientInfo> createState() => _CreatePatientInfoState();
@@ -38,6 +49,9 @@ class _CreatePatientInfoState extends State<CreatePatientInfo> {
   List<String> _selectPatient = [];
   List<String> _selectMedical = [];
   List<String> _selectCondition = [];
+
+  File? image1;
+  File? image2;
 
   void _showMultiSelectPatient() async {
     final List<String> patientList = [
@@ -289,7 +303,7 @@ class _CreatePatientInfoState extends State<CreatePatientInfo> {
                   width: 5,
                 ),
                 ElevatedButton.icon(
-                  icon: Icon(Icons.download),
+                  icon: Icon(Icons.upload),
                   label: Text(
                     "Upload".toUpperCase(),
                     style: TextStyle(fontSize: 14),
@@ -303,7 +317,7 @@ class _CreatePatientInfoState extends State<CreatePatientInfo> {
                           side: BorderSide(color: kSecondaryColor)),
                     ),
                   ),
-                  onPressed: () {},
+                  onPressed: () => {getGalleryImage1()},
                 ),
               ],
             ),
@@ -340,7 +354,7 @@ class _CreatePatientInfoState extends State<CreatePatientInfo> {
                   width: 5,
                 ),
                 ElevatedButton.icon(
-                  icon: Icon(Icons.download),
+                  icon: Icon(Icons.upload),
                   label: Text(
                     "Upload".toUpperCase(),
                     style: TextStyle(fontSize: 14),
@@ -354,7 +368,7 @@ class _CreatePatientInfoState extends State<CreatePatientInfo> {
                           side: BorderSide(color: kSecondaryColor)),
                     ),
                   ),
-                  onPressed: () {},
+                  onPressed: () => {getGalleryImage2()},
                 ),
               ],
             ),
@@ -379,33 +393,29 @@ class _CreatePatientInfoState extends State<CreatePatientInfo> {
                   fontWeight: FontWeight.bold,
                 ),
               ),
-              Container(
-                height: 200,
-                width: 180,
-                child: Column(
-                  children: [
-                    RadioListTile(
-                      title: Text("Male"),
-                      value: listGender[0],
-                      groupValue: genderOption,
-                      onChanged: (value) {
-                        setState(() {
-                          genderOption = value.toString();
-                        });
-                      },
-                    ),
-                    RadioListTile(
-                      title: Text("Female"),
-                      value: listGender[1],
-                      groupValue: genderOption,
-                      onChanged: (value) {
-                        setState(() {
-                          genderOption = value.toString();
-                        });
-                      },
-                    ),
-                  ],
-                ),
+              Column(
+                children: [
+                  RadioListTile(
+                    title: Text("Male"),
+                    value: listGender[0],
+                    groupValue: genderOption,
+                    onChanged: (value) {
+                      setState(() {
+                        genderOption = value.toString();
+                      });
+                    },
+                  ),
+                  RadioListTile(
+                    title: Text("Female"),
+                    value: listGender[1],
+                    groupValue: genderOption,
+                    onChanged: (value) {
+                      setState(() {
+                        genderOption = value.toString();
+                      });
+                    },
+                  ),
+                ],
               ),
             ],
           ),
@@ -422,53 +432,49 @@ class _CreatePatientInfoState extends State<CreatePatientInfo> {
                     fontWeight: FontWeight.bold,
                   ),
                 ),
-                Container(
-                  height: 250,
-                  width: 200,
-                  child: Column(
-                    children: [
-                      RadioListTile(
-                        title: Text("Malay"),
-                        value: listRace[0],
-                        groupValue: raceOption,
-                        onChanged: (value) {
-                          setState(() {
-                            raceOption = value.toString();
-                          });
-                        },
-                      ),
-                      RadioListTile(
-                        title: Text("Chinese"),
-                        value: listRace[1],
-                        groupValue: raceOption,
-                        onChanged: (value) {
-                          setState(() {
-                            raceOption = value.toString();
-                          });
-                        },
-                      ),
-                      RadioListTile(
-                        title: Text("Indian"),
-                        value: listRace[2],
-                        groupValue: raceOption,
-                        onChanged: (value) {
-                          setState(() {
-                            raceOption = value.toString();
-                          });
-                        },
-                      ),
-                      RadioListTile(
-                        title: Text("Others"),
-                        value: listRace[3],
-                        groupValue: raceOption,
-                        onChanged: (value) {
-                          setState(() {
-                            raceOption = value.toString();
-                          });
-                        },
-                      ),
-                    ],
-                  ),
+                Column(
+                  children: [
+                    RadioListTile(
+                      title: Text("Malay"),
+                      value: listRace[0],
+                      groupValue: raceOption,
+                      onChanged: (value) {
+                        setState(() {
+                          raceOption = value.toString();
+                        });
+                      },
+                    ),
+                    RadioListTile(
+                      title: Text("Chinese"),
+                      value: listRace[1],
+                      groupValue: raceOption,
+                      onChanged: (value) {
+                        setState(() {
+                          raceOption = value.toString();
+                        });
+                      },
+                    ),
+                    RadioListTile(
+                      title: Text("Indian"),
+                      value: listRace[2],
+                      groupValue: raceOption,
+                      onChanged: (value) {
+                        setState(() {
+                          raceOption = value.toString();
+                        });
+                      },
+                    ),
+                    RadioListTile(
+                      title: Text("Others"),
+                      value: listRace[3],
+                      groupValue: raceOption,
+                      onChanged: (value) {
+                        setState(() {
+                          raceOption = value.toString();
+                        });
+                      },
+                    ),
+                  ],
                 ),
               ],
             ),
@@ -626,5 +632,39 @@ class _CreatePatientInfoState extends State<CreatePatientInfo> {
         ),
       ],
     );
+  }
+
+  Future getGalleryImage1() async {
+    //access gallery and get selected image path
+    try {
+      final image1 = await ImagePicker().pickImage(source: ImageSource.gallery);
+      if (image1 == null) return;
+
+      final imageTemporary = File(image1.path);
+      setState(() {
+        this.image1 = imageTemporary;
+      });
+    } on PlatformException {
+      if (kDebugMode) {
+        print("Failed to pick image");
+      }
+    }
+  }
+
+  Future getGalleryImage2() async {
+    //access gallery and get selected image path
+    try {
+      final image2 = await ImagePicker().pickImage(source: ImageSource.gallery);
+      if (image2 == null) return;
+
+      final imageTemporary = File(image2.path);
+      setState(() {
+        this.image2 = imageTemporary;
+      });
+    } on PlatformException {
+      if (kDebugMode) {
+        print("Failed to pick image");
+      }
+    }
   }
 }

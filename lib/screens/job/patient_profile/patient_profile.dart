@@ -74,7 +74,7 @@ class _PatientProfileState extends State<PatientProfile> {
                       ),
                       const SizedBox(height: 15.0),
                       PatientProfileHeader(
-                        title: "Wound Dressing",
+                        title: "Ms. John",
                         name: "Mr. John Doe",
                         sufname: "(Son)",
                         phoneNum: "012-3456789",
@@ -86,9 +86,7 @@ class _PatientProfileState extends State<PatientProfile> {
                       const SizedBox(height: 15.0),
 
                       //Description
-                      PatientProfileDescription(
-                          description:
-                              "Rorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc vulputate libero et velit interdum."),
+                      PatientProfileDescription(),
                       const SizedBox(height: 15.0),
 
                       const SizedBox(height: 15.0),
