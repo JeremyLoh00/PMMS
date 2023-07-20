@@ -108,13 +108,13 @@ class _JobListState extends State<JobList> {
                                 padding: const EdgeInsets.symmetric(
                                     horizontal: 10, vertical: 2),
                                 decoration: BoxDecoration(
-                                  color: kPrimaryColor,
+                                  color: k100Completed,
                                   borderRadius: BorderRadius.circular(10),
                                 ),
                                 child: Text(
                                   "Completed",
                                   style: TextStyle(
-                                    color: kWhite,
+                                    color: kCompleted,
                                     fontSize: 12,
                                     fontWeight: FontWeight.w500,
                                   ),

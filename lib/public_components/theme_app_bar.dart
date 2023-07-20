@@ -26,6 +26,7 @@ class ThemeAppBar extends StatelessWidget implements PreferredSizeWidget {
   @override
   Widget build(BuildContext context) {
     return AppBar(
+      scrolledUnderElevation: 0,
       leading: previous
           ? IconButton(
               onPressed: onBackPressed ?? () => {Navigator.pop(context)},

@@ -444,13 +444,6 @@ class _NavigationState extends State<Navigation> {
           elevation: 0,
           scrolledUnderElevation: 0,
           centerTitle: true,
-          title: Text(
-            "About Us",
-            style: TextStyle(
-              color: kBlack,
-              fontWeight: FontWeight.bold,
-            ),
-          ),
           backgroundColor: Colors.transparent,
           leading: Builder(
             builder: (context) => // Ensure Scaffold is in context
