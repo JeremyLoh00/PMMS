@@ -41,6 +41,7 @@ class PaymentController extends GetxController {
         print(paymentIntentData.toString());
         displayPaymentSheet(context);
       } else {
+        Navigator.pop(context);
         ThemeSnackBar.showSnackBar(context, "Uns");
       }
     } catch (e, s) {
@@ -88,6 +89,7 @@ class PaymentController extends GetxController {
     } on Exception catch (e) {
       if (e is StripeException) {
         print("Error from Stripe: ${e.error.localizedMessage}");
+        ThemeSnackBar.showSnackBar(context, "${e.error.localizedMessage}");
       } else {
         print("Unforeseen error: ${e}");
       }
@@ -123,7 +125,9 @@ class PaymentController extends GetxController {
         'amount': await getProductPrice(),
         'currency': 'myr',
         'payment_method_types[0]': 'card',
-        'metadata[product_id]': 'prod_OIQPVXxQUB2MLX'
+        'metadata[product_id]': 'prod_OIQPVXxQUB2MLX',
+        //'automatic_payment_methods':"true",
+        
       };
       // Map<String, dynamic> body = PaymentRequestModel(
       //   cancelUrl: "https://example.com/cancel",
