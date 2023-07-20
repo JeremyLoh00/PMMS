@@ -386,9 +386,9 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
             Space(20),
             Row(
               children: [
-                SizedBox(
-                  width: MediaQuery.of(context).size.width / 2.5,
-                ),
+                // SizedBox(
+                //   width: MediaQuery.of(context).size.width / 2.5,
+                // ),
                 Expanded(
                   flex: 1,
                   child: ButtonPrimary(
