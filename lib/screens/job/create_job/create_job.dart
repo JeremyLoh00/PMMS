@@ -14,6 +14,8 @@ class CreateJob extends StatefulWidget {
 }
 
 class _CreateJobState extends State<CreateJob> {
+  Function()? onPressed;
+
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
@@ -22,46 +24,52 @@ class _CreateJobState extends State<CreateJob> {
         builder: (context) {
           final storeJobFormBloc = BlocProvider.of<StoreJobFormBloc>(context);
           return FormBlocListener<StoreJobFormBloc, String, String>(
-              onSubmitting: (context, state) {
-                FocusScope.of(context).unfocus();
-                CircularProgressIndicator();
-              },
-              onSuccess: (context, state) {
-                ThemeSnackBar.showSnackBar(
-                  context,
-                  "Success",
-                );
-              },
-              onFailure: (context, state) {
-                ThemeSnackBar.showSnackBar(
-                    context, state.failureResponse ?? "Error");
-              },
-              onSubmissionFailed: (context, state) {
-                print("on submission failed ${state}");
-              },
-              child: Scaffold(
-                backgroundColor: kWhite,
-                drawerEnableOpenDragGesture: true,
-                appBar: AppBar(
-                  scrolledUnderElevation: 0,
-                  elevation: 0,
-                  centerTitle: true,
-                  title: Text(
-                    "Create Job",
-                    style: TextStyle(
-                      fontFamily: "Poppins",
-                      fontWeight: FontWeight.bold,
+            onSubmitting: (context, state) {
+              FocusScope.of(context).unfocus();
+              CircularProgressIndicator();
+            },
+            onSuccess: (context, state) {
+              ThemeSnackBar.showSnackBar(
+                context,
+                "Success",
+              );
+            },
+            onFailure: (context, state) {
+              ThemeSnackBar.showSnackBar(
+                  context, state.failureResponse ?? "Error");
+            },
+            onSubmissionFailed: (context, state) {
+              print("on submission failed ${state}");
+            },
+            child: Scaffold(
+              backgroundColor: kWhite,
+              drawerEnableOpenDragGesture: true,
+              appBar: AppBar(
+                scrolledUnderElevation: 0,
+                elevation: 0,
+                centerTitle: true,
+                title: Text(
+                  "Create Job",
+                  style: TextStyle(
+                    fontFamily: "Poppins",
+                    fontWeight: FontWeight.bold,
+                    color: kBlack,
+                  ),
+                ),
+              ),
+              body: SafeArea(
+                child: Column(
+                  children: [
+                    Expanded(
+                      child: CreateJobHeader(
+                        storeJobFormBloc: storeJobFormBloc,
+                      ),
                     ),
-                  ),
+                  ],
                 ),
-                body: SafeArea(
-                  child: Column(
-                    children: [
-                      CreateJobHeader(storeJobFormBloc: storeJobFormBloc),
-                    ],
-                  ),
-                ),
-              ));
+              ),
+            ),
+          );
         },
       ),
     );
