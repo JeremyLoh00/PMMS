@@ -44,3 +44,7 @@ const kTextWarning = Color.fromRGBO(188, 139, 20, 6);
 // Info
 const kBgInfo = Color.fromRGBO(236, 253, 245, 1.0);
 const kTextInfo = kPrimaryColor;
+
+//Gender
+const int MALE = 1;
+const int FEMALE = 0;

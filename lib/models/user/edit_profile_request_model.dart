@@ -4,6 +4,8 @@ class EditProfileRequestModel {
   XFile? photoPath;
 
   String? address;
+  String? worldCityId;
+  String? worldDivisionId;
   String? phoneNo;
   String? name;
   String? email;
@@ -15,6 +17,8 @@ class EditProfileRequestModel {
   EditProfileRequestModel({
     this.photoPath,
     this.address,
+    this.worldCityId,
+    this.worldDivisionId,
     this.phoneNo,
     this.name,
     this.email,
@@ -26,6 +30,8 @@ class EditProfileRequestModel {
 
   EditProfileRequestModel.fromJson(Map<String, dynamic> json) {
     address = json['user[address]'];
+    worldCityId = json['user[world_city_id]'];
+    worldDivisionId = json['user[world_division_id]'];
     phoneNo = json['user[phone_no]'];
     email = json['user[email]'];
     name = json['user[name]'];
@@ -39,6 +45,8 @@ class EditProfileRequestModel {
     final Map<String, String> data = new Map<String, String>();
 
     data['user[address]'] = this.address!;
+    data['user[world_city_id]'] = this.worldCityId.toString();
+    data['user[world_division_id]'] = this.worldDivisionId.toString();
     data['user[phone_no]'] = this.phoneNo!;
     data['user[name]'] = this.name!;
     data['user[email]'] = this.email!;

@@ -20,7 +20,7 @@ import 'package:private_nurse_for_client/public_components/theme_app_bar.dart';
 import 'package:private_nurse_for_client/screens/profile/components/body.dart';
 import 'package:private_nurse_for_client/theme.dart';
 import 'package:provider/provider.dart';
-
+import 'package:pull_to_refresh/pull_to_refresh.dart';
 class ProfileScreen extends StatefulWidget {
   const ProfileScreen({super.key});
 
@@ -31,7 +31,29 @@ class ProfileScreen extends StatefulWidget {
 class _ProfileScreenState extends State<ProfileScreen> {
   late Future<UserModel?> _userModel;
   UserBloc userBloc = UserBloc();
-    Future<UserModel?> checkAuthenticated() async {
+  // For refresher
+  RefreshController _refreshController =
+      RefreshController(initialRefresh: false);
+  
+  void callBackRefresh() {
+    _onRefresh();
+  }
+
+  void _onRefresh() async {
+    UserModel? user = await checkAuthenticated();
+
+    if (user != null) {
+      // Declare notifier
+      final UserDataNotifier userDataNotifier =
+          Provider.of<UserDataNotifier>(context, listen: false);
+      // Set to the notifier
+      userDataNotifier.setUserData(user);
+    }
+    // if failed,use refreshFailed()
+    _refreshController.refreshCompleted();
+  }
+
+  Future<UserModel?> checkAuthenticated() async {
     //get data from secure storage
     try {
       final UserResponseModel userResponseModel = await userBloc.me(context);
@@ -51,6 +73,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
       return null;
     }
   }
+
   Future<UserModel?> getUserDetails() async {
     //return this._memoizer.runOnce((user) async {
     // Means no argument passed to this interface, so current user profile
@@ -69,27 +92,48 @@ class _ProfileScreenState extends State<ProfileScreen> {
     _userModel = getUserDetails();
   }
 
- 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: kWhite,
-      appBar: ThemeAppBar(
-        "Profile",
-        trailing: Padding(
-          padding: const EdgeInsets.only(right: 15),
-          child: ScaleTap(
-            onPressed: () {
-              navigateTo(context, EditProfileScreen());
-            },
-            child: const Icon(
-              Iconsax.edit,
-              color: kPrimaryColor,
-            ),
+        backgroundColor: kWhite,
+        appBar: ThemeAppBar(
+          "Profile",
+          trailing: Padding(
+            padding: const EdgeInsets.only(right: 15),
+            child: Consumer<UserDataNotifier>(
+                builder: (context, userDataNotifier, _) {
+              // If the user data in the notifier is not null
+              if (userDataNotifier.user != null) {
+                // Show UI using the data in the notifier
+                return editIcon(
+                  context,
+                  userDataNotifier.user!,
+                );
+                // Else try o get the data from shared preferences the show the UI
+              } else {
+                return FutureBuilder(
+                    future: _userModel,
+                    builder: (context, snapshot) {
+                      if (snapshot.hasData && snapshot.data != null) {
+                        // Set to the user data notifier
+                        userDataNotifier.setUserData(snapshot.data);
+                        // return UI
+                        return editIcon(
+                          context,
+                          snapshot.data!,
+                        );
+                      } else {
+                        // Show loading
+                        return Center(
+                          child: ThemeSpinner.spinner(),
+                        );
+                      }
+                    });
+              }
+            }),
           ),
         ),
-      ),
-      body: SingleChildScrollView(
+        body: SingleChildScrollView(
           child: // Use the user data notifier
               Consumer<UserDataNotifier>(
                   builder: (context, userDataNotifier, _) {
@@ -120,11 +164,26 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   });
             }
           }),
-        )
-    );
+        ));
   }
 
- 
-
-  
+  Widget editIcon(BuildContext context, UserModel userModel) {
+    return IconButton(
+      onPressed: () {
+        navigateTo(
+          context,
+          EditProfileScreen(
+            userModel: userModel,
+            callBackRefresh: callBackRefresh,
+          ),
+        );
+      },
+      splashColor: kPrimary100Color,
+      tooltip: "Edit Profile",
+      icon: Icon(
+        Iconsax.edit,
+        color: kPrimaryColor,
+      ),
+    );
+  }
 }
