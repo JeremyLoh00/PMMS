@@ -70,6 +70,7 @@ dependencies:
   open_filex: ^4.3.2
   auto_size_text: ^3.0.0
   table_calendar: ^3.0.9
+  flutter_stripe: ^9.3.0
 
 dev_dependencies:
   flutter_test:
