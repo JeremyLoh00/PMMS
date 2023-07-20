@@ -1,6 +1,8 @@
 import 'package:delayed_display/delayed_display.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:iconsax/iconsax.dart';
+import 'package:private_nurse_for_client/bloc/payment_controller.dart';
 import 'package:private_nurse_for_client/constant.dart';
 import 'package:private_nurse_for_client/public_components/button_primary.dart';
 import 'package:private_nurse_for_client/public_components/input_decoration%20copy.dart';
@@ -16,6 +18,7 @@ class ContactUsScreen extends StatefulWidget {
 class _ContactUsScreenState extends State<ContactUsScreen> {
   @override
   Widget build(BuildContext context) {
+    final PaymentController controller = Get.put(PaymentController());
     return GestureDetector(
       onTap: () => FocusScope.of(context).unfocus(),
       child: SafeArea(
@@ -81,10 +84,14 @@ class _ContactUsScreenState extends State<ContactUsScreen> {
                   ),
                 ),
               ),
-              SizedBox(height: 15,),
+              SizedBox(
+                height: 15,
+              ),
               ButtonPrimary(
                 "Sumbit",
-                onPressed: () => {},
+                onPressed: () {
+                  controller.makePayment(context: context);
+                },
               )
             ],
           ),
