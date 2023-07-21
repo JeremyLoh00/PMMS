@@ -1,46 +1,86 @@
-import 'package:private_nurse_for_client/models/feedback/feedback_model.dart';
+import 'package:private_nurse_for_client/models/emergency_contact/emergency_contact_model.dart';
 
 class NurseModel {
   int? id;
-  String? formalPhoto1Path;
-  String? formalPhoto2Path;
-  String? name;
-  String? phoneNo;
+  String? licenseNo;
+  String? workExperience;
+  String? nationality;
+  int? nationalityId;
+  String? race;
+  int? raceId;
+  String? educationLevel;
+  int? educationLevelId;
+  String? collegeName;
+  EmergencyContactModel? emergencyContact;
+  int? income;
+  bool? isCompanyNurse;
+  int? totalPatientServed;
   int? points;
-  FeedbackModel? feedbacks;
+  int? totalFeedback;
+  String? averageRating;
 
   NurseModel(
       {this.id,
-      this.formalPhoto1Path,
-      this.formalPhoto2Path,
-      this.name,
-      this.phoneNo,
+      this.licenseNo,
+      this.workExperience,
+      this.nationality,
+      this.nationalityId,
+      this.race,
+      this.raceId,
+      this.educationLevel,
+      this.educationLevelId,
+      this.collegeName,
+      this.emergencyContact,
+      this.income,
+      this.isCompanyNurse,
+      this.totalPatientServed,
       this.points,
-      this.feedbacks});
+      this.totalFeedback,
+      this.averageRating});
 
   NurseModel.fromJson(Map<String, dynamic> json) {
     id = json['id'];
-    formalPhoto1Path = json['formal_photo_1_path'];
-    formalPhoto2Path = json['formal_photo_2_path'];
-    name = json['name'];
-    phoneNo = json['phone_no'];
-    points = json['points'];
-    feedbacks = json['feedbacks'] != null
-        ? new FeedbackModel.fromJson(json['feedbacks'])
+    licenseNo = json['license_no'];
+    workExperience = json['work_experience'];
+    nationality = json['nationality'];
+    nationalityId = json['nationality_id'];
+    race = json['race'];
+    raceId = json['race_id'];
+    educationLevel = json['education_level'];
+    educationLevelId = json['education_level_id'];
+    collegeName = json['college_name'];
+    emergencyContact = json['emergency_contact'] != null
+        ? new EmergencyContactModel.fromJson(json['emergency_contact'])
         : null;
+    income = json['income'];
+    isCompanyNurse = json['is_company_nurse'];
+    totalPatientServed = json['total_patient_served'];
+    points = json['points'];
+    totalFeedback = json['total_feedback'];
+    averageRating = json['average_rating'];
   }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
     data['id'] = this.id;
-    data['formal_photo_1_path'] = this.formalPhoto1Path;
-    data['formal_photo_2_path'] = this.formalPhoto2Path;
-    data['name'] = this.name;
-    data['phone_no'] = this.phoneNo;
-    data['points'] = this.points;
-    if (this.feedbacks != null) {
-      data['feedbacks'] = this.feedbacks!.toJson();
+    data['license_no'] = this.licenseNo;
+    data['work_experience'] = this.workExperience;
+    data['nationality'] = this.nationality;
+    data['nationality_id'] = this.nationalityId;
+    data['race'] = this.race;
+    data['race_id'] = this.raceId;
+    data['education_level'] = this.educationLevel;
+    data['education_level_id'] = this.educationLevelId;
+    data['college_name'] = this.collegeName;
+    if (this.emergencyContact != null) {
+      data['emergency_contact'] = this.emergencyContact!.toJson();
     }
+    data['income'] = this.income;
+    data['is_company_nurse'] = this.isCompanyNurse;
+    data['total_patient_served'] = this.totalPatientServed;
+    data['points'] = this.points;
+    data['total_feedback'] = this.totalFeedback;
+    data['average_rating'] = this.averageRating;
     return data;
   }
 }

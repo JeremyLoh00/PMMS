@@ -1,6 +1,6 @@
 import 'dart:convert';
 
-import 'package:private_nurse_for_client/models/nurse/list_nurse_response_model.dart';
+import 'package:private_nurse_for_client/models/user/list_user_response_model.dart';
 import 'package:private_nurse_for_client/models/nurse/nurse_filter_request_model.dart';
 import 'package:private_nurse_for_client/services/resource.dart';
 
@@ -19,7 +19,7 @@ class NurseResource {
           'take': nurseHistoryFilterRequestModel.take.toString(),
         },
         parse: (response) {
-          return ListNurseResponseModel(json.decode(response.body));
+          return ListUserResponseModel(json.decode(response.body));
         });
   }
 
@@ -37,7 +37,7 @@ class NurseResource {
           'take': nurseFilterRequestModel.take.toString(),
         },
         parse: (response) {
-          return ListNurseResponseModel(json.decode(response.body));
+          return ListUserResponseModel(json.decode(response.body));
         });
   }
 }

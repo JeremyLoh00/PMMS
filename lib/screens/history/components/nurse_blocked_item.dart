@@ -5,15 +5,16 @@ import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:flutter_scale_tap/flutter_scale_tap.dart';
 import 'package:private_nurse_for_client/constant.dart';
 import 'package:private_nurse_for_client/models/nurse/nurse_model.dart';
+import 'package:private_nurse_for_client/models/user/user_model.dart';
 import 'package:private_nurse_for_client/public_components/space.dart';
 import 'package:private_nurse_for_client/public_components/theme_spinner.dart';
 import 'package:private_nurse_for_client/theme.dart';
 
 class NurseBlockedItem extends StatelessWidget {
-  final NurseModel nurseModel;
+  final UserModel userModel;
   const NurseBlockedItem({
     super.key,
-    required this.nurseModel,
+    required this.userModel,
   });
 
   @override
@@ -42,7 +43,7 @@ class NurseBlockedItem extends StatelessWidget {
                 width: 100,
                 height: 100,
                 child: CachedNetworkImage(
-                  imageUrl: nurseModel.formalPhoto1Path!,
+                  imageUrl: userModel.profilePhoto!,
                   imageBuilder: (context, imageProvider) => Container(
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(10),
@@ -80,7 +81,7 @@ class NurseBlockedItem extends StatelessWidget {
                             ),
                           ),
                           TextSpan(
-                              text: nurseModel.points!.toString(),
+                              text: userModel.nurseModel!.points!.toString(),
                               //recognizer: onTapRecognizer,
                               style: TextStyle(
                                 color: kPrimaryColor,
@@ -102,7 +103,7 @@ class NurseBlockedItem extends StatelessWidget {
                   children: [
                     Expanded(
                       child: Text(
-                        nurseModel.name!,
+                        userModel.name!,
                         maxLines: 1,
                         overflow: TextOverflow.ellipsis,
                         style: TextStyle(
@@ -114,11 +115,11 @@ class NurseBlockedItem extends StatelessWidget {
                   ],
                 ),
                 Text(
-                  nurseModel.phoneNo!,
+                  userModel.phoneNo!,
                   style: TextStyle(color: kSecondaryColor, fontSize: 10),
                 ),
                 Text(
-                  "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam.",
+                  userModel.nurseModel!.workExperience!,
                   style: TextStyle(fontSize: 10, color: kLightGrey),
                   textAlign: TextAlign.justify,
                 ),
@@ -127,8 +128,8 @@ class NurseBlockedItem extends StatelessWidget {
                   children: [
                     Expanded(
                       child: RatingBarIndicator(
-                        rating:
-                            nurseModel.feedbacks!.averageRatings!.toDouble(),
+                        rating: int.parse(userModel.nurseModel!.averageRating!)
+                            .toDouble(),
                         itemBuilder: (context, index) => Icon(
                           Icons.star,
                           color: kPrimaryColor,
@@ -187,7 +188,7 @@ class NurseBlockedItem extends StatelessWidget {
                   text: TextSpan(
                     children: [
                       TextSpan(
-                        text: nurseModel.feedbacks!.reviewCounts!.toString(),
+                        text: userModel.nurseModel!.totalFeedback!.toString(),
                         //recognizer: onTapRecognizer,
                         style: const TextStyle(
                           color: kPrimaryColor,
