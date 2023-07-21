@@ -8,9 +8,10 @@ import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 import 'package:private_nurse_for_client/bloc/nurse_bloc.dart';
 import 'package:private_nurse_for_client/constant.dart';
 import 'package:private_nurse_for_client/helpers/http_response.dart';
-import 'package:private_nurse_for_client/models/nurse/list_nurse_response_model.dart';
+import 'package:private_nurse_for_client/models/user/list_user_response_model.dart';
 import 'package:private_nurse_for_client/models/nurse/nurse_filter_request_model.dart';
 import 'package:private_nurse_for_client/models/nurse/nurse_model.dart';
+import 'package:private_nurse_for_client/models/user/user_model.dart';
 import 'package:private_nurse_for_client/public_components/empty_list.dart';
 import 'package:private_nurse_for_client/public_components/theme_spinner.dart';
 import 'package:private_nurse_for_client/screens/edit_profile/edit_profile_screen.dart';
@@ -33,7 +34,7 @@ class NurseHistoryScreen extends StatefulWidget {
 class _NurseHistoryScreenState extends State<NurseHistoryScreen> {
   NurseBloc nurseBloc = NurseBloc();
   static const _pageSize = 30;
-  final PagingController<int, NurseModel> _nursePagingController =
+  final PagingController<int, UserModel> _nursePagingController =
       PagingController(firstPageKey: 1);
 
   NurseFilterRequestModel nurseHistoryFilterRequestModel =
@@ -55,14 +56,14 @@ class _NurseHistoryScreenState extends State<NurseHistoryScreen> {
     nurseHistoryFilterRequestModel.page = pageKey;
     try {
       //Call API
-      final ListNurseResponseModel response =
+      final ListUserResponseModel response =
           await nurseBloc.getListNurseHistory(
         nurseHistoryFilterRequestModel,
       );
 
       // If success
       if (response.statusCode == HttpResponse.HTTP_OK) {
-        List<NurseModel> listNurseModel = response.data!;
+        List<UserModel> listNurseModel = response.data!;
 
         // Compare the lenght with the page size to know either already last page or not
         final isLastPage = listNurseModel.length < _pageSize;
@@ -74,6 +75,7 @@ class _NurseHistoryScreenState extends State<NurseHistoryScreen> {
         }
       } else {
         _nursePagingController.error = response.message;
+        print(response.message);
       }
     } catch (error) {
       _nursePagingController.error = "Server Error";
@@ -103,9 +105,9 @@ class _NurseHistoryScreenState extends State<NurseHistoryScreen> {
       onRefresh: _onRefresh,
       child: CustomScrollView(
         slivers: <Widget>[
-          PagedSliverList<int, NurseModel>(
+          PagedSliverList<int, UserModel>(
             pagingController: _nursePagingController,
-            builderDelegate: PagedChildBuilderDelegate<NurseModel>(
+            builderDelegate: PagedChildBuilderDelegate<UserModel>(
                 firstPageProgressIndicatorBuilder: (context) {
                   return ThemeSpinner.spinner();
                 },
@@ -120,7 +122,7 @@ class _NurseHistoryScreenState extends State<NurseHistoryScreen> {
                     ),
                 animateTransitions: true,
                 itemBuilder: (context, nurseModel, index) {
-                  return NurseHistoryItem(nurseModel: nurseModel);
+                  return NurseHistoryItem(userModel: nurseModel);
                 }),
           )
         ],
