@@ -53,7 +53,9 @@ class NurseHistoryItem extends StatelessWidget {
                   width: 100,
                   height: 100,
                   child: CachedNetworkImage(
-                    imageUrl: userModel.profilePhoto!,
+                    imageUrl: userModel.profilePhoto == null
+                        ? ""
+                        : userModel.profilePhoto!,
                     imageBuilder: (context, imageProvider) => Container(
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(10),
@@ -102,7 +104,7 @@ class NurseHistoryItem extends StatelessWidget {
                                     fontWeight: FontWeight.w500,
                                   )),
                               const TextSpan(
-                                text: "points",
+                                text: " points",
                                 //recognizer: onTapRecognizer,
                                 style: TextStyle(
                                   color: kPrimaryColor,
@@ -142,8 +144,7 @@ class NurseHistoryItem extends StatelessWidget {
                   Space(5),
                   //View rating start
                   RatingBarIndicator(
-                    rating: int.parse(userModel.nurseModel!.averageRating!)
-                        .toDouble(),
+                    rating: double.parse(userModel.nurseModel!.averageRating!),
                     itemBuilder: (context, index) => Icon(
                       Icons.star,
                       color: kPrimaryColor,
@@ -165,7 +166,7 @@ class NurseHistoryItem extends StatelessWidget {
                           ),
                         ),
                         const TextSpan(
-                          text: "Reviews",
+                          text: " Reviews",
                           //recognizer: onTapRecognizer,
                           style: TextStyle(
                             color: kPrimaryColor,
