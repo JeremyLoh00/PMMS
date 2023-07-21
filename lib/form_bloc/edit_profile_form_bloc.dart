@@ -14,24 +14,24 @@ class EditProfileFormBloc extends FormBloc<UserModel, UserResponseModel> {
   UserBloc userBloc = new UserBloc();
   XFile? newProfilePhoto;
 
-  //Name
-  final newName = TextFieldBloc(
-    validators: [
-      InputValidator.nameChar,
-    ],
-  );
-  //Email
-  final newEmail = TextFieldBloc(
-      // validators: [
-      //   InputValidator.required,
-      // ],
-      );
-  //IC
-  final newIC = TextFieldBloc(
-      // validators: [
-      //   InputValidator.required,
-      // ],
-      );
+  // //Name
+  // final newName = TextFieldBloc(
+  //   validators: [
+  //     InputValidator.nameChar,
+  //   ],
+  // );
+  // //Email
+  // final newEmail = TextFieldBloc(
+  //     // validators: [
+  //     //   InputValidator.required,
+  //     // ],
+  //     );
+  // //IC
+  // final newIC = TextFieldBloc(
+  //     // validators: [
+  //     //   InputValidator.required,
+  //     // ],
+  //     );
 
   // Phone Number
   final phoneNo = TextFieldBloc(
@@ -41,13 +41,13 @@ class EditProfileFormBloc extends FormBloc<UserModel, UserResponseModel> {
     ],
   );
   // Gender
-  final gender = SelectFieldBloc(
-    validators: [FieldBlocValidators.required],
-    items: [
-      'Female',
-      'Male',
-    ],
-  );
+  // final gender = SelectFieldBloc(
+  //   validators: [FieldBlocValidators.required],
+  //   items: [
+  //     'Female',
+  //     'Male',
+  //   ],
+  // );
 
   // Address
   final newAddress = TextFieldBloc(
@@ -80,18 +80,18 @@ class EditProfileFormBloc extends FormBloc<UserModel, UserResponseModel> {
     }
   }
 
-// Bank
-  final newBank = TextFieldBloc(
-      // validators: [
-      //   InputValidator.required,
-      // ],
-      );
-// Account
-  final newAccount = TextFieldBloc(
-      // validators: [
-      //   InputValidator.required,
-      // ],
-      );
+// // Bank
+//   final newBank = TextFieldBloc(
+//       // validators: [
+//       //   InputValidator.required,
+//       // ],
+//       );
+// // Account
+//   final newAccount = TextFieldBloc(
+//       // validators: [
+//       //   InputValidator.required,
+//       // ],
+//       );
 
   // Check phone
   Future<String?> _checkPhoneNo(String phoneNo) async {
@@ -103,28 +103,28 @@ class EditProfileFormBloc extends FormBloc<UserModel, UserResponseModel> {
   }
 
   EditProfileFormBloc(UserModel userModel) {
-    newName.updateInitialValue(userModel.name!);
-    newEmail.updateInitialValue(userModel.email!);
-    newIC.updateInitialValue(userModel.icNo!);
+    // newName.updateInitialValue(userModel.name!);
+    // newEmail.updateInitialValue(userModel.email!);
+    // newIC.updateInitialValue(userModel.icNo!);
     phoneNo.updateInitialValue(userModel.phoneNo!);
-    gender.updateInitialValue(userModel.genderId!.toString());
+    // gender.updateInitialValue(userModel.genderId!.toString());
     newAddress.updateInitialValue(userModel.address!);
     cityModel.updateInitialValue(userModel.worldCityId.toString());
     division.updateInitialValue(userModel.worldDivisionId.toString());
-    newBank.updateInitialValue(userModel.bankModel!.name!);
-    newAccount.updateInitialValue(userModel.accountNumber!);
+    // newBank.updateInitialValue(userModel.bankModel!.name!);
+    // newAccount.updateInitialValue(userModel.accountNumber!);
 
     addFieldBlocs(fieldBlocs: [
-      newName,
-      newEmail,
-      newIC,
+      // newName,
+      // newEmail,
+      // newIC,
       phoneNo,
-      gender,
+      // gender,
       newAddress,
       cityModel,
       division,
-      newBank,
-      newAccount,
+      // newBank,
+      // newAccount,
     ]);
   }
 
@@ -134,21 +134,21 @@ class EditProfileFormBloc extends FormBloc<UserModel, UserResponseModel> {
       //TODO: edit EditProfileRequestModel ikut formbloc
       EditProfileRequestModel requestModel = EditProfileRequestModel();
 
-      requestModel.name = newName.value;
-      requestModel.email = newEmail.value;
-      requestModel.ic = newIC.value;
+      // requestModel.name = newName.value;
+      // requestModel.email = newEmail.value;
+      // requestModel.ic = newIC.value;
       requestModel.phoneNo = phoneNo.value;
-      if (gender.value == 'Female') {
-        requestModel.gender = FEMALE.toString();
-      }
-      if (gender.value == 'Male') {
-        requestModel.gender = MALE.toString();
-      }
+      // if (gender.value == 'Female') {
+      //   requestModel.gender = FEMALE.toString();
+      // }
+      // if (gender.value == 'Male') {
+      //   requestModel.gender = MALE.toString();
+      // }
       requestModel.address = newAddress.value;
       requestModel.worldCityId = getCityValue().toString();
       requestModel.worldDivisionId = getDivisionValue().toString();
-      requestModel.bank = newBank.value;
-      requestModel.account = newAccount.value;
+      // requestModel.bank = newBank.value;
+      // requestModel.account = newAccount.value;
       requestModel.photoPath = newProfilePhoto;
 
       UserResponseModel responseModel =

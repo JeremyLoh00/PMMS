@@ -44,21 +44,21 @@ class EditProfileScreen extends StatefulWidget {
 enum SingingCharacter { male, female }
 
 class _EditProfileScreenState extends State<EditProfileScreen> {
-  String? selectedValue;
-  final List<String> items = [
-    'Item1',
-    'Item2',
-    'Item3',
-    'Item4',
-    'Item5',
-    'Item6',
-    'Item7',
-    'Item8',
-  ];
+  // String? selectedValue;
+  // final List<String> items = [
+  //   'Item1',
+  //   'Item2',
+  //   'Item3',
+  //   'Item4',
+  //   'Item5',
+  //   'Item6',
+  //   'Item7',
+  //   'Item8',
+  // ];
 
   SingingCharacter? _character = SingingCharacter.male;
-  String src =
-      "https://c4.wallpaperflare.com/wallpaper/246/739/689/digital-digital-art-artwork-illustration-abstract-hd-wallpaper-preview.jpg";
+  // String src =
+  //     "https://c4.wallpaperflare.com/wallpaper/246/739/689/digital-digital-art-artwork-illustration-abstract-hd-wallpaper-preview.jpg";
   @override
   bool _isLoading = false;
   XFile? selectedProfilePic;
@@ -264,63 +264,63 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                         ],
                       ),
                       Space(10),
-                      DelayedDisplay(
-                        delay: Duration(milliseconds: delayAnimationDuration),
-                        child: TextFieldBlocBuilder(
-                          textFieldBloc: formBloc.newName,
-                          keyboardType: TextInputType.name,
-                          cursorColor: kPrimaryColor,
-                          decoration: textFieldInputDecoration(
-                            "Name",
-                            hintText: "ex: Rolex Dilly",
-                            prefixIcon: Icon(
-                              Iconsax.profile_circle,
-                              color: kPrimaryColor,
-                            ),
-                          ),
-                        ),
-                      ),
-                      SizedBox(
-                        height: 15,
-                      ),
-                      DelayedDisplay(
-                        delay: Duration(milliseconds: delayAnimationDuration),
-                        child: TextFieldBlocBuilder(
-                          textFieldBloc: formBloc.newEmail,
-                          keyboardType: TextInputType.name,
-                          cursorColor: kPrimaryColor,
-                          decoration: textFieldInputDecoration(
-                            "Email",
-                            hintText: "ex: something@nurse.com",
-                            prefixIcon: const Icon(
-                              Iconsax.sms,
-                              color: kPrimaryColor,
-                            ),
-                          ),
-                        ),
-                      ),
-                      SizedBox(
-                        height: 15,
-                      ),
-                      DelayedDisplay(
-                        delay: Duration(milliseconds: delayAnimationDuration),
-                        child: TextFieldBlocBuilder(
-                          textFieldBloc: formBloc.newIC,
-                          keyboardType: TextInputType.name,
-                          cursorColor: kPrimaryColor,
-                          decoration: textFieldInputDecoration(
-                            "IC / Passport Number",
-                            hintText: "ex:0000000000",
-                            prefixIcon: const Icon(
-                              Iconsax.personalcard,
-                              color: kPrimaryColor,
-                            ),
-                          ),
-                        ),
-                      ),
-                      SizedBox(
-                        height: 15,
-                      ),
+                      // DelayedDisplay(
+                      //   delay: Duration(milliseconds: delayAnimationDuration),
+                      //   child: TextFieldBlocBuilder(
+                      //     textFieldBloc: formBloc.newName,
+                      //     keyboardType: TextInputType.name,
+                      //     cursorColor: kPrimaryColor,
+                      //     decoration: textFieldInputDecoration(
+                      //       "Name",
+                      //       hintText: "ex: Rolex Dilly",
+                      //       prefixIcon: Icon(
+                      //         Iconsax.profile_circle,
+                      //         color: kPrimaryColor,
+                      //       ),
+                      //     ),
+                      //   ),
+                      // ),
+                      // SizedBox(
+                      //   height: 15,
+                      // ),
+                      // DelayedDisplay(
+                      //   delay: Duration(milliseconds: delayAnimationDuration),
+                      //   child: TextFieldBlocBuilder(
+                      //     textFieldBloc: formBloc.newEmail,
+                      //     keyboardType: TextInputType.name,
+                      //     cursorColor: kPrimaryColor,
+                      //     decoration: textFieldInputDecoration(
+                      //       "Email",
+                      //       hintText: "ex: something@nurse.com",
+                      //       prefixIcon: const Icon(
+                      //         Iconsax.sms,
+                      //         color: kPrimaryColor,
+                      //       ),
+                      //     ),
+                      //   ),
+                      // ),
+                      // SizedBox(
+                      //   height: 15,
+                      // ),
+                      // DelayedDisplay(
+                      //   delay: Duration(milliseconds: delayAnimationDuration),
+                      //   child: TextFieldBlocBuilder(
+                      //     textFieldBloc: formBloc.newIC,
+                      //     keyboardType: TextInputType.name,
+                      //     cursorColor: kPrimaryColor,
+                      //     decoration: textFieldInputDecoration(
+                      //       "IC / Passport Number",
+                      //       hintText: "ex:0000000000",
+                      //       prefixIcon: const Icon(
+                      //         Iconsax.personalcard,
+                      //         color: kPrimaryColor,
+                      //       ),
+                      //     ),
+                      //   ),
+                      // ),
+                      // SizedBox(
+                      //   height: 15,
+                      // ),
                       DelayedDisplay(
                         delay: Duration(milliseconds: delayAnimationDuration),
                         child: TextFieldBlocBuilder(
@@ -338,25 +338,25 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                         ),
                       ),
                       Space(20),
-                      Text(
-                        "Gender",
-                        style: TextStyle(
-                            fontWeight: FontWeight.bold, fontSize: 20),
-                      ),
-                      Space(10),
-                      RadioButtonGroupFieldBlocBuilder<String>(
-                        fillColor: MaterialStateProperty.resolveWith<Color>(
-                            (Set<MaterialState> states) {
-                          return kPrimaryColor;
-                        }),
-                        selectFieldBloc: formBloc.gender,
-                        itemBuilder: (context, dynamic value) => FieldItem(
-                          child: Text(value),
-                        ),
-                        decoration: const InputDecoration(
-                          prefixIcon: SizedBox(),
-                        ),
-                      ),
+                      // Text(
+                      //   "Gender",
+                      //   style: TextStyle(
+                      //       fontWeight: FontWeight.bold, fontSize: 20),
+                      // ),
+                      // Space(10),
+                      // RadioButtonGroupFieldBlocBuilder<String>(
+                      //   fillColor: MaterialStateProperty.resolveWith<Color>(
+                      //       (Set<MaterialState> states) {
+                      //     return kPrimaryColor;
+                      //   }),
+                      //   selectFieldBloc: formBloc.gender,
+                      //   itemBuilder: (context, dynamic value) => FieldItem(
+                      //     child: Text(value),
+                      //   ),
+                      //   decoration: const InputDecoration(
+                      //     prefixIcon: SizedBox(),
+                      //   ),
+                      // ),
                       // Row(
                       //   mainAxisAlignment: MainAxisAlignment.spaceAround,
                       //   children: [
@@ -364,8 +364,16 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                       //       child: ListTile(
                       //         title: const Text('Male'),
                       //         leading: Radio<SingingCharacter>(
+                      //           fillColor:
+                      //               MaterialStateProperty.resolveWith<Color>(
+                      //                   (Set<MaterialState> states) {
+                      //             return kPrimaryColor;
+                      //           }),
                       //           value: SingingCharacter.male,
-                      //           groupValue: _character,
+                      //           groupValue: widget.userModel.genderId! == 1
+                      //               ? _character = SingingCharacter.male
+                      //               : SingingCharacter.female,
+                      //           // _character,
                       //           onChanged: (SingingCharacter? value) {
                       //             setState(() {
                       //               _character = value;
@@ -378,8 +386,16 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                       //       child: ListTile(
                       //         title: const Text('Female'),
                       //         leading: Radio<SingingCharacter>(
+                      //           fillColor:
+                      //               MaterialStateProperty.resolveWith<Color>(
+                      //                   (Set<MaterialState> states) {
+                      //             return kPrimaryColor;
+                      //           }),
                       //           value: SingingCharacter.female,
-                      //           groupValue: _character,
+                      //           groupValue: widget.userModel.genderId! == 1
+                      //               ? _character = SingingCharacter.male
+                      //               : SingingCharacter.female,
+                      //           // _character,
                       //           onChanged: (SingingCharacter? value) {
                       //             setState(() {
                       //               _character = value;
@@ -418,6 +434,47 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                       ),
                       Row(
                         children: [
+                          Expanded(
+                            flex: 3,
+                            child: ScaleTap(
+                              onPressed: () {},
+                              child: StyledDropdown<DivisionModel>(
+                                items: listDivision!
+                                    .map<DropdownMenuItem<DivisionModel>>(
+                                  (DivisionModel model) {
+                                    return DropdownMenuItem<DivisionModel>(
+                                      value: model, // Set the value to the ID
+                                      child: Text(
+                                        model.name.toString(),
+                                        style: const TextStyle(
+                                          fontSize: 14,
+                                          fontWeight: FontWeight.bold,
+                                          overflow: TextOverflow.ellipsis,
+                                        ),
+                                      ),
+                                    );
+                                  },
+                                ).toList(),
+                                selected: selectedDivision,
+                                list: listDivision!,
+                                setDropdownValue: (value) {
+                                  setState(() {
+                                    selectedDivision = listDivision!.firstWhere(
+                                      (model) => model.id == value.id,
+                                    ); // Find the model based on the ID
+                                    print(selectedDivision.id);
+                                    formBloc.division.updateValue(
+                                        selectedDivision.id!.toString());
+
+                                    formBloc.cityModel.updateValue("-1");
+
+                                    onChangeDivision();
+                                  });
+                                  // updateListJobs();
+                                },
+                              ),
+                            ),
+                          ),
                           Expanded(
                             flex: 3,
                             child: ScaleTap(
@@ -524,92 +581,85 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                           //     ),
                           //   ),
                           // ),
-                          Expanded(
-                            flex: 3,
-                            child: ScaleTap(
-                              onPressed: () {},
-                              child: StyledDropdown<DivisionModel>(
-                                items: listDivision!
-                                    .map<DropdownMenuItem<DivisionModel>>(
-                                  (DivisionModel model) {
-                                    return DropdownMenuItem<DivisionModel>(
-                                      value: model, // Set the value to the ID
-                                      child: Text(
-                                        model.name.toString(),
-                                        style: const TextStyle(
-                                          fontSize: 14,
-                                          fontWeight: FontWeight.bold,
-                                          overflow: TextOverflow.ellipsis,
-                                        ),
-                                      ),
-                                    );
-                                  },
-                                ).toList(),
-                                selected: selectedDivision,
-                                list: listDivision!,
-                                setDropdownValue: (value) {
-                                  setState(() {
-                                    selectedDivision = listDivision!.firstWhere(
-                                      (model) => model.id == value.id,
-                                    ); // Find the model based on the ID
-                                    print(selectedDivision.id);
-                                    formBloc.division.updateValue(
-                                        selectedDivision.id!.toString());
-
-                                    formBloc.cityModel.updateValue("-1");
-
-                                    onChangeDivision();
-                                  });
-                                  // updateListJobs();
-                                },
-                              ),
-                            ),
-                          ),
+                          
                         ],
                       ),
-                      Space(20),
-                      Text(
-                        "Bank Information",
-                        style: TextStyle(
-                            fontWeight: FontWeight.bold, fontSize: 20),
-                      ),
-                      Space(10),
-                      DelayedDisplay(
-                        delay: Duration(milliseconds: delayAnimationDuration),
-                        child: TextFieldBlocBuilder(
-                          textFieldBloc: formBloc.newBank,
-                          keyboardType: TextInputType.name,
-                          cursorColor: kPrimaryColor,
-                          decoration: textFieldInputDecoration(
-                            "Bank",
-                            hintText: "Public Bank",
-                            prefixIcon: Icon(
-                              Iconsax.bank,
-                              color: kPrimaryColor,
+                      Visibility(
+                              visible: false,
+                              child: TextFieldBlocBuilder(
+                                textFieldBloc: formBloc.division,
+                                keyboardType: TextInputType.name,
+                                cursorColor: kPrimaryColor,
+                                decoration: textFieldInputDecoration(
+                                  "Hidden State",
+                                  hintText: "Johor",
+                                  prefixIcon: Icon(
+                                    Iconsax.profile_circle,
+                                    color: kPrimaryColor,
+                                  ),
+                                ),
+                              ),
                             ),
-                          ),
-                        ),
-                      ),
-                      SizedBox(
-                        height: 15,
-                      ),
-                      DelayedDisplay(
-                        delay: Duration(milliseconds: delayAnimationDuration),
-                        child: TextFieldBlocBuilder(
-                          textFieldBloc: formBloc.newAccount,
-                          keyboardType: TextInputType.name,
-                          cursorColor: kPrimaryColor,
-                          decoration: textFieldInputDecoration(
-                            "Account",
-                            hintText: "631520200",
-                            prefixIcon: Icon(
-                              Iconsax.card,
-                              color: kPrimaryColor,
+                            Visibility(
+                              visible: false,
+                              child: TextFieldBlocBuilder(
+                                textFieldBloc: formBloc.cityModel,
+                                keyboardType: TextInputType.name,
+                                cursorColor: kPrimaryColor,
+                                decoration: textFieldInputDecoration(
+                                  "Hidden City",
+                                  hintText: "Banting",
+                                  prefixIcon: Icon(
+                                    Iconsax.profile_circle,
+                                    color: kPrimaryColor,
+                                  ),
+                                ),
+                              ),
                             ),
-                          ),
-                        ),
-                      ),
+                            Space(20),
                       Space(20),
+                      // Text(
+                      //   "Bank Information",
+                      //   style: TextStyle(
+                      //       fontWeight: FontWeight.bold, fontSize: 20),
+                      // ),
+                      // Space(10),
+                      // DelayedDisplay(
+                      //   delay: Duration(milliseconds: delayAnimationDuration),
+                      //   child: TextFieldBlocBuilder(
+                      //     textFieldBloc: formBloc.newBank,
+                      //     keyboardType: TextInputType.name,
+                      //     cursorColor: kPrimaryColor,
+                      //     decoration: textFieldInputDecoration(
+                      //       "Bank",
+                      //       hintText: "Public Bank",
+                      //       prefixIcon: Icon(
+                      //         Iconsax.bank,
+                      //         color: kPrimaryColor,
+                      //       ),
+                      //     ),
+                      //   ),
+                      // ),
+                      // SizedBox(
+                      //   height: 15,
+                      // ),
+                      // DelayedDisplay(
+                      //   delay: Duration(milliseconds: delayAnimationDuration),
+                      //   child: TextFieldBlocBuilder(
+                      //     textFieldBloc: formBloc.newAccount,
+                      //     keyboardType: TextInputType.name,
+                      //     cursorColor: kPrimaryColor,
+                      //     decoration: textFieldInputDecoration(
+                      //       "Account",
+                      //       hintText: "631520200",
+                      //       prefixIcon: Icon(
+                      //         Iconsax.card,
+                      //         color: kPrimaryColor,
+                      //       ),
+                      //     ),
+                      //   ),
+                      // ),
+                      // Space(20),
                       Row(
                         children: [
                           // SizedBox(
@@ -637,106 +687,6 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
               );
             }),
           ),
-        ),
-      ),
-    );
-  }
-
-  Widget profileInformation(
-      {required String title,
-      required IconData icon,
-      required String sub,
-      String? relation,
-      String? description}) {
-    return Container(
-      margin: EdgeInsets.only(top: 15),
-      padding: EdgeInsets.all(15),
-      width: double.infinity,
-      decoration: BoxDecoration(
-          color: kPrimary100Color,
-          borderRadius: BorderRadius.circular(8),
-          boxShadow: [
-            profileShadow(kPrimary100Color),
-          ]),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text(
-            title,
-            style: TextStyle(
-              fontWeight: FontWeight.bold,
-            ),
-          ),
-          Space(10),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.start,
-            children: [
-              SizedBox(width: 5),
-              Icon(
-                icon,
-                size: 20,
-                color: kPrimaryColor,
-              ),
-              SizedBox(width: 15),
-              Expanded(
-                flex: 5,
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      relation != null ? "$sub ($relation)" : sub,
-                      style: TextStyle(
-                        color: kPrimaryColor,
-                        fontWeight: FontWeight.w500,
-                        fontSize: 12,
-                      ),
-                    ),
-                    Space(3),
-                    description != null
-                        ? Text(
-                            description,
-                            style: TextStyle(
-                              color: kGrey,
-                              fontSize: 12,
-                            ),
-                          )
-                        : Space(0),
-                  ],
-                ),
-              ),
-            ],
-          )
-        ],
-      ),
-    );
-  }
-
-  Widget profilePic() {
-    return Hero(
-      tag: 'editprofile',
-      child: Container(
-        width: 100,
-        height: 100,
-        padding: EdgeInsets.all(0.5),
-        decoration: BoxDecoration(
-          shape: BoxShape.circle,
-          border: Border.all(color: kPrimaryColor),
-        ),
-        child: CachedNetworkImage(
-          imageUrl: src,
-          imageBuilder: (context, imageProvider) => Container(
-            decoration: BoxDecoration(
-              shape: BoxShape.circle,
-              image: DecorationImage(
-                image: imageProvider,
-                fit: BoxFit.cover,
-              ),
-            ),
-          ),
-          placeholder: (context, url) => const CircularProgressIndicator(
-            color: kPrimaryColor,
-          ),
-          errorWidget: (context, url, error) => const Icon(Icons.error),
         ),
       ),
     );
