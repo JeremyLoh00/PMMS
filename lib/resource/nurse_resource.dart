@@ -8,7 +8,7 @@ class NurseResource {
   static Resource getListNurseHistory(
       NurseFilterRequestModel nurseHistoryFilterRequestModel) {
     return Resource(
-        url: 'client/nurse-history/nurses',
+        url: 'client/nurse-history',
         params: {
           // Calculate number page based on offset and take
           'page': ((nurseHistoryFilterRequestModel.page! /
@@ -26,7 +26,7 @@ class NurseResource {
   static Resource getListNurseBlocked(
       NurseFilterRequestModel nurseFilterRequestModel) {
     return Resource(
-        url: 'client/blocked-nurse/nurses',
+        url: 'client/blocked-nurse',
         params: {
           // Calculate number page based on offset and take
           'page':
