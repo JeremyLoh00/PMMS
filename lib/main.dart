@@ -1,4 +1,7 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
+import 'package:flutter_stripe/flutter_stripe.dart';
 import 'package:get_it/get_it.dart';
 import 'package:private_nurse_for_client/app.dart';
 import 'package:private_nurse_for_client/bloc/city_bloc.dart';
@@ -19,6 +22,9 @@ import 'screens/sign_in/sign_in_screen.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  HttpOverrides.global = MyHttpOverrides();
+  Stripe.publishableKey =
+      'pk_test_51NVTKRFfsjmBEM78bAzoEV8SdPbmNhLLqkjPjyRnGWgdNXdM9BCBaEnuufHITCR1osydRhfA0EPheV7qvNg6FA3S00XiJBLSZE';
   GetIt.instance.registerSingleton<UserModel>(UserModel());
 
   UserModel user = UserModel();
@@ -109,4 +115,13 @@ void main() async {
   runApp(MyApp(
     initialRoute: initialRoute,
   ));
+}
+
+class MyHttpOverrides extends HttpOverrides {
+  @override
+  HttpClient createHttpClient(SecurityContext? context) {
+    return super.createHttpClient(context)
+      ..badCertificateCallback =
+          (X509Certificate cert, String host, int port) => true;
+  }
 }

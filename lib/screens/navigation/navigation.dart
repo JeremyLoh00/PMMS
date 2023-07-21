@@ -518,13 +518,19 @@ class _NavigationState extends State<Navigation> {
                 navigateTo(context, BlockedNurseScreen());
               },
               //trailing to navigate to blocked nurse
-              child: const Padding(
+              child: const Center(
+                child: Padding(
                   padding: EdgeInsets.only(right: 15),
                   child: Text(
                     "Blocked Nurse",
                     style: TextStyle(
-                        fontWeight: FontWeight.bold, color: kSecondaryColor),
-                  )),
+                      fontWeight: FontWeight.bold,
+                      color: kSecondaryColor,
+                      fontSize: 12,
+                    ),
+                  ),
+                ),
+              ),
             ),
           ],
         );

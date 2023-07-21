@@ -9,6 +9,7 @@ import 'package:private_nurse_for_client/public_components/input_decoration.dart
 import 'package:private_nurse_for_client/public_components/space.dart';
 import 'package:private_nurse_for_client/screens/job/create_job/create_job.dart';
 import 'package:private_nurse_for_client/screens/dashboard/component/job_list.dart';
+import 'package:private_nurse_for_client/screens/job/create_job/select_job.dart';
 import 'package:private_nurse_for_client/theme.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -72,8 +73,8 @@ class _HomeScreenState extends State<HomeScreen>
                 decoration: textFieldInputDecoration2(),
                 isExpanded: true,
                 enableFeedback: true,
-                hint: Row(
-                  children: const [
+                hint: const Row(
+                  children: [
                     Expanded(
                       child: Text(
                         'Job Status',
@@ -143,15 +144,16 @@ class _HomeScreenState extends State<HomeScreen>
               ),
               ScaleTap(
                 onPressed: () {
-                  navigateTo(context, CreateJob());
+                  navigateTo(context, const SelectJob());
                 },
                 child: Container(
-                  padding: EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
                   decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(15),
                       border: Border.all(color: kPrimaryColor),
                       color: kWhite),
-                  child: Text(
+                  child: const Text(
                     "New Job",
                     style: TextStyle(
                       color: kPrimaryColor,

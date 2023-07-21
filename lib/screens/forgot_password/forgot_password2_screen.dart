@@ -4,11 +4,15 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:pin_code_fields/pin_code_fields.dart';
+import 'package:private_nurse_for_client/bloc/forgot_password_bloc.dart';
 import 'package:private_nurse_for_client/constant.dart';
 import 'package:private_nurse_for_client/helpers/general_method.dart';
+import 'package:private_nurse_for_client/models/default_response_model.dart';
 import 'package:private_nurse_for_client/public_components/h1.dart';
 import 'package:private_nurse_for_client/public_components/theme_app_bar.dart';
+import 'package:private_nurse_for_client/public_components/theme_snack_bar.dart';
 import 'package:private_nurse_for_client/public_components/theme_spinner.dart';
+import 'package:private_nurse_for_client/screens/forgot_password/forgot_password3_screen.dart';
 
 class ForgotPassword2Screen extends StatefulWidget {
   final String email;
@@ -19,6 +23,8 @@ class ForgotPassword2Screen extends StatefulWidget {
 }
 
 class _ForgotPassword2ScreenState extends State<ForgotPassword2Screen> {
+  final ForgotPasswordBloc forgotPassword = new ForgotPasswordBloc();
+
   StreamController<ErrorAnimationType> errorController =
       StreamController<ErrorAnimationType>();
   bool isLoading = false;
@@ -143,37 +149,104 @@ class _ForgotPassword2ScreenState extends State<ForgotPassword2Screen> {
                           hasError = false;
                         });
 
-                        SizedBox(
-                          height: 20,
-                        );
-                        RichText(
-                          textAlign: TextAlign.center,
-                          text: TextSpan(
-                              text: "Still not receiving your OTP ?\n",
-                              style: TextStyle(
-                                  color: Colors.black54, fontSize: 15),
-                              children: [
-                                TextSpan(
-                                    recognizer: TapGestureRecognizer()
-                                      ..onTap = () async {
-                                        setState(() {
-                                          loadingText = "Sending...";
-                                          isLoading = true;
-                                        });
+// Call API to verify OTP
+                        DefaultResponseModel responseModel =
+                            await forgotPassword.verifyOTP(widget.email, otp);
 
-                                        //call api to verify email
-                                      },
-                                    text: "Resend",
-                                    style: TextStyle(
-                                        color: kPrimaryColor,
-                                        fontWeight: FontWeight.bold,
-                                        fontSize: 16))
-                              ]),
-                        );
+                        if (responseModel.isSuccess) {
+                          setState(() {
+                            isLoading = false;
+                          });
+                          //Successfully verified
+                          // ThemeSnackBar.showSnackBar(context, "OTP Verified");
+                          Navigator.pop(context);
+                          // Navigate to forgot password 3 screen
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => ForgotPassword3Screen(
+                                  email: widget.email, otp: otp),
+                            ),
+                          );
+                        } else {
+                          //Failed to verified
+                          setState(() {
+                            isLoading = false;
+                            hasError = true;
+                          });
+                          //set error
+                          errorController.add(ErrorAnimationType.shake);
+                        }
                       }
                     },
-                    onChanged: (String value) {},
-                  )
+                    onChanged: (String value) {
+                      setState(() {
+                        hasError = false;
+                      });
+                    },
+                    beforeTextPaste: (text) {
+                      if (text != null &&
+                          text.trim().length == 6 &&
+                          isNumeric(text)) {
+                        return true;
+                      }
+                      return false;
+                    },
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 30.0),
+                    child: Text(
+                      hasError ? "Invalid OTP" : "",
+                      style: TextStyle(
+                          color: Colors.red,
+                          fontSize: 12,
+                          fontWeight: FontWeight.w400),
+                    ),
+                  ),
+                  SizedBox(
+                    height: 20,
+                  ),
+                  RichText(
+                    textAlign: TextAlign.center,
+                    text: TextSpan(
+                        text: "Still not receiving your OTP ?\n",
+                        style: TextStyle(color: Colors.black54, fontSize: 15),
+                        children: [
+                          TextSpan(
+                              recognizer: TapGestureRecognizer()
+                                ..onTap = () async {
+                                  setState(() {
+                                    loadingText = "Sending...";
+                                    isLoading = true;
+                                  });
+
+                                  //call api to verify email
+                                  DefaultResponseModel responseModel =
+                                      await forgotPassword
+                                          .verifyEmail(widget.email);
+
+                                  setState(() {
+                                    isLoading = false;
+                                  });
+
+                                  if (responseModel.isSuccess) {
+                                    //Successfully get response from API
+                                    ThemeSnackBar.showSnackBar(
+                                        context, "OTP sent!");
+                                  } else {
+                                    if (responseModel.message != "") {
+                                      ThemeSnackBar.showSnackBar(
+                                          context, "Something went wrong");
+                                    }
+                                  }
+                                },
+                              text: "Resend",
+                              style: TextStyle(
+                                  color: kPrimaryColor,
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 16))
+                        ]),
+                  ),
                 ],
               ),
             ),

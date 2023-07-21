@@ -30,13 +30,11 @@ class ValidatePasswordResponseModel
 
   @override
   PaginatorModel? jsonToPaginator(Map<String, dynamic> json) {
-   
     throw UnimplementedError();
   }
 
   @override
   PaginatorModel? paginatorToJson(PaginatorModel? paginatorModel) {
-   
     throw UnimplementedError();
   }
 }

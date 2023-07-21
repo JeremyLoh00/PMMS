@@ -1,7 +1,16 @@
+import 'dart:collection';
+import 'dart:ui';
+
 import 'package:datetime_picker_formfield/datetime_picker_formfield.dart';
+import 'package:delayed_display/delayed_display.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_scale_tap/flutter_scale_tap.dart';
 import 'package:intl/intl.dart';
+import 'package:private_nurse_for_client/constant.dart';
 import 'package:private_nurse_for_client/form_bloc/store_job_form_bloc.dart';
+import 'package:private_nurse_for_client/public_components/space.dart';
+import 'package:private_nurse_for_client/theme.dart';
+import 'package:table_calendar/table_calendar.dart';
 
 class CreateJobInfo extends StatefulWidget {
   StoreJobFormBloc storeJobFormBloc;
@@ -15,188 +24,357 @@ class CreateJobInfo extends StatefulWidget {
 }
 
 class _CreateJobInfoState extends State<CreateJobInfo> {
-  String? pref_week;
-  String? pref_day;
+  String? _service;
   TextEditingController date = TextEditingController();
   final format = DateFormat('HH:mm');
 
-  final weekList = [
-    'Every Week',
-    'First Week',
-    'Second Week',
-    'Third Week',
-    'Fourth Week',
+  final serviceList = [
+    'Wound Dressing',
+    'Daycare Service',
+    'Live-in service',
+    'Feeding Tube Insertion/Removal/Exchange',
+    'Urinal tube insertion/Removal/Exchange',
+    'Physiotheraphy',
   ];
 
-  final daysList = [
-    'Everyday',
-    'Monday',
-    'Tuesday',
-    'Wednesday',
-    'Thursday',
-    'Friday',
-    'Weekend',
-  ];
+  int delayAnimationDuration = 200;
+  late final ValueNotifier<List<Event>> _selectedEvents;
+  final ValueNotifier<DateTime> _focusedDay = ValueNotifier(DateTime.now());
+  final Set<DateTime> _selectedDays = LinkedHashSet<DateTime>(
+    equals: isSameDay,
+    hashCode: getHashCode,
+  );
+
+  late PageController _pageController;
+  CalendarFormat _calendarFormat = CalendarFormat.month;
+  RangeSelectionMode _rangeSelectionMode = RangeSelectionMode.toggledOff;
+  DateTime? _rangeStart;
+  DateTime? _rangeEnd;
+
+  @override
+  void initState() {
+    super.initState();
+
+    _selectedDays.add(_focusedDay.value);
+    _selectedEvents = ValueNotifier(_getEventsForDay(_focusedDay.value));
+  }
+
+  @override
+  void dispose() {
+    _focusedDay.dispose();
+    _selectedEvents.dispose();
+    super.dispose();
+  }
+
+  bool get canClearSelection =>
+      _selectedDays.isNotEmpty || _rangeStart != null || _rangeEnd != null;
+
+  List<Event> _getEventsForDay(DateTime day) {
+    return kEvents[day] ?? [];
+  }
+
+  List<Event> _getEventsForDays(Iterable<DateTime> days) {
+    return [
+      for (final d in days) ..._getEventsForDay(d),
+    ];
+  }
+
+  List<Event> _getEventsForRange(DateTime start, DateTime end) {
+    final days = daysInRange(start, end);
+    return _getEventsForDays(days);
+  }
+
+  void _onDaySelected(DateTime selectedDay, DateTime focusedDay) {
+    setState(() {
+      if (_selectedDays.contains(selectedDay)) {
+        _selectedDays.remove(selectedDay);
+      } else {
+        _selectedDays.add(selectedDay);
+      }
+
+      _focusedDay.value = focusedDay;
+      _rangeStart = null;
+      _rangeEnd = null;
+      _rangeSelectionMode = RangeSelectionMode.toggledOff;
+    });
+
+    _selectedEvents.value = _getEventsForDays(_selectedDays);
+  }
+
+  void _onRangeSelected(DateTime? start, DateTime? end, DateTime focusedDay) {
+    setState(() {
+      _focusedDay.value = focusedDay;
+      _rangeStart = start;
+      _rangeEnd = end;
+      _selectedDays.clear();
+      _rangeSelectionMode = RangeSelectionMode.toggledOn;
+    });
+
+    if (start != null && end != null) {
+      _selectedEvents.value = _getEventsForRange(start, end);
+    } else if (start != null) {
+      _selectedEvents.value = _getEventsForDay(start);
+    } else if (end != null) {
+      _selectedEvents.value = _getEventsForDay(end);
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: <Widget>[
-        SizedBox(
-          height: 5,
-        ),
-        TextField(
-          readOnly: true,
-          controller: date,
-          decoration: InputDecoration(
-            suffixIcon: Icon(Icons.calendar_month_outlined),
-            contentPadding:
-                const EdgeInsets.symmetric(vertical: 5.0, horizontal: 10.0),
-            enabled: true,
-            hintText: 'Date',
-            labelText: 'Date',
-            border: OutlineInputBorder(
-              borderSide: BorderSide(
-                width: 3,
-                color: Colors.grey,
-              ),
-              borderRadius: BorderRadius.circular(10.0),
-            ),
-          ),
-          onTap: () async {
-            DateTime? pickedDate = await showDatePicker(
-              context: context,
-              initialDate: DateTime.now(),
-              firstDate: DateTime(1998),
-              lastDate: DateTime(2200),
-            );
-
-            if (pickedDate != null) {
-              setState(() {
-                date.text = DateFormat('yyyy-MM-dd').format(pickedDate);
-              });
-            } else {}
-          },
-        ),
-        SizedBox(
-          height: 20,
-        ),
-        DateTimeField(
-          format: format,
-          decoration: InputDecoration(
-            suffixIcon: Icon(Icons.access_time),
-            contentPadding:
-                const EdgeInsets.symmetric(vertical: 5.0, horizontal: 10.0),
-            enabled: true,
-            hintText: 'Time',
-            labelText: 'Time',
-            border: OutlineInputBorder(
-              borderSide: BorderSide(
-                width: 3,
-                color: Colors.grey,
-              ),
-              borderRadius: BorderRadius.circular(10.0),
-            ),
-          ),
-          onShowPicker: (context, currentValue) async {
-            final pickerTime = await showTimePicker(
-              context: context,
-              initialTime: TimeOfDay.fromDateTime(
-                currentValue ?? DateTime.now(),
-              ),
-            );
-
-            return DateTimeField.convert(pickerTime);
-          },
-        ),
-        SizedBox(
-          height: 10,
-        ),
-        Text(
-          "Preferred Period",
-          style: TextStyle(fontWeight: FontWeight.bold),
-        ),
-        SizedBox(
-          height: 10,
-        ),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Expanded(
-              child: Container(
-                width: 200,
-                child: DropdownButtonFormField(
-                  hint: Text("Preferred Week"),
-                  value: pref_week,
-                  onChanged: (String? newValue) {
-                    setState(() {
-                      pref_week = newValue ?? "";
-                    });
-                  },
-                  items: _week(),
-                  decoration: InputDecoration(
-                    contentPadding: const EdgeInsets.symmetric(
-                        vertical: 5.0, horizontal: 10.0),
-                    border: OutlineInputBorder(
-                      borderSide: BorderSide(
-                        width: 3,
-                        color: Colors.grey,
+    return SingleChildScrollView(
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: <Widget>[
+          DelayedDisplay(
+            delay: Duration(milliseconds: delayAnimationDuration),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                const Text(
+                  "Service",
+                  style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    fontSize: 16,
+                  ),
+                ),
+                Space(20),
+                Container(
+                  width: double.infinity,
+                  child: DropdownButtonFormField(
+                    hint: const Text("Select Service"),
+                    value: _service,
+                    onChanged: (String? newValue) {
+                      setState(() {
+                        _service = newValue ?? "";
+                      });
+                    },
+                    items: _serviceList(),
+                    decoration: InputDecoration(
+                      contentPadding: const EdgeInsets.symmetric(
+                          vertical: 5.0, horizontal: 10.0),
+                      border: OutlineInputBorder(
+                        borderSide: const BorderSide(
+                          width: 3,
+                          color: Colors.grey,
+                        ),
+                        borderRadius: BorderRadius.circular(10.0),
                       ),
-                      borderRadius: BorderRadius.circular(10.0),
                     ),
                   ),
                 ),
-              ),
+              ],
             ),
-            SizedBox(width: 5),
-            Expanded(
-              child: Container(
-                width: 200,
-                child: DropdownButtonFormField(
-                  hint: Text("Preferred Days"),
-                  value: pref_day,
-                  onChanged: (String? newValue) {
-                    setState(() {
-                      pref_day = newValue ?? "";
-                    });
-                  },
-                  items: _days(),
-                  decoration: InputDecoration(
-                    contentPadding: const EdgeInsets.symmetric(
-                        vertical: 5.0, horizontal: 10.0),
-                    border: OutlineInputBorder(
-                      borderSide: BorderSide(
-                        width: 3,
-                        color: Colors.grey,
+          ),
+          Space(20),
+          DelayedDisplay(
+            delay: Duration(milliseconds: delayAnimationDuration),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      "Job Date",
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 16,
                       ),
-                      borderRadius: BorderRadius.circular(10.0),
                     ),
-                  ),
+                    Space(10),
+                    Container(
+                      decoration: BoxDecoration(
+                        color: kWhite,
+                        borderRadius: BorderRadius.circular(30),
+                        boxShadow: [
+                          profileShadow(
+                            kGrey.withOpacity(0.3),
+                          ),
+                        ],
+                      ),
+                      child: Column(
+                        children: [
+                          ValueListenableBuilder<DateTime>(
+                            valueListenable: _focusedDay,
+                            builder: (context, value, _) {
+                              return _CalendarHeader(
+                                focusedDay: value,
+                                clearButtonVisible: canClearSelection,
+                                onTodayButtonTap: () {
+                                  setState(
+                                      () => _focusedDay.value = DateTime.now());
+                                },
+                                onClearButtonTap: () {
+                                  setState(() {
+                                    _rangeStart = null;
+                                    _rangeEnd = null;
+                                    _selectedDays.clear();
+                                    _selectedEvents.value = [];
+                                  });
+                                },
+                                onLeftArrowTap: () {
+                                  _pageController.previousPage(
+                                    duration: Duration(milliseconds: 300),
+                                    curve: Curves.easeOut,
+                                  );
+                                },
+                                onRightArrowTap: () {
+                                  _pageController.nextPage(
+                                    duration: Duration(milliseconds: 300),
+                                    curve: Curves.easeOut,
+                                  );
+                                },
+                              );
+                            },
+                          ),
+                          TableCalendar<Event>(
+                            firstDay: kFirstDay,
+                            lastDay: kLastDay,
+                            focusedDay: _focusedDay.value,
+                            headerVisible: false,
+                            selectedDayPredicate: (day) =>
+                                _selectedDays.contains(day),
+                            rangeStartDay: _rangeStart,
+                            rangeEndDay: _rangeEnd,
+                            calendarFormat: _calendarFormat,
+                            rangeSelectionMode: _rangeSelectionMode,
+                            // eventLoader: _getEventsForDay,
+                            // holidayPredicate: (day) {
+                            //   // Every 20th day of the month will be treated as a holiday
+                            //   return day.day == 20;
+                            // },
+                            onDaySelected: _onDaySelected,
+                            onRangeSelected: _onRangeSelected,
+                            onCalendarCreated: (controller) =>
+                                _pageController = controller,
+                            onPageChanged: (focusedDay) =>
+                                _focusedDay.value = focusedDay,
+                            onFormatChanged: (format) {
+                              if (_calendarFormat != format) {
+                                setState(() => _calendarFormat = format);
+                              }
+                            },
+                          ),
+                        ],
+                      ),
+                    ),
+                  ],
                 ),
-              ),
+              ],
             ),
-          ],
-        ),
-      ],
+          ),
+        ],
+      ),
     );
   }
 
-  List<DropdownMenuItem<String>> _week() {
-    return weekList.map<DropdownMenuItem<String>>((String value) {
+  List<DropdownMenuItem<String>> _serviceList() {
+    return serviceList.map<DropdownMenuItem<String>>((String value) {
       return DropdownMenuItem<String>(
         value: value,
         child: Text(value),
       );
     }).toList();
   }
+}
 
-  List<DropdownMenuItem<String>> _days() {
-    return daysList.map<DropdownMenuItem<String>>((String value) {
-      return DropdownMenuItem<String>(
-        value: value,
-        child: Text(value),
-      );
-    }).toList();
+int getHashCode(DateTime key) {
+  return key.day * 1000000 + key.month * 10000 + key.year;
+}
+
+final kEvents = LinkedHashMap<DateTime, List<Event>>(
+  equals: isSameDay,
+  hashCode: getHashCode,
+)..addAll(_kEventSource);
+
+final _kEventSource = Map.fromIterable(List.generate(50, (index) => index),
+    key: (item) => DateTime.utc(kFirstDay.year, kFirstDay.month, item * 5),
+    value: (item) => List.generate(
+        item % 4 + 1, (index) => Event('Event $item | ${index + 1}')))
+  ..addAll({
+    kToday: [
+      Event('Today\'s Event 1'),
+      Event('Today\'s Event 2'),
+    ],
+  });
+
+List<DateTime> daysInRange(DateTime first, DateTime last) {
+  final dayCount = last.difference(first).inDays + 1;
+  return List.generate(
+    dayCount,
+    (index) => DateTime.utc(first.year, first.month, first.day + index),
+  );
+}
+
+final kToday = DateTime.now();
+final kFirstDay = DateTime(kToday.year, kToday.month - 3, kToday.day);
+final kLastDay = DateTime(kToday.year, kToday.month + 3, kToday.day);
+
+class Event {
+  final String title;
+
+  const Event(this.title);
+
+  @override
+  String toString() => title;
+}
+
+class _CalendarHeader extends StatelessWidget {
+  final DateTime focusedDay;
+  final VoidCallback onLeftArrowTap;
+  final VoidCallback onRightArrowTap;
+  final VoidCallback onTodayButtonTap;
+  final VoidCallback onClearButtonTap;
+  final bool clearButtonVisible;
+
+  const _CalendarHeader({
+    Key? key,
+    required this.focusedDay,
+    required this.onLeftArrowTap,
+    required this.onRightArrowTap,
+    required this.onTodayButtonTap,
+    required this.onClearButtonTap,
+    required this.clearButtonVisible,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    final headerText = DateFormat.yMMM().format(focusedDay);
+
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 8.0),
+      child: Row(
+        children: [
+          const SizedBox(width: 16.0),
+          SizedBox(
+            width: 120.0,
+            child: Text(
+              headerText,
+              style: TextStyle(fontSize: 26.0),
+            ),
+          ),
+          IconButton(
+            icon: Icon(Icons.calendar_today, size: 20.0),
+            visualDensity: VisualDensity.compact,
+            onPressed: onTodayButtonTap,
+          ),
+          if (clearButtonVisible)
+            IconButton(
+              icon: Icon(Icons.clear, size: 20.0),
+              visualDensity: VisualDensity.compact,
+              onPressed: onClearButtonTap,
+            ),
+          const Spacer(),
+          IconButton(
+            icon: Icon(Icons.chevron_left),
+            onPressed: onLeftArrowTap,
+          ),
+          IconButton(
+            icon: Icon(Icons.chevron_right),
+            onPressed: onRightArrowTap,
+          ),
+        ],
+      ),
+    );
   }
 }

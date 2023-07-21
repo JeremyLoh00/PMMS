@@ -4,7 +4,6 @@ import 'package:private_nurse_for_client/constant.dart';
 ThemeData theme() {
   return ThemeData(
     brightness: Brightness.light,
-    primarySwatch: Colors.red,
     scaffoldBackgroundColor: Colors.white,
     appBarTheme: appBarTheme(),
     scrollbarTheme: ScrollbarThemeData(),
