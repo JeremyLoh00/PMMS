@@ -111,19 +111,7 @@ class UserModel {
 
     nurseModel = json['nurse'] != null
         ? new NurseModel.fromJson(json['nurse'])
-        : new NurseModel(
-            id: -1,
-            collegeName: "",
-            educationLevel: "",
-            educationLevelId: -1,
-            licenseNo: "",
-            nationality: "",
-            race: "",
-            workExperience: "",
-            nationalityId: -1,
-            raceId: -1,
-            emergencyContactModel: EmergencyContactModel(),
-          );
+        : null;
 
     profilePhoto = json['profile_photo'];
 

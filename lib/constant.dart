@@ -2,10 +2,10 @@ import 'dart:collection';
 
 import 'package:flutter/material.dart';
 
-const kPrimaryColor = Color.fromRGBO(4 , 99, 128, 1);
-const kPrimary100Color = Color.fromRGBO(225 , 244, 250, 1);
-const kCompleted = Color.fromRGBO(6 , 95, 70, 1);
-const k100Completed = Color.fromRGBO(209 , 250, 229, 1);
+const kPrimaryColor = Color.fromRGBO(4, 99, 128, 1);
+const kPrimary100Color = Color.fromRGBO(225, 244, 250, 1);
+const kCompleted = Color.fromRGBO(6, 95, 70, 1);
+const k100Completed = Color.fromRGBO(209, 250, 229, 1);
 //TODO: change rootURL
 const rootUrl = "https://private-nurse.mahirandigital.com/api/v1/";
 const kSecondaryColor = Color.fromRGBO(4, 8, 116, 1);
@@ -23,6 +23,8 @@ const kDanger = Color.fromARGB(255, 209, 0, 10);
 const kDisabledBg = Color.fromARGB(255, 224, 224, 224);
 const kPrimaryLightColor = Color.fromRGBO(241, 244, 250, 1.0);
 const kTextGray = Color.fromRGBO(0, 0, 0, 0.40);
+
+const pageSize = 10;
 
 class DialogType {
   static const int info = 1;
@@ -46,4 +48,3 @@ const kTextWarning = Color.fromRGBO(188, 139, 20, 6);
 // Info
 const kBgInfo = Color.fromRGBO(236, 253, 245, 1.0);
 const kTextInfo = kPrimaryColor;
-
