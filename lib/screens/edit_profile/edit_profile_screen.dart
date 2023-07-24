@@ -432,18 +432,64 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                       SizedBox(
                         height: 15,
                       ),
-                      Row(
-                        children: [
-                          Expanded(
-                            flex: 3,
-                            child: ScaleTap(
-                              onPressed: () {},
-                              child: StyledDropdown<DivisionModel>(
-                                items: listDivision!
-                                    .map<DropdownMenuItem<DivisionModel>>(
-                                  (DivisionModel model) {
-                                    return DropdownMenuItem<DivisionModel>(
-                                      value: model, // Set the value to the ID
+                      DelayedDisplay(
+                        delay: Duration(milliseconds: delayAnimationDuration),
+                        child: Row(
+                          children: [
+                            SizedBox(width: 4),
+                            Expanded(
+                              flex: 3,
+                              child: ScaleTap(
+                                onPressed: () {},
+                                child: StyledDropdown<DivisionModel>(
+                                  items: listDivision!
+                                      .map<DropdownMenuItem<DivisionModel>>(
+                                    (DivisionModel model) {
+                                      return DropdownMenuItem<DivisionModel>(
+                                        value: model, // Set the value to the ID
+                                        child: Text(
+                                          model.name.toString(),
+                                          style: const TextStyle(
+                                            fontSize: 14,
+                                            fontWeight: FontWeight.bold,
+                                            overflow: TextOverflow.ellipsis,
+                                          ),
+                                        ),
+                                      );
+                                    },
+                                  ).toList(),
+                                  selected: selectedDivision,
+                                  list: listDivision!,
+                                  setDropdownValue: (value) {
+                                    setState(() {
+                                      selectedDivision =
+                                          listDivision!.firstWhere(
+                                        (model) => model.id == value.id,
+                                      ); // Find the model based on the ID
+                                      print(selectedDivision.id);
+                                      formBloc.division.updateValue(
+                                          selectedDivision.id!.toString());
+
+                                      formBloc.cityModel.updateValue("-1");
+
+                                      onChangeDivision();
+                                    });
+                                    // updateListJobs();
+                                  },
+                                ),
+                              ),
+                            ),
+                            SizedBox(width: 10),
+                            Expanded(
+                              flex: 3,
+                              child: ScaleTap(
+                                onPressed: () {},
+                                child: StyledDropdown<CityModel>(
+                                  items: listCities!
+                                      .map<DropdownMenuItem<CityModel>>(
+                                          (CityModel model) {
+                                    return DropdownMenuItem<CityModel>(
+                                      value: model,
                                       child: Text(
                                         model.name.toString(),
                                         style: const TextStyle(
@@ -453,170 +499,58 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                                         ),
                                       ),
                                     );
+                                  }).toList(),
+                                  selected: selectedCity,
+                                  list: listCities!,
+                                  setDropdownValue: (value) {
+                                    setState(() {
+                                      selectedCity = listCities!.firstWhere(
+                                          (model) => model.id == value.id);
+                                      formBloc.cityModel.updateValue(
+                                          selectedCity!.id!.toString());
+                                      print(selectedDivision.id);
+                                      print(selectedCity!.id);
+                                    });
+                                    // updateListJobs();
                                   },
-                                ).toList(),
-                                selected: selectedDivision,
-                                list: listDivision!,
-                                setDropdownValue: (value) {
-                                  setState(() {
-                                    selectedDivision = listDivision!.firstWhere(
-                                      (model) => model.id == value.id,
-                                    ); // Find the model based on the ID
-                                    print(selectedDivision.id);
-                                    formBloc.division.updateValue(
-                                        selectedDivision.id!.toString());
-
-                                    formBloc.cityModel.updateValue("-1");
-
-                                    onChangeDivision();
-                                  });
-                                  // updateListJobs();
-                                },
+                                ),
                               ),
                             ),
-                          ),
-                          Expanded(
-                            flex: 3,
-                            child: ScaleTap(
-                              onPressed: () {},
-                              child: StyledDropdown<CityModel>(
-                                items: listCities!
-                                    .map<DropdownMenuItem<CityModel>>(
-                                        (CityModel model) {
-                                  return DropdownMenuItem<CityModel>(
-                                    value: model,
-                                    child: Text(
-                                      model.name.toString(),
-                                      style: const TextStyle(
-                                        fontSize: 14,
-                                        fontWeight: FontWeight.bold,
-                                        overflow: TextOverflow.ellipsis,
-                                      ),
-                                    ),
-                                  );
-                                }).toList(),
-                                selected: selectedCity,
-                                list: listCities!,
-                                setDropdownValue: (value) {
-                                  setState(() {
-                                    selectedCity = listCities!.firstWhere(
-                                        (model) => model.id == value.id);
-                                    formBloc.cityModel.updateValue(
-                                        selectedCity!.id!.toString());
-                                    // print(selectedDivision.id);
-                                    print(selectedCity!.id);
-                                  });
-                                  // updateListJobs();
-                                },
-                              ),
-                            ),
-                          ),
-                          SizedBox(
-                            width: 15,
-                          ),
-                          // Expanded(
-                          //   flex: 3,
-                          //   child: ScaleTap(
-                          //     onPressed: () {},
-                          //     child: DropdownButtonFormField2<String>(
-                          //       decoration: textFieldInputDecoration2(),
-                          //       isExpanded: true,
-                          //       enableFeedback: true,
-                          //       hint: Row(
-                          //         children: const [
-                          //           Expanded(
-                          //             child: Text(
-                          //               'State',
-                          //               style: TextStyle(
-                          //                 fontSize: 14,
-                          //                 fontWeight: FontWeight.bold,
-                          //                 color: Colors.black,
-                          //               ),
-                          //               overflow: TextOverflow.ellipsis,
-                          //             ),
-                          //           ),
-                          //         ],
-                          //       ),
-                          //       dropdownStyleData: DropdownStyleData(
-                          //         maxHeight: 200,
-                          //         //swidth: double.infinity,
-                          //         padding: null,
-                          //         decoration: BoxDecoration(
-                          //           borderRadius: BorderRadius.circular(14),
-                          //           boxShadow: [
-                          //             profileShadow(kGrey.withOpacity(0.3))
-                          //           ],
-                          //           color: kWhite,
-                          //         ),
-                          //         elevation: 0,
-                          //         offset: const Offset(0, 0),
-                          //         scrollbarTheme: ScrollbarThemeData(
-                          //           radius: const Radius.circular(2),
-                          //           thickness:
-                          //               MaterialStateProperty.all<double>(6),
-                          //           thumbVisibility:
-                          //               MaterialStateProperty.all<bool>(true),
-                          //         ),
-                          //       ),
-                          //       items: items
-                          //           .map((item) => DropdownMenuItem<String>(
-                          //                 value: item,
-                          //                 child: Text(
-                          //                   item,
-                          //                   style: const TextStyle(
-                          //                     fontSize: 14,
-                          //                     fontWeight: FontWeight.bold,
-                          //                     color: Colors.black,
-                          //                   ),
-                          //                   overflow: TextOverflow.ellipsis,
-                          //                 ),
-                          //               ))
-                          //           .toList(),
-                          //       value: selectedValue,
-                          //       onChanged: (value) {
-                          //         setState(() {
-                          //           selectedValue = value as String;
-                          //         });
-                          //       },
-                          //     ),
-                          //   ),
-                          // ),
-                          
-                        ],
+                          ],
+                        ),
                       ),
                       Visibility(
-                              visible: false,
-                              child: TextFieldBlocBuilder(
-                                textFieldBloc: formBloc.division,
-                                keyboardType: TextInputType.name,
-                                cursorColor: kPrimaryColor,
-                                decoration: textFieldInputDecoration(
-                                  "Hidden State",
-                                  hintText: "Johor",
-                                  prefixIcon: Icon(
-                                    Iconsax.profile_circle,
-                                    color: kPrimaryColor,
-                                  ),
-                                ),
-                              ),
+                        visible: false,
+                        child: TextFieldBlocBuilder(
+                          textFieldBloc: formBloc.division,
+                          keyboardType: TextInputType.name,
+                          cursorColor: kPrimaryColor,
+                          decoration: textFieldInputDecoration(
+                            "Hidden State",
+                            hintText: "Johor",
+                            prefixIcon: Icon(
+                              Iconsax.profile_circle,
+                              color: kPrimaryColor,
                             ),
-                            Visibility(
-                              visible: false,
-                              child: TextFieldBlocBuilder(
-                                textFieldBloc: formBloc.cityModel,
-                                keyboardType: TextInputType.name,
-                                cursorColor: kPrimaryColor,
-                                decoration: textFieldInputDecoration(
-                                  "Hidden City",
-                                  hintText: "Banting",
-                                  prefixIcon: Icon(
-                                    Iconsax.profile_circle,
-                                    color: kPrimaryColor,
-                                  ),
-                                ),
-                              ),
+                          ),
+                        ),
+                      ),
+                      Visibility(
+                        visible: false,
+                        child: TextFieldBlocBuilder(
+                          textFieldBloc: formBloc.cityModel,
+                          keyboardType: TextInputType.name,
+                          cursorColor: kPrimaryColor,
+                          decoration: textFieldInputDecoration(
+                            "Hidden City",
+                            hintText: "Banting",
+                            prefixIcon: Icon(
+                              Iconsax.profile_circle,
+                              color: kPrimaryColor,
                             ),
-                            Space(20),
+                          ),
+                        ),
+                      ),
                       Space(20),
                       // Text(
                       //   "Bank Information",
