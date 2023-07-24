@@ -1,3 +1,5 @@
+import 'dart:collection';
+
 import 'package:flutter/material.dart';
 import 'package:private_nurse_for_client/constant.dart';
 import 'package:private_nurse_for_client/form_bloc/store_job_form_bloc.dart';
@@ -7,6 +9,8 @@ import 'package:private_nurse_for_client/screens/job/create_job/components/creat
 import 'package:private_nurse_for_client/screens/job/create_job/components/create_service_info.dart';
 import 'package:private_nurse_for_client/screens/job/create_job/components/preferred_nurse.dart';
 import 'package:private_nurse_for_client/screens/job/payment/payment.dart';
+import 'package:private_nurse_for_client/theme.dart';
+import 'package:table_calendar/table_calendar.dart';
 
 class CreateJobHeader extends StatefulWidget {
   StoreJobFormBloc storeJobFormBloc;
@@ -26,6 +30,7 @@ class _CreateJobHeaderState extends State<CreateJobHeader> {
   @override
   Widget build(BuildContext context) {
     return Stepper(
+      elevation: 0,
       physics: BouncingScrollPhysics(),
       type: StepperType.horizontal,
       // steps: [],
@@ -112,7 +117,13 @@ class _CreateJobHeaderState extends State<CreateJobHeader> {
   List<Step> getSteps() => [
         Step(
           isActive: currentStep >= 0,
-          label: Text("Job Info"),
+          label: Text(
+            "Job Info",
+            style: textStyleNormal(
+              fontsize: 10,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
           title: SizedBox(),
           content: Container(
             height: MediaQuery.of(context).size.height * 0.625,
@@ -123,18 +134,44 @@ class _CreateJobHeaderState extends State<CreateJobHeader> {
         ),
         Step(
           isActive: currentStep >= 1,
-          label: Text("Service Info"),
+          label: Text(
+            "Service Info",
+            style: textStyleNormal(
+              fontsize: 10,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
           title: SizedBox(),
           content: Container(
             height: MediaQuery.of(context).size.height * 0.625,
             child: CreateServiceInfo(
-              storeJobFormBloc: widget.storeJobFormBloc,
+              widget.storeJobFormBloc,
             ),
           ),
         ),
         Step(
           isActive: currentStep >= 2,
-          label: Text("Preferred Nurse"),
+          label: Container(
+            width: 55,
+            child: Column(
+              children: [
+                Text(
+                  "Preferred",
+                  style: textStyleNormal(
+                    fontsize: 10,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+                Text(
+                  "Nurse",
+                  style: textStyleNormal(
+                    fontsize: 10,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+              ],
+            ),
+          ),
           title: SizedBox(),
           content: Container(
             height: MediaQuery.of(context).size.height * 0.625,
@@ -143,7 +180,56 @@ class _CreateJobHeaderState extends State<CreateJobHeader> {
         ),
         Step(
           isActive: currentStep >= 3,
-          label: Text("Patient Info"),
+          label: Text(
+            "Patient Info",
+            style: textStyleNormal(
+              fontsize: 10,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+          title: SizedBox(),
+          content: CreatePatientInfo(
+            storeJobFormBloc: widget.storeJobFormBloc,
+          ),
+        ),
+        Step(
+          isActive: currentStep >= 4,
+          label: Container(
+            width: 55,
+            child: Column(
+              children: [
+                Text(
+                  "Emergency",
+                  style: textStyleNormal(
+                    fontsize: 10,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+                Text(
+                  "Contact",
+                  style: textStyleNormal(
+                    fontsize: 10,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+              ],
+            ),
+          ),
+          title: SizedBox(),
+          content: CreatePatientInfo(
+            storeJobFormBloc: widget.storeJobFormBloc,
+          ),
+        ),
+        Step(
+          isActive: currentStep >= 5,
+          label: Text(
+            "Summary",
+            maxLines: 1,
+            style: textStyleNormal(
+              fontsize: 10,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
           title: SizedBox(),
           content: CreatePatientInfo(
             storeJobFormBloc: widget.storeJobFormBloc,

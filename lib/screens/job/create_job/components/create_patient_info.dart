@@ -6,8 +6,10 @@ import 'package:flutter/services.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:private_nurse_for_client/constant.dart';
 import 'package:private_nurse_for_client/form_bloc/store_job_form_bloc.dart';
+import 'package:private_nurse_for_client/public_components/space.dart';
 import 'package:private_nurse_for_client/screens/job/create_job/components/multi_select.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:private_nurse_for_client/theme.dart';
 
 class CreatePatientInfo extends StatefulWidget {
   StoreJobFormBloc storeJobFormBloc;
@@ -35,7 +37,7 @@ List<bool> value = [
 
 class _CreatePatientInfoState extends State<CreatePatientInfo> {
   TextEditingController name = TextEditingController();
-  TextEditingController idNum = TextEditingController();
+  TextEditingController age = TextEditingController();
   TextEditingController patient = TextEditingController();
   TextEditingController medical = TextEditingController();
   TextEditingController condition = TextEditingController();
@@ -43,6 +45,9 @@ class _CreatePatientInfoState extends State<CreatePatientInfo> {
   TextEditingController phoneNum = TextEditingController();
   TextEditingController relationship = TextEditingController();
   TextEditingController needs = TextEditingController();
+  TextEditingController height = TextEditingController();
+  TextEditingController weight = TextEditingController();
+  TextEditingController address = TextEditingController();
   String genderOption = listGender[0];
   String raceOption = listRace[0];
 
@@ -52,6 +57,8 @@ class _CreatePatientInfoState extends State<CreatePatientInfo> {
 
   File? image1;
   File? image2;
+
+  bool value = false;
 
   void _showMultiSelectPatient() async {
     final List<String> patientList = [
@@ -163,101 +170,14 @@ class _CreatePatientInfoState extends State<CreatePatientInfo> {
       children: [
         //Patient Information
         _patientInfo(),
-        SizedBox(
-          height: 15,
-        ),
+        //address
+        _address(),
+        //multiple select
+        _multipleSelectInput(),
         //Gender And Race
         _genderAndRace(),
         //Photo Patient
         _photoPatient(),
-        SizedBox(
-          height: 10,
-        ),
-        //Emergency Contact Information
-        _emergencyContact(),
-        SizedBox(
-          height: 10,
-        ),
-        //Special Needs
-        _specialNeeds()
-      ],
-    );
-  }
-
-  @override
-  _emergencyContact() {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Text(
-          "Emergency Contact",
-          style: TextStyle(
-            fontWeight: FontWeight.bold,
-          ),
-        ),
-        SizedBox(
-          height: 10,
-        ),
-        TextFormField(
-          controller: nameEmergency,
-          decoration: InputDecoration(
-            prefixIcon: Icon(Icons.person_outline),
-            contentPadding:
-                const EdgeInsets.symmetric(vertical: 5.0, horizontal: 10.0),
-            enabled: true,
-            hintText: 'Name',
-            label: Text('Name'),
-            border: OutlineInputBorder(
-              borderSide: BorderSide(
-                width: 3,
-                color: Colors.grey,
-              ),
-              borderRadius: BorderRadius.circular(10.0),
-            ),
-          ),
-        ),
-        SizedBox(
-          height: 10,
-        ),
-        TextFormField(
-          controller: phoneNum,
-          decoration: InputDecoration(
-            prefixIcon: Icon(Icons.phone_outlined),
-            contentPadding:
-                const EdgeInsets.symmetric(vertical: 5.0, horizontal: 10.0),
-            enabled: true,
-            hintText: 'Phone No.',
-            label: Text('Phone No.'),
-            border: OutlineInputBorder(
-              borderSide: BorderSide(
-                width: 3,
-                color: Colors.grey,
-              ),
-              borderRadius: BorderRadius.circular(10.0),
-            ),
-          ),
-        ),
-        SizedBox(
-          height: 10,
-        ),
-        TextFormField(
-          controller: relationship,
-          decoration: InputDecoration(
-            prefixIcon: Icon(Icons.group_outlined),
-            contentPadding:
-                const EdgeInsets.symmetric(vertical: 5.0, horizontal: 10.0),
-            enabled: true,
-            hintText: 'Relationship',
-            label: Text('Relationship'),
-            border: OutlineInputBorder(
-              borderSide: BorderSide(
-                width: 3,
-                color: Colors.grey,
-              ),
-              borderRadius: BorderRadius.circular(10.0),
-            ),
-          ),
-        ),
       ],
     );
   }
@@ -486,16 +406,25 @@ class _CreatePatientInfoState extends State<CreatePatientInfo> {
 
   _patientInfo() {
     return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: [
+        Text(
+          "Name",
+          style: textStyleNormal(
+            fontWeight: FontWeight.bold,
+            fontsize: 16.0,
+          ),
+        ),
+        Space(10.0),
         TextFormField(
           controller: name,
+          textInputAction: TextInputAction.next,
           decoration: InputDecoration(
             contentPadding:
                 const EdgeInsets.symmetric(vertical: 5.0, horizontal: 10.0),
             prefixIcon: Icon(Icons.person_outline_rounded),
             enabled: true,
             hintText: 'Name',
-            labelText: 'Name',
             border: OutlineInputBorder(
               borderSide: BorderSide(
                 width: 3,
@@ -505,18 +434,220 @@ class _CreatePatientInfoState extends State<CreatePatientInfo> {
             ),
           ),
         ),
-        SizedBox(
-          height: 15,
+        Space(15.0),
+        Text(
+          "Age",
+          style: textStyleNormal(
+            fontWeight: FontWeight.bold,
+            fontsize: 16.0,
+          ),
         ),
+        Space(10.0),
         TextFormField(
-          controller: idNum,
+          controller: age,
+          textInputAction: TextInputAction.next,
+          keyboardType: TextInputType.number,
+          decoration: InputDecoration(
+            suffixText: "years old",
+            contentPadding:
+                const EdgeInsets.symmetric(vertical: 5.0, horizontal: 10.0),
+            enabled: true,
+            hintText: 'Age',
+            border: OutlineInputBorder(
+              borderSide: BorderSide(
+                width: 3,
+                color: Colors.grey,
+              ),
+              borderRadius: BorderRadius.circular(10.0),
+            ),
+          ),
+        ),
+        Space(15.0),
+        Row(
+          children: [
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    "Height",
+                    style: textStyleNormal(
+                      fontWeight: FontWeight.bold,
+                      fontsize: 16.0,
+                    ),
+                  ),
+                  Space(10.0),
+                  TextFormField(
+                    controller: height,
+                    textInputAction: TextInputAction.next,
+                    keyboardType: TextInputType.number,
+                    decoration: InputDecoration(
+                      suffixText: "cm",
+                      contentPadding: const EdgeInsets.symmetric(
+                          vertical: 5.0, horizontal: 10.0),
+                      enabled: true,
+                      hintText: 'Height',
+                      border: OutlineInputBorder(
+                        borderSide: BorderSide(
+                          width: 3,
+                          color: Colors.grey,
+                        ),
+                        borderRadius: BorderRadius.circular(10.0),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            SizedBox(
+              width: 10,
+            ),
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    "Weight",
+                    style: textStyleNormal(
+                      fontWeight: FontWeight.bold,
+                      fontsize: 16.0,
+                    ),
+                  ),
+                  Space(10.0),
+                  TextFormField(
+                    controller: weight,
+                    textInputAction: TextInputAction.next,
+                    keyboardType: TextInputType.number,
+                    decoration: InputDecoration(
+                      suffixText: "kg",
+                      contentPadding: const EdgeInsets.symmetric(
+                          vertical: 5.0, horizontal: 10.0),
+                      enabled: true,
+                      hintText: 'Weight',
+                      border: OutlineInputBorder(
+                        borderSide: BorderSide(
+                          width: 3,
+                          color: Colors.grey,
+                        ),
+                        borderRadius: BorderRadius.circular(10.0),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ],
+        ),
+        Space(15),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Text(
+              "Phone No.",
+              style: textStyleNormal(
+                fontWeight: FontWeight.bold,
+                fontsize: 16.0,
+              ),
+            ),
+            Row(
+              children: [
+                Checkbox(
+                  value: this.value,
+                  onChanged: (bool? value) {
+                    setState(() {
+                      this.value = value!;
+                    });
+                  },
+                ),
+                Text(
+                  "Copy from my details",
+                  style: textStyleNormal(
+                    color: kGrey,
+                  ),
+                ),
+              ],
+            ),
+          ],
+        ),
+        Space(10.0),
+        TextFormField(
+          controller: phoneNum,
+          keyboardType: TextInputType.phone,
+          textInputAction: TextInputAction.next,
+          decoration: InputDecoration(
+            prefixIcon: Icon(Icons.phone_outlined),
+            contentPadding:
+                const EdgeInsets.symmetric(vertical: 5.0, horizontal: 10.0),
+            enabled: true,
+            hintText: 'Phone No.',
+            border: OutlineInputBorder(
+              borderSide: BorderSide(
+                width: 3,
+                color: Colors.grey,
+              ),
+              borderRadius: BorderRadius.circular(10.0),
+            ),
+          ),
+        ),
+        Space(15),
+      ],
+    );
+  }
+
+  Future getGalleryImage1() async {
+    //access gallery and get selected image path
+    try {
+      final image1 = await ImagePicker().pickImage(source: ImageSource.gallery);
+      if (image1 == null) return;
+
+      final imageTemporary = File(image1.path);
+      setState(() {
+        this.image1 = imageTemporary;
+      });
+    } on PlatformException {
+      if (kDebugMode) {
+        print("Failed to pick image");
+      }
+    }
+  }
+
+  Future getGalleryImage2() async {
+    //access gallery and get selected image path
+    try {
+      final image2 = await ImagePicker().pickImage(source: ImageSource.gallery);
+      if (image2 == null) return;
+
+      final imageTemporary = File(image2.path);
+      setState(() {
+        this.image2 = imageTemporary;
+      });
+    } on PlatformException {
+      if (kDebugMode) {
+        print("Failed to pick image");
+      }
+    }
+  }
+
+  _address() {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          "Address",
+          style: textStyleNormal(
+            fontWeight: FontWeight.bold,
+            fontsize: 16.0,
+          ),
+        ),
+        Space(10.0),
+        TextFormField(
+          controller: address,
+          textInputAction: TextInputAction.next,
           decoration: InputDecoration(
             contentPadding:
                 const EdgeInsets.symmetric(vertical: 5.0, horizontal: 10.0),
-            prefixIcon: Icon(Icons.perm_contact_calendar_sharp),
             enabled: true,
-            hintText: 'NRIC No.',
-            labelText: 'NRIC No./Password No.',
+            hintText: 'Address',
             border: OutlineInputBorder(
               borderSide: BorderSide(
                 width: 3,
@@ -526,9 +657,60 @@ class _CreatePatientInfoState extends State<CreatePatientInfo> {
             ),
           ),
         ),
-        SizedBox(
-          height: 15,
+        Space(10.0),
+        Row(
+          children: [
+            Expanded(
+              child: TextFormField(
+                controller: address,
+                textInputAction: TextInputAction.next,
+                decoration: InputDecoration(
+                  contentPadding: const EdgeInsets.symmetric(
+                      vertical: 5.0, horizontal: 10.0),
+                  enabled: true,
+                  hintText: 'City',
+                  border: OutlineInputBorder(
+                    borderSide: BorderSide(
+                      width: 3,
+                      color: Colors.grey,
+                    ),
+                    borderRadius: BorderRadius.circular(10.0),
+                  ),
+                ),
+              ),
+            ),
+            SizedBox(
+              width: 10.0,
+            ),
+            Expanded(
+              child: TextFormField(
+                controller: address,
+                textInputAction: TextInputAction.next,
+                decoration: InputDecoration(
+                  contentPadding: const EdgeInsets.symmetric(
+                      vertical: 5.0, horizontal: 10.0),
+                  enabled: true,
+                  hintText: 'State',
+                  border: OutlineInputBorder(
+                    borderSide: BorderSide(
+                      width: 3,
+                      color: Colors.grey,
+                    ),
+                    borderRadius: BorderRadius.circular(10.0),
+                  ),
+                ),
+              ),
+            ),
+          ],
         ),
+        Space(15.0),
+      ],
+    );
+  }
+
+  _multipleSelectInput() {
+    return Column(
+      children: [
         TextFormField(
           readOnly: true,
           controller: patient,
@@ -595,76 +777,8 @@ class _CreatePatientInfoState extends State<CreatePatientInfo> {
           ),
           onTap: _showMultiSelectCondition,
         ),
+        Space(15.0),
       ],
     );
-  }
-
-  _specialNeeds() {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Text(
-          "Special Needs",
-          style: TextStyle(
-            fontWeight: FontWeight.bold,
-          ),
-        ),
-        SizedBox(
-          height: 10,
-        ),
-        TextFormField(
-          controller: needs,
-          decoration: InputDecoration(
-            contentPadding:
-                const EdgeInsets.symmetric(vertical: 5.0, horizontal: 10.0),
-            prefixIcon: Icon(Icons.chat_outlined),
-            enabled: true,
-            hintText: 'Patient Condition',
-            labelText: 'Patient Condition',
-            border: OutlineInputBorder(
-              borderSide: BorderSide(
-                width: 3,
-                color: Colors.grey,
-              ),
-              borderRadius: BorderRadius.circular(10.0),
-            ),
-          ),
-        ),
-      ],
-    );
-  }
-
-  Future getGalleryImage1() async {
-    //access gallery and get selected image path
-    try {
-      final image1 = await ImagePicker().pickImage(source: ImageSource.gallery);
-      if (image1 == null) return;
-
-      final imageTemporary = File(image1.path);
-      setState(() {
-        this.image1 = imageTemporary;
-      });
-    } on PlatformException {
-      if (kDebugMode) {
-        print("Failed to pick image");
-      }
-    }
-  }
-
-  Future getGalleryImage2() async {
-    //access gallery and get selected image path
-    try {
-      final image2 = await ImagePicker().pickImage(source: ImageSource.gallery);
-      if (image2 == null) return;
-
-      final imageTemporary = File(image2.path);
-      setState(() {
-        this.image2 = imageTemporary;
-      });
-    } on PlatformException {
-      if (kDebugMode) {
-        print("Failed to pick image");
-      }
-    }
   }
 }

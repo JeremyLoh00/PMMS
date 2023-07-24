@@ -1,14 +1,20 @@
+import 'dart:async';
 import 'dart:collection';
 import 'dart:ui';
 
 import 'package:datetime_picker_formfield/datetime_picker_formfield.dart';
 import 'package:delayed_display/delayed_display.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_form_bloc/flutter_form_bloc.dart';
 import 'package:flutter_scale_tap/flutter_scale_tap.dart';
 import 'package:intl/intl.dart';
 import 'package:private_nurse_for_client/constant.dart';
 import 'package:private_nurse_for_client/form_bloc/store_job_form_bloc.dart';
+import 'package:private_nurse_for_client/public_components/loading_dialog.dart';
 import 'package:private_nurse_for_client/public_components/space.dart';
+import 'package:private_nurse_for_client/public_components/theme_snack_bar.dart';
 import 'package:private_nurse_for_client/theme.dart';
 import 'package:table_calendar/table_calendar.dart';
 
@@ -90,6 +96,11 @@ class _CreateJobInfoState extends State<CreateJobInfo> {
         _selectedDays.remove(selectedDay);
       } else {
         _selectedDays.add(selectedDay);
+        Timer(Duration(milliseconds: 100), () {
+          setState(() {
+            widget.storeJobFormBloc.addVariant();
+          });
+        });
       }
 
       _focusedDay.value = focusedDay;
@@ -122,148 +133,186 @@ class _CreateJobInfoState extends State<CreateJobInfo> {
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: <Widget>[
-          DelayedDisplay(
-            delay: Duration(milliseconds: delayAnimationDuration),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                const Text(
-                  "Service",
-                  style: TextStyle(
-                    fontWeight: FontWeight.bold,
-                    fontSize: 16,
-                  ),
-                ),
-                Space(20),
-                Container(
-                  width: double.infinity,
-                  child: DropdownButtonFormField(
-                    hint: const Text("Select Service"),
-                    value: _service,
-                    onChanged: (String? newValue) {
-                      setState(() {
-                        _service = newValue ?? "";
-                      });
-                    },
-                    items: _serviceList(),
-                    decoration: InputDecoration(
-                      contentPadding: const EdgeInsets.symmetric(
-                          vertical: 5.0, horizontal: 10.0),
-                      border: OutlineInputBorder(
-                        borderSide: const BorderSide(
-                          width: 3,
-                          color: Colors.grey,
+      child: BlocProvider(
+        create: (context) => StoreJobFormBloc(),
+        child: Builder(
+          builder: (context) {
+            final storeJobForm = BlocProvider.of<StoreJobFormBloc>(context);
+
+            return FormBlocListener<StoreJobFormBloc, String, String>(
+              // On submitting
+              onSubmitting: ((context, state) {
+                FocusScope.of(context).unfocus();
+                LoadingDialog.show(context);
+                if (kDebugMode) {
+                  print("hai");
+                }
+              }),
+              //On Submission Failed
+              onSubmissionFailed: (context, state) {
+                LoadingDialog.hide(context);
+              },
+              // On Success
+              onSuccess: (context, state) {
+                LoadingDialog.hide(context);
+              },
+              // On failure
+              onFailure: (context, state) {
+                LoadingDialog.hide(context);
+                ThemeSnackBar.showSnackBar(
+                    context, state.failureResponse ?? "Error");
+              },
+              // Design
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: <Widget>[
+                  DelayedDisplay(
+                    delay: Duration(milliseconds: delayAnimationDuration),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        const Text(
+                          "Service",
+                          style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 16,
+                          ),
                         ),
-                        borderRadius: BorderRadius.circular(10.0),
-                      ),
+                        Space(20),
+                        Container(
+                          width: double.infinity,
+                          child: DropdownButtonFormField(
+                            hint: const Text("Select Service"),
+                            value: _service,
+                            onChanged: (String? newValue) {
+                              setState(() {
+                                _service = newValue ?? "";
+                              });
+                            },
+                            items: _serviceList(),
+                            decoration: InputDecoration(
+                              contentPadding: const EdgeInsets.symmetric(
+                                  vertical: 5.0, horizontal: 10.0),
+                              border: OutlineInputBorder(
+                                borderSide: const BorderSide(
+                                  width: 3,
+                                  color: Colors.grey,
+                                ),
+                                borderRadius: BorderRadius.circular(10.0),
+                              ),
+                            ),
+                          ),
+                        ),
+                      ],
                     ),
                   ),
-                ),
-              ],
-            ),
-          ),
-          Space(20),
-          DelayedDisplay(
-            delay: Duration(milliseconds: delayAnimationDuration),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      "Job Date",
-                      style: TextStyle(
-                        fontWeight: FontWeight.bold,
-                        fontSize: 16,
-                      ),
+                  Space(20),
+                  DelayedDisplay(
+                    delay: Duration(milliseconds: delayAnimationDuration),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              "Job Date",
+                              style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                                fontSize: 16,
+                              ),
+                            ),
+                            Space(10),
+                            Container(
+                              decoration: BoxDecoration(
+                                color: kWhite,
+                                borderRadius: BorderRadius.circular(30),
+                                boxShadow: [
+                                  profileShadow(
+                                    kGrey.withOpacity(0.3),
+                                  ),
+                                ],
+                              ),
+                              child: Column(
+                                children: [
+                                  ValueListenableBuilder<DateTime>(
+                                    valueListenable: _focusedDay,
+                                    builder: (context, value, _) {
+                                      return _CalendarHeader(
+                                        focusedDay: value,
+                                        clearButtonVisible: canClearSelection,
+                                        onTodayButtonTap: () {
+                                          setState(() => _focusedDay.value =
+                                              DateTime.now());
+                                        },
+                                        onClearButtonTap: () {
+                                          setState(() {
+                                            _rangeStart = null;
+                                            _rangeEnd = null;
+                                            _selectedDays.clear();
+                                            _selectedEvents.value = [];
+                                          });
+                                        },
+                                        onLeftArrowTap: () {
+                                          _pageController.previousPage(
+                                            duration:
+                                                Duration(milliseconds: 300),
+                                            curve: Curves.easeOut,
+                                          );
+                                        },
+                                        onRightArrowTap: () {
+                                          _pageController.nextPage(
+                                            duration:
+                                                Duration(milliseconds: 300),
+                                            curve: Curves.easeOut,
+                                          );
+                                        },
+                                      );
+                                    },
+                                  ),
+                                  TableCalendar<Event>(
+                                    firstDay: kFirstDay,
+                                    lastDay: kLastDay,
+                                    focusedDay: _focusedDay.value,
+                                    headerVisible: false,
+                                    selectedDayPredicate: (day) {
+                                      return _selectedDays.contains(day);
+                                    },
+                                    rangeStartDay: _rangeStart,
+                                    rangeEndDay: _rangeEnd,
+                                    calendarFormat: _calendarFormat,
+                                    rangeSelectionMode: _rangeSelectionMode,
+                                    // eventLoader: _getEventsForDay,
+                                    // holidayPredicate: (day) {
+                                    //   // Every 20th day of the month will be treated as a holiday
+                                    //   return day.day == 20;
+                                    // },
+                                    onDaySelected: _onDaySelected,
+                                    onRangeSelected: _onRangeSelected,
+                                    onCalendarCreated: (controller) =>
+                                        _pageController = controller,
+                                    onPageChanged: (focusedDay) =>
+                                        _focusedDay.value = focusedDay,
+                                    onFormatChanged: (format) {
+                                      if (_calendarFormat != format) {
+                                        setState(
+                                            () => _calendarFormat = format);
+                                      }
+                                    },
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ],
+                        ),
+                      ],
                     ),
-                    Space(10),
-                    Container(
-                      decoration: BoxDecoration(
-                        color: kWhite,
-                        borderRadius: BorderRadius.circular(30),
-                        boxShadow: [
-                          profileShadow(
-                            kGrey.withOpacity(0.3),
-                          ),
-                        ],
-                      ),
-                      child: Column(
-                        children: [
-                          ValueListenableBuilder<DateTime>(
-                            valueListenable: _focusedDay,
-                            builder: (context, value, _) {
-                              return _CalendarHeader(
-                                focusedDay: value,
-                                clearButtonVisible: canClearSelection,
-                                onTodayButtonTap: () {
-                                  setState(
-                                      () => _focusedDay.value = DateTime.now());
-                                },
-                                onClearButtonTap: () {
-                                  setState(() {
-                                    _rangeStart = null;
-                                    _rangeEnd = null;
-                                    _selectedDays.clear();
-                                    _selectedEvents.value = [];
-                                  });
-                                },
-                                onLeftArrowTap: () {
-                                  _pageController.previousPage(
-                                    duration: Duration(milliseconds: 300),
-                                    curve: Curves.easeOut,
-                                  );
-                                },
-                                onRightArrowTap: () {
-                                  _pageController.nextPage(
-                                    duration: Duration(milliseconds: 300),
-                                    curve: Curves.easeOut,
-                                  );
-                                },
-                              );
-                            },
-                          ),
-                          TableCalendar<Event>(
-                            firstDay: kFirstDay,
-                            lastDay: kLastDay,
-                            focusedDay: _focusedDay.value,
-                            headerVisible: false,
-                            selectedDayPredicate: (day) =>
-                                _selectedDays.contains(day),
-                            rangeStartDay: _rangeStart,
-                            rangeEndDay: _rangeEnd,
-                            calendarFormat: _calendarFormat,
-                            rangeSelectionMode: _rangeSelectionMode,
-                            // eventLoader: _getEventsForDay,
-                            // holidayPredicate: (day) {
-                            //   // Every 20th day of the month will be treated as a holiday
-                            //   return day.day == 20;
-                            // },
-                            onDaySelected: _onDaySelected,
-                            onRangeSelected: _onRangeSelected,
-                            onCalendarCreated: (controller) =>
-                                _pageController = controller,
-                            onPageChanged: (focusedDay) =>
-                                _focusedDay.value = focusedDay,
-                            onFormatChanged: (format) {
-                              if (_calendarFormat != format) {
-                                setState(() => _calendarFormat = format);
-                              }
-                            },
-                          ),
-                        ],
-                      ),
-                    ),
-                  ],
-                ),
-              ],
-            ),
-          ),
-        ],
+                  ),
+                ],
+              ),
+            );
+          },
+        ),
       ),
     );
   }

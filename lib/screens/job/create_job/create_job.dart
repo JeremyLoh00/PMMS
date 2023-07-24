@@ -57,16 +57,14 @@ class _CreateJobState extends State<CreateJob> {
                   ),
                 ),
               ),
-              body: SafeArea(
-                child: Column(
-                  children: [
-                    Expanded(
-                      child: CreateJobHeader(
-                        storeJobFormBloc: storeJobFormBloc,
-                      ),
+              body: Column(
+                children: [
+                  Expanded(
+                    child: CreateJobHeader(
+                      storeJobFormBloc: storeJobFormBloc,
                     ),
-                  ],
-                ),
+                  ),
+                ],
               ),
             ),
           );

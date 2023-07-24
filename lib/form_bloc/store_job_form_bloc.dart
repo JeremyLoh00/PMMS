@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:form_bloc/form_bloc.dart';
 import 'package:private_nurse_for_client/helpers/validators.dart';
+import 'package:private_nurse_for_client/screens/job/create_job/components/field_bloc/variant_field_bloc.dart';
 
 class StoreJobFormBloc extends FormBloc<String, String> {
   //Form key declaration and validations
@@ -29,9 +30,23 @@ class StoreJobFormBloc extends FormBloc<String, String> {
 
   final raceService = SelectFieldBloc();
 
+  final variants = ListFieldBloc<VariantFieldBloc, dynamic>(name: 'variants');
+
   @override
   FutureOr<void> onSubmitting() {
     // TODO: implement onSubmitting
     throw UnimplementedError();
+  }
+
+   void addVariant() {
+    variants.addFieldBloc(VariantFieldBloc(
+      name: 'variant',
+      variantName: TextFieldBloc(name: 'variantName'),
+      options: ListFieldBloc(name: 'options'),
+    ));
+  }
+
+  void removeVariant(int index) {
+    variants.removeFieldBlocAt(index);
   }
 }
