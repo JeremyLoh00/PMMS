@@ -35,10 +35,7 @@ class _HomeScreenState extends State<HomeScreen>
   late TabController _tabController;
   GlobalKey<ScaffoldState> _key = GlobalKey();
   String? selectedValue;
-  JobFilterRequestModel jobFilterRequestModel = JobFilterRequestModel(
-    cityId: -1,
-    divisionId: 10,
-  );
+  JobFilterRequestModel jobFilterRequestModel = JobFilterRequestModel();
   UserBloc userBloc = UserBloc();
   final PagingController<int, JobModel> _jobPagingController =
       PagingController(firstPageKey: 1);

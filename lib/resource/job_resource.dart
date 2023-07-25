@@ -8,7 +8,7 @@ import 'package:private_nurse_for_client/services/resource.dart';
 class JobResource {
   static Resource getListJobs(JobFilterRequestModel jobFilterRequestModel) {
     return Resource(
-        url: 'nurse/jobs',
+        url: 'client/jobs',
         params: {
           // Calculate number page based on offset and take
           'page':
@@ -18,10 +18,6 @@ class JobResource {
           'take': jobFilterRequestModel.take.toString(),
 
           'tab': jobFilterRequestModel.tab.toString(),
-          if (jobFilterRequestModel.cityId != null)
-            'city_id': jobFilterRequestModel.cityId.toString(),
-          if (jobFilterRequestModel.divisionId != null)
-            'division_id': jobFilterRequestModel.divisionId.toString(),
         },
         parse: (response) {
           return ListJobResponseModel(json.decode(response.body));
@@ -30,23 +26,35 @@ class JobResource {
 
   static Resource applyJob(int jobId) {
     return Resource(
-        url: 'nurse/jobs/$jobId/apply-jobs',
+        url: 'client/jobs/$jobId/apply-jobs',
         parse: (response) {
           return DefaultResponseModel(json.decode(response.body));
         });
   }
-
+  static Resource ongoingJob(int jobId) {
+    return Resource(
+        url: 'client/jobs/$jobId/ongoing-jobs',
+        parse: (response) {
+          return DefaultResponseModel(json.decode(response.body));
+        });
+  }
   static Resource completeJob(int jobId) {
     return Resource(
-        url: 'nurse/jobs/$jobId/complete-jobs',
+        url: 'client/jobs/$jobId/cancel-jobs',
         parse: (response) {
           return DefaultResponseModel(json.decode(response.body));
         });
   }
-
+  static Resource cancelJob(int jobId) {
+    return Resource(
+        url: 'client/jobs/$jobId/complete-jobs',
+        parse: (response) {
+          return DefaultResponseModel(json.decode(response.body));
+        });
+  }
   static Resource generateBillPayment() {
     return Resource(
-        url: 'nurse/generate-bill/uniform-fee',
+        url: 'client/generate-bill/uniform-fee',
         parse: (response) {
           return DefaultResponseModel(json.decode(response.body));
         });

@@ -14,11 +14,15 @@ class JobsBloc {
   Future<DefaultResponseModel> applyJob(int jobId) async {
     return await WebService.post(JobResource.applyJob(jobId));
   }
-
+Future<DefaultResponseModel> ongoingJob(int jobId) async {
+    return await WebService.post(JobResource.ongoingJob(jobId));
+  }
   Future<DefaultResponseModel> completeJob(int jobId) async {
     return await WebService.post(JobResource.completeJob(jobId));
   }
-
+Future<DefaultResponseModel> cancelJob(int jobId) async {
+    return await WebService.post(JobResource.cancelJob(jobId));
+  }
   Future<DefaultResponseModel> generateBillPayment() async {
     return await WebService.post(JobResource.generateBillPayment());
   }
