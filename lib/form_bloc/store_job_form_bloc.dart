@@ -6,7 +6,7 @@ import 'package:private_nurse_for_client/helpers/validators.dart';
 import 'package:private_nurse_for_client/screens/job/create_job/components/field_bloc/variant_field_bloc.dart';
 
 class StoreJobFormBloc extends FormBloc<String, String> {
-   XFile? newFormalPhoto1;
+  XFile? newFormalPhoto1;
   //Form key declaration and validations
   final dateJobInfo = TextFieldBloc(
     validators: [
@@ -34,21 +34,34 @@ class StoreJobFormBloc extends FormBloc<String, String> {
 
   final variants = ListFieldBloc<VariantFieldBloc, dynamic>(name: 'variants');
 
+  List<Map<String, VariantFieldBloc>> listSelected = [];
+
   @override
   FutureOr<void> onSubmitting() {
     // TODO: implement onSubmitting
     throw UnimplementedError();
   }
 
-   void addVariant() {
-    variants.addFieldBloc(VariantFieldBloc(
-      name: 'variant',
-      variantName: TextFieldBloc(name: 'variantName'),
-      options: ListFieldBloc(name: 'options'),
-    ));
+  void addVariant(String dateId) {
+    listSelected.add({
+      dateId: VariantFieldBloc(
+        name: 'variant',
+        variantName: TextFieldBloc(name: 'variantName'),
+        options: ListFieldBloc(name: 'options'),
+      )
+    });
+    variants.addFieldBloc(
+      listSelected.firstWhere(
+        (element) => element.containsKey(dateId),
+      )[dateId]!,
+    );
   }
 
-  void removeVariant(int index) {
-    variants.removeFieldBlocAt(index);
+  void removeVariant(String dateId) {
+    // variants.removeFieldBlocAt(dateID);
+    VariantFieldBloc removeVariantFieldBloc = listSelected.firstWhere(
+      (element) => element.containsKey(dateId),
+    )[dateId]!;
+    variants.removeFieldBloc(removeVariantFieldBloc);
   }
 }

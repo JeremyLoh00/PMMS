@@ -6,13 +6,16 @@ import 'package:private_nurse_for_client/form_bloc/store_job_form_bloc.dart';
 import 'package:private_nurse_for_client/public_components/space.dart';
 import 'package:private_nurse_for_client/screens/edit_profile/edit_profile_screen.dart';
 import 'package:private_nurse_for_client/screens/job/create_job/components/field_bloc/variant_field_bloc.dart';
+import 'package:private_nurse_for_client/screens/job/create_job/components/summary.dart';
 import 'package:private_nurse_for_client/theme.dart';
 
 class CreateServiceInfo extends StatefulWidget {
   final StoreJobFormBloc storeJobFormBloc;
+  Set<DateTime> selectedDays;
   CreateServiceInfo(
     this.storeJobFormBloc, {
     super.key,
+    required this.selectedDays,
   });
 
   @override
@@ -41,8 +44,12 @@ class _CreateServiceInfoState extends State<CreateServiceInfo> {
   void initState() {
     // TODO: implement initState
     super.initState();
-
-    widget.storeJobFormBloc.addVariant();
+    String dateId = widget.selectedDays.first.day.toString() +
+        "-" +
+        widget.selectedDays.first.month.toString() +
+        "-" +
+        widget.selectedDays.first.year.toString();
+    widget.storeJobFormBloc.addVariant(dateId);
   }
 
   @override
@@ -61,7 +68,13 @@ class _CreateServiceInfoState extends State<CreateServiceInfo> {
                   shrinkWrap: true,
                   physics: const NeverScrollableScrollPhysics(),
                   itemCount: state.fieldBlocs.length,
-                  itemBuilder: (context, i) {
+                  itemBuilder: (context, index) {
+                    String dateId = widget.selectedDays.first.day.toString() +
+                        "-" +
+                        widget.selectedDays.first.month.toString() +
+                        "-" +
+                        widget.selectedDays.first.year.toString();
+                    print(widget.storeJobFormBloc.listSelected[index].entries);
                     return Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
@@ -72,7 +85,8 @@ class _CreateServiceInfoState extends State<CreateServiceInfo> {
                             mainAxisAlignment: MainAxisAlignment.start,
                             children: [
                               Text(
-                                '12 July 2023',
+                                widget.storeJobFormBloc.listSelected[index]
+                                    .entries.first.key,
                                 style: textStyleNormal(
                                   fontWeight: FontWeight.bold,
                                   fontsize: 16,

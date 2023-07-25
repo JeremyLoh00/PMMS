@@ -20,9 +20,11 @@ import 'package:table_calendar/table_calendar.dart';
 
 class CreateJobInfo extends StatefulWidget {
   StoreJobFormBloc storeJobFormBloc;
+  Set<DateTime> selectedDays;
   CreateJobInfo({
     super.key,
     required this.storeJobFormBloc,
+    required this.selectedDays,
   });
 
   @override
@@ -46,10 +48,6 @@ class _CreateJobInfoState extends State<CreateJobInfo> {
   int delayAnimationDuration = 200;
   late final ValueNotifier<List<Event>> _selectedEvents;
   final ValueNotifier<DateTime> _focusedDay = ValueNotifier(DateTime.now());
-  final Set<DateTime> _selectedDays = LinkedHashSet<DateTime>(
-    equals: isSameDay,
-    hashCode: getHashCode,
-  );
 
   late PageController _pageController;
   CalendarFormat _calendarFormat = CalendarFormat.month;
@@ -61,7 +59,7 @@ class _CreateJobInfoState extends State<CreateJobInfo> {
   void initState() {
     super.initState();
 
-    _selectedDays.add(_focusedDay.value);
+    widget.selectedDays.add(_focusedDay.value);
     _selectedEvents = ValueNotifier(_getEventsForDay(_focusedDay.value));
   }
 
@@ -73,7 +71,9 @@ class _CreateJobInfoState extends State<CreateJobInfo> {
   }
 
   bool get canClearSelection =>
-      _selectedDays.isNotEmpty || _rangeStart != null || _rangeEnd != null;
+      widget.selectedDays.isNotEmpty ||
+      _rangeStart != null ||
+      _rangeEnd != null;
 
   List<Event> _getEventsForDay(DateTime day) {
     return kEvents[day] ?? [];
@@ -92,20 +92,22 @@ class _CreateJobInfoState extends State<CreateJobInfo> {
 
   void _onDaySelected(DateTime selectedDay, DateTime focusedDay) {
     setState(() {
-      if (_selectedDays.contains(selectedDay)) {
-        _selectedDays.remove(selectedDay);
-        Timer(Duration(milliseconds: 100), () {
-          setState(() {
-            widget.storeJobFormBloc.removeVariant(selectedDay.day.toInt());
-          });
-        });
+      if (widget.selectedDays.contains(selectedDay)) {
+        widget.selectedDays.remove(selectedDay);
+        String dateId = selectedDay.day.toString() +
+            "-" +
+            selectedDay.month.toString() +
+            "-" +
+            selectedDay.year.toString();
+        widget.storeJobFormBloc.removeVariant(dateId);
       } else {
-        _selectedDays.add(selectedDay);
-        Timer(Duration(milliseconds: 100), () {
-          setState(() {
-            widget.storeJobFormBloc.addVariant();
-          });
-        });
+        widget.selectedDays.add(selectedDay);
+        String dateId = selectedDay.day.toString() +
+            "-" +
+            selectedDay.month.toString() +
+            "-" +
+            selectedDay.year.toString();
+        widget.storeJobFormBloc.addVariant(dateId);
       }
 
       _focusedDay.value = focusedDay;
@@ -114,7 +116,7 @@ class _CreateJobInfoState extends State<CreateJobInfo> {
       _rangeSelectionMode = RangeSelectionMode.toggledOff;
     });
 
-    _selectedEvents.value = _getEventsForDays(_selectedDays);
+    _selectedEvents.value = _getEventsForDays(widget.selectedDays);
   }
 
   void _onRangeSelected(DateTime? start, DateTime? end, DateTime focusedDay) {
@@ -122,7 +124,7 @@ class _CreateJobInfoState extends State<CreateJobInfo> {
       _focusedDay.value = focusedDay;
       _rangeStart = start;
       _rangeEnd = end;
-      _selectedDays.clear();
+      widget.selectedDays.clear();
       _rangeSelectionMode = RangeSelectionMode.toggledOn;
     });
 
@@ -254,7 +256,7 @@ class _CreateJobInfoState extends State<CreateJobInfo> {
                                           setState(() {
                                             _rangeStart = null;
                                             _rangeEnd = null;
-                                            _selectedDays.clear();
+                                            widget.selectedDays.clear();
                                             _selectedEvents.value = [];
                                           });
                                         },
@@ -281,7 +283,7 @@ class _CreateJobInfoState extends State<CreateJobInfo> {
                                     focusedDay: _focusedDay.value,
                                     headerVisible: false,
                                     selectedDayPredicate: (day) {
-                                      return _selectedDays.contains(day);
+                                      return widget.selectedDays.contains(day);
                                     },
                                     rangeStartDay: _rangeStart,
                                     rangeEndDay: _rangeEnd,
@@ -412,12 +414,6 @@ class _CalendarHeader extends StatelessWidget {
             visualDensity: VisualDensity.compact,
             onPressed: onTodayButtonTap,
           ),
-          if (clearButtonVisible)
-            IconButton(
-              icon: Icon(Icons.clear, size: 20.0),
-              visualDensity: VisualDensity.compact,
-              onPressed: onClearButtonTap,
-            ),
           const Spacer(),
           IconButton(
             icon: Icon(Icons.chevron_left),

@@ -123,6 +123,10 @@ class _CreateJobHeaderState extends State<CreateJobHeader> {
   }
 
   // List<Step> getSteps() => [Step(title: Text(""), content: Text("data"))];
+    final Set<DateTime> _selectedDays = LinkedHashSet<DateTime>(
+    equals: isSameDay,
+    hashCode: getHashCode,
+  );
 
   List<Step> getSteps() => [
         Step(
@@ -139,6 +143,7 @@ class _CreateJobHeaderState extends State<CreateJobHeader> {
             height: MediaQuery.of(context).size.height * 0.625,
             child: CreateJobInfo(
               storeJobFormBloc: widget.storeJobFormBloc,
+              selectedDays: _selectedDays,
             ),
           ),
         ),
@@ -156,6 +161,7 @@ class _CreateJobHeaderState extends State<CreateJobHeader> {
             height: MediaQuery.of(context).size.height * 0.625,
             child: CreateServiceInfo(
               widget.storeJobFormBloc,
+              selectedDays: _selectedDays,
             ),
           ),
         ),

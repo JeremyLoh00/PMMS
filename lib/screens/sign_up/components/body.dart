@@ -33,41 +33,43 @@ class _BodyState extends State<Body> {
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 15),
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Column(
-            children: [
-              Row(
-                mainAxisAlignment: MainAxisAlignment.start,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    "Step ${widget.activeStepper} of $totalStepperCount",
-                    textAlign: TextAlign.start,
-                    style: const TextStyle(
-                        color: kPrimaryColor,
-                        fontWeight: FontWeight.w600,
-                        fontSize: 18,
-                        fontFamily: "Poppins"),
-                  ),
-                ],
-              ),
-              Space(10),
-              StepProgressIndicator(
-                totalSteps: totalStepperCount,
-                size: 6.0,
-                currentStep: widget.activeStepper,
-                selectedColor: kPrimaryColor,
-                unselectedColor: kGrey.shade300,
-                roundedEdges: const Radius.circular(20),
-              ),
-              Space(30),
-            ],
-          ),
-          Expanded(child: componentSelector(widget.formBloc)),
-        ],
+      child: SingleChildScrollView(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Column(
+              children: [
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      "Step ${widget.activeStepper} of $totalStepperCount",
+                      textAlign: TextAlign.start,
+                      style: const TextStyle(
+                          color: kPrimaryColor,
+                          fontWeight: FontWeight.w600,
+                          fontSize: 18,
+                          fontFamily: "Poppins"),
+                    ),
+                  ],
+                ),
+                Space(10),
+                StepProgressIndicator(
+                  totalSteps: totalStepperCount,
+                  size: 6.0,
+                  currentStep: widget.activeStepper,
+                  selectedColor: kPrimaryColor,
+                  unselectedColor: kGrey.shade300,
+                  roundedEdges: const Radius.circular(20),
+                ),
+                Space(30),
+              ],
+            ),
+            SingleChildScrollView(child: componentSelector(widget.formBloc)),
+          ],
+        ),
       ),
     );
   }
