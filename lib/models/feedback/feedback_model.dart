@@ -1,18 +1,21 @@
 class FeedbackModel {
-  int? reviewCounts;
-  int? averageRatings;
+  int? id;
+  String? comment;
+  int? rating;
 
-  FeedbackModel({this.reviewCounts, this.averageRatings});
+  FeedbackModel({this.id, this.comment, this.rating});
 
   FeedbackModel.fromJson(Map<String, dynamic> json) {
-    reviewCounts = json['review_counts'];
-    averageRatings = json['average_ratings'];
+    id = json['id'];
+    comment = json['comment'];
+    rating = json['rating'];
   }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['review_counts'] = this.reviewCounts;
-    data['average_ratings'] = this.averageRatings;
+    data['id'] = this.id;
+    data['comment'] = this.comment;
+    data['rating'] = this.rating;
     return data;
   }
 }
