@@ -1,12 +1,15 @@
 import 'dart:io';
 
+import 'package:delayed_display/delayed_display.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:multi_dropdown/multiselect_dropdown.dart';
 import 'package:private_nurse_for_client/constant.dart';
 import 'package:private_nurse_for_client/form_bloc/store_job_form_bloc.dart';
 import 'package:private_nurse_for_client/public_components/space.dart';
+import 'package:private_nurse_for_client/screens/job/create_job/components/image_uploader_job.dart';
 import 'package:private_nurse_for_client/screens/job/create_job/components/multi_select.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:private_nurse_for_client/theme.dart';
@@ -35,6 +38,46 @@ List<bool> value = [
   false,
 ];
 
+final List<ValueItem> patientList = [
+  ValueItem(label: 'Diabetic', value: '1'),
+  ValueItem(label: 'Hipertensi', value: '2'),
+  ValueItem(label: 'Heart Failure', value: '3'),
+  ValueItem(label: 'Kidney Disease', value: '4'),
+  ValueItem(label: 'Dyalisis', value: '5'),
+  ValueItem(label: 'Asthma', value: '6'),
+  ValueItem(label: 'Skin Problem', value: '7'),
+  ValueItem(label: 'Blindness', value: '8'),
+  ValueItem(label: 'Dementia', value: '9'),
+  ValueItem(label: 'Alzheimer', value: '10'),
+  ValueItem(label: 'Stroke', value: '11'),
+  ValueItem(label: 'Other', value: '12'),
+];
+
+final List<ValueItem> medicalList = [
+  ValueItem(label: 'Diabetic', value: '1'),
+  ValueItem(label: 'Hipertensi', value: '2'),
+  ValueItem(label: 'Heart Failure', value: '3'),
+  ValueItem(label: 'Kidney Disease', value: '4'),
+  ValueItem(label: 'Dyalisis', value: '5'),
+  ValueItem(label: 'Asthma', value: '6'),
+  ValueItem(label: 'Skin Problem', value: '7'),
+  ValueItem(label: 'Blindness', value: '8'),
+  ValueItem(label: 'Dementia', value: '9'),
+  ValueItem(label: 'Alzheimer', value: '10'),
+  ValueItem(label: 'Stroke', value: '11'),
+  ValueItem(label: 'Other', value: '12'),
+];
+
+final List<ValueItem> conditionList = [
+  ValueItem(label: 'Wheelchair Bound', value: '1'),
+  ValueItem(label: 'Bed Bound', value: '2'),
+  ValueItem(label: 'Can Ambulate', value: '3'),
+  ValueItem(label: 'Can Talk and Walk', value: '4'),
+  ValueItem(label: 'Cannot Talk', value: '5'),
+  ValueItem(label: 'Cooperative', value: '6'),
+  ValueItem(label: 'Not Cooperative', value: '7'),
+];
+
 class _CreatePatientInfoState extends State<CreatePatientInfo> {
   TextEditingController name = TextEditingController();
   TextEditingController age = TextEditingController();
@@ -48,6 +91,15 @@ class _CreatePatientInfoState extends State<CreatePatientInfo> {
   TextEditingController height = TextEditingController();
   TextEditingController weight = TextEditingController();
   TextEditingController address = TextEditingController();
+  TextEditingController city = TextEditingController();
+  TextEditingController state = TextEditingController();
+  TextEditingController idCard = TextEditingController();
+  final MultiSelectController _controllerPatientDiagnosis =
+      MultiSelectController();
+  final MultiSelectController _controllerMedicalHistory =
+      MultiSelectController();
+  final MultiSelectController _controllerPatientCondition =
+      MultiSelectController();
   String genderOption = listGender[0];
   String raceOption = listRace[0];
 
@@ -55,113 +107,13 @@ class _CreatePatientInfoState extends State<CreatePatientInfo> {
   List<String> _selectMedical = [];
   List<String> _selectCondition = [];
 
+  XFile? _selectedFormalImage1;
   File? image1;
   File? image2;
+  File? image3;
 
-  bool value = false;
-
-  void _showMultiSelectPatient() async {
-    final List<String> patientList = [
-      'Diabetic',
-      'Hipertensi',
-      'Heart Failure',
-      'Kidney Disease',
-      'Dyalisis',
-      'Asthma',
-      'Skin Problem',
-      'Blindness',
-      'Dementia',
-      'Alzheimer',
-      'Stroke',
-      'Other',
-    ];
-
-    final List<String>? resultsPatient = await showDialog(
-      context: context,
-      builder: (context) {
-        return MultiSelectPatient(
-          patientList: patientList,
-        );
-      },
-    );
-
-    //Update UI
-    if (resultsPatient != null) {
-      setState(() {
-        _selectPatient = resultsPatient;
-        for (var i = 0; i < _selectPatient.length; i++) {
-          patient.text = _selectPatient[i].toString();
-        }
-      });
-    }
-  }
-
-  void _showMultiSelectMedical() async {
-    final List<String> medicalList = [
-      'Diabetic',
-      'Hipertensi',
-      'Heart Failure',
-      'Kidney Disease',
-      'Dyalisis',
-      'Asthma',
-      'Skin Problem',
-      'Blindness',
-      'Dementia',
-      'Alzheimer',
-      'Stroke',
-      'Other',
-    ];
-
-    final List<String>? resultsMedical = await showDialog(
-      context: context,
-      builder: (context) {
-        return MultiSelectMedical(
-          medicalList: medicalList,
-        );
-      },
-    );
-
-    //Update UI
-    if (resultsMedical != null) {
-      setState(() {
-        _selectMedical = resultsMedical;
-        for (var i = 0; i < _selectMedical.length; i++) {
-          medical.text = _selectMedical[i].toString();
-        }
-      });
-    }
-  }
-
-  void _showMultiSelectCondition() async {
-    final List<String> conditionList = [
-      'Wheelchair Bound',
-      'Bed Bound',
-      'Can Ambulate',
-      'Can Talk and Walk',
-      'Cannot Talk',
-      'Cooperative',
-      'Not Cooperative',
-    ];
-
-    final List<String>? resultsCondition = await showDialog(
-      context: context,
-      builder: (context) {
-        return MultiSelectCondition(
-          conditionList: conditionList,
-        );
-      },
-    );
-
-    //Update UI
-    if (resultsCondition != null) {
-      setState(() {
-        _selectCondition = resultsCondition;
-        for (var i = 0; i < _selectCondition.length; i++) {
-          condition.text = _selectCondition[i].toString();
-        }
-      });
-    }
-  }
+  bool valuePhoneNum = false;
+  bool valueAddress = false;
 
   @override
   Widget build(BuildContext context) {
@@ -172,6 +124,8 @@ class _CreatePatientInfoState extends State<CreatePatientInfo> {
         _patientInfo(),
         //address
         _address(),
+        //Identification card
+        _idInfo(),
         //multiple select
         _multipleSelectInput(),
         //Gender And Race
@@ -195,104 +149,32 @@ class _CreatePatientInfoState extends State<CreatePatientInfo> {
         SizedBox(
           height: 10,
         ),
-        Row(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Expanded(
-              child: TextFormField(
-                readOnly: true,
-                decoration: InputDecoration(
-                  contentPadding: const EdgeInsets.symmetric(
-                      vertical: 5.0, horizontal: 10.0),
-                  enabled: true,
-                  hintText: 'Photo 1',
-                  border: OutlineInputBorder(
-                    borderSide: BorderSide(
-                      width: 3,
-                      color: Colors.grey,
-                    ),
-                    borderRadius: BorderRadius.circular(10.0),
-                  ),
-                ),
-              ),
-            ),
-            Row(
-              children: [
-                SizedBox(
-                  width: 5,
-                ),
-                ElevatedButton.icon(
-                  icon: Icon(Icons.upload),
-                  label: Text(
-                    "Upload".toUpperCase(),
-                    style: TextStyle(fontSize: 14),
-                  ),
-                  style: ButtonStyle(
-                    foregroundColor:
-                        MaterialStateProperty.all<Color>(kSecondaryColor),
-                    shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-                      RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(10.0),
-                          side: BorderSide(color: kSecondaryColor)),
-                    ),
-                  ),
-                  onPressed: () => {getGalleryImage1()},
-                ),
-              ],
-            ),
-          ],
+        DelayedDisplay(
+          delay: Duration(milliseconds: delayAnimationDuration),
+          child: InputFormalPhoto2(
+            formBloc: widget.storeJobFormBloc,
+            onImageFormalSelected: (XFile selectedImage) {
+              setState(() {
+                _selectedFormalImage1 = selectedImage;
+                widget.storeJobFormBloc.newFormalPhoto1 = selectedImage;
+              });
+            },
+          ),
         ),
         SizedBox(
           height: 10,
         ),
-        Row(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Expanded(
-              child: TextFormField(
-                readOnly: true,
-                decoration: InputDecoration(
-                  contentPadding: const EdgeInsets.symmetric(
-                      vertical: 5.0, horizontal: 10.0),
-                  enabled: true,
-                  hintText: 'Photo 2',
-                  border: OutlineInputBorder(
-                    borderSide: BorderSide(
-                      width: 3,
-                      color: Colors.grey,
-                    ),
-                    borderRadius: BorderRadius.circular(10.0),
-                  ),
-                ),
-              ),
-            ),
-            Row(
-              children: [
-                SizedBox(
-                  width: 5,
-                ),
-                ElevatedButton.icon(
-                  icon: Icon(Icons.upload),
-                  label: Text(
-                    "Upload".toUpperCase(),
-                    style: TextStyle(fontSize: 14),
-                  ),
-                  style: ButtonStyle(
-                    foregroundColor:
-                        MaterialStateProperty.all<Color>(kSecondaryColor),
-                    shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-                      RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(10.0),
-                          side: BorderSide(color: kSecondaryColor)),
-                    ),
-                  ),
-                  onPressed: () => {getGalleryImage2()},
-                ),
-              ],
-            ),
-          ],
+        DelayedDisplay(
+          delay: Duration(milliseconds: delayAnimationDuration),
+          child: InputFormalPhoto3(
+            formBloc: widget.storeJobFormBloc,
+            onImageFormalSelected: (XFile selectedImage) {
+              setState(() {
+                _selectedFormalImage1 = selectedImage;
+                widget.storeJobFormBloc.newFormalPhoto1 = selectedImage;
+              });
+            },
+          ),
         ),
       ],
     );
@@ -552,10 +434,10 @@ class _CreatePatientInfoState extends State<CreatePatientInfo> {
             Row(
               children: [
                 Checkbox(
-                  value: this.value,
+                  value: this.valuePhoneNum,
                   onChanged: (bool? value) {
                     setState(() {
-                      this.value = value!;
+                      this.valuePhoneNum = value!;
                     });
                   },
                 ),
@@ -594,50 +476,39 @@ class _CreatePatientInfoState extends State<CreatePatientInfo> {
     );
   }
 
-  Future getGalleryImage1() async {
-    //access gallery and get selected image path
-    try {
-      final image1 = await ImagePicker().pickImage(source: ImageSource.gallery);
-      if (image1 == null) return;
-
-      final imageTemporary = File(image1.path);
-      setState(() {
-        this.image1 = imageTemporary;
-      });
-    } on PlatformException {
-      if (kDebugMode) {
-        print("Failed to pick image");
-      }
-    }
-  }
-
-  Future getGalleryImage2() async {
-    //access gallery and get selected image path
-    try {
-      final image2 = await ImagePicker().pickImage(source: ImageSource.gallery);
-      if (image2 == null) return;
-
-      final imageTemporary = File(image2.path);
-      setState(() {
-        this.image2 = imageTemporary;
-      });
-    } on PlatformException {
-      if (kDebugMode) {
-        print("Failed to pick image");
-      }
-    }
-  }
-
   _address() {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(
-          "Address",
-          style: textStyleNormal(
-            fontWeight: FontWeight.bold,
-            fontsize: 16.0,
-          ),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Text(
+              "Address",
+              style: textStyleNormal(
+                fontWeight: FontWeight.bold,
+                fontsize: 16.0,
+              ),
+            ),
+            Row(
+              children: [
+                Checkbox(
+                  value: this.valueAddress,
+                  onChanged: (bool? value) {
+                    setState(() {
+                      this.valueAddress = value!;
+                    });
+                  },
+                ),
+                Text(
+                  "Copy from my details",
+                  style: textStyleNormal(
+                    color: kGrey,
+                  ),
+                ),
+              ],
+            ),
+          ],
         ),
         Space(10.0),
         TextFormField(
@@ -662,7 +533,7 @@ class _CreatePatientInfoState extends State<CreatePatientInfo> {
           children: [
             Expanded(
               child: TextFormField(
-                controller: address,
+                controller: city,
                 textInputAction: TextInputAction.next,
                 decoration: InputDecoration(
                   contentPadding: const EdgeInsets.symmetric(
@@ -684,7 +555,7 @@ class _CreatePatientInfoState extends State<CreatePatientInfo> {
             ),
             Expanded(
               child: TextFormField(
-                controller: address,
+                controller: state,
                 textInputAction: TextInputAction.next,
                 decoration: InputDecoration(
                   contentPadding: const EdgeInsets.symmetric(
@@ -711,62 +582,175 @@ class _CreatePatientInfoState extends State<CreatePatientInfo> {
   _multipleSelectInput() {
     return Column(
       children: [
-        TextFormField(
-          readOnly: true,
-          controller: patient,
-          decoration: InputDecoration(
-            contentPadding:
-                const EdgeInsets.symmetric(vertical: 5.0, horizontal: 10.0),
-            suffixIcon: Icon(Icons.arrow_drop_down_outlined),
-            enabled: true,
-            hintText: 'Patient Diagnosis',
-            labelText: 'Patient Diagnosis',
-            border: OutlineInputBorder(
-              borderSide: BorderSide(
-                width: 3,
-                color: Colors.grey,
+        DelayedDisplay(
+          delay: Duration(milliseconds: delayAnimationDuration),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                'Patient Diagnosis',
+                style: textStyleNormal(
+                  fontWeight: FontWeight.bold,
+                  fontsize: 16.0,
+                ),
               ),
-              borderRadius: BorderRadius.circular(10.0),
-            ),
+              Space(10.0),
+              MultiSelectDropDown(
+                borderRadius: 10.0,
+                borderWidth: 1.0,
+                hint: 'Patient Diagnosis',
+                hintStyle: textStyleNormal(
+                  fontsize: 16.0,
+                  color: Colors.grey,
+                ),
+                borderColor: Colors.grey,
+                showClearIcon: true,
+                controller: _controllerPatientDiagnosis,
+                onOptionSelected: (options) {
+                  debugPrint(options.toString());
+                },
+                options: patientList,
+                maxItems: 12,
+                selectionType: SelectionType.multi,
+                chipConfig: const ChipConfig(
+                    wrapType: WrapType.wrap,
+                    backgroundColor: kPrimary100Color,
+                    labelColor: kPrimaryColor),
+                dropdownHeight: 300,
+                optionTextStyle: const TextStyle(fontSize: 16),
+                selectedOptionIcon: const Icon(
+                  Icons.checklist,
+                  color: kPrimaryColor,
+                ),
+                selectedOptionTextColor: kPrimaryColor,
+              ),
+            ],
           ),
-          onTap: _showMultiSelectPatient,
         ),
         SizedBox(
           height: 15,
         ),
-        TextFormField(
-          readOnly: true,
-          controller: medical,
-          decoration: InputDecoration(
-            contentPadding:
-                const EdgeInsets.symmetric(vertical: 5.0, horizontal: 10.0),
-            suffixIcon: Icon(Icons.arrow_drop_down_outlined),
-            enabled: true,
-            hintText: 'Medical History',
-            labelText: 'Medical History',
-            border: OutlineInputBorder(
-              borderSide: BorderSide(
-                width: 3,
-                color: Colors.grey,
+        DelayedDisplay(
+          delay: Duration(milliseconds: delayAnimationDuration),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                'Medical History',
+                style: textStyleNormal(
+                  fontWeight: FontWeight.bold,
+                  fontsize: 16.0,
+                ),
               ),
-              borderRadius: BorderRadius.circular(10.0),
-            ),
+              Space(10.0),
+              MultiSelectDropDown(
+                borderRadius: 10.0,
+                borderWidth: 1.0,
+                hint: 'Medical History',
+                hintStyle: textStyleNormal(
+                  fontsize: 16.0,
+                  color: Colors.grey,
+                ),
+                borderColor: Colors.grey,
+                showClearIcon: true,
+                controller: _controllerPatientDiagnosis,
+                onOptionSelected: (options) {
+                  debugPrint(options.toString());
+                },
+                options: medicalList,
+                maxItems: 12,
+                selectionType: SelectionType.multi,
+                chipConfig: const ChipConfig(
+                    wrapType: WrapType.wrap,
+                    backgroundColor: kPrimary100Color,
+                    labelColor: kPrimaryColor),
+                dropdownHeight: 300,
+                optionTextStyle: const TextStyle(fontSize: 16),
+                selectedOptionIcon: const Icon(
+                  Icons.checklist,
+                  color: kPrimaryColor,
+                ),
+                selectedOptionTextColor: kPrimaryColor,
+              ),
+            ],
           ),
-          onTap: _showMultiSelectMedical,
         ),
         SizedBox(
           height: 15,
         ),
+        DelayedDisplay(
+          delay: Duration(milliseconds: delayAnimationDuration),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                'Patient Condition',
+                style: textStyleNormal(
+                  fontWeight: FontWeight.bold,
+                  fontsize: 16.0,
+                ),
+              ),
+              Space(10.0),
+              MultiSelectDropDown(
+                borderRadius: 10.0,
+                borderWidth: 1.0,
+                hint: 'Patient Condition',
+                hintStyle: textStyleNormal(
+                  fontsize: 16.0,
+                  color: Colors.grey,
+                ),
+                borderColor: Colors.grey,
+                showClearIcon: true,
+                controller: _controllerPatientCondition,
+                onOptionSelected: (options) {
+                  debugPrint(options.toString());
+                },
+                options: conditionList,
+                maxItems: 7,
+                selectionType: SelectionType.multi,
+                chipConfig: const ChipConfig(
+                    wrapType: WrapType.wrap,
+                    backgroundColor: kPrimary100Color,
+                    labelColor: kPrimaryColor),
+                dropdownHeight: 300,
+                optionTextStyle: const TextStyle(fontSize: 16),
+                selectedOptionIcon: const Icon(
+                  Icons.checklist,
+                  color: kPrimaryColor,
+                ),
+                selectedOptionTextColor: kPrimaryColor,
+              ),
+            ],
+          ),
+        ),
+        Space(15.0),
+      ],
+    );
+  }
+
+  int delayAnimationDuration = 200;
+
+  _idInfo() {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          "NRIC No. / Passport No.",
+          style: textStyleNormal(
+            fontWeight: FontWeight.bold,
+            fontsize: 16.0,
+          ),
+        ),
+        Space(10.0),
         TextFormField(
-          readOnly: true,
-          controller: condition,
+          controller: idCard,
+          textInputAction: TextInputAction.next,
           decoration: InputDecoration(
+            prefixIcon: Icon(Icons.credit_card),
             contentPadding:
                 const EdgeInsets.symmetric(vertical: 5.0, horizontal: 10.0),
-            suffixIcon: Icon(Icons.arrow_drop_down_outlined),
             enabled: true,
-            hintText: 'Patient Condition',
-            labelText: 'Patient Condition',
+            hintText: 'NRIC No.',
             border: OutlineInputBorder(
               borderSide: BorderSide(
                 width: 3,
@@ -775,7 +759,19 @@ class _CreatePatientInfoState extends State<CreatePatientInfo> {
               borderRadius: BorderRadius.circular(10.0),
             ),
           ),
-          onTap: _showMultiSelectCondition,
+        ),
+        Space(10.0),
+        DelayedDisplay(
+          delay: Duration(milliseconds: delayAnimationDuration),
+          child: InputFormalPhoto1(
+            formBloc: widget.storeJobFormBloc,
+            onImageFormalSelected: (XFile selectedImage) {
+              setState(() {
+                _selectedFormalImage1 = selectedImage;
+                widget.storeJobFormBloc.newFormalPhoto1 = selectedImage;
+              });
+            },
+          ),
         ),
         Space(15.0),
       ],

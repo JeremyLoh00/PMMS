@@ -37,8 +37,13 @@ List<String> listDuration = [
 ];
 
 class _CreateServiceInfoState extends State<CreateServiceInfo> {
-  String? _preffredTime;
-  String? _prefferedDuration;
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+
+    widget.storeJobFormBloc.addVariant();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -50,6 +55,8 @@ class _CreateServiceInfoState extends State<CreateServiceInfo> {
             bloc: widget.storeJobFormBloc.variants,
             builder: (context, state) {
               if (state.fieldBlocs.isNotEmpty) {
+                String? _preffredTime;
+                String? _prefferedDuration;
                 return ListView.builder(
                   shrinkWrap: true,
                   physics: const NeverScrollableScrollPhysics(),

@@ -9,9 +9,9 @@ class PreferredNurse extends StatefulWidget {
   State<PreferredNurse> createState() => _PreferredNurseState();
 }
 
-List<String> listGender = ['Male', 'Female'];
+List<String> listGender = ['Male', 'Female', 'Any'];
 
-List<String> listRace = ['Malay', 'Chinese', 'Indian', 'Others'];
+List<String> listRace = ['Malay', 'Chinese', 'Indian', 'Sabahan', 'Sarawakian', 'Any'];
 
 class _PreferredNurseState extends State<PreferredNurse> {
   String genderOption = listGender[0];
@@ -49,7 +49,6 @@ class _PreferredNurseState extends State<PreferredNurse> {
                     ),
                   ),
                   Container(
-                    height: 200,
                     width: 180,
                     child: Column(
                       children: [
@@ -66,6 +65,16 @@ class _PreferredNurseState extends State<PreferredNurse> {
                         RadioListTile(
                           title: Text("Female"),
                           value: listGender[1],
+                          groupValue: genderOption,
+                          onChanged: (value) {
+                            setState(() {
+                              genderOption = value.toString();
+                            });
+                          },
+                        ),
+                        RadioListTile(
+                          title: Text("Any"),
+                          value: listGender[2],
                           groupValue: genderOption,
                           onChanged: (value) {
                             setState(() {
@@ -92,7 +101,6 @@ class _PreferredNurseState extends State<PreferredNurse> {
                       ),
                     ),
                     Container(
-                      height: 250,
                       width: 200,
                       child: Column(
                         children: [
@@ -127,8 +135,28 @@ class _PreferredNurseState extends State<PreferredNurse> {
                             },
                           ),
                           RadioListTile(
-                            title: Text("Others"),
+                            title: Text("Sabahan"),
                             value: listRace[3],
+                            groupValue: raceOption,
+                            onChanged: (value) {
+                              setState(() {
+                                raceOption = value.toString();
+                              });
+                            },
+                          ),
+                           RadioListTile(
+                            title: Text("Sarawakian"),
+                            value: listRace[4],
+                            groupValue: raceOption,
+                            onChanged: (value) {
+                              setState(() {
+                                raceOption = value.toString();
+                              });
+                            },
+                          ),
+                          RadioListTile(
+                            title: Text("Any"),
+                            value: listRace[5],
                             groupValue: raceOption,
                             onChanged: (value) {
                               setState(() {

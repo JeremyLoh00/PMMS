@@ -3,6 +3,7 @@ import 'package:flutter_scale_tap/flutter_scale_tap.dart';
 import 'package:private_nurse_for_client/constant.dart';
 import 'package:private_nurse_for_client/helpers/general_method.dart';
 import 'package:private_nurse_for_client/public_components/space.dart';
+import 'package:private_nurse_for_client/screens/job/create_job/job_history/history_job.dart';
 import 'package:private_nurse_for_client/screens/job/create_job/create_job.dart';
 import 'package:private_nurse_for_client/theme.dart';
 
@@ -143,7 +144,26 @@ class _SelectJobState extends State<SelectJob> {
                           },
                         ),
                       );
-                    } else {}
+                    } else {
+                      Navigator.of(context).push(
+                        PageRouteBuilder(
+                          pageBuilder:
+                              (context, animation, secondaryAnimation) {
+                            return const HistoryJob();
+                          },
+                          transitionDuration: const Duration(milliseconds: 100),
+                          reverseTransitionDuration:
+                              const Duration(milliseconds: 100),
+                          transitionsBuilder:
+                              (context, animation, secondaryAnimation, child) {
+                            return FadeTransition(
+                              opacity: animation,
+                              child: child,
+                            );
+                          },
+                        ),
+                      );
+                    }
                   });
                 },
                 child: Padding(

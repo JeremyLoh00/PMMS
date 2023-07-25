@@ -74,12 +74,12 @@ TextStyle listTileTitleStyle() {
   );
 }
 
-TextStyle textStyleH1() {
+TextStyle textStyleH1({Color color = Colors.black, double? fontsize, FontWeight? fontWeight}) {
   return TextStyle(
-    fontSize: 20,
-    color: kDarkGrey,
+    fontSize: fontsize ?? 20,
+    color: color ?? kDarkGrey,
     fontFamily: "Poppins",
-    fontWeight: FontWeight.w500,
+    fontWeight: fontWeight ?? FontWeight.w500,
   );
 }
 

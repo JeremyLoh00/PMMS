@@ -4,11 +4,15 @@ import 'package:flutter/material.dart';
 import 'package:private_nurse_for_client/constant.dart';
 import 'package:private_nurse_for_client/form_bloc/store_job_form_bloc.dart';
 import 'package:private_nurse_for_client/helpers/general_method.dart';
+import 'package:private_nurse_for_client/screens/dashboard/home_screen.dart';
 import 'package:private_nurse_for_client/screens/job/create_job/components/ceate_job_info.dart';
 import 'package:private_nurse_for_client/screens/job/create_job/components/create_patient_info.dart';
 import 'package:private_nurse_for_client/screens/job/create_job/components/create_service_info.dart';
+import 'package:private_nurse_for_client/screens/job/create_job/components/emergency_contact.dart';
 import 'package:private_nurse_for_client/screens/job/create_job/components/preferred_nurse.dart';
+import 'package:private_nurse_for_client/screens/job/create_job/components/summary.dart';
 import 'package:private_nurse_for_client/screens/job/payment/payment.dart';
+import 'package:private_nurse_for_client/screens/navigation/navigation.dart';
 import 'package:private_nurse_for_client/theme.dart';
 import 'package:table_calendar/table_calendar.dart';
 
@@ -40,7 +44,7 @@ class _CreateJobHeaderState extends State<CreateJobHeader> {
         final isLastStep = currentStep == getSteps().length - 1;
 
         if (isLastStep) {
-          navigateTo(context, Payment());
+          Navigator.pop(context);
 
           //send the data to the server
         } else {
@@ -88,7 +92,8 @@ class _CreateJobHeaderState extends State<CreateJobHeader> {
                   width: 10,
                 ),
                 ElevatedButton(
-                  child: Text("Next".toUpperCase(),
+                  child: Text(
+                      currentStep == 5 ? "Post Job" : "Next".toUpperCase(),
                       style: TextStyle(fontSize: 14)),
                   style: ButtonStyle(
                     foregroundColor:
@@ -102,7 +107,12 @@ class _CreateJobHeaderState extends State<CreateJobHeader> {
                       ),
                     ),
                   ),
-                  onPressed: details.onStepContinue,
+                  onPressed: currentStep == 5
+                      ? () {
+                          Navigator.pop(context);
+                          Navigator.pop(context);
+                        }
+                      : details.onStepContinue,
                 ),
               ],
             ),
@@ -216,8 +226,9 @@ class _CreateJobHeaderState extends State<CreateJobHeader> {
             ),
           ),
           title: SizedBox(),
-          content: CreatePatientInfo(
-            storeJobFormBloc: widget.storeJobFormBloc,
+          content: SizedBox(
+            height: MediaQuery.of(context).size.height * 0.625,
+            child: EmergencyContact(),
           ),
         ),
         Step(
@@ -231,8 +242,9 @@ class _CreateJobHeaderState extends State<CreateJobHeader> {
             ),
           ),
           title: SizedBox(),
-          content: CreatePatientInfo(
-            storeJobFormBloc: widget.storeJobFormBloc,
+          content: Container(
+            height: MediaQuery.of(context).size.height * 0.625,
+            child: Summary(),
           ),
         ),
       ];

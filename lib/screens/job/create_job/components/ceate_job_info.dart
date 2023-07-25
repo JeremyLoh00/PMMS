@@ -94,6 +94,11 @@ class _CreateJobInfoState extends State<CreateJobInfo> {
     setState(() {
       if (_selectedDays.contains(selectedDay)) {
         _selectedDays.remove(selectedDay);
+        Timer(Duration(milliseconds: 100), () {
+          setState(() {
+            widget.storeJobFormBloc.removeVariant(selectedDay.day.toInt());
+          });
+        });
       } else {
         _selectedDays.add(selectedDay);
         Timer(Duration(milliseconds: 100), () {
