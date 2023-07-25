@@ -46,7 +46,7 @@ class OngoingTab extends StatefulWidget {
 
 class _OngoingTabState extends State<OngoingTab> {
   // For pagination
-  static const _pageSize = 30;
+  static const _pageSize = 5;
 
   // For refresher
   RefreshController _refreshController =
@@ -65,7 +65,7 @@ class _OngoingTabState extends State<OngoingTab> {
 
   JobsBloc jobBloc = JobsBloc();
   JobFilterRequestModel jobFilterRequestModel = JobFilterRequestModel();
-  int jobStatus = 3;
+  int jobStatus = 2;
 
   Future<void> _fetchPage(int pageKey) async {
     jobFilterRequestModel.page = pageKey;

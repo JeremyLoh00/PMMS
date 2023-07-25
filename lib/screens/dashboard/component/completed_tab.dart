@@ -47,7 +47,7 @@ class CompletedTab extends StatefulWidget {
 class _CompletedTabState extends State<CompletedTab> {
   double _rating = 3.3;
   // For pagination
-  static const _pageSize = 30;
+  static const _pageSize = 5;
 
   // For refresher
   RefreshController _refreshController =
@@ -66,7 +66,7 @@ class _CompletedTabState extends State<CompletedTab> {
 
   JobsBloc jobBloc = JobsBloc();
   JobFilterRequestModel jobFilterRequestModel = JobFilterRequestModel();
-  int jobStatus = 4;
+  int jobStatus = 3;
 
   Future<void> _fetchPage(int pageKey) async {
     jobFilterRequestModel.page = pageKey;
