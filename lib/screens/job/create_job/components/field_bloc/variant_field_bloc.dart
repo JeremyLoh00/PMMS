@@ -3,16 +3,16 @@ import 'package:private_nurse_for_client/screens/job/create_job/components/field
 
 class VariantFieldBloc extends GroupFieldBloc {
   final int? id;
-  final TextFieldBloc variantName;
-  final ListFieldBloc<OptionFieldBloc, dynamic> options;
+  final TextFieldBloc prefferedStartTime;
+  final TextFieldBloc duration;
 
   VariantFieldBloc({
-    required this.variantName,
-    required this.options,
+    required this.prefferedStartTime,
+    required this.duration,
     String? name,
     this.id,
   }) : super(name: name, fieldBlocs: [
-          variantName,
-          options,
+          prefferedStartTime,
+          duration,
         ]);
 }

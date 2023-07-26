@@ -4,6 +4,7 @@ import 'package:delayed_display/delayed_display.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_form_bloc/flutter_form_bloc.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:multi_dropdown/multiselect_dropdown.dart';
 import 'package:private_nurse_for_client/constant.dart';
@@ -653,7 +654,7 @@ class _CreatePatientInfoState extends State<CreatePatientInfo> {
                 ),
                 borderColor: Colors.grey,
                 showClearIcon: true,
-                controller: _controllerPatientDiagnosis,
+                controller: _controllerMedicalHistory,
                 onOptionSelected: (options) {
                   debugPrint(options.toString());
                 },

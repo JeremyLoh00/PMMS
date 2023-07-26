@@ -67,7 +67,7 @@ class _BodyState extends State<Body> {
                 Space(30),
               ],
             ),
-            SingleChildScrollView(child: componentSelector(widget.formBloc)),
+            componentSelector(widget.formBloc),
           ],
         ),
       ),

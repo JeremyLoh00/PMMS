@@ -13,6 +13,7 @@ import 'package:intl/intl.dart';
 import 'package:private_nurse_for_client/constant.dart';
 import 'package:private_nurse_for_client/form_bloc/store_job_form_bloc.dart';
 import 'package:private_nurse_for_client/public_components/loading_dialog.dart';
+import 'package:private_nurse_for_client/public_components/my_dropdown_bloc_builder.dart';
 import 'package:private_nurse_for_client/public_components/space.dart';
 import 'package:private_nurse_for_client/public_components/theme_snack_bar.dart';
 import 'package:private_nurse_for_client/theme.dart';
@@ -140,186 +141,137 @@ class _CreateJobInfoState extends State<CreateJobInfo> {
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
-      child: BlocProvider(
-        create: (context) => StoreJobFormBloc(),
-        child: Builder(
-          builder: (context) {
-            final storeJobForm = BlocProvider.of<StoreJobFormBloc>(context);
-
-            return FormBlocListener<StoreJobFormBloc, String, String>(
-              // On submitting
-              onSubmitting: ((context, state) {
-                FocusScope.of(context).unfocus();
-                LoadingDialog.show(context);
-                if (kDebugMode) {
-                  print("hai");
-                }
-              }),
-              //On Submission Failed
-              onSubmissionFailed: (context, state) {
-                LoadingDialog.hide(context);
-              },
-              // On Success
-              onSuccess: (context, state) {
-                LoadingDialog.hide(context);
-              },
-              // On failure
-              onFailure: (context, state) {
-                LoadingDialog.hide(context);
-                ThemeSnackBar.showSnackBar(
-                    context, state.failureResponse ?? "Error");
-              },
-              // Design
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: <Widget>[
-                  DelayedDisplay(
-                    delay: Duration(milliseconds: delayAnimationDuration),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        const Text(
-                          "Service",
-                          style: TextStyle(
-                            fontWeight: FontWeight.bold,
-                            fontSize: 16,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: <Widget>[
+          DelayedDisplay(
+            delay: Duration(milliseconds: delayAnimationDuration),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                const Text(
+                  "Service",
+                  style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    fontSize: 16,
+                  ),
+                ),
+                Space(10),
+                Container(
+                  width: double.infinity,
+                  child: MyDropdownBlocBuilder(
+                    selectFieldBloc: widget.storeJobFormBloc.serviceInfo,
+                    itemBuilder: (context, itemData) => FieldItem(
+                      child: DropdownMenuItem(
+                        value: itemData.id,
+                        child: Text(itemData.name),
+                      ),
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
+          Space(20),
+          DelayedDisplay(
+            delay: Duration(milliseconds: delayAnimationDuration),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      "Job Date",
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 16,
+                      ),
+                    ),
+                    Space(10),
+                    Container(
+                      decoration: BoxDecoration(
+                        color: kWhite,
+                        borderRadius: BorderRadius.circular(30),
+                        boxShadow: [
+                          profileShadow(
+                            kGrey.withOpacity(0.3),
                           ),
-                        ),
-                        Space(20),
-                        Container(
-                          width: double.infinity,
-                          child: DropdownButtonFormField(
-                            hint: const Text("Select Service"),
-                            value: _service,
-                            onChanged: (String? newValue) {
-                              setState(() {
-                                _service = newValue ?? "";
-                              });
+                        ],
+                      ),
+                      child: Column(
+                        children: [
+                          ValueListenableBuilder<DateTime>(
+                            valueListenable: _focusedDay,
+                            builder: (context, value, _) {
+                              return _CalendarHeader(
+                                focusedDay: value,
+                                clearButtonVisible: canClearSelection,
+                                onTodayButtonTap: () {
+                                  setState(
+                                      () => _focusedDay.value = DateTime.now());
+                                },
+                                onClearButtonTap: () {
+                                  setState(() {
+                                    _rangeStart = null;
+                                    _rangeEnd = null;
+                                    widget.selectedDays.clear();
+                                    _selectedEvents.value = [];
+                                  });
+                                },
+                                onLeftArrowTap: () {
+                                  _pageController.previousPage(
+                                    duration: Duration(milliseconds: 300),
+                                    curve: Curves.easeOut,
+                                  );
+                                },
+                                onRightArrowTap: () {
+                                  _pageController.nextPage(
+                                    duration: Duration(milliseconds: 300),
+                                    curve: Curves.easeOut,
+                                  );
+                                },
+                              );
                             },
-                            items: _serviceList(),
-                            decoration: InputDecoration(
-                              contentPadding: const EdgeInsets.symmetric(
-                                  vertical: 5.0, horizontal: 10.0),
-                              border: OutlineInputBorder(
-                                borderSide: const BorderSide(
-                                  width: 3,
-                                  color: Colors.grey,
-                                ),
-                                borderRadius: BorderRadius.circular(10.0),
-                              ),
-                            ),
                           ),
-                        ),
-                      ],
+                          TableCalendar<Event>(
+                            firstDay: kFirstDay,
+                            lastDay: kLastDay,
+                            focusedDay: _focusedDay.value,
+                            headerVisible: false,
+                            selectedDayPredicate: (day) {
+                              return widget.selectedDays.contains(day);
+                            },
+                            rangeStartDay: _rangeStart,
+                            rangeEndDay: _rangeEnd,
+                            calendarFormat: _calendarFormat,
+                            rangeSelectionMode: _rangeSelectionMode,
+                            // eventLoader: _getEventsForDay,
+                            // holidayPredicate: (day) {
+                            //   // Every 20th day of the month will be treated as a holiday
+                            //   return day.day == 20;
+                            // },
+                            onDaySelected: _onDaySelected,
+                            onRangeSelected: _onRangeSelected,
+                            onCalendarCreated: (controller) =>
+                                _pageController = controller,
+                            onPageChanged: (focusedDay) =>
+                                _focusedDay.value = focusedDay,
+                            onFormatChanged: (format) {
+                              if (_calendarFormat != format) {
+                                setState(() => _calendarFormat = format);
+                              }
+                            },
+                          ),
+                        ],
+                      ),
                     ),
-                  ),
-                  Space(20),
-                  DelayedDisplay(
-                    delay: Duration(milliseconds: delayAnimationDuration),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              "Job Date",
-                              style: TextStyle(
-                                fontWeight: FontWeight.bold,
-                                fontSize: 16,
-                              ),
-                            ),
-                            Space(10),
-                            Container(
-                              decoration: BoxDecoration(
-                                color: kWhite,
-                                borderRadius: BorderRadius.circular(30),
-                                boxShadow: [
-                                  profileShadow(
-                                    kGrey.withOpacity(0.3),
-                                  ),
-                                ],
-                              ),
-                              child: Column(
-                                children: [
-                                  ValueListenableBuilder<DateTime>(
-                                    valueListenable: _focusedDay,
-                                    builder: (context, value, _) {
-                                      return _CalendarHeader(
-                                        focusedDay: value,
-                                        clearButtonVisible: canClearSelection,
-                                        onTodayButtonTap: () {
-                                          setState(() => _focusedDay.value =
-                                              DateTime.now());
-                                        },
-                                        onClearButtonTap: () {
-                                          setState(() {
-                                            _rangeStart = null;
-                                            _rangeEnd = null;
-                                            widget.selectedDays.clear();
-                                            _selectedEvents.value = [];
-                                          });
-                                        },
-                                        onLeftArrowTap: () {
-                                          _pageController.previousPage(
-                                            duration:
-                                                Duration(milliseconds: 300),
-                                            curve: Curves.easeOut,
-                                          );
-                                        },
-                                        onRightArrowTap: () {
-                                          _pageController.nextPage(
-                                            duration:
-                                                Duration(milliseconds: 300),
-                                            curve: Curves.easeOut,
-                                          );
-                                        },
-                                      );
-                                    },
-                                  ),
-                                  TableCalendar<Event>(
-                                    firstDay: kFirstDay,
-                                    lastDay: kLastDay,
-                                    focusedDay: _focusedDay.value,
-                                    headerVisible: false,
-                                    selectedDayPredicate: (day) {
-                                      return widget.selectedDays.contains(day);
-                                    },
-                                    rangeStartDay: _rangeStart,
-                                    rangeEndDay: _rangeEnd,
-                                    calendarFormat: _calendarFormat,
-                                    rangeSelectionMode: _rangeSelectionMode,
-                                    // eventLoader: _getEventsForDay,
-                                    // holidayPredicate: (day) {
-                                    //   // Every 20th day of the month will be treated as a holiday
-                                    //   return day.day == 20;
-                                    // },
-                                    onDaySelected: _onDaySelected,
-                                    onRangeSelected: _onRangeSelected,
-                                    onCalendarCreated: (controller) =>
-                                        _pageController = controller,
-                                    onPageChanged: (focusedDay) =>
-                                        _focusedDay.value = focusedDay,
-                                    onFormatChanged: (format) {
-                                      if (_calendarFormat != format) {
-                                        setState(
-                                            () => _calendarFormat = format);
-                                      }
-                                    },
-                                  ),
-                                ],
-                              ),
-                            ),
-                          ],
-                        ),
-                      ],
-                    ),
-                  ),
-                ],
-              ),
-            );
-          },
-        ),
+                  ],
+                ),
+              ],
+            ),
+          ),
+        ],
       ),
     );
   }

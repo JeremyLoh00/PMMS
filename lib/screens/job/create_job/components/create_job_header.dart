@@ -1,9 +1,12 @@
 import 'dart:collection';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_form_bloc/flutter_form_bloc.dart';
 import 'package:private_nurse_for_client/constant.dart';
 import 'package:private_nurse_for_client/form_bloc/store_job_form_bloc.dart';
 import 'package:private_nurse_for_client/helpers/general_method.dart';
+import 'package:private_nurse_for_client/public_components/loading_dialog.dart';
+import 'package:private_nurse_for_client/public_components/theme_snack_bar.dart';
 import 'package:private_nurse_for_client/screens/dashboard/home_screen.dart';
 import 'package:private_nurse_for_client/screens/job/create_job/components/ceate_job_info.dart';
 import 'package:private_nurse_for_client/screens/job/create_job/components/create_patient_info.dart';
@@ -33,97 +36,133 @@ class _CreateJobHeaderState extends State<CreateJobHeader> {
 
   @override
   Widget build(BuildContext context) {
-    return Stepper(
-      elevation: 0,
-      physics: BouncingScrollPhysics(),
-      type: StepperType.horizontal,
-      // steps: [],
-      steps: getSteps(),
-      currentStep: currentStep,
-      onStepContinue: () {
-        final isLastStep = currentStep == getSteps().length - 1;
+    return BlocProvider(
+      create: (context) => StoreJobFormBloc(),
+      child: Builder(
+        builder: (context) {
+          final storeJobForm = BlocProvider.of<StoreJobFormBloc>(context);
 
-        if (isLastStep) {
-          Navigator.pop(context);
-
-          //send the data to the server
-        } else {
-          setState(() {
-            currentStep += 1;
-          });
-        }
-      },
-      onStepCancel: currentStep == 0
-          ? null
-          : () {
-              setState(() {
-                currentStep -= 1;
-              });
+          return FormBlocListener<StoreJobFormBloc, String, String>(
+            // On submitting
+            onSubmitting: ((context, state) {
+              FocusScope.of(context).unfocus();
+              LoadingDialog.show(context);
+            }),
+            //On Submission Failed
+            onSubmissionFailed: (context, state) {
+              LoadingDialog.hide(context);
             },
-      controlsBuilder: (context, details) {
-        return Align(
-          alignment: Alignment.bottomRight,
-          child: Padding(
-            padding: const EdgeInsets.all(10.0),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.end,
-              children: [
-                ElevatedButton(
-                  child: Text("Back".toUpperCase(),
-                      style: TextStyle(fontSize: 14)),
-                  style: ButtonStyle(
-                    foregroundColor:
-                        MaterialStateProperty.all<Color>(kPrimaryColor),
-                    backgroundColor: MaterialStateProperty.all<Color>(kWhite),
-                    shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-                      RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(10.0),
-                        side: BorderSide(color: kPrimaryColor),
-                      ),
+            // On Success
+            onSuccess: (context, state) {
+              LoadingDialog.hide(context);
+            },
+            // On failure
+            onFailure: (context, state) {
+              LoadingDialog.hide(context);
+              ThemeSnackBar.showSnackBar(
+                  context, state.failureResponse ?? "Error");
+            },
+            // Design
+            child: Stepper(
+              elevation: 0,
+              physics: BouncingScrollPhysics(),
+              type: StepperType.horizontal,
+              // steps: [],
+              steps: getSteps(),
+              currentStep: currentStep,
+              onStepContinue: () {
+                final isLastStep = currentStep == getSteps().length - 1;
+
+                if (isLastStep) {
+                  Navigator.pop(context);
+
+                  //send the data to the server
+                } else {
+                  setState(() {
+                    currentStep += 1;
+                  });
+                }
+              },
+              onStepCancel: currentStep == 0
+                  ? null
+                  : () {
+                      setState(() {
+                        currentStep -= 1;
+                      });
+                    },
+              controlsBuilder: (context, details) {
+                return Align(
+                  alignment: Alignment.bottomRight,
+                  child: Padding(
+                    padding: const EdgeInsets.all(10.0),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      children: [
+                        ElevatedButton(
+                          child: Text("Back".toUpperCase(),
+                              style: TextStyle(fontSize: 14)),
+                          style: ButtonStyle(
+                            foregroundColor:
+                                MaterialStateProperty.all<Color>(kPrimaryColor),
+                            backgroundColor:
+                                MaterialStateProperty.all<Color>(kWhite),
+                            shape: MaterialStateProperty.all<
+                                RoundedRectangleBorder>(
+                              RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(10.0),
+                                side: BorderSide(color: kPrimaryColor),
+                              ),
+                            ),
+                          ),
+                          onPressed: currentStep == 0
+                              ? () {
+                                  Navigator.pop(context);
+                                }
+                              : details.onStepCancel,
+                        ),
+                        SizedBox(
+                          width: 10,
+                        ),
+                        ElevatedButton(
+                          child: Text(
+                              currentStep == 5
+                                  ? "Post Job"
+                                  : "Next".toUpperCase(),
+                              style: TextStyle(fontSize: 14)),
+                          style: ButtonStyle(
+                            foregroundColor:
+                                MaterialStateProperty.all<Color>(Colors.white),
+                            backgroundColor:
+                                MaterialStateProperty.all<Color>(kPrimaryColor),
+                            shape: MaterialStateProperty.all<
+                                RoundedRectangleBorder>(
+                              RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(10.0),
+                                side: BorderSide(color: kPrimaryColor),
+                              ),
+                            ),
+                          ),
+                          onPressed: currentStep == 5
+                              ? () {
+                                  Navigator.pop(context);
+                                  Navigator.pop(context);
+                                }
+                              : details.onStepContinue,
+                        ),
+                      ],
                     ),
                   ),
-                  onPressed: currentStep == 0
-                      ? () {
-                          Navigator.pop(context);
-                        }
-                      : details.onStepCancel,
-                ),
-                SizedBox(
-                  width: 10,
-                ),
-                ElevatedButton(
-                  child: Text(
-                      currentStep == 5 ? "Post Job" : "Next".toUpperCase(),
-                      style: TextStyle(fontSize: 14)),
-                  style: ButtonStyle(
-                    foregroundColor:
-                        MaterialStateProperty.all<Color>(Colors.white),
-                    backgroundColor:
-                        MaterialStateProperty.all<Color>(kPrimaryColor),
-                    shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-                      RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(10.0),
-                        side: BorderSide(color: kPrimaryColor),
-                      ),
-                    ),
-                  ),
-                  onPressed: currentStep == 5
-                      ? () {
-                          Navigator.pop(context);
-                          Navigator.pop(context);
-                        }
-                      : details.onStepContinue,
-                ),
-              ],
+                );
+              },
             ),
-          ),
-        );
-      },
+          );
+        },
+      ),
     );
   }
 
   // List<Step> getSteps() => [Step(title: Text(""), content: Text("data"))];
-    final Set<DateTime> _selectedDays = LinkedHashSet<DateTime>(
+  final Set<DateTime> _selectedDays = LinkedHashSet<DateTime>(
     equals: isSameDay,
     hashCode: getHashCode,
   );
