@@ -6,6 +6,7 @@ import 'package:private_nurse_for_client/constant.dart';
 import 'package:private_nurse_for_client/helpers/general_method.dart';
 import 'package:private_nurse_for_client/public_components/space.dart';
 import 'package:private_nurse_for_client/screens/job/job_detail.dart';
+import 'package:private_nurse_for_client/screens/job_description/job_description_screen.dart';
 import 'package:private_nurse_for_client/theme.dart';
 
 class JobList extends StatefulWidget {
@@ -32,9 +33,11 @@ class _JobListState extends State<JobList> {
             // navigateTo(context, InformationDetailsScreen(selectedTabIndex: widget.selectedTabIndex,));
             navigateTo(
                 context,
-                JobDetail(
-                  hasComment: false,
-                ));
+                // JobDetail(
+                //   hasComment: false,
+                // )
+                JobDescription()
+                );
           },
           child: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 15),
