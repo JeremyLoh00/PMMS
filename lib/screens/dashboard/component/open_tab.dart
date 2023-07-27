@@ -368,8 +368,7 @@ class _OpenTabState extends State<OpenTab> {
                           SizedBox(width: 5),
                           Expanded(
                             child: Text(
-                              // jobModel.jobSchedule!.first.startTime!,
-                              "a",
+                              jobModel.jobSchedule!.first.startTime!,
                               style: TextStyle(
                                 fontSize: 12,
                                 fontWeight: FontWeight.w500,

@@ -99,7 +99,7 @@ class UserResource {
   // To edit profile details
   static Resource editProfile(EditProfileRequestModel editProfileRequestModel) {
     return Resource(
-        url: 'client/update-profile-client',
+        url: 'client/update-profile',
         data: editProfileRequestModel.toJson(),
         parse: (response) {
           return UserResponseModel(json.decode(response.body));

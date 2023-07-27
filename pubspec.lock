@@ -1066,6 +1066,7 @@ packages:
     description:
       name: test_api
 <<<<<<< HEAD
+<<<<<<< HEAD
       sha256: "5c2f730018264d276c20e4f1503fd1308dfbbae39ec8ee63c5236311ac06954b"
       url: "https://pub.dev"
     source: hosted
@@ -1076,6 +1077,12 @@ packages:
     source: hosted
     version: "0.5.1"
 >>>>>>> 759d92e (update home joblist backend)
+=======
+      sha256: eb6ac1540b26de412b3403a163d919ba86f6a973fe6cc50ae3541b80092fdcfb
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.5.1"
+>>>>>>> 28c50b9e938bfaa0094b6a66e85f7f292e13857d
   typed_data:
     dependency: transitive
     description:

@@ -14,6 +14,7 @@ import 'package:private_nurse_for_client/models/user/user_model.dart';
 import 'package:private_nurse_for_client/models/user/user_response_model.dart';
 import 'package:private_nurse_for_client/helpers/user_data_notifier.dart';
 import 'package:private_nurse_for_client/models/user/user_model.dart';
+import 'package:private_nurse_for_client/models/user/user_response_model.dart';
 import 'package:private_nurse_for_client/public_components/custom_dialog.dart';
 import 'package:private_nurse_for_client/public_components/space.dart';
 import 'package:private_nurse_for_client/public_components/theme_spinner.dart';
@@ -38,36 +39,18 @@ class Navigation extends StatefulWidget {
 }
 
 class _NavigationState extends State<Navigation> {
-  late Future<UserModel?> _userModel;
-  UserBloc userBloc = UserBloc();
-  Future<UserModel?> getUserDetails() async {
-    //return this._memoizer.runOnce((user) async {
-    // Means no argument passed to this interface, so current user profile
-    // Get from getit current user data
-    UserModel user = GetIt.instance.get<UserModel>();
-    if (user.id != null) {
-      return user;
-    } else {
-      return null;
-    }
-  }
-
-  @override
-  void initState() {
-    super.initState();
-    _userModel = getUserDetails();
-  }
-
   int _selectedIndex = 0;
+  UserBloc userBloc = UserBloc();
+  late Future<UserModel?> _userModel;
   final _pageController = PageController();
   @override
-  // void initState() {
-  //   // TODO: implement initState
-  //   super.initState();
-
-  //   // check access token either valid or not
-  //   //WidgetsBinding.instance.addPostFrameCallback((_) => checkAccessToken());
-  // }
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    _userModel = getUserDetails();
+    // check access token either valid or not
+    //WidgetsBinding.instance.addPostFrameCallback((_) => checkAccessToken());
+  }
 
   void _selectDrawerItem(int index) {
     setState(() {
@@ -92,6 +75,20 @@ class _NavigationState extends State<Navigation> {
       return null;
     }
   }
+
+  Future<UserModel?> getUserDetails() async {
+    //return this._memoizer.runOnce((user) async {
+    // Means no argument passed to this interface, so current user profile
+    // Get from getit current user data
+    UserModel user = GetIt.instance.get<UserModel>();
+    if (user.id != null) {
+      return user;
+    } else {
+      return await checkAuthenticated();
+    }
+  }
+
+
 
   @override
   Widget build(BuildContext context) {
@@ -544,29 +541,5 @@ class _NavigationState extends State<Navigation> {
       default:
         return Placeholder();
     }
-  }
-
-  Widget profilePic(BuildContext context, UserModel userModel) {
-    return Container(
-      width: 25,
-      height: 25,
-      padding: const EdgeInsets.all(0.5),
-      decoration: BoxDecoration(
-        shape: BoxShape.circle,
-      ),
-      child: CachedNetworkImage(
-        imageUrl: userModel.profilePhoto!,
-        imageBuilder: (context, imageProvider) => Container(
-          decoration: BoxDecoration(
-            shape: BoxShape.circle,
-            image: DecorationImage(
-              image: imageProvider,
-              fit: BoxFit.cover,
-            ),
-          ),
-        ),
-        errorWidget: (context, url, error) => const Icon(Icons.error),
-      ),
-    );
   }
 }
