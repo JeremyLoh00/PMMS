@@ -211,156 +211,162 @@ class _CancelledTabState extends State<CancelledTab> {
                   ),
                   SizedBox(width: 15),
                   Expanded(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Space(7),
-                        badgeStatus(
-                          status: jobModel.status!,
-                          bgColor: kBgSuccess,
-                          textColor: kTextSuccess,
-                        ),
-                        Space(5),
-                        Text(
-                          jobModel.service!.name!,
-                          style: TextStyle(
-                            color: kBlack,
-                            fontWeight: FontWeight.bold,
+                    child: Padding(
+                      padding: const EdgeInsets.only(right: 10),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Space(7),
+                          Row(
+                            children: [
+                              Text(
+                                jobModel.service!.name!,
+                                style: TextStyle(
+                                  color: kBlack,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                              badgeStatus(
+                                status: jobModel.status!,
+                                bgColor: kBgSuccess,
+                                textColor: kTextSuccess,
+                              ),
+                            ],
                           ),
-                        ),
-                        Space(10),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Icon(
-                              Iconsax.user,
-                              color: kPrimaryColor,
-                              size: 16,
-                            ),
-                            SizedBox(width: 5),
-                            Expanded(
+                          Space(10),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Icon(
+                                Iconsax.user,
+                                color: kPrimaryColor,
+                                size: 16,
+                              ),
+                              SizedBox(width: 5),
+                              Expanded(
+                                  child: Text(
+                                jobModel.patient!.name!,
+                                // jobModel.client!.userModel!.name!,
+                                maxLines: 2,
+                                overflow: TextOverflow.ellipsis,
+                                style: TextStyle(
+                                  fontSize: 12,
+                                  fontWeight: FontWeight.w500,
+                                ),
+                              ))
+                            ],
+                          ),
+                          Space(5),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Icon(
+                                Iconsax.clock,
+                                color: kPrimaryColor,
+                                size: 16,
+                              ),
+                              SizedBox(width: 5),
+                              Expanded(
                                 child: Text(
-                                  jobModel.patient!.name!,
-                              // jobModel.client!.userModel!.name!,
-                              maxLines: 2,
-                              overflow: TextOverflow.ellipsis,
-                              style: TextStyle(
-                                fontSize: 12,
-                                fontWeight: FontWeight.w500,
-                              ),
-                            ))
-                          ],
-                        ),
-                        Space(5),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Icon(
-                              Iconsax.clock,
-                              color: kPrimaryColor,
-                              size: 16,
-                            ),
-                            SizedBox(width: 5),
-                            Expanded(
-                              child: Text(
-                                jobModel.jobSchedule!.date!,
-                                style: TextStyle(
-                                  fontSize: 12,
-                                  fontWeight: FontWeight.w500,
+                                  jobModel.jobSchedule!.first.date!,
+                                  style: TextStyle(
+                                    fontSize: 12,
+                                    fontWeight: FontWeight.w500,
+                                  ),
                                 ),
                               ),
-                            ),
-                          ],
-                        ),
-                        Space(5),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Icon(
-                              Iconsax.calendar,
-                              color: kPrimaryColor,
-                              size: 16,
-                            ),
-                            SizedBox(width: 5),
-                            Expanded(
-                              child: Text(
-                               jobModel.jobSchedule!.startTime!,
-                                style: TextStyle(
-                                  fontSize: 12,
-                                  fontWeight: FontWeight.w500,
-                                ),
-                              ),
-                            ),
-                          ],
-                        ),
-                        Space(5),
-                        Text(
-                          jobModel.status!,
-                          style: TextStyle(
-                            fontSize: 12,
-                            fontWeight: FontWeight.w500,
+                            ],
                           ),
-                        ),
-                      ],
+                          Space(5),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Icon(
+                                Iconsax.calendar,
+                                color: kPrimaryColor,
+                                size: 16,
+                              ),
+                              SizedBox(width: 5),
+                              Expanded(
+                                child: Text(
+                                  jobModel.jobSchedule!.first.startTime!,
+                                  style: TextStyle(
+                                    fontSize: 12,
+                                    fontWeight: FontWeight.w500,
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                          Space(5),
+                          Text(
+                            jobModel.status!,
+                            style: TextStyle(
+                              fontSize: 12,
+                              fontWeight: FontWeight.w500,
+                            ),
+                          ),
+                        ],
+                      ),
                     ),
                   )
                 ],
               ),
-              Space(20),
-              Row(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  const SizedBox(width: 10),
-                  const Icon(
-                    Iconsax.star1,
-                    color: kPrimaryColor,
-                    size: 16,
-                  ),
-                  const SizedBox(width: 3),
-                  Text(
-                    jobModel.feedback!.rating!.toStringAsFixed(1),
-                    style: const TextStyle(
-                      fontWeight: FontWeight.bold,
-                      fontSize: 13,
-                    ),
-                  ),
-                  const SizedBox(width: 20),
-                  const Icon(
-                    Icons.chat_bubble,
-                    color: kPrimaryColor,
-                    size: 16,
-                  ),
-                  const SizedBox(width: 3),
-                  Expanded(
-                    child: Text(
-                      jobModel.feedback!.comment!,
-                      style: const TextStyle(
-                        color: kGrey,
-                        fontSize: 11,
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-              Space(10),
-              Padding(
-                padding: const EdgeInsets.all(10.0),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.end,
-                  children: [
-                    Text(
-                      "Cancelled on ${DateTime.now().day} | ${DateTime.now().hour}",
-                      style: TextStyle(
-                        color: kGrey,
-                        fontSize: 10,
-                      ),
-                    )
-                  ],
-                ),
-              )
+              // Space(20),
+              // Row(
+              //   crossAxisAlignment: CrossAxisAlignment.start,
+              //   children: [
+              //     const SizedBox(width: 10),
+              //     const Icon(
+              //       Iconsax.star1,
+              //       color: kPrimaryColor,
+              //       size: 16,
+              //     ),
+              //     const SizedBox(width: 3),
+              //     Text(
+              //       jobModel.feedback!.rating!.toStringAsFixed(1),
+              //       style: const TextStyle(
+              //         fontWeight: FontWeight.bold,
+              //         fontSize: 13,
+              //       ),
+              //     ),
+              //     const SizedBox(width: 20),
+              //     const Icon(
+              //       Icons.chat_bubble,
+              //       color: kPrimaryColor,
+              //       size: 16,
+              //     ),
+              //     const SizedBox(width: 3),
+              //     Expanded(
+              //       child: Text(
+              //         jobModel.feedback!.comment!,
+              //         style: const TextStyle(
+              //           color: kGrey,
+              //           fontSize: 11,
+              //         ),
+              //       ),
+              //     ),
+              //   ],
+              // ),
+              // Space(10),
+              // Padding(
+              //   padding: const EdgeInsets.all(10.0),
+              //   child: Row(
+              //     mainAxisAlignment: MainAxisAlignment.end,
+              //     children: [
+              //       Text(
+              //         "Cancelled on ${DateTime.now().day} | ${DateTime.now().hour}",
+              //         style: TextStyle(
+              //           color: kGrey,
+              //           fontSize: 10,
+              //         ),
+              //       )
+              //     ],
+              //   ),
+              // )
             ],
           ),
         ),

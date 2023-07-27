@@ -524,7 +524,7 @@ class _NavigationState extends State<Navigation> {
             ),
           ],
         );
-        case 1:
+      case 1:
         return appBarNurseHistory();
       case 2:
         // about us
