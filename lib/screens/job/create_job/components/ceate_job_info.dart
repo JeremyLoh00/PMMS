@@ -60,7 +60,7 @@ class _CreateJobInfoState extends State<CreateJobInfo> {
   void initState() {
     super.initState();
 
-    widget.selectedDays.add(_focusedDay.value);
+    // widget.selectedDays.add(_focusedDay.value);
     _selectedEvents = ValueNotifier(_getEventsForDay(_focusedDay.value));
   }
 

@@ -68,10 +68,11 @@ class _CreateJobHeaderState extends State<CreateJobHeader> {
               physics: BouncingScrollPhysics(),
               type: StepperType.horizontal,
               // steps: [],
-              steps: getSteps(),
+              steps: getSteps(widget.storeJobFormBloc),
               currentStep: currentStep,
               onStepContinue: () {
-                final isLastStep = currentStep == getSteps().length - 1;
+                final isLastStep =
+                    currentStep == getSteps(widget.storeJobFormBloc).length - 1;
 
                 if (isLastStep) {
                   Navigator.pop(context);
@@ -166,7 +167,7 @@ class _CreateJobHeaderState extends State<CreateJobHeader> {
     hashCode: getHashCode,
   );
 
-  List<Step> getSteps() => [
+  List<Step> getSteps(StoreJobFormBloc formBloc) => [
         Step(
           isActive: currentStep >= 0,
           label: Text(
@@ -229,7 +230,9 @@ class _CreateJobHeaderState extends State<CreateJobHeader> {
           title: SizedBox(),
           content: Container(
             height: MediaQuery.of(context).size.height * 0.625,
-            child: PreferredNurse(),
+            child: PreferredNurse(
+              formBloc: widget.storeJobFormBloc,
+            ),
           ),
         ),
         Step(
@@ -243,7 +246,7 @@ class _CreateJobHeaderState extends State<CreateJobHeader> {
           ),
           title: SizedBox(),
           content: CreatePatientInfo(
-            storeJobFormBloc: widget.storeJobFormBloc,
+            storeJobFormBloc: formBloc,
           ),
         ),
         Step(

@@ -5,11 +5,23 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_form_bloc/flutter_form_bloc.dart';
+import 'package:flutter_scale_tap/flutter_scale_tap.dart';
+import 'package:get_it/get_it.dart';
+import 'package:iconsax/iconsax.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:multi_dropdown/multiselect_dropdown.dart';
+import 'package:private_nurse_for_client/bloc/city_bloc.dart';
 import 'package:private_nurse_for_client/constant.dart';
 import 'package:private_nurse_for_client/form_bloc/store_job_form_bloc.dart';
+import 'package:private_nurse_for_client/models/city/city_model.dart';
+import 'package:private_nurse_for_client/models/city/city_response_model.dart';
+import 'package:private_nurse_for_client/models/division/division_model.dart';
+import 'package:private_nurse_for_client/public_components/custom_dialog.dart';
+import 'package:private_nurse_for_client/public_components/input_decoration%20copy.dart';
 import 'package:private_nurse_for_client/public_components/space.dart';
+import 'package:private_nurse_for_client/public_components/styled_dropdown.dart';
+import 'package:private_nurse_for_client/public_components/theme_snack_bar.dart';
+import 'package:private_nurse_for_client/public_components/theme_spinner.dart';
 import 'package:private_nurse_for_client/screens/job/create_job/components/image_uploader_job.dart';
 import 'package:private_nurse_for_client/screens/job/create_job/components/multi_select.dart';
 import 'package:image_picker/image_picker.dart';
@@ -116,15 +128,20 @@ class _CreatePatientInfoState extends State<CreatePatientInfo> {
   bool valuePhoneNum = false;
   bool valueAddress = false;
 
+  List<DivisionModel>? listDivision = GetIt.instance.get<List<DivisionModel>>();
+  late DivisionModel selectedDivision;
+  List<CityModel>? listCities = GetIt.instance.get<List<CityModel>>();
+  CityModel? selectedCity;
+
   @override
   Widget build(BuildContext context) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         //Patient Information
-        _patientInfo(),
+        _patientInfo(widget.storeJobFormBloc),
         //address
-        _address(),
+        _address(widget.storeJobFormBloc),
         //Identification card
         _idInfo(),
         //multiple select
@@ -287,260 +304,323 @@ class _CreatePatientInfoState extends State<CreatePatientInfo> {
     );
   }
 
-  _patientInfo() {
+  _patientInfo(StoreJobFormBloc formbloc) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(
-          "Name",
-          style: textStyleNormal(
-            fontWeight: FontWeight.bold,
-            fontsize: 16.0,
-          ),
-        ),
-        Space(10.0),
-        TextFormField(
-          controller: name,
-          textInputAction: TextInputAction.next,
-          decoration: InputDecoration(
-            contentPadding:
-                const EdgeInsets.symmetric(vertical: 5.0, horizontal: 10.0),
-            prefixIcon: Icon(Icons.person_outline_rounded),
-            enabled: true,
-            hintText: 'Name',
-            border: OutlineInputBorder(
-              borderSide: BorderSide(
-                width: 3,
-                color: Colors.grey,
+        DelayedDisplay(
+          delay: Duration(milliseconds: delayAnimationDuration),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                "Name",
+                style: textStyleNormal(
+                  fontWeight: FontWeight.bold,
+                  fontsize: 16.0,
+                ),
               ),
-              borderRadius: BorderRadius.circular(10.0),
-            ),
-          ),
-        ),
-        Space(15.0),
-        Text(
-          "Age",
-          style: textStyleNormal(
-            fontWeight: FontWeight.bold,
-            fontsize: 16.0,
-          ),
-        ),
-        Space(10.0),
-        TextFormField(
-          controller: age,
-          textInputAction: TextInputAction.next,
-          keyboardType: TextInputType.number,
-          decoration: InputDecoration(
-            suffixText: "years old",
-            contentPadding:
-                const EdgeInsets.symmetric(vertical: 5.0, horizontal: 10.0),
-            enabled: true,
-            hintText: 'Age',
-            border: OutlineInputBorder(
-              borderSide: BorderSide(
-                width: 3,
-                color: Colors.grey,
+              TextFieldBlocBuilder(
+                textFieldBloc: formbloc.name,
+                textInputAction: TextInputAction.next,
+                keyboardType: TextInputType.name,
+                decoration: InputDecoration(
+                  contentPadding: const EdgeInsets.symmetric(
+                      vertical: 5.0, horizontal: 10.0),
+                  enabled: true,
+                  hintText: 'Name',
+                  border: OutlineInputBorder(
+                    borderSide: BorderSide(
+                      width: 3,
+                      color: Colors.grey,
+                    ),
+                    borderRadius: BorderRadius.circular(10.0),
+                  ),
+                ),
               ),
-              borderRadius: BorderRadius.circular(10.0),
-            ),
+            ],
+          ),
+        ),
+        DelayedDisplay(
+          delay: Duration(milliseconds: delayAnimationDuration),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                "Age",
+                style: textStyleNormal(
+                  fontWeight: FontWeight.bold,
+                  fontsize: 16.0,
+                ),
+              ),
+              TextFieldBlocBuilder(
+                cursorColor: kPrimaryColor,
+                textFieldBloc: formbloc.age,
+                textInputAction: TextInputAction.next,
+                keyboardType: TextInputType.number,
+                decoration: InputDecoration(
+                  suffixText: "years old",
+                  contentPadding: const EdgeInsets.symmetric(
+                      vertical: 5.0, horizontal: 10.0),
+                  enabled: true,
+                  hintText: 'Age',
+                  border: OutlineInputBorder(
+                    borderSide: BorderSide(
+                      width: 3,
+                      color: Colors.grey,
+                    ),
+                    borderRadius: BorderRadius.circular(10.0),
+                  ),
+                ),
+              ),
+            ],
           ),
         ),
         Space(15.0),
         Row(
           children: [
             Expanded(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    "Height",
-                    style: textStyleNormal(
-                      fontWeight: FontWeight.bold,
-                      fontsize: 16.0,
-                    ),
-                  ),
-                  Space(10.0),
-                  TextFormField(
-                    controller: height,
-                    textInputAction: TextInputAction.next,
-                    keyboardType: TextInputType.number,
-                    decoration: InputDecoration(
-                      suffixText: "cm",
-                      contentPadding: const EdgeInsets.symmetric(
-                          vertical: 5.0, horizontal: 10.0),
-                      enabled: true,
-                      hintText: 'Height',
-                      border: OutlineInputBorder(
-                        borderSide: BorderSide(
-                          width: 3,
-                          color: Colors.grey,
-                        ),
-                        borderRadius: BorderRadius.circular(10.0),
+              child: DelayedDisplay(
+                delay: Duration(milliseconds: delayAnimationDuration),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      "Height",
+                      style: textStyleNormal(
+                        fontWeight: FontWeight.bold,
+                        fontsize: 16.0,
                       ),
                     ),
-                  ),
-                ],
+                    TextFieldBlocBuilder(
+                      textFieldBloc: formbloc.height,
+                      textInputAction: TextInputAction.next,
+                      keyboardType: TextInputType.name,
+                      decoration: InputDecoration(
+                        suffixText: "cm",
+                        contentPadding: const EdgeInsets.symmetric(
+                            vertical: 5.0, horizontal: 10.0),
+                        enabled: true,
+                        hintText: 'Height',
+                        border: OutlineInputBorder(
+                          borderSide: BorderSide(
+                            width: 3,
+                            color: Colors.grey,
+                          ),
+                          borderRadius: BorderRadius.circular(10.0),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
               ),
             ),
             SizedBox(
               width: 10,
             ),
             Expanded(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
+              child: DelayedDisplay(
+                delay: Duration(milliseconds: delayAnimationDuration),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      "Weight",
+                      style: textStyleNormal(
+                        fontWeight: FontWeight.bold,
+                        fontsize: 16.0,
+                      ),
+                    ),
+                    TextFieldBlocBuilder(
+                      textFieldBloc: formbloc.weight,
+                      textInputAction: TextInputAction.next,
+                      keyboardType: TextInputType.name,
+                      decoration: InputDecoration(
+                        suffixText: "kg",
+                        contentPadding: const EdgeInsets.symmetric(
+                            vertical: 5.0, horizontal: 10.0),
+                        enabled: true,
+                        hintText: 'Weight',
+                        border: OutlineInputBorder(
+                          borderSide: BorderSide(
+                            width: 3,
+                            color: Colors.grey,
+                          ),
+                          borderRadius: BorderRadius.circular(10.0),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          ],
+        ),
+        DelayedDisplay(
+          delay: Duration(milliseconds: delayAnimationDuration),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text(
-                    "Weight",
+                    "Phone No.",
                     style: textStyleNormal(
                       fontWeight: FontWeight.bold,
                       fontsize: 16.0,
                     ),
                   ),
-                  Space(10.0),
-                  TextFormField(
-                    controller: weight,
-                    textInputAction: TextInputAction.next,
-                    keyboardType: TextInputType.number,
-                    decoration: InputDecoration(
-                      suffixText: "kg",
-                      contentPadding: const EdgeInsets.symmetric(
-                          vertical: 5.0, horizontal: 10.0),
-                      enabled: true,
-                      hintText: 'Weight',
-                      border: OutlineInputBorder(
-                        borderSide: BorderSide(
-                          width: 3,
-                          color: Colors.grey,
-                        ),
-                        borderRadius: BorderRadius.circular(10.0),
+                  Row(
+                    children: [
+                      Checkbox(
+                        value: this.valuePhoneNum,
+                        onChanged: (bool? value) {
+                          setState(() {
+                            this.valuePhoneNum = value!;
+                          });
+                        },
                       ),
-                    ),
+                      Text(
+                        "Copy from my details",
+                        style: textStyleNormal(
+                          color: kGrey,
+                        ),
+                      ),
+                    ],
                   ),
                 ],
               ),
-            ),
-          ],
-        ),
-        Space(15),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Text(
-              "Phone No.",
-              style: textStyleNormal(
-                fontWeight: FontWeight.bold,
-                fontsize: 16.0,
-              ),
-            ),
-            Row(
-              children: [
-                Checkbox(
-                  value: this.valuePhoneNum,
-                  onChanged: (bool? value) {
-                    setState(() {
-                      this.valuePhoneNum = value!;
-                    });
-                  },
-                ),
-                Text(
-                  "Copy from my details",
-                  style: textStyleNormal(
-                    color: kGrey,
+              TextFieldBlocBuilder(
+                textFieldBloc: formbloc.phoneNum,
+                keyboardType: TextInputType.phone,
+                textInputAction: TextInputAction.next,
+                decoration: InputDecoration(
+                  prefixIcon: Icon(Icons.phone_outlined),
+                  contentPadding: const EdgeInsets.symmetric(
+                      vertical: 5.0, horizontal: 10.0),
+                  enabled: true,
+                  hintText: 'Phone No.',
+                  border: OutlineInputBorder(
+                    borderSide: BorderSide(
+                      width: 3,
+                      color: Colors.grey,
+                    ),
+                    borderRadius: BorderRadius.circular(10.0),
                   ),
                 ),
-              ],
-            ),
-          ],
-        ),
-        Space(10.0),
-        TextFormField(
-          controller: phoneNum,
-          keyboardType: TextInputType.phone,
-          textInputAction: TextInputAction.next,
-          decoration: InputDecoration(
-            prefixIcon: Icon(Icons.phone_outlined),
-            contentPadding:
-                const EdgeInsets.symmetric(vertical: 5.0, horizontal: 10.0),
-            enabled: true,
-            hintText: 'Phone No.',
-            border: OutlineInputBorder(
-              borderSide: BorderSide(
-                width: 3,
-                color: Colors.grey,
               ),
-              borderRadius: BorderRadius.circular(10.0),
-            ),
+            ],
           ),
         ),
-        Space(15),
       ],
     );
   }
 
-  _address() {
+  @override
+  void initState() {
+    super.initState();
+
+    //get the first item in the GetIt
+    selectedDivision = listDivision!.firstWhere((division) => true);
+
+// check if the division null or not
+    if (widget.storeJobFormBloc.division.value == "") {
+      widget.storeJobFormBloc.division
+          .updateValue(selectedDivision.id!.toString());
+    } else {
+      print("obj2");
+    }
+
+    print("divisionValue ${widget.storeJobFormBloc.division.value}");
+    // print("cityValue ${widget.formBloc.cityModel.value}");
+
+    if (listDivision!.isNotEmpty) selectedDivision = listDivision![0];
+    if (listCities![0].id != -1) {
+      listCities!.insert(0, CityModel(id: -1, name: "Select Cities"));
+    }
+    selectedCity = listCities![0];
+
+    if (widget.storeJobFormBloc.cityModel.value == "") {
+      widget.storeJobFormBloc.cityModel
+          .updateValue(selectedCity!.id!.toString());
+    } else {
+      print("obj2");
+    }
+  }
+
+  Future onChangeDivision() async {
+    CustomDialog.show(context,
+        isDissmissable: false,
+        title: "Fetching cities from ${selectedDivision.name}",
+        center: ThemeSpinner.spinner());
+    final CityBloc cityBloc = CityBloc();
+    CityResponseModel responseModel =
+        await cityBloc.getCityList(divisionModel: selectedDivision);
+    if (responseModel.isSuccess) {
+      List<CityModel> fetchedCities = responseModel.data ?? [];
+      setState(() {
+        listCities = fetchedCities;
+        listCities!.insert(0, CityModel(id: -1, name: "Select Cities"));
+        selectedCity = listCities![0];
+      });
+      if (mounted) {
+        Navigator.pop(context);
+      }
+    } else {
+      if (mounted) {
+        ThemeSnackBar.showSnackBar(context, responseModel.message);
+      }
+    }
+  }
+
+  _address(StoreJobFormBloc formBloc) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Text(
-              "Address",
-              style: textStyleNormal(
-                fontWeight: FontWeight.bold,
-                fontsize: 16.0,
-              ),
-            ),
-            Row(
-              children: [
-                Checkbox(
-                  value: this.valueAddress,
-                  onChanged: (bool? value) {
-                    setState(() {
-                      this.valueAddress = value!;
-                    });
-                  },
-                ),
-                Text(
-                  "Copy from my details",
-                  style: textStyleNormal(
-                    color: kGrey,
+        DelayedDisplay(
+          delay: Duration(milliseconds: delayAnimationDuration),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(
+                    "Address",
+                    style: textStyleNormal(
+                      fontWeight: FontWeight.bold,
+                      fontsize: 16.0,
+                    ),
                   ),
-                ),
-              ],
-            ),
-          ],
-        ),
-        Space(10.0),
-        TextFormField(
-          controller: address,
-          textInputAction: TextInputAction.next,
-          decoration: InputDecoration(
-            contentPadding:
-                const EdgeInsets.symmetric(vertical: 5.0, horizontal: 10.0),
-            enabled: true,
-            hintText: 'Address',
-            border: OutlineInputBorder(
-              borderSide: BorderSide(
-                width: 3,
-                color: Colors.grey,
+                  Row(
+                    children: [
+                      Checkbox(
+                        value: this.valueAddress,
+                        onChanged: (bool? value) {
+                          setState(() {
+                            this.valueAddress = value!;
+                          });
+                        },
+                      ),
+                      Text(
+                        "Copy from my details",
+                        style: textStyleNormal(
+                          color: kGrey,
+                        ),
+                      ),
+                    ],
+                  ),
+                ],
               ),
-              borderRadius: BorderRadius.circular(10.0),
-            ),
-          ),
-        ),
-        Space(10.0),
-        Row(
-          children: [
-            Expanded(
-              child: TextFormField(
-                controller: city,
+              TextFieldBlocBuilder(
+                textFieldBloc: formBloc.address,
                 textInputAction: TextInputAction.next,
                 decoration: InputDecoration(
                   contentPadding: const EdgeInsets.symmetric(
                       vertical: 5.0, horizontal: 10.0),
                   enabled: true,
-                  hintText: 'City',
+                  hintText: 'Address',
                   border: OutlineInputBorder(
                     borderSide: BorderSide(
                       width: 3,
@@ -548,34 +628,94 @@ class _CreatePatientInfoState extends State<CreatePatientInfo> {
                     ),
                     borderRadius: BorderRadius.circular(10.0),
                   ),
+                ),
+              ),
+            ],
+          ),
+        ),
+        Row(
+          children: [
+            Expanded(
+              flex: 3,
+              child: ScaleTap(
+                onPressed: () {},
+                child: StyledDropdown<DivisionModel>(
+                  items: listDivision!.map<DropdownMenuItem<DivisionModel>>(
+                    (DivisionModel model) {
+                      return DropdownMenuItem<DivisionModel>(
+                        value: model, // Set the value to the ID
+                        child: Text(
+                          model.name.toString(),
+                          style: const TextStyle(
+                            fontSize: 14,
+                            fontWeight: FontWeight.bold,
+                            overflow: TextOverflow.ellipsis,
+                          ),
+                        ),
+                      );
+                    },
+                  ).toList(),
+                  selected: selectedDivision,
+                  list: listDivision!,
+                  setDropdownValue: (value) {
+                    setState(() {
+                      selectedDivision = listDivision!.firstWhere(
+                        (model) => model.id == value.id,
+                      ); // Find the model based on the ID
+                      print(selectedDivision.id);
+                      formBloc.division
+                          .updateValue(selectedDivision.id!.toString());
+
+                      formBloc.cityModel.updateValue("-1");
+
+                      onChangeDivision();
+                    });
+                    // updateListJobs();
+                  },
                 ),
               ),
             ),
             SizedBox(
-              width: 10.0,
+              width: 15,
             ),
             Expanded(
-              child: TextFormField(
-                controller: state,
-                textInputAction: TextInputAction.next,
-                decoration: InputDecoration(
-                  contentPadding: const EdgeInsets.symmetric(
-                      vertical: 5.0, horizontal: 10.0),
-                  enabled: true,
-                  hintText: 'State',
-                  border: OutlineInputBorder(
-                    borderSide: BorderSide(
-                      width: 3,
-                      color: Colors.grey,
-                    ),
-                    borderRadius: BorderRadius.circular(10.0),
-                  ),
+              flex: 3,
+              child: ScaleTap(
+                onPressed: () {},
+                child: StyledDropdown<CityModel>(
+                  items: listCities!
+                      .map<DropdownMenuItem<CityModel>>((CityModel model) {
+                    return DropdownMenuItem<CityModel>(
+                      value: model,
+                      child: Text(
+                        model.name.toString(),
+                        style: const TextStyle(
+                          fontSize: 14,
+                          fontWeight: FontWeight.bold,
+                          overflow: TextOverflow.ellipsis,
+                        ),
+                      ),
+                    );
+                  }).toList(),
+                  selected: selectedCity,
+                  list: listCities!,
+                  setDropdownValue: (value) {
+                    setState(() {
+                      selectedCity = listCities!
+                          .firstWhere((model) => model.id == value.id);
+                      formBloc.cityModel
+                          .updateValue(selectedCity!.id!.toString());
+                      print(selectedDivision.id);
+                      print(selectedCity!.id);
+                    });
+                    // updateListJobs();
+                  },
                 ),
               ),
             ),
           ],
         ),
-        Space(15.0),
+        Space(20.0),
       ],
     );
   }

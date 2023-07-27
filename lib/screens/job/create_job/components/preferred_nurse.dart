@@ -1,9 +1,15 @@
 import 'package:delayed_display/delayed_display.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_form_bloc/flutter_form_bloc.dart';
+import 'package:private_nurse_for_client/form_bloc/store_job_form_bloc.dart';
 import 'package:private_nurse_for_client/public_components/space.dart';
 
 class PreferredNurse extends StatefulWidget {
-  const PreferredNurse({super.key});
+  StoreJobFormBloc formBloc;
+  PreferredNurse({
+    super.key,
+    required this.formBloc,
+  });
 
   @override
   State<PreferredNurse> createState() => _PreferredNurseState();
@@ -11,7 +17,14 @@ class PreferredNurse extends StatefulWidget {
 
 List<String> listGender = ['Male', 'Female', 'Any'];
 
-List<String> listRace = ['Malay', 'Chinese', 'Indian', 'Sabahan', 'Sarawakian', 'Any'];
+List<String> listRace = [
+  'Malay',
+  'Chinese',
+  'Indian',
+  'Sabahan',
+  'Sarawakian',
+  'Any'
+];
 
 class _PreferredNurseState extends State<PreferredNurse> {
   String genderOption = listGender[0];
@@ -35,54 +48,26 @@ class _PreferredNurseState extends State<PreferredNurse> {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            SizedBox(
+            const SizedBox(
               width: 10,
             ),
             Expanded(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
-                  Text(
+                  const Text(
                     "Gender",
                     style: TextStyle(
                       fontWeight: FontWeight.bold,
                     ),
                   ),
-                  Container(
-                    width: 180,
-                    child: Column(
-                      children: [
-                        RadioListTile(
-                          title: Text("Male"),
-                          value: listGender[0],
-                          groupValue: genderOption,
-                          onChanged: (value) {
-                            setState(() {
-                              genderOption = value.toString();
-                            });
-                          },
-                        ),
-                        RadioListTile(
-                          title: Text("Female"),
-                          value: listGender[1],
-                          groupValue: genderOption,
-                          onChanged: (value) {
-                            setState(() {
-                              genderOption = value.toString();
-                            });
-                          },
-                        ),
-                        RadioListTile(
-                          title: Text("Any"),
-                          value: listGender[2],
-                          groupValue: genderOption,
-                          onChanged: (value) {
-                            setState(() {
-                              genderOption = value.toString();
-                            });
-                          },
-                        ),
-                      ],
+                  RadioButtonGroupFieldBlocBuilder<String>(
+                    selectFieldBloc: widget.formBloc.preferredGender,
+                    itemBuilder: (context, dynamic value) =>
+                        FieldItem(child: Text(value)),
+                    decoration: const InputDecoration(
+                      border: InputBorder.none,
+                      prefixIcon: SizedBox(),
                     ),
                   ),
                 ],
@@ -94,79 +79,21 @@ class _PreferredNurseState extends State<PreferredNurse> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(
+                    const Text(
                       "Race",
                       style: TextStyle(
                         fontWeight: FontWeight.bold,
                       ),
                     ),
-                    Container(
-                      width: 200,
-                      child: Column(
-                        children: [
-                          RadioListTile(
-                            title: Text("Malay"),
-                            value: listRace[0],
-                            groupValue: raceOption,
-                            onChanged: (value) {
-                              setState(() {
-                                raceOption = value.toString();
-                              });
-                            },
-                          ),
-                          RadioListTile(
-                            title: Text("Chinese"),
-                            value: listRace[1],
-                            groupValue: raceOption,
-                            onChanged: (value) {
-                              setState(() {
-                                raceOption = value.toString();
-                              });
-                            },
-                          ),
-                          RadioListTile(
-                            title: Text("Indian"),
-                            value: listRace[2],
-                            groupValue: raceOption,
-                            onChanged: (value) {
-                              setState(() {
-                                raceOption = value.toString();
-                              });
-                            },
-                          ),
-                          RadioListTile(
-                            title: Text("Sabahan"),
-                            value: listRace[3],
-                            groupValue: raceOption,
-                            onChanged: (value) {
-                              setState(() {
-                                raceOption = value.toString();
-                              });
-                            },
-                          ),
-                           RadioListTile(
-                            title: Text("Sarawakian"),
-                            value: listRace[4],
-                            groupValue: raceOption,
-                            onChanged: (value) {
-                              setState(() {
-                                raceOption = value.toString();
-                              });
-                            },
-                          ),
-                          RadioListTile(
-                            title: Text("Any"),
-                            value: listRace[5],
-                            groupValue: raceOption,
-                            onChanged: (value) {
-                              setState(() {
-                                raceOption = value.toString();
-                              });
-                            },
-                          ),
-                        ],
-                      ),
+                    RadioButtonGroupFieldBlocBuilder<String>(
+                    selectFieldBloc: widget.formBloc.preferredRace,
+                    itemBuilder: (context, dynamic value) =>
+                        FieldItem(child: Text(value)),
+                    decoration: const InputDecoration(
+                      border: InputBorder.none,
+                      prefixIcon: SizedBox(),
                     ),
+                  ),
                   ],
                 ),
               ),

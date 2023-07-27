@@ -41,18 +41,6 @@ List<String> listDuration = [
 
 class _CreateServiceInfoState extends State<CreateServiceInfo> {
   @override
-  void initState() {
-    // TODO: implement initState
-    super.initState();
-    String dateId = widget.selectedDays.first.day.toString() +
-        "-" +
-        widget.selectedDays.first.month.toString() +
-        "-" +
-        widget.selectedDays.first.year.toString();
-    widget.storeJobFormBloc.addVariant(dateId);
-  }
-
-  @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
       child: Column(
