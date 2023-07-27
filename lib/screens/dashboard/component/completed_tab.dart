@@ -5,6 +5,7 @@ import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:private_nurse_for_client/bloc/job_bloc.dart';
 import 'package:private_nurse_for_client/constant.dart';
+import 'package:private_nurse_for_client/helpers/general_method.dart';
 import 'package:private_nurse_for_client/helpers/http_response.dart';
 import 'package:private_nurse_for_client/models/job/job_model.dart';
 import 'package:private_nurse_for_client/models/job/list_job_response_model.dart';
@@ -14,6 +15,7 @@ import 'package:private_nurse_for_client/public_components/empty_list.dart';
 import 'package:private_nurse_for_client/public_components/space.dart';
 import 'package:private_nurse_for_client/public_components/theme_spinner.dart';
 import 'package:private_nurse_for_client/screens/dashboard/component/home_function.dart';
+import 'package:private_nurse_for_client/screens/job_description/job_description_screen.dart';
 import 'package:private_nurse_for_client/theme.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 
@@ -135,16 +137,11 @@ class _CompletedTabState extends State<CompletedTab> {
   Widget completedJobItem(BuildContext context, int index, JobModel jobModel) {
     return ScaleTap(
       onPressed: () {
-        // navigateTo(
-        //   context,
-        //   InformationDetailsScreen(
-        //     userModel: widget.userModel,
-        //     jobModel: jobModel,
-        //     selectedTabIndex: widget.selectedTabIndex,
-        //     rating: jobModel.feedback!.rating!.toDouble(),
-        //     callbackHomePaginator: callBackHomePaginator,
-        //   ),
-        // );
+         navigateTo(
+            context,
+            JobDescription(
+              jobModel: jobModel,
+            ));
       },
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 15),

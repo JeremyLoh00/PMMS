@@ -1,35 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:private_nurse_for_client/constant.dart';
+import 'package:private_nurse_for_client/models/job/job_model.dart';
 import 'package:private_nurse_for_client/public_components/space.dart';
+import 'package:private_nurse_for_client/screens/job_description/components/schedule_list.dart';
 
 class JobDescriptionDetail extends StatefulWidget {
-  final String src;
-  final String title;
-  final double price;
-  final String status;
-  final String name;
-  final String phoneNum;
-  final String city;
-  final String address;
-  final String startDate;
-  final String startTime;
-  final String endDate;
-  final String endTime;
+
+  final JobModel jobModel;
 
   JobDescriptionDetail({
     Key? key,
-    required this.src,
-    required this.title,
-    required this.price,
-    required this.status,
-    required this.name,
-    required this.phoneNum,
-    required this.city,
-    required this.address,
-    required this.startDate,
-    required this.startTime,
-    required this.endDate,
-    required this.endTime,
+    required this.jobModel
   }) : super(key: key);
 
   @override
@@ -63,7 +44,7 @@ class _JobDescriptionDetailState extends State<JobDescriptionDetail> {
                     height: 20.0,
                     alignment: Alignment.center,
                     child: Text(
-                      widget.status,
+                      widget.jobModel.status!,
                       textAlign: TextAlign.center,
                       style: TextStyle(
                         color: kPrimaryColor,
@@ -79,12 +60,12 @@ class _JobDescriptionDetailState extends State<JobDescriptionDetail> {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text(widget.name,
+                        Text(widget.jobModel.service!.name!,
                             style: TextStyle(
                                 fontSize: 16,
                                 color: kPrimaryColor,
                                 fontWeight: FontWeight.bold)),
-                        Text(widget.phoneNum,
+                        Text(widget.jobModel.phoneNo!,
                             style: TextStyle(
                               color: kGrey,
                             )),
@@ -106,7 +87,7 @@ class _JobDescriptionDetailState extends State<JobDescriptionDetail> {
                       SizedBox(
                         width: 5,
                       ),
-                      Text(widget.price.toString(),
+                      Text(widget.jobModel.totalServiceFee!,
                           style: TextStyle(
                               fontSize: 30,
                               fontWeight: FontWeight.bold,
@@ -137,28 +118,39 @@ class _JobDescriptionDetailState extends State<JobDescriptionDetail> {
               SizedBox(
                 width: 10,
               ),
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    widget.city,
-                    style: TextStyle(
-                        fontSize: 10,
-                        color: kGrey,
+              Expanded(
+                child: Text(
+                      widget.jobModel.address!,
+                      style: TextStyle(
                         fontFamily: "Poppins",
-                        fontWeight: FontWeight.w600),
-                  ),
-                  Space(3),
-                  Text(
-                    widget.address,
-                    style: TextStyle(
-                      fontFamily: "Poppins",
-                      fontSize: 12,
-                      fontWeight: FontWeight.bold,
+                        fontSize: 12,
+                        fontWeight: FontWeight.bold,
+                      ),
                     ),
-                  ),
-                ],
               ),
+              // Column(
+              //   crossAxisAlignment: CrossAxisAlignment.start,
+              //   children: [
+              //     Text(
+              //       // widget.jobModel,
+              //       "a",
+              //       style: TextStyle(
+              //           fontSize: 10,
+              //           color: kGrey,
+              //           fontFamily: "Poppins",
+              //           fontWeight: FontWeight.w600),
+              //     ),
+              //     Space(3),
+              //     Text(
+              //       widget.jobModel.address!,
+              //       style: TextStyle(
+              //         fontFamily: "Poppins",
+              //         fontSize: 12,
+              //         fontWeight: FontWeight.bold,
+              //       ),
+              //     ),
+              //   ],
+              // ),
             ],
           ),
           Space(20),
@@ -182,46 +174,7 @@ class _JobDescriptionDetailState extends State<JobDescriptionDetail> {
               SizedBox(
                 width: 10,
               ),
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    widget.startDate,
-                    style: TextStyle(
-                        fontSize: 10,
-                        color: kGrey,
-                        fontFamily: "Poppins",
-                        fontWeight: FontWeight.w600),
-                  ),
-                  Space(3),
-                  Text(
-                    widget.startTime,
-                    style: TextStyle(
-                      fontFamily: "Poppins",
-                      fontSize: 12,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                  Space(10),
-                  Text(
-                    widget.endDate,
-                    style: TextStyle(
-                        fontSize: 10,
-                        color: kGrey,
-                        fontFamily: "Poppins",
-                        fontWeight: FontWeight.w600),
-                  ),
-                  Space(3),
-                  Text(
-                    widget.endTime,
-                    style: TextStyle(
-                      fontFamily: "Poppins",
-                      fontSize: 12,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                ],
-              ),
+              ScheduleList(jobModel: widget.jobModel)
             ],
           ),
         ],

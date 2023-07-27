@@ -48,3 +48,9 @@ const kTextWarning = Color.fromRGBO(188, 139, 20, 6);
 // Info
 const kBgInfo = Color.fromRGBO(236, 253, 245, 1.0);
 const kTextInfo = kPrimaryColor;
+
+const kReviewBg = Color.fromRGBO(237, 233, 254, 1.0);
+const kReviewText = Color.fromRGBO(91, 33, 182, 1.0);
+
+const kOnGoingBg = Color.fromRGBO(219, 234, 254, 1.0);
+const kOnGoingText = Color.fromRGBO(30, 64, 175, 1.0);

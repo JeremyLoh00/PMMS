@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_scale_tap/flutter_scale_tap.dart';
 import 'package:private_nurse_for_client/constant.dart';
 import 'package:private_nurse_for_client/helpers/general_method.dart';
+import 'package:private_nurse_for_client/models/job/job_model.dart';
 import 'package:private_nurse_for_client/public_components/custom_list_tile.dart';
 import 'package:private_nurse_for_client/public_components/space.dart';
 import 'package:private_nurse_for_client/screens/job/nurse_profile/nurse_profile.dart';
@@ -10,10 +11,12 @@ import 'package:private_nurse_for_client/screens/job/patient_profile/patient_pro
 import 'package:private_nurse_for_client/theme.dart';
 
 class NurseApplication extends StatefulWidget {
-  final String src;
+  // final String src;
+  final JobModel jobModel;
   NurseApplication({
     Key? key,
-    required this.src,
+    // required this.src,
+    required this.jobModel
   }) : super(key: key);
 
   @override
@@ -44,9 +47,10 @@ class _NurseApplicationState extends State<NurseApplication> {
             ),
           ),
           ListView.builder(
+            padding: EdgeInsets.zero,
             shrinkWrap: true,
             physics: const BouncingScrollPhysics(),
-            itemCount: status.length, // Replace with your actual item count
+            itemCount: widget.jobModel.listOfAppliedNurse!.length, // Replace with your actual item count
             itemBuilder: (context, index) {
               return ScaleTap(
                 onPressed: () {
@@ -56,7 +60,7 @@ class _NurseApplicationState extends State<NurseApplication> {
                       navigateTo(
                         context,
                         NurseProfile(
-                          src: widget.src,
+                          src: widget.jobModel.listOfAppliedNurse![index].profilePhoto!,
                           hasButton: true,
                         ),
                       );
@@ -64,14 +68,14 @@ class _NurseApplicationState extends State<NurseApplication> {
                       navigateTo(
                         context,
                         NurseProfile(
-                          src: widget.src,
+                          src: widget.jobModel.listOfAppliedNurse![index].profilePhoto!,
                         ),
                       );
                     } else if (status[index] == 'Awaiting') {
                       navigateTo(
                         context,
                         NurseProfile(
-                          src: widget.src,
+                          src: widget.jobModel.listOfAppliedNurse![index].profilePhoto!,
                           hasButton: true,
                         ),
                       );
@@ -79,7 +83,7 @@ class _NurseApplicationState extends State<NurseApplication> {
                       navigateTo(
                         context,
                         NurseProfile(
-                          src: widget.src,
+                          src: widget.jobModel.listOfAppliedNurse![index].profilePhoto!,
                           hasButton: true,
                         ),
                       );
@@ -87,7 +91,7 @@ class _NurseApplicationState extends State<NurseApplication> {
                       navigateTo(
                         context,
                         NurseProfile(
-                          src: widget.src,
+                          src: widget.jobModel.listOfAppliedNurse![index].profilePhoto!,
                         ),
                       );
                     }
@@ -122,7 +126,7 @@ class _NurseApplicationState extends State<NurseApplication> {
                               width: 40,
                               height: 40,
                               child: CachedNetworkImage(
-                                imageUrl: widget.src,
+                                imageUrl: widget.jobModel.listOfAppliedNurse![index].profilePhoto!,
                                 imageBuilder: (context, imageProvider) =>
                                     Container(
                                   decoration: BoxDecoration(
@@ -152,8 +156,8 @@ class _NurseApplicationState extends State<NurseApplication> {
                               Row(
                                 children: [
                                   Expanded(
-                                    child: const Text(
-                                      "Nurse Aida",
+                                    child: Text(
+                                      widget.jobModel.listOfAppliedNurse![index].name!,
                                       style: TextStyle(
                                         color: kBlack,
                                         fontWeight: FontWeight.bold,
@@ -223,11 +227,13 @@ class _NurseApplicationState extends State<NurseApplication> {
                                                       MainAxisAlignment.end,
                                                   children: [
                                                     Container(
-                                                        padding: const EdgeInsets
-                                                                .symmetric(
-                                                            horizontal: 10,
-                                                            vertical: 2),
-                                                        decoration: BoxDecoration(
+                                                        padding:
+                                                            const EdgeInsets
+                                                                    .symmetric(
+                                                                horizontal: 10,
+                                                                vertical: 2),
+                                                        decoration:
+                                                            BoxDecoration(
                                                           color: Color.fromRGBO(
                                                               247,
                                                               250,
@@ -240,8 +246,12 @@ class _NurseApplicationState extends State<NurseApplication> {
                                                         child: Text(
                                                           status[2],
                                                           style: TextStyle(
-                                                            color: Color.fromRGBO(
-                                                                95, 86, 6, 1),
+                                                            color:
+                                                                Color.fromRGBO(
+                                                                    95,
+                                                                    86,
+                                                                    6,
+                                                                    1),
                                                             fontSize: 12,
                                                             fontWeight:
                                                                 FontWeight.w500,
@@ -260,11 +270,12 @@ class _NurseApplicationState extends State<NurseApplication> {
                                                                         .symmetric(
                                                                     horizontal:
                                                                         10,
-                                                                    vertical: 2),
+                                                                    vertical:
+                                                                        2),
                                                             decoration:
                                                                 BoxDecoration(
-                                                              color:
-                                                                  Color.fromRGBO(
+                                                              color: Color
+                                                                  .fromRGBO(
                                                                       209,
                                                                       222,
                                                                       250,

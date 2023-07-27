@@ -22,6 +22,7 @@ import 'package:private_nurse_for_client/public_components/theme_snack_bar.dart'
 import 'package:private_nurse_for_client/public_components/theme_spinner.dart';
 import 'package:private_nurse_for_client/resource/user_resource.dart';
 import 'package:private_nurse_for_client/screens/dashboard/component/home_function.dart';
+import 'package:private_nurse_for_client/screens/job_description/job_description_screen.dart';
 import 'package:private_nurse_for_client/theme.dart';
 import 'package:provider/provider.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
@@ -181,40 +182,40 @@ class _OpenTabState extends State<OpenTab> {
                     ),
                 animateTransitions: true,
                 itemBuilder: (context, jobModel, index) {
-                  // return jobItem(context, index, jobModel);
-                  return Consumer<UserDataNotifier>(
-                      builder: (context, userDataNotifier, _) {
-                    // If the user data in the notifier is not null
-                    if (userDataNotifier.user != null) {
-                      // Show UI using the data in the notifier
-                      return jobItem(
+                  return jobItem(
                         context,
                         index,
                         jobModel
-                      );
-                      // Else try o get the data from shared preferences the show the UI
-                    } else {
-                      return FutureBuilder(
-                          future: _userModel,
-                          builder: (context, snapshot) {
-                            if (snapshot.hasData && snapshot.data != null) {
-                              // Set to the user data notifier
-                              userDataNotifier.setUserData(snapshot.data);
-                              // return UI
-                              return jobItem(
-                                context,
-                                index,
-                                jobModel
-                              );
-                            } else {
-                              // Show loading
-                              return Center(
-                                child: ThemeSpinner.spinner(),
-                              );
-                            }
-                          });
-                    }
-                  });
+                      );// return jobItem(context, index, jobModel);
+                  // return Consumer<UserDataNotifier>(
+                  //     builder: (context, userDataNotifier, _) {
+                  //   // If the user data in the notifier is not null
+                  //   if (userDataNotifier.user != null) {
+                  //     // Show UI using the data in the notifier
+                      
+                  //     // Else try o get the data from shared preferences the show the UI
+                  //   } else {
+                  //     return FutureBuilder(
+                  //         future: _userModel,
+                  //         builder: (context, snapshot) {
+                  //           if (snapshot.hasData && snapshot.data != null) {
+                  //             // Set to the user data notifier
+                  //             userDataNotifier.setUserData(snapshot.data);
+                  //             // return UI
+                  //             return jobItem(
+                  //               context,
+                  //               index,
+                  //               jobModel
+                  //             );
+                  //           } else {
+                  //             // Show loading
+                  //             return Center(
+                  //               child: ThemeSpinner.spinner(),
+                  //             );
+                  //           }
+                  //         });
+                  //   }
+                  // });
                 }),
           )
         ],
@@ -226,14 +227,11 @@ class _OpenTabState extends State<OpenTab> {
       BuildContext context, int index, JobModel jobModel) {
     return ScaleTap(
       onPressed: () {
-        // navigateTo(
-        //     context,
-        //     InformationDetailsScreen(
-        //       userModel: userModel,
-        //       jobModel: jobModel,
-        //       selectedTabIndex: widget.selectedTabIndex,
-        //       callbackHomePaginator: callBackHomePaginator,
-        //     ));
+        navigateTo(
+            context,
+            JobDescription(
+              jobModel: jobModel,
+            ));
       },
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 15),
@@ -374,7 +372,8 @@ class _OpenTabState extends State<OpenTab> {
                           SizedBox(width: 5),
                           Expanded(
                             child: Text(
-                              jobModel.jobSchedule!.first.startTime!,
+                              // jobModel.jobSchedule!.first.startTime!,
+                              "a",
                               style: TextStyle(
                                 fontSize: 12,
                                 fontWeight: FontWeight.w500,

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:private_nurse_for_client/constant.dart';
 
 Widget badgeStatus(
     {required String status,
@@ -10,14 +11,16 @@ Widget badgeStatus(
       vertical: 1,
     ),
     decoration: BoxDecoration(
-      color: bgColor,
+      color: status == "Ongoing" ? kOnGoingBg : status == "Waiting Client Reviews" ? kReviewBg : kBgColor,
+      
+      // bgColor,
       //  border: Border.all(color: textColor),
       borderRadius: BorderRadius.circular(7),
     ),
     child: Text(
       status,
       style: TextStyle(
-        color: textColor,
+        color: status == "Ongoing" ? kOnGoingText : status == "Awaiting Client Reviews" ? kReviewText : textColor,
         fontSize: 11,
       ),
     ),
