@@ -145,7 +145,7 @@ class _OngoingTabState extends State<OngoingTab> {
   Widget onGoingJobItem(BuildContext context, int index, JobModel jobModel) {
     return ScaleTap(
       onPressed: () {
-         navigateTo(
+        navigateTo(
             context,
             JobDescription(
               jobModel: jobModel,

@@ -5,13 +5,9 @@ import 'package:private_nurse_for_client/public_components/space.dart';
 import 'package:private_nurse_for_client/screens/job_description/components/schedule_list.dart';
 
 class JobDescriptionDetail extends StatefulWidget {
-
   final JobModel jobModel;
 
-  JobDescriptionDetail({
-    Key? key,
-    required this.jobModel
-  }) : super(key: key);
+  JobDescriptionDetail({Key? key, required this.jobModel}) : super(key: key);
 
   @override
   State<JobDescriptionDetail> createState() => _JobDescriptionDetailState();
@@ -120,13 +116,13 @@ class _JobDescriptionDetailState extends State<JobDescriptionDetail> {
               ),
               Expanded(
                 child: Text(
-                      widget.jobModel.address!,
-                      style: TextStyle(
-                        fontFamily: "Poppins",
-                        fontSize: 12,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
+                  widget.jobModel.address!,
+                  style: TextStyle(
+                    fontFamily: "Poppins",
+                    fontSize: 12,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
               ),
               // Column(
               //   crossAxisAlignment: CrossAxisAlignment.start,

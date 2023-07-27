@@ -13,11 +13,11 @@ import 'package:private_nurse_for_client/theme.dart';
 class NurseApplication extends StatefulWidget {
   // final String src;
   final JobModel jobModel;
-  NurseApplication({
-    Key? key,
-    // required this.src,
-    required this.jobModel
-  }) : super(key: key);
+  NurseApplication(
+      {Key? key,
+      // required this.src,
+      required this.jobModel})
+      : super(key: key);
 
   @override
   State<NurseApplication> createState() => _NurseApplicationState();
@@ -50,7 +50,8 @@ class _NurseApplicationState extends State<NurseApplication> {
             padding: EdgeInsets.zero,
             shrinkWrap: true,
             physics: const BouncingScrollPhysics(),
-            itemCount: widget.jobModel.listOfAppliedNurse!.length, // Replace with your actual item count
+            itemCount: widget.jobModel.listOfAppliedNurse!
+                .length, // Replace with your actual item count
             itemBuilder: (context, index) {
               return ScaleTap(
                 onPressed: () {
@@ -60,7 +61,8 @@ class _NurseApplicationState extends State<NurseApplication> {
                       navigateTo(
                         context,
                         NurseProfile(
-                          src: widget.jobModel.listOfAppliedNurse![index].profilePhoto!,
+                          src: widget.jobModel.listOfAppliedNurse![index]
+                              .profilePhoto!,
                           hasButton: true,
                         ),
                       );
@@ -68,14 +70,16 @@ class _NurseApplicationState extends State<NurseApplication> {
                       navigateTo(
                         context,
                         NurseProfile(
-                          src: widget.jobModel.listOfAppliedNurse![index].profilePhoto!,
+                          src: widget.jobModel.listOfAppliedNurse![index]
+                              .profilePhoto!,
                         ),
                       );
                     } else if (status[index] == 'Awaiting') {
                       navigateTo(
                         context,
                         NurseProfile(
-                          src: widget.jobModel.listOfAppliedNurse![index].profilePhoto!,
+                          src: widget.jobModel.listOfAppliedNurse![index]
+                              .profilePhoto!,
                           hasButton: true,
                         ),
                       );
@@ -83,7 +87,8 @@ class _NurseApplicationState extends State<NurseApplication> {
                       navigateTo(
                         context,
                         NurseProfile(
-                          src: widget.jobModel.listOfAppliedNurse![index].profilePhoto!,
+                          src: widget.jobModel.listOfAppliedNurse![index]
+                              .profilePhoto!,
                           hasButton: true,
                         ),
                       );
@@ -91,7 +96,8 @@ class _NurseApplicationState extends State<NurseApplication> {
                       navigateTo(
                         context,
                         NurseProfile(
-                          src: widget.jobModel.listOfAppliedNurse![index].profilePhoto!,
+                          src: widget.jobModel.listOfAppliedNurse![index]
+                              .profilePhoto!,
                         ),
                       );
                     }
@@ -126,7 +132,8 @@ class _NurseApplicationState extends State<NurseApplication> {
                               width: 40,
                               height: 40,
                               child: CachedNetworkImage(
-                                imageUrl: widget.jobModel.listOfAppliedNurse![index].profilePhoto!,
+                                imageUrl: widget.jobModel
+                                    .listOfAppliedNurse![index].profilePhoto!,
                                 imageBuilder: (context, imageProvider) =>
                                     Container(
                                   decoration: BoxDecoration(
@@ -157,7 +164,8 @@ class _NurseApplicationState extends State<NurseApplication> {
                                 children: [
                                   Expanded(
                                     child: Text(
-                                      widget.jobModel.listOfAppliedNurse![index].name!,
+                                      widget.jobModel.listOfAppliedNurse![index]
+                                          .name!,
                                       style: TextStyle(
                                         color: kBlack,
                                         fontWeight: FontWeight.bold,

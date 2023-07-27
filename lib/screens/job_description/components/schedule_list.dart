@@ -36,6 +36,7 @@ class _ScheduleListState extends State<ScheduleList> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start, mainAxisAlignment: MainAxisAlignment.start,
               children: [
+                //Date
                 Text(
                   widget.jobModel.jobSchedule![index].date!,
                   style: TextStyle(
@@ -45,6 +46,7 @@ class _ScheduleListState extends State<ScheduleList> {
                       fontWeight: FontWeight.w600),
                 ),
                 Space(3),
+                //Time
                 Row(
                   children: [
                     Text(

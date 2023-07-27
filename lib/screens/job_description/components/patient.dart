@@ -44,7 +44,6 @@ class _PatientState extends State<Patient> {
             itemBuilder: (context, index) {
               return ScaleTap(
                 onPressed: () {
-                  // navigateTo(context, InformationDetailsScreen(selectedTabIndex: widget.selectedTabIndex,));
                   navigateTo(
                     context,
                     PatientProfile(
