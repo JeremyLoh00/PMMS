@@ -3,11 +3,15 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_scale_tap/flutter_scale_tap.dart';
 import 'package:get_it/get_it.dart';
+import 'package:get_it/get_it.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:private_nurse_for_client/bloc/user_bloc.dart';
 import 'package:private_nurse_for_client/constant.dart';
 import 'package:private_nurse_for_client/helpers/general_method.dart';
 import 'package:private_nurse_for_client/helpers/secure_storage_api.dart';
+import 'package:private_nurse_for_client/helpers/user_data_notifier.dart';
+import 'package:private_nurse_for_client/models/user/user_model.dart';
+import 'package:private_nurse_for_client/models/user/user_response_model.dart';
 import 'package:private_nurse_for_client/helpers/user_data_notifier.dart';
 import 'package:private_nurse_for_client/models/user/user_model.dart';
 import 'package:private_nurse_for_client/models/user/user_response_model.dart';
@@ -23,6 +27,7 @@ import 'package:private_nurse_for_client/screens/navigation/app_bar_type.dart';
 import 'package:private_nurse_for_client/screens/notification/notification_screen.dart';
 import 'package:private_nurse_for_client/screens/profile/profile_screen.dart';
 import 'package:private_nurse_for_client/screens/subscription/subscription_screen.dart';
+import 'package:provider/provider.dart';
 import 'package:provider/provider.dart';
 
 class Navigation extends StatefulWidget {
@@ -82,6 +87,8 @@ class _NavigationState extends State<Navigation> {
       return await checkAuthenticated();
     }
   }
+
+
 
   @override
   Widget build(BuildContext context) {
