@@ -9,17 +9,12 @@ import 'package:private_nurse_for_client/helpers/general_method.dart';
 import 'package:private_nurse_for_client/models/job/job_model.dart';
 import 'package:private_nurse_for_client/models/job_filter_request/job_filter_request_model.dart';
 import 'package:private_nurse_for_client/models/user/user_model.dart';
-import 'package:private_nurse_for_client/public_components/button_secondary.dart';
-import 'package:private_nurse_for_client/public_components/input_decoration.dart';
-import 'package:private_nurse_for_client/public_components/space.dart';
+import 'package:private_nurse_for_client/public_components/button_circle_add.dart';
 import 'package:private_nurse_for_client/screens/dashboard/component/cancelled_tab.dart';
 import 'package:private_nurse_for_client/screens/dashboard/component/completed_tab.dart';
 import 'package:private_nurse_for_client/screens/dashboard/component/ongoing_tab.dart';
 import 'package:private_nurse_for_client/screens/dashboard/component/open_tab.dart';
 import 'package:private_nurse_for_client/screens/job/create_job/create_job.dart';
-import 'package:private_nurse_for_client/screens/dashboard/component/job_list.dart';
-import 'package:private_nurse_for_client/screens/job/create_job/select_job.dart';
-import 'package:private_nurse_for_client/theme.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -86,171 +81,110 @@ class _HomeScreenState extends State<HomeScreen>
 
   @override
   Widget build(BuildContext context) {
-    return Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-      // Padding(
-      //   padding: const EdgeInsets.symmetric(horizontal: 15),
-      //   child: Expanded(
-      //     flex: 3,
-      //     child: ScaleTap(
-      //       onPressed: () {},
-      //       child: DropdownButtonFormField2<String>(
-      //         decoration: textFieldInputDecoration2(),
-      //         isExpanded: true,
-      //         enableFeedback: true,
-      //         hint: const Row(
-      //           children: [
-      //             Expanded(
-      //               child: Text(
-      //                 'Job Status',
-      //                 style: TextStyle(
-      //                   fontSize: 14,
-      //                   fontWeight: FontWeight.bold,
-      //                   color: Colors.black,
-      //                 ),
-      //                 overflow: TextOverflow.ellipsis,
-      //               ),
-      //             ),
-      //           ],
-      //         ),
-      //         dropdownStyleData: DropdownStyleData(
-      //           maxHeight: 200,
-      //           //swidth: double.infinity,
-      //           padding: null,
-      //           decoration: BoxDecoration(
-      //             borderRadius: BorderRadius.circular(14),
-      //             boxShadow: [profileShadow(kGrey.withOpacity(0.3))],
-      //             color: kWhite,
-      //           ),
-      //           elevation: 0,
-      //           offset: const Offset(0, 0),
-      //           scrollbarTheme: ScrollbarThemeData(
-      //             radius: const Radius.circular(2),
-      //             thickness: MaterialStateProperty.all<double>(6),
-      //             thumbVisibility: MaterialStateProperty.all<bool>(true),
-      //           ),
-      //         ),
-      //         items: items
-      //             .map((item) => DropdownMenuItem<String>(
-      //                   value: item,
-      //                   child: Text(
-      //                     item,
-      //                     style: const TextStyle(
-      //                       fontSize: 14,
-      //                       fontWeight: FontWeight.bold,
-      //                       color: Colors.black,
-      //                     ),
-      //                     overflow: TextOverflow.ellipsis,
-      //                   ),
-      //                 ))
-      //             .toList(),
-      //         value: selectedValue,
-      //         onChanged: (value) {
-      //           setState(() {
-      //             selectedValue = value as String;
-      //           });
-      //         },
-      //       ),
-      //     ),
-      //   ),
-      // ),
-      // Space(10),
-      Expanded(
-          child: Column(children: [
-        TabBar(
-          onTap: (value) {
-            setState(() {
-              _selectedTabIndex = value;
-              // _jobPagingController.refresh();
-              // _requestedPagingController.refresh();
-              // _ongoingPagingController.refresh();
-              // _completedPagingController.refresh();
-              print(_selectedTabIndex);
-            });
-          },
-          physics: const BouncingScrollPhysics(),
-          controller: _tabController,
-          splashBorderRadius: BorderRadius.circular(10),
-          overlayColor: MaterialStateProperty.resolveWith<Color?>(
-            (Set<MaterialState> states) {
-              return states.contains(MaterialState.focused)
-                  ? null
-                  : kPrimary100Color;
-            },
-          ),
-          isScrollable: true,
-          indicatorColor: kPrimaryColor,
-          enableFeedback: false,
-          tabs: const [
-            Tab(
-              child: Text(
-                "Open",
-                style: TextStyle(
-                  fontWeight: FontWeight.bold,
-                  color: Colors.black,
-                ),
-              ),
-            ),
-            Tab(
-              child: Text(
-                "On-Going",
-                style: TextStyle(
-                  fontWeight: FontWeight.bold,
-                  color: Colors.black,
-                ),
-              ),
-            ),
-            Tab(
-              child: Text(
-                "Completed",
-                style: TextStyle(
-                  fontWeight: FontWeight.bold,
-                  color: Colors.black,
-                ),
-              ),
-            ),
-            Tab(
-              child: Text(
-                "Cancelled",
-                style: TextStyle(
-                  fontWeight: FontWeight.bold,
-                  color: Colors.black,
-                ),
-              ),
-            ),
-          ],
-        ),
+    return Scaffold(
+      body: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
         Expanded(
-          child: TabBarView(
+            child: Column(children: [
+          TabBar(
+            onTap: (value) {
+              setState(() {
+                _selectedTabIndex = value;
+                print(_selectedTabIndex);
+              });
+            },
+            physics: const BouncingScrollPhysics(),
             controller: _tabController,
-            children: [
-              OpenTab(
-                userModel: widget.userModel!,
-                selectedTabIndex: _selectedTabIndex,
-                jobFilterRequestModel: jobFilterRequestModel,
-                pagingController: _jobPagingController,
+            splashBorderRadius: BorderRadius.circular(10),
+            overlayColor: MaterialStateProperty.resolveWith<Color?>(
+              (Set<MaterialState> states) {
+                return states.contains(MaterialState.focused)
+                    ? null
+                    : kPrimary100Color;
+              },
+            ),
+            isScrollable: true,
+            indicatorColor: kPrimaryColor,
+            enableFeedback: false,
+            tabs: const [
+              Tab(
+                child: Text(
+                  "Open",
+                  style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    color: Colors.black,
+                  ),
+                ),
               ),
-              OngoingTab(
-                userModel: widget.userModel!,
-                selectedTabIndex: _selectedTabIndex,
-                jobFilterRequestModel: jobFilterRequestModel,
-                pagingController: _ongoingPagingController,
+              Tab(
+                child: Text(
+                  "On-Going",
+                  style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    color: Colors.black,
+                  ),
+                ),
               ),
-              CompletedTab(
-                userModel: widget.userModel!,
-                selectedTabIndex: _selectedTabIndex,
-                jobFilterRequestModel: jobFilterRequestModel,
-                pagingController: _completedPagingController,
+              Tab(
+                child: Text(
+                  "Completed",
+                  style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    color: Colors.black,
+                  ),
+                ),
               ),
-              CancelledTab(
-                userModel: widget.userModel!,
-                selectedTabIndex: _selectedTabIndex,
-                jobFilterRequestModel: jobFilterRequestModel,
-                pagingController: _cancelledPagingController,
+              Tab(
+                child: Text(
+                  "Cancelled",
+                  style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    color: Colors.black,
+                  ),
+                ),
               ),
             ],
           ),
-        ),
-      ]))
-    ]);
+          Expanded(
+            child: TabBarView(
+              controller: _tabController,
+              children: [
+                OpenTab(
+                  userModel: widget.userModel!,
+                  selectedTabIndex: _selectedTabIndex,
+                  jobFilterRequestModel: jobFilterRequestModel,
+                  pagingController: _jobPagingController,
+                ),
+                OngoingTab(
+                  userModel: widget.userModel!,
+                  selectedTabIndex: _selectedTabIndex,
+                  jobFilterRequestModel: jobFilterRequestModel,
+                  pagingController: _ongoingPagingController,
+                ),
+                CompletedTab(
+                  userModel: widget.userModel!,
+                  selectedTabIndex: _selectedTabIndex,
+                  jobFilterRequestModel: jobFilterRequestModel,
+                  pagingController: _completedPagingController,
+                ),
+                CancelledTab(
+                  userModel: widget.userModel!,
+                  selectedTabIndex: _selectedTabIndex,
+                  jobFilterRequestModel: jobFilterRequestModel,
+                  pagingController: _cancelledPagingController,
+                ),
+              ],
+            ),
+          ),
+        ]))
+      ]),
+      floatingActionButton: FloatingActionButton(
+        backgroundColor: Colors.transparent,
+        foregroundColor: Colors.transparent,
+        onPressed: () {},
+        child: ButtonCircleAdd(onPressed: () {
+          navigateTo(context, CreateJob());
+        }),
+      ),
+    );
   }
 }

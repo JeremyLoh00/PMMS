@@ -168,135 +168,148 @@ class _OngoingTabState extends State<OngoingTab> {
               ),
             ],
           ),
-          child: Row(
-            // row for 2 column: image and column
-            mainAxisAlignment: MainAxisAlignment.start,
-            crossAxisAlignment: CrossAxisAlignment.start,
+          child: Column(
             children: [
-              // image
-              Column(
-                mainAxisAlignment: MainAxisAlignment.center,
+              Row(
+                // row for 2 column: image and column
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  SizedBox(
-                    width: 100,
-                    height: 100,
-                    child: CachedNetworkImage(
-                      imageUrl: jobModel.service!.photoPath!,
-                      imageBuilder: (context, imageProvider) => Container(
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(10),
-                          image: DecorationImage(
-                            image: imageProvider,
-                            fit: BoxFit.cover,
+                  // image
+                  Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      SizedBox(
+                        width: 100,
+                        height: 100,
+                        child: CachedNetworkImage(
+                          imageUrl: jobModel.service!.photoPath!,
+                          imageBuilder: (context, imageProvider) => Container(
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(10),
+                              image: DecorationImage(
+                                image: imageProvider,
+                                fit: BoxFit.cover,
+                              ),
+                            ),
                           ),
+                          placeholder: (context, url) => Container(
+                            width: 10,
+                            height: 10,
+                            child: Center(
+                              child: ThemeSpinner.spinner(),
+                            ),
+                          ),
+                          errorWidget: (context, url, error) =>
+                              const Icon(Icons.error),
                         ),
                       ),
-                      placeholder: (context, url) => Container(
-                        width: 10,
-                        height: 10,
-                        child: Center(
-                          child: ThemeSpinner.spinner(),
-                        ),
-                      ),
-                      errorWidget: (context, url, error) =>
-                          const Icon(Icons.error),
-                    ),
+                    ],
                   ),
+                  SizedBox(width: 15),
+                  Expanded(
+                    child: Padding(
+                      padding: const EdgeInsets.only(right: 10),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Space(7),
+                          Space(5),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Expanded(
+                                child: Text(
+                                  jobModel.service!.name!,
+                                  style: TextStyle(
+                                    color: kBlack,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                  maxLines: 1,
+                                  overflow: TextOverflow.ellipsis,
+                                ),
+                              ),
+                              badgeStatus(
+                                status: jobModel.status!,
+                                bgColor: kBgSuccess,
+                                textColor: kTextSuccess,
+                              ),
+                            ],
+                          ),
+                          Space(10),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Icon(
+                                Iconsax.user,
+                                color: kPrimaryColor,
+                                size: 16,
+                              ),
+                              SizedBox(width: 5),
+                              Expanded(
+                                  child: Text(
+                                jobModel.patient!.name!,
+                                // jobModel.client!.userModel!.name!,
+                                maxLines: 1,
+                                overflow: TextOverflow.ellipsis,
+                                style: TextStyle(
+                                  fontSize: 12,
+                                  fontWeight: FontWeight.w500,
+                                ),
+                              ))
+                            ],
+                          ),
+                          Space(5),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Icon(
+                                Iconsax.clock,
+                                color: kPrimaryColor,
+                                size: 16,
+                              ),
+                              SizedBox(width: 5),
+                              Expanded(
+                                child: Text(
+                                  jobModel.jobSchedule!.first.date!,
+                                  style: TextStyle(
+                                    fontSize: 12,
+                                    fontWeight: FontWeight.w500,
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                          Space(5),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Icon(
+                                Iconsax.calendar,
+                                color: kPrimaryColor,
+                                size: 16,
+                              ),
+                              SizedBox(width: 5),
+                              Expanded(
+                                child: Text(
+                                  jobModel.jobSchedule!.first.startTime!,
+                                  style: TextStyle(
+                                    fontSize: 12,
+                                    fontWeight: FontWeight.w500,
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ],
+                      ),
+                    ),
+                  )
                 ],
               ),
-              SizedBox(width: 15),
-              Expanded(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Space(7),
-                    badgeStatus(
-                      status: jobModel.status!,
-                      bgColor: kBgSuccess,
-                      textColor: kTextSuccess,
-                    ),
-                    Space(5),
-                    Text(
-                      jobModel.service!.name!,
-                      style: TextStyle(
-                        color: kBlack,
-                        fontWeight: FontWeight.bold,
-                      ),
-                      maxLines: 1,
-                      overflow: TextOverflow.ellipsis,
-                    ),
-                    Space(10),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Icon(
-                          Iconsax.user,
-                          color: kPrimaryColor,
-                          size: 16,
-                        ),
-                        SizedBox(width: 5),
-                        Expanded(
-                            child: Text(
-                              jobModel.patient!.name!,
-                          // jobModel.client!.userModel!.name!,
-                          maxLines: 1,
-                          overflow: TextOverflow.ellipsis,
-                          style: TextStyle(
-                            fontSize: 12,
-                            fontWeight: FontWeight.w500,
-                          ),
-                        ))
-                      ],
-                    ),
-                    Space(5),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Icon(
-                          Iconsax.clock,
-                          color: kPrimaryColor,
-                          size: 16,
-                        ),
-                        SizedBox(width: 5),
-                        Expanded(
-                          child: Text(
-                            jobModel.jobSchedule!.date!,
-                            style: TextStyle(
-                              fontSize: 12,
-                              fontWeight: FontWeight.w500,
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
-                    Space(5),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Icon(
-                          Iconsax.calendar,
-                          color: kPrimaryColor,
-                          size: 16,
-                        ),
-                        SizedBox(width: 5),
-                        Expanded(
-                          child: Text(
-                            jobModel.jobSchedule!.startTime!,
-                            style: TextStyle(
-                              fontSize: 12,
-                              fontWeight: FontWeight.w500,
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
-                    Space(5),
-                  ],
-                ),
-              )
             ],
           ),
         ),

@@ -12,7 +12,7 @@ class NurseModel {
   int? educationLevelId;
   String? collegeName;
   EmergencyContactModel? emergencyContact;
-  int? income;
+  String? income;
   bool? isCompanyNurse;
   int? totalPatientServed;
   int? points;

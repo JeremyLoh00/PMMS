@@ -1,29 +1,20 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_scale_tap/flutter_scale_tap.dart';
-import 'package:get_it/get_it.dart';
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:private_nurse_for_client/bloc/job_bloc.dart';
-import 'package:private_nurse_for_client/bloc/user_bloc.dart';
 import 'package:private_nurse_for_client/constant.dart';
-import 'package:private_nurse_for_client/helpers/general_method.dart';
 import 'package:private_nurse_for_client/helpers/http_response.dart';
-import 'package:private_nurse_for_client/helpers/secure_storage_api.dart';
-import 'package:private_nurse_for_client/helpers/user_data_notifier.dart';
 import 'package:private_nurse_for_client/models/job/job_model.dart';
 import 'package:private_nurse_for_client/models/job/list_job_response_model.dart';
 import 'package:private_nurse_for_client/models/job_filter_request/job_filter_request_model.dart';
 import 'package:private_nurse_for_client/models/user/user_model.dart';
-import 'package:private_nurse_for_client/models/user/user_response_model.dart';
 import 'package:private_nurse_for_client/public_components/empty_list.dart';
 import 'package:private_nurse_for_client/public_components/space.dart';
-import 'package:private_nurse_for_client/public_components/theme_snack_bar.dart';
 import 'package:private_nurse_for_client/public_components/theme_spinner.dart';
-import 'package:private_nurse_for_client/resource/user_resource.dart';
 import 'package:private_nurse_for_client/screens/dashboard/component/home_function.dart';
 import 'package:private_nurse_for_client/theme.dart';
-import 'package:provider/provider.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 
 class CompletedTab extends StatefulWidget {
@@ -45,7 +36,6 @@ class CompletedTab extends StatefulWidget {
 }
 
 class _CompletedTabState extends State<CompletedTab> {
-  double _rating = 3.3;
   // For pagination
   static const _pageSize = 5;
 
@@ -211,156 +201,157 @@ class _CompletedTabState extends State<CompletedTab> {
                   ),
                   SizedBox(width: 15),
                   Expanded(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Space(7),
-                        badgeStatus(
-                          status: jobModel.status!,
-                          bgColor: kBgSuccess,
-                          textColor: kTextSuccess,
-                        ),
-                        Space(5),
-                        Text(
-                          jobModel.service!.name!,
-                          style: TextStyle(
-                            color: kBlack,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                        Space(10),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Icon(
-                              Iconsax.user,
-                              color: kPrimaryColor,
-                              size: 16,
-                            ),
-                            SizedBox(width: 5),
-                            Expanded(
+                    child: Padding(
+                      padding: const EdgeInsets.only(right: 10),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Space(7),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Expanded(
                                 child: Text(
-                                  jobModel.patient!.name!,
-                              // jobModel.client!.userModel!.name!,
-                              maxLines: 2,
-                              overflow: TextOverflow.ellipsis,
-                              style: TextStyle(
-                                fontSize: 12,
-                                fontWeight: FontWeight.w500,
-                              ),
-                            ))
-                          ],
-                        ),
-                        Space(5),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Icon(
-                              Iconsax.clock,
-                              color: kPrimaryColor,
-                              size: 16,
-                            ),
-                            SizedBox(width: 5),
-                            Expanded(
-                              child: Text(
-                                jobModel.jobSchedule!.date!,
-                                style: TextStyle(
-                                  fontSize: 12,
-                                  fontWeight: FontWeight.w500,
+                                  jobModel.service!.name!,
+                                  style: TextStyle(
+                                    color: kBlack,
+                                    fontWeight: FontWeight.bold,
+                                  ),
                                 ),
                               ),
-                            ),
-                          ],
-                        ),
-                        Space(5),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Icon(
-                              Iconsax.calendar,
-                              color: kPrimaryColor,
-                              size: 16,
-                            ),
-                            SizedBox(width: 5),
-                            Expanded(
-                              child: Text(
-                               jobModel.jobSchedule!.startTime!,
-                                style: TextStyle(
-                                  fontSize: 12,
-                                  fontWeight: FontWeight.w500,
-                                ),
+                              badgeStatus(
+                                status: jobModel.status!,
+                                bgColor: kBgSuccess,
+                                textColor: kTextSuccess,
                               ),
-                            ),
-                          ],
-                        ),
-                        Space(5),
-                        Text(
-                          jobModel.status!,
-                          style: TextStyle(
-                            fontSize: 12,
-                            fontWeight: FontWeight.w500,
+                            ],
                           ),
-                        ),
-                      ],
+                          Space(10),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Icon(
+                                Iconsax.user,
+                                color: kPrimaryColor,
+                                size: 16,
+                              ),
+                              SizedBox(width: 5),
+                              Expanded(
+                                  child: Text(
+                                jobModel.patient!.name!,
+                                // jobModel.client!.userModel!.name!,
+                                maxLines: 2,
+                                overflow: TextOverflow.ellipsis,
+                                style: TextStyle(
+                                  fontSize: 12,
+                                  fontWeight: FontWeight.w500,
+                                ),
+                              ))
+                            ],
+                          ),
+                          Space(5),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Icon(
+                                Iconsax.clock,
+                                color: kPrimaryColor,
+                                size: 16,
+                              ),
+                              SizedBox(width: 5),
+                              Expanded(
+                                child: Text(
+                                  jobModel.jobSchedule!.first.date!,
+                                  style: TextStyle(
+                                    fontSize: 12,
+                                    fontWeight: FontWeight.w500,
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                          Space(5),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Icon(
+                                Iconsax.calendar,
+                                color: kPrimaryColor,
+                                size: 16,
+                              ),
+                              SizedBox(width: 5),
+                              Expanded(
+                                child: Text(
+                                  jobModel.jobSchedule!.first.startTime!,
+                                  style: TextStyle(
+                                    fontSize: 12,
+                                    fontWeight: FontWeight.w500,
+                                  ),
+                                ),
+                              ),
+                              // Space(20),
+                              // Row(
+                              //   crossAxisAlignment: CrossAxisAlignment.start,
+                              //   children: [
+                              //     const SizedBox(width: 10),
+                              //     const Icon(
+                              //       Iconsax.star1,
+                              //       color: kPrimaryColor,
+                              //       size: 16,
+                              //     ),
+                              //     const SizedBox(width: 3),
+                              //     Text(
+                              //       jobModel.feedback!.rating!.toStringAsFixed(1),
+                              //       style: const TextStyle(
+                              //         fontWeight: FontWeight.bold,
+                              //         fontSize: 13,
+                              //       ),
+                              //     ),
+                              //     const SizedBox(width: 20),
+                              //     const Icon(
+                              //       Icons.chat_bubble,
+                              //       color: kPrimaryColor,
+                              //       size: 16,
+                              //     ),
+                              //     const SizedBox(width: 3),
+                              //     Expanded(
+                              //       child: Text(
+                              //         jobModel.feedback!.comment!,
+                              //         style: const TextStyle(
+                              //           color: kGrey,
+                              //           fontSize: 11,
+                              //         ),
+                              //       ),
+                              //     ),
+                              //   ],
+                              // ),
+                              // Space(10),
+                              // Padding(
+                              //   padding: const EdgeInsets.all(10.0),
+                              //   child: Row(
+                              //     mainAxisAlignment: MainAxisAlignment.end,
+                              //     children: [
+                              //       Text(
+                              //         "Cancelled on ${DateTime.now().day} | ${DateTime.now().hour}",
+                              //         style: TextStyle(
+                              //           color: kGrey,
+                              //           fontSize: 10,
+                              //         ),
+                              //       )
+                              //     ],
+                              //   ),
+                              // )
+                            ],
+                          ),
+                        ],
+                      ),
                     ),
                   )
                 ],
               ),
-              Space(20),
-              Row(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  const SizedBox(width: 10),
-                  const Icon(
-                    Iconsax.star1,
-                    color: kPrimaryColor,
-                    size: 16,
-                  ),
-                  const SizedBox(width: 3),
-                  Text(
-                    jobModel.feedback!.rating!.toStringAsFixed(1),
-                    style: const TextStyle(
-                      fontWeight: FontWeight.bold,
-                      fontSize: 13,
-                    ),
-                  ),
-                  const SizedBox(width: 20),
-                  const Icon(
-                    Icons.chat_bubble,
-                    color: kPrimaryColor,
-                    size: 16,
-                  ),
-                  const SizedBox(width: 3),
-                  Expanded(
-                    child: Text(
-                      jobModel.feedback!.comment!,
-                      style: const TextStyle(
-                        color: kGrey,
-                        fontSize: 11,
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-              Space(10),
-              Padding(
-                padding: const EdgeInsets.all(10.0),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.end,
-                  children: [
-                    Text(
-                      "Completed on ${DateTime.now().day} | ${DateTime.now().hour}",
-                      style: TextStyle(
-                        color: kGrey,
-                        fontSize: 10,
-                      ),
-                    )
-                  ],
-                ),
-              )
             ],
           ),
         ),

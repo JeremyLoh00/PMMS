@@ -1,4 +1,3 @@
-
 class ServiceModel {
   int? id;
   String? name;
