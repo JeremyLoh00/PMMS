@@ -182,17 +182,14 @@ class _OpenTabState extends State<OpenTab> {
                     ),
                 animateTransitions: true,
                 itemBuilder: (context, jobModel, index) {
-                  return jobItem(
-                        context,
-                        index,
-                        jobModel
-                      );// return jobItem(context, index, jobModel);
+                  return jobItem(context, index,
+                      jobModel); // return jobItem(context, index, jobModel);
                   // return Consumer<UserDataNotifier>(
                   //     builder: (context, userDataNotifier, _) {
                   //   // If the user data in the notifier is not null
                   //   if (userDataNotifier.user != null) {
                   //     // Show UI using the data in the notifier
-                      
+
                   //     // Else try o get the data from shared preferences the show the UI
                   //   } else {
                   //     return FutureBuilder(
@@ -223,8 +220,7 @@ class _OpenTabState extends State<OpenTab> {
     );
   }
 
-  Widget jobItem(
-      BuildContext context, int index, JobModel jobModel) {
+  Widget jobItem(BuildContext context, int index, JobModel jobModel) {
     return ScaleTap(
       onPressed: () {
         navigateTo(

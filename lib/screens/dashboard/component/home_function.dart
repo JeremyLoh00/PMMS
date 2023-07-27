@@ -11,16 +11,34 @@ Widget badgeStatus(
       vertical: 1,
     ),
     decoration: BoxDecoration(
-      color: status == "Ongoing" ? kOnGoingBg : status == "Waiting Client Reviews" ? kReviewBg : kBgColor,
-      
-      // bgColor,
+      color: status == "Ongoing"
+          ? kOnGoingBg
+          : status == "Waiting Client Reviews"
+              ? kReviewBg
+              : status == "Waiting nurse approval" || status == "Waiting payment"
+                  ? kNurseApprovalBg
+                  : status == "Completed"
+                      ? kCompletedBg
+                      : status == "Cancelled"
+                          ? kBgDanger
+                          : bgColor,
       //  border: Border.all(color: textColor),
       borderRadius: BorderRadius.circular(7),
     ),
     child: Text(
       status,
       style: TextStyle(
-        color: status == "Ongoing" ? kOnGoingText : status == "Awaiting Client Reviews" ? kReviewText : textColor,
+        color: status == "Ongoing"
+            ? kOnGoingText
+            : status == "Awaiting Client Reviews"
+                ? kReviewText
+                : status == "Waiting nurse approval" || status == "Waiting payment"
+                    ? kNurseApprovalText
+                    : status == "Completed"
+                        ? kCompletedText
+                        : status == "Cancelled"
+                            ? kTextDanger
+                            : textColor,
         fontSize: 11,
       ),
     ),

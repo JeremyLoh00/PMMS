@@ -60,18 +60,6 @@ class _HomeScreenState extends State<HomeScreen>
   }
 
   int _selectedTabIndex = 0;
-  int jobStatus = 1;
-
-  final List<String> items = [
-    'Item1',
-    'Item2',
-    'Item3',
-    'Item4',
-    'Item5',
-    'Item6',
-    'Item7',
-    'Item8',
-  ];
 
   String src =
       "https://c1.wallpaperflare.com/preview/547/839/590/accident-bleed-bleeding-bleeding-finger.jpg";

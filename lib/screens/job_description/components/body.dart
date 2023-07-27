@@ -23,6 +23,7 @@ class _BodyState extends State<Body> {
         child: Container(
           color: kWhite,
           child: Column(children: [
+            //Image
             Container(
               height: 250,
               decoration: BoxDecoration(
@@ -50,7 +51,7 @@ class _BodyState extends State<Body> {
               Container(
                 height: 700,
               ),
-              Positioned(
+              Positioned( //Position of the float container
                 top: MediaQuery.of(context).size.height * .12 -
                     (MediaQuery.of(context).size.width * .4),
                 left: 15,
