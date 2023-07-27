@@ -145,7 +145,6 @@ class _CreateJobHeaderState extends State<CreateJobHeader> {
                           onPressed: currentStep == 5
                               ? () {
                                   Navigator.pop(context);
-                                  Navigator.pop(context);
                                 }
                               : details.onStepContinue,
                         ),
