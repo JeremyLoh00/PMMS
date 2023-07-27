@@ -22,6 +22,7 @@ import 'package:private_nurse_for_client/public_components/theme_snack_bar.dart'
 import 'package:private_nurse_for_client/public_components/theme_spinner.dart';
 import 'package:private_nurse_for_client/resource/user_resource.dart';
 import 'package:private_nurse_for_client/screens/dashboard/component/home_function.dart';
+import 'package:private_nurse_for_client/screens/job_description/job_description_screen.dart';
 import 'package:private_nurse_for_client/theme.dart';
 import 'package:provider/provider.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
@@ -144,14 +145,11 @@ class _OngoingTabState extends State<OngoingTab> {
   Widget onGoingJobItem(BuildContext context, int index, JobModel jobModel) {
     return ScaleTap(
       onPressed: () {
-        // navigateTo(
-        //     context,
-        //     InformationDetailsScreen(
-        //       userModel: widget.userModel,
-        //       jobModel: jobModel,
-        //       selectedTabIndex: widget.selectedTabIndex,
-        //       callbackHomePaginator: callBackHomePaginator,
-        //     ));
+         navigateTo(
+            context,
+            JobDescription(
+              jobModel: jobModel,
+            ));
       },
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 15),
@@ -231,8 +229,8 @@ class _OngoingTabState extends State<OngoingTab> {
                               ),
                               badgeStatus(
                                 status: jobModel.status!,
-                                bgColor: kBgSuccess,
-                                textColor: kTextSuccess,
+                                bgColor: kOnGoingBg,
+                                textColor: kOnGoingText,
                               ),
                             ],
                           ),

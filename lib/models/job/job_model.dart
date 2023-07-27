@@ -1,3 +1,5 @@
+import 'package:private_nurse_for_client/models/emergency_contact/emergency_contact_model.dart';
+import 'package:private_nurse_for_client/models/feedback/feedback_model.dart';
 import 'package:private_nurse_for_client/models/job_schedule/job_schedule_model.dart';
 import 'package:private_nurse_for_client/models/list_of_applied_nurse/list_of_applied_nurse_model.dart';
 import 'package:private_nurse_for_client/models/patient/patient_model.dart';
@@ -14,6 +16,17 @@ class JobModel {
   String? status;
   int? statusId;
   List<ListOfAppliedNurseModel>? listOfAppliedNurse;
+  String? address;
+  String? phoneNo;
+  List<FeedbackModel>? feedbacks;
+  String? height;
+  String? weight;
+  String? patientPhoto1Path;
+  String? patientPhoto2Path;
+  String? allMedicalHistories;
+  String? allCondition;
+  String? allDiagnosis;
+  EmergencyContactModel? emergencyContact;
 
   JobModel(
       {this.id,
@@ -25,7 +38,18 @@ class JobModel {
       this.jobSchedule,
       this.status,
       this.statusId,
-      this.listOfAppliedNurse});
+      this.listOfAppliedNurse,
+      this.address,
+      this.phoneNo,
+      this.feedbacks,
+      this.height,
+      this.weight,
+      this.patientPhoto1Path,
+      this.patientPhoto2Path,
+      this.allMedicalHistories,
+      this.allCondition,
+      this.allDiagnosis,
+      this.emergencyContact});
 
   JobModel.fromJson(Map<String, dynamic> json) {
     id = json['id'];
@@ -50,6 +74,24 @@ class JobModel {
         listOfAppliedNurse!.add(new ListOfAppliedNurseModel.fromJson(v));
       });
     }
+    address = json['address'];
+    phoneNo = json['phone_no'];
+    if (json['feedbacks'] != null) {
+      feedbacks = <FeedbackModel>[];
+      json['feedbacks'].forEach((v) {
+        feedbacks!.add(new FeedbackModel.fromJson(v));
+      });
+    }
+    height = json['height'];
+    weight = json['weight'];
+    patientPhoto1Path = json['patient_photo_1_path'];
+    patientPhoto2Path = json['patient_photo_2_path'];
+    allMedicalHistories = json['all_medical_histories'];
+    allCondition = json['all_condition'];
+    allDiagnosis = json['all_diagnosis'];
+    emergencyContact = json['emergency_contact'] != null
+        ? new EmergencyContactModel.fromJson(json['emergency_contact'])
+        : null;
   }
 
   Map<String, dynamic> toJson() {
@@ -73,13 +115,21 @@ class JobModel {
       data['list_of_applied_nurse'] =
           this.listOfAppliedNurse!.map((v) => v.toJson()).toList();
     }
+    data['address'] = this.address;
+    data['phone_no'] = this.phoneNo;
+    if (this.feedbacks != null) {
+      data['feedbacks'] = this.feedbacks!.map((v) => v.toJson()).toList();
+    }
+    data['height'] = this.height;
+    data['weight'] = this.weight;
+    data['patient_photo_1_path'] = this.patientPhoto1Path;
+    data['patient_photo_2_path'] = this.patientPhoto2Path;
+    data['all_medical_histories'] = this.allMedicalHistories;
+    data['all_condition'] = this.allCondition;
+    data['all_diagnosis'] = this.allDiagnosis;
+    if (this.emergencyContact != null) {
+      data['emergency_contact'] = this.emergencyContact!.toJson();
+    }
     return data;
   }
 }
-
-
-
-
-
-
-

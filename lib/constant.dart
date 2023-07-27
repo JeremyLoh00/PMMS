@@ -49,6 +49,15 @@ const kTextWarning = Color.fromRGBO(188, 139, 20, 6);
 const kBgInfo = Color.fromRGBO(236, 253, 245, 1.0);
 const kTextInfo = kPrimaryColor;
 
-//Gender
-const int MALE = 1;
-const int FEMALE = 0;
+//Badge status color
+const kReviewBg = Color.fromRGBO(237, 233, 254, 1.0);
+const kReviewText = Color.fromRGBO(91, 33, 182, 1.0);
+
+const kOnGoingBg = Color.fromRGBO(219, 234, 254, 1.0);
+const kOnGoingText = Color.fromRGBO(30, 64, 175, 1.0);
+
+const kNurseApprovalBg = Color.fromRGBO(146, 64, 14, 1.0);
+const kNurseApprovalText = Color.fromRGBO(254, 243, 199, 1.0);
+
+const kCompletedBg = Color.fromRGBO(209, 250, 229, 1.0);
+const kCompletedText = Color.fromRGBO(6, 68, 70, 1.0);

@@ -93,18 +93,6 @@ class _NavigationState extends State<Navigation> {
     }
   }
 
-  Future<UserModel?> getUserDetails() async {
-    //return this._memoizer.runOnce((user) async {
-    // Means no argument passed to this interface, so current user profile
-    // Get from getit current user data
-    UserModel user = GetIt.instance.get<UserModel>();
-    if (user.id != null) {
-      return user;
-    } else {
-      return await checkAuthenticated();
-    }
-  }
-
   @override
   Widget build(BuildContext context) {
     return WillPopScope(
