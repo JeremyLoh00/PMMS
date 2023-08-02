@@ -4,10 +4,9 @@ import 'package:flutter_scale_tap/flutter_scale_tap.dart';
 import 'package:private_nurse_for_client/constant.dart';
 import 'package:private_nurse_for_client/helpers/general_method.dart';
 import 'package:private_nurse_for_client/models/job/job_model.dart';
-import 'package:private_nurse_for_client/public_components/custom_list_tile.dart';
 import 'package:private_nurse_for_client/public_components/space.dart';
-import 'package:private_nurse_for_client/screens/job/nurse_profile/nurse_profile.dart';
-import 'package:private_nurse_for_client/screens/job/patient_profile/patient_profile.dart';
+import 'package:private_nurse_for_client/screens/dashboard/component/home_function.dart';
+import 'package:private_nurse_for_client/screens/nurse_profile/nurse_profile.dart';
 import 'package:private_nurse_for_client/theme.dart';
 
 class NurseApplication extends StatefulWidget {
@@ -24,14 +23,6 @@ class NurseApplication extends StatefulWidget {
 }
 
 class _NurseApplicationState extends State<NurseApplication> {
-  List<String> status = [
-    'Accepted',
-    'Cancelled',
-    'Awaiting',
-    'On-going',
-    'plant',
-  ];
-
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -57,38 +48,30 @@ class _NurseApplicationState extends State<NurseApplication> {
                 onPressed: () {
                   // navigateTo(context, InformationDetailsScreen(selectedTabIndex: widget.selectedTabIndex,));
                   setState(() {
-                    if (status[index] == 'Accepted') {
+                    if (widget.jobModel.status == 'Open') {
                       navigateTo(
                         context,
                         NurseProfile(
-                          src: widget.jobModel.listOfAppliedNurse![index]
-                              .profilePhoto!,
+                          lsitOfAppliedNurseModel:
+                              widget.jobModel.listOfAppliedNurse![index],
                           hasButton: true,
                         ),
                       );
-                    } else if (status[index] == 'Cancelled') {
+                    } else if (widget.jobModel.status == 'Awaiting') {
                       navigateTo(
                         context,
                         NurseProfile(
-                          src: widget.jobModel.listOfAppliedNurse![index]
-                              .profilePhoto!,
-                        ),
-                      );
-                    } else if (status[index] == 'Awaiting') {
-                      navigateTo(
-                        context,
-                        NurseProfile(
-                          src: widget.jobModel.listOfAppliedNurse![index]
-                              .profilePhoto!,
+                          lsitOfAppliedNurseModel:
+                              widget.jobModel.listOfAppliedNurse![index],
                           hasButton: true,
                         ),
                       );
-                    } else if (status[index] == 'On-going') {
+                    } else if (widget.jobModel.status == 'Ongoing') {
                       navigateTo(
                         context,
                         NurseProfile(
-                          src: widget.jobModel.listOfAppliedNurse![index]
-                              .profilePhoto!,
+                          lsitOfAppliedNurseModel:
+                              widget.jobModel.listOfAppliedNurse![index],
                           hasButton: true,
                         ),
                       );
@@ -96,15 +79,16 @@ class _NurseApplicationState extends State<NurseApplication> {
                       navigateTo(
                         context,
                         NurseProfile(
-                          src: widget.jobModel.listOfAppliedNurse![index]
-                              .profilePhoto!,
+                          lsitOfAppliedNurseModel:
+                              widget.jobModel.listOfAppliedNurse![index],
+                          hasButton: false,
                         ),
                       );
                     }
                   });
                 },
                 child: Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 15),
+                  padding: const EdgeInsets.only(top: 10),
                   child: Container(
                     padding:
                         const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
@@ -173,144 +157,149 @@ class _NurseApplicationState extends State<NurseApplication> {
                                     ),
                                   ),
                                   SizedBox(width: 5),
-                                  status[index] == 'Accepted'
-                                      ? Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.end,
-                                          children: [
-                                            Container(
-                                                padding:
-                                                    const EdgeInsets.symmetric(
-                                                        horizontal: 10,
-                                                        vertical: 2),
-                                                decoration: BoxDecoration(
-                                                  color: Color.fromRGBO(
-                                                      209, 250, 229, 10),
-                                                  borderRadius:
-                                                      BorderRadius.circular(10),
-                                                ),
-                                                child: Text(
-                                                  status[0],
-                                                  style: TextStyle(
-                                                    color: Color.fromRGBO(
-                                                        6, 95, 70, 1),
-                                                    fontSize: 12,
-                                                    fontWeight: FontWeight.w500,
-                                                  ),
-                                                ))
-                                          ],
-                                        )
-                                      : status[index] == 'Cancelled'
-                                          ? Row(
-                                              mainAxisAlignment:
-                                                  MainAxisAlignment.end,
-                                              children: [
-                                                Container(
-                                                    padding: const EdgeInsets
-                                                            .symmetric(
-                                                        horizontal: 10,
-                                                        vertical: 2),
-                                                    decoration: BoxDecoration(
-                                                      color: Color.fromRGBO(
-                                                          250, 209, 209, 0.965),
-                                                      borderRadius:
-                                                          BorderRadius.circular(
-                                                              10),
-                                                    ),
-                                                    child: Text(
-                                                      status[1],
-                                                      style: TextStyle(
-                                                        color: Color.fromRGBO(
-                                                            95, 6, 6, 1),
-                                                        fontSize: 12,
-                                                        fontWeight:
-                                                            FontWeight.w500,
-                                                      ),
-                                                    ))
-                                              ],
-                                            )
-                                          : status[index] == 'Awaiting'
-                                              ? Row(
-                                                  mainAxisAlignment:
-                                                      MainAxisAlignment.end,
-                                                  children: [
-                                                    Container(
-                                                        padding:
-                                                            const EdgeInsets
-                                                                    .symmetric(
-                                                                horizontal: 10,
-                                                                vertical: 2),
-                                                        decoration:
-                                                            BoxDecoration(
-                                                          color: Color.fromRGBO(
-                                                              247,
-                                                              250,
-                                                              209,
-                                                              0.965),
-                                                          borderRadius:
-                                                              BorderRadius
-                                                                  .circular(10),
-                                                        ),
-                                                        child: Text(
-                                                          status[2],
-                                                          style: TextStyle(
-                                                            color:
-                                                                Color.fromRGBO(
-                                                                    95,
-                                                                    86,
-                                                                    6,
-                                                                    1),
-                                                            fontSize: 12,
-                                                            fontWeight:
-                                                                FontWeight.w500,
-                                                          ),
-                                                        ))
-                                                  ],
-                                                )
-                                              : status[index] == 'On-going'
-                                                  ? Row(
-                                                      mainAxisAlignment:
-                                                          MainAxisAlignment.end,
-                                                      children: [
-                                                        Container(
-                                                            padding:
-                                                                const EdgeInsets
-                                                                        .symmetric(
-                                                                    horizontal:
-                                                                        10,
-                                                                    vertical:
-                                                                        2),
-                                                            decoration:
-                                                                BoxDecoration(
-                                                              color: Color
-                                                                  .fromRGBO(
-                                                                      209,
-                                                                      222,
-                                                                      250,
-                                                                      0.965),
-                                                              borderRadius:
-                                                                  BorderRadius
-                                                                      .circular(
-                                                                          10),
-                                                            ),
-                                                            child: Text(
-                                                              status[3],
-                                                              style: TextStyle(
-                                                                color: Color
-                                                                    .fromARGB(
-                                                                        255,
-                                                                        6,
-                                                                        27,
-                                                                        95),
-                                                                fontSize: 12,
-                                                                fontWeight:
-                                                                    FontWeight
-                                                                        .w500,
-                                                              ),
-                                                            ))
-                                                      ],
-                                                    )
-                                                  : SizedBox(),
+                                  badgeStatus(
+                                    status: widget.jobModel.status!,
+                                    bgColor: kOnGoingBg, //nurse status
+                                    textColor: kOnGoingText,
+                                  )
+                                  // status[index] == 'Accepted'
+                                  //     ? Row(
+                                  //         mainAxisAlignment:
+                                  //             MainAxisAlignment.end,
+                                  //         children: [
+                                  //           Container(
+                                  //               padding:
+                                  //                   const EdgeInsets.symmetric(
+                                  //                       horizontal: 10,
+                                  //                       vertical: 2),
+                                  //               decoration: BoxDecoration(
+                                  //                 color: Color.fromRGBO(
+                                  //                     209, 250, 229, 10),
+                                  //                 borderRadius:
+                                  //                     BorderRadius.circular(10),
+                                  //               ),
+                                  //               child: Text(
+                                  //                 status[0],
+                                  //                 style: TextStyle(
+                                  //                   color: Color.fromRGBO(
+                                  //                       6, 95, 70, 1),
+                                  //                   fontSize: 12,
+                                  //                   fontWeight: FontWeight.w500,
+                                  //                 ),
+                                  //               ))
+                                  //         ],
+                                  //       )
+                                  //     : status[index] == 'Cancelled'
+                                  //         ? Row(
+                                  //             mainAxisAlignment:
+                                  //                 MainAxisAlignment.end,
+                                  //             children: [
+                                  //               Container(
+                                  //                   padding: const EdgeInsets
+                                  //                           .symmetric(
+                                  //                       horizontal: 10,
+                                  //                       vertical: 2),
+                                  //                   decoration: BoxDecoration(
+                                  //                     color: Color.fromRGBO(
+                                  //                         250, 209, 209, 0.965),
+                                  //                     borderRadius:
+                                  //                         BorderRadius.circular(
+                                  //                             10),
+                                  //                   ),
+                                  //                   child: Text(
+                                  //                     status[1],
+                                  //                     style: TextStyle(
+                                  //                       color: Color.fromRGBO(
+                                  //                           95, 6, 6, 1),
+                                  //                       fontSize: 12,
+                                  //                       fontWeight:
+                                  //                           FontWeight.w500,
+                                  //                     ),
+                                  //                   ))
+                                  //             ],
+                                  //           )
+                                  //         : status[index] == 'Awaiting'
+                                  //             ? Row(
+                                  //                 mainAxisAlignment:
+                                  //                     MainAxisAlignment.end,
+                                  //                 children: [
+                                  //                   Container(
+                                  //                       padding:
+                                  //                           const EdgeInsets
+                                  //                                   .symmetric(
+                                  //                               horizontal: 10,
+                                  //                               vertical: 2),
+                                  //                       decoration:
+                                  //                           BoxDecoration(
+                                  //                         color: Color.fromRGBO(
+                                  //                             247,
+                                  //                             250,
+                                  //                             209,
+                                  //                             0.965),
+                                  //                         borderRadius:
+                                  //                             BorderRadius
+                                  //                                 .circular(10),
+                                  //                       ),
+                                  //                       child: Text(
+                                  //                         status[2],
+                                  //                         style: TextStyle(
+                                  //                           color:
+                                  //                               Color.fromRGBO(
+                                  //                                   95,
+                                  //                                   86,
+                                  //                                   6,
+                                  //                                   1),
+                                  //                           fontSize: 12,
+                                  //                           fontWeight:
+                                  //                               FontWeight.w500,
+                                  //                         ),
+                                  //                       ))
+                                  //                 ],
+                                  //               )
+                                  //             : status[index] == 'On-going'
+                                  //                 ? Row(
+                                  //                     mainAxisAlignment:
+                                  //                         MainAxisAlignment.end,
+                                  //                     children: [
+                                  //                       Container(
+                                  //                           padding:
+                                  //                               const EdgeInsets
+                                  //                                       .symmetric(
+                                  //                                   horizontal:
+                                  //                                       10,
+                                  //                                   vertical:
+                                  //                                       2),
+                                  //                           decoration:
+                                  //                               BoxDecoration(
+                                  //                             color: Color
+                                  //                                 .fromRGBO(
+                                  //                                     209,
+                                  //                                     222,
+                                  //                                     250,
+                                  //                                     0.965),
+                                  //                             borderRadius:
+                                  //                                 BorderRadius
+                                  //                                     .circular(
+                                  //                                         10),
+                                  //                           ),
+                                  //                           child: Text(
+                                  //                             status[3],
+                                  //                             style: TextStyle(
+                                  //                               color: Color
+                                  //                                   .fromARGB(
+                                  //                                       255,
+                                  //                                       6,
+                                  //                                       27,
+                                  //                                       95),
+                                  //                               fontSize: 12,
+                                  //                               fontWeight:
+                                  //                                   FontWeight
+                                  //                                       .w500,
+                                  //                             ),
+                                  //                           ))
+                                  //     ],
+                                  //   )
+                                  // : SizedBox(),
                                 ],
                               ),
                             ],

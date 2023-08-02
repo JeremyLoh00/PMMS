@@ -52,7 +52,7 @@ class _BodyState extends State<Body> {
                 height: 700,
               ),
               Positioned( //Position of the float container
-                top: MediaQuery.of(context).size.height * .12 -
+                top: MediaQuery.of(context).size.height * .16 -
                     (MediaQuery.of(context).size.width * .4),
                 left: 15,
                 right: 15,

@@ -137,7 +137,7 @@ class _CompletedTabState extends State<CompletedTab> {
   Widget completedJobItem(BuildContext context, int index, JobModel jobModel) {
     return ScaleTap(
       onPressed: () {
-         navigateTo(
+        navigateTo(
             context,
             JobDescription(
               jobModel: jobModel,
@@ -171,7 +171,7 @@ class _CompletedTabState extends State<CompletedTab> {
                     children: [
                       SizedBox(
                         width: 100,
-                        height: 100,
+                        height: 120,
                         child: CachedNetworkImage(
                           imageUrl: jobModel.service!.photoPath!,
                           imageBuilder: (context, imageProvider) => Container(
@@ -204,25 +204,38 @@ class _CompletedTabState extends State<CompletedTab> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Space(7),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Expanded(
-                                child: Text(
-                                  jobModel.service!.name!,
-                                  style: TextStyle(
-                                    color: kBlack,
-                                    fontWeight: FontWeight.bold,
-                                  ),
-                                ),
-                              ),
-                              badgeStatus(
-                                status: jobModel.status!,
-                                bgColor: kBgSuccess,
-                                textColor: kTextSuccess,
-                              ),
-                            ],
+                          badgeStatus(
+                            status: jobModel.status!,
+                            bgColor: kBgSuccess,
+                            textColor: kTextSuccess,
                           ),
+                          Space(5),
+                          Text(
+                            jobModel.service!.name!,
+                            style: TextStyle(
+                              color: kBlack,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                          // Row(
+                          //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          //   children: [
+                          //     Expanded(
+                          //       child: Text(
+                          //         jobModel.service!.name!,
+                          //         style: TextStyle(
+                          //           color: kBlack,
+                          //           fontWeight: FontWeight.bold,
+                          //         ),
+                          //       ),
+                          //     ),
+                          //     badgeStatus(
+                          //       status: jobModel.status!,
+                          //       bgColor: kBgSuccess,
+                          //       textColor: kTextSuccess,
+                          //     ),
+                          //   ],
+                          // ),
                           Space(10),
                           Row(
                             mainAxisAlignment: MainAxisAlignment.start,

@@ -179,7 +179,7 @@ class _OngoingTabState extends State<OngoingTab> {
                     children: [
                       SizedBox(
                         width: 100,
-                        height: 100,
+                        height: 120,
                         child: CachedNetworkImage(
                           imageUrl: jobModel.service!.photoPath!,
                           imageBuilder: (context, imageProvider) => Container(
@@ -212,28 +212,42 @@ class _OngoingTabState extends State<OngoingTab> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Space(7),
-                          Space(5),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Expanded(
-                                child: Text(
-                                  jobModel.service!.name!,
-                                  style: TextStyle(
-                                    color: kBlack,
-                                    fontWeight: FontWeight.bold,
-                                  ),
-                                  maxLines: 1,
-                                  overflow: TextOverflow.ellipsis,
-                                ),
-                              ),
-                              badgeStatus(
-                                status: jobModel.status!,
-                                bgColor: kOnGoingBg,
-                                textColor: kOnGoingText,
-                              ),
-                            ],
+                          badgeStatus(
+                            status: jobModel.status!,
+                            bgColor: kOnGoingBg,
+                            textColor: kOnGoingText,
                           ),
+                          Space(5),
+                          Text(
+                            jobModel.service!.name!,
+                            style: TextStyle(
+                              color: kBlack,
+                              fontWeight: FontWeight.bold,
+                            ),
+                            maxLines: 1,
+                            overflow: TextOverflow.ellipsis,
+                          ),
+                          // Row(
+                          //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          //   children: [
+                          //     Expanded(
+                          //       child: Text(
+                          //         jobModel.service!.name!,
+                          //         style: TextStyle(
+                          //           color: kBlack,
+                          //           fontWeight: FontWeight.bold,
+                          //         ),
+                          //         maxLines: 1,
+                          //         overflow: TextOverflow.ellipsis,
+                          //       ),
+                          //     ),
+                          //     badgeStatus(
+                          //       status: jobModel.status!,
+                          //       bgColor: kOnGoingBg,
+                          //       textColor: kOnGoingText,
+                          //     ),
+                          //   ],
+                          // ),
                           Space(10),
                           Row(
                             mainAxisAlignment: MainAxisAlignment.start,

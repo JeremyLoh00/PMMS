@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:private_nurse_for_client/constant.dart';
 import 'package:private_nurse_for_client/models/job/job_model.dart';
 import 'package:private_nurse_for_client/public_components/space.dart';
+import 'package:private_nurse_for_client/screens/dashboard/component/home_function.dart';
 import 'package:private_nurse_for_client/screens/job_description/components/schedule_list.dart';
 
 class JobDescriptionDetail extends StatefulWidget {
@@ -27,36 +28,18 @@ class _JobDescriptionDetailState extends State<JobDescriptionDetail> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   // Badge status
-                  Container(
-                    width: 62,
-                    padding: const EdgeInsets.symmetric(
-                      vertical: 2.0,
-                      horizontal: 10.0,
-                    ),
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(20.0),
-                      color: kPrimary100Color,
-                    ),
-                    height: 20.0,
-                    alignment: Alignment.center,
-                    child: Text(
-                      widget.jobModel.status!,
-                      textAlign: TextAlign.center,
-                      style: TextStyle(
-                        color: kPrimaryColor,
-                        fontSize: 10.0,
-                        fontFamily: "Poppins",
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                  ),
+                  badgeStatus(
+                            status: widget.jobModel.status!,
+                            bgColor: kOnGoingBg,
+                            textColor: kOnGoingText,
+                          ),
                   Space(15),
                   //Name and phone number
                   Container(
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text(widget.jobModel.service!.name!,
+                        Text(widget.jobModel.patient!.name!,
                             style: TextStyle(
                                 fontSize: 16,
                                 color: kPrimaryColor,

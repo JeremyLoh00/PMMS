@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:private_nurse_for_client/constant.dart';
+import 'package:private_nurse_for_client/public_components/space.dart';
 
 class NurseProfileHeader extends StatelessWidget {
   NurseProfileHeader({
@@ -11,7 +12,6 @@ class NurseProfileHeader extends StatelessWidget {
     required this.education,
     required this.location,
     required this.experience,
-    required this.time,
   }) : super(key: key);
 
   final String title;
@@ -20,8 +20,6 @@ class NurseProfileHeader extends StatelessWidget {
   final String education;
   final String location;
   final String experience;
-  final String time;
-  final double _profileRating = 4.0;
   IconData? _selectedIcon;
 
   @override
@@ -56,7 +54,7 @@ class NurseProfileHeader extends StatelessWidget {
                 _selectedIcon ?? Icons.star,
                 color: kPrimaryColor,
               ),
-              rating: _profileRating,
+              rating: double.parse(totalReview),
               itemCount: 5,
               itemSize: 25.0,
               unratedColor: Color.fromRGBO(4, 99, 128, 0.39),
@@ -102,35 +100,38 @@ class NurseProfileHeader extends StatelessWidget {
                   SizedBox(
                     width: 5,
                   ),
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        "Educations",
-                        style: TextStyle(
-                          fontFamily: "Poppins",
-                          fontSize: 16,
-                          fontWeight: FontWeight.w800,
+                  Expanded(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          "Educations",
+                          style: TextStyle(
+                            fontFamily: "Poppins",
+                            fontSize: 16,
+                            fontWeight: FontWeight.w800,
+                          ),
                         ),
-                      ),
-                      Text(
-                        education,
-                        style: TextStyle(
-                          fontFamily: "Poppins",
-                          fontSize: 14,
-                          fontWeight: FontWeight.bold,
+                        Space(5),
+                        Text(
+                          education,
+                          style: TextStyle(
+                            fontFamily: "Poppins",
+                            fontSize: 14,
+                            fontWeight: FontWeight.bold,
+                          ),
                         ),
-                      ),
-                      Text(
-                        location,
-                        style: TextStyle(
-                          color: kGrey,
-                          fontFamily: "Poppins",
-                          fontSize: 12,
-                          fontWeight: FontWeight.bold,
+                        Text(
+                          location,
+                          style: TextStyle(
+                            color: kGrey,
+                            fontFamily: "Poppins",
+                            fontSize: 12,
+                            fontWeight: FontWeight.bold,
+                          ),
                         ),
-                      ),
-                    ],
+                      ],
+                    ),
                   ),
                 ],
               ),
@@ -147,35 +148,38 @@ class NurseProfileHeader extends StatelessWidget {
                   SizedBox(
                     width: 5,
                   ),
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        "Working Experience",
-                        style: TextStyle(
-                          fontFamily: "Poppins",
-                          fontSize: 16,
-                          fontWeight: FontWeight.w800,
+                  Expanded(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          "Working Experience",
+                          style: TextStyle(
+                            fontFamily: "Poppins",
+                            fontSize: 16,
+                            fontWeight: FontWeight.w800,
+                          ),
                         ),
-                      ),
-                      Text(
-                        experience,
-                        style: TextStyle(
-                          fontFamily: "Poppins",
-                          fontSize: 14,
-                          fontWeight: FontWeight.bold,
+                        Space(5),
+                        Text(
+                          experience,
+                          style: TextStyle(
+                            fontFamily: "Poppins",
+                            fontSize: 14,
+                            fontWeight: FontWeight.bold,
+                          ),
                         ),
-                      ),
-                      Text(
-                        time,
-                        style: TextStyle(
-                          color: kGrey,
-                          fontFamily: "Poppins",
-                          fontSize: 12,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                    ],
+                        // Text(
+                        //   time,
+                        //   style: TextStyle(
+                        //     color: kGrey,
+                        //     fontFamily: "Poppins",
+                        //     fontSize: 12,
+                        //     fontWeight: FontWeight.bold,
+                        //   ),
+                        // ),
+                      ],
+                    ),
                   ),
                 ],
               ),

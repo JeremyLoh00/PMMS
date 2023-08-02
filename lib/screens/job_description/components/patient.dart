@@ -5,7 +5,7 @@ import 'package:private_nurse_for_client/constant.dart';
 import 'package:private_nurse_for_client/helpers/general_method.dart';
 import 'package:private_nurse_for_client/models/job/job_model.dart';
 import 'package:private_nurse_for_client/public_components/space.dart';
-import 'package:private_nurse_for_client/screens/job/patient_profile/patient_profile.dart';
+import 'package:private_nurse_for_client/screens/patient_profile/patient_profile.dart';
 import 'package:private_nurse_for_client/theme.dart';
 
 class Patient extends StatefulWidget {
@@ -47,12 +47,12 @@ class _PatientState extends State<Patient> {
                   navigateTo(
                     context,
                     PatientProfile(
-                      src: widget.jobModel.patient!.name!,
+                      jobModel: widget.jobModel,
                     ),
                   );
                 },
                 child: Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 15),
+                  padding: const EdgeInsets.only(top: 10),
                   child: Container(
                     padding:
                         const EdgeInsets.symmetric(horizontal: 10, vertical: 5),

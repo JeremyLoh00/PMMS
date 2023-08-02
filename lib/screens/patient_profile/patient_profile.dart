@@ -5,15 +5,16 @@ import 'package:getwidget/components/carousel/gf_carousel.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:private_nurse_for_client/constant.dart';
 import 'package:private_nurse_for_client/helpers/general_method.dart';
-import 'package:private_nurse_for_client/screens/job/patient_profile/components/patient_profile_description.dart';
-import 'package:private_nurse_for_client/screens/job/patient_profile/components/patient_profile_header.dart';
+import 'package:private_nurse_for_client/models/job/job_model.dart';
+import 'package:private_nurse_for_client/screens/patient_profile/components/patient_profile_description.dart';
+import 'package:private_nurse_for_client/screens/patient_profile/components/patient_profile_header.dart';
 import 'package:private_nurse_for_client/screens/profile/profile_screen.dart';
 
 class PatientProfile extends StatefulWidget {
-  final String src;
+  final JobModel jobModel;
   const PatientProfile({
     super.key,
-    required this.src,
+    required this.jobModel,
   });
 
   @override
@@ -74,10 +75,11 @@ class _PatientProfileState extends State<PatientProfile> {
                       ),
                       const SizedBox(height: 15.0),
                       PatientProfileHeader(
-                        title: "Ms. John",
-                        name: "Mr. John Doe",
-                        sufname: "(Son)",
-                        phoneNum: "012-3456789",
+                        title: widget.jobModel.patient!.name!,
+                        name: widget.jobModel.emergencyContact!.name!,
+                        sufname:  widget.jobModel.emergencyContact!.relationship!,
+                        phoneNum:  widget.jobModel.emergencyContact!.phoneNo!,
+                        gender: widget.jobModel.patient!.genderId!,
                       ),
                       Divider(
                         color: kGrey,
@@ -86,7 +88,7 @@ class _PatientProfileState extends State<PatientProfile> {
                       const SizedBox(height: 15.0),
 
                       //Description
-                      PatientProfileDescription(),
+                      PatientProfileDescription(jobModel: widget.jobModel,),
                       const SizedBox(height: 15.0),
 
                       const SizedBox(height: 15.0),

@@ -146,7 +146,7 @@ class _CancelledTabState extends State<CancelledTab> {
   Widget cancelledJobItem(BuildContext context, int index, JobModel jobModel) {
     return ScaleTap(
       onPressed: () {
-         navigateTo(
+        navigateTo(
             context,
             JobDescription(
               jobModel: jobModel,
@@ -180,7 +180,7 @@ class _CancelledTabState extends State<CancelledTab> {
                     children: [
                       SizedBox(
                         width: 100,
-                        height: 100,
+                        height: 120,
                         child: CachedNetworkImage(
                           imageUrl: jobModel.service!.photoPath!,
                           imageBuilder: (context, imageProvider) => Container(
@@ -213,22 +213,35 @@ class _CancelledTabState extends State<CancelledTab> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Space(7),
-                          Row(
-                            children: [
-                              Text(
-                                jobModel.service!.name!,
-                                style: TextStyle(
-                                  color: kBlack,
-                                  fontWeight: FontWeight.bold,
-                                ),
-                              ),
-                              badgeStatus(
-                                status: jobModel.status!,
-                                bgColor: kBgSuccess,
-                                textColor: kTextSuccess,
-                              ),
-                            ],
+                          badgeStatus(
+                            status: jobModel.status!,
+                            bgColor: kBgSuccess,
+                            textColor: kTextSuccess,
                           ),
+                          Space(5),
+                          Text(
+                            jobModel.service!.name!,
+                            style: TextStyle(
+                              color: kBlack,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                          // Row(
+                          //   children: [
+                          //     Text(
+                          //       jobModel.service!.name!,
+                          //       style: TextStyle(
+                          //         color: kBlack,
+                          //         fontWeight: FontWeight.bold,
+                          //       ),
+                          //     ),
+                          //     badgeStatus(
+                          //       status: jobModel.status!,
+                          //       bgColor: kBgSuccess,
+                          //       textColor: kTextSuccess,
+                          //     ),
+                          //   ],
+                          // ),
                           Space(10),
                           Row(
                             mainAxisAlignment: MainAxisAlignment.start,

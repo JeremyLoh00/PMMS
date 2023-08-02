@@ -23,11 +23,12 @@ class _PaymentState extends State<Payment> {
     return Scaffold(
       appBar: _buildAppBar(),
       body: Padding(
-        padding: const EdgeInsets.only(top: 100),
+        padding: const EdgeInsets.only(top: 100, left: 25, right: 25),
         child: Align(
           alignment: Alignment.center,
           child: Column(
             children: [
+              Icon(Icons.wallet_outlined, color: kPrimaryColor, size: 100,),
               Text(
                 "Service Fee Payment",
                 style: TextStyle(
@@ -46,13 +47,13 @@ class _PaymentState extends State<Payment> {
                 ),
               ),
               SizedBox(
-                height: 20,
+                height: 50,
               ),
               Row(
-                mainAxisAlignment: MainAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text(
-                    "Subtotal:",
+                    "System Service Fee:",
                     style: TextStyle(
                       fontFamily: "Poppins",
                       fontSize: 14,
@@ -63,7 +64,57 @@ class _PaymentState extends State<Payment> {
                     width: 10,
                   ),
                   Text(
-                    "RM 5.00",
+                    "5.00",
+                    style: TextStyle(
+                      color: kPrimaryColor,
+                      fontFamily: "Poppins",
+                      fontSize: 30,
+                      fontWeight: FontWeight.w900,
+                    ),
+                  ),
+                ],
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(
+                    "Nursing Service Fee:",
+                    style: TextStyle(
+                      fontFamily: "Poppins",
+                      fontSize: 14,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  SizedBox(
+                    width: 10,
+                  ),
+                  Text(
+                    "50.00",
+                    style: TextStyle(
+                      color: kPrimaryColor,
+                      fontFamily: "Poppins",
+                      fontSize: 30,
+                      fontWeight: FontWeight.w900,
+                    ),
+                  ),
+                ],
+              ),
+              Row(
+               mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(
+                    "Total (RM):",
+                    style: TextStyle(
+                      fontFamily: "Poppins",
+                      fontSize: 14,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  SizedBox(
+                    width: 10,
+                  ),
+                  Text(
+                    "55.00",
                     style: TextStyle(
                       color: kPrimaryColor,
                       fontFamily: "Poppins",
@@ -77,7 +128,7 @@ class _PaymentState extends State<Payment> {
                 height: 30,
               ),
               Padding(
-                padding: const EdgeInsets.all(35.0),
+                padding: const EdgeInsets.all(0.0),
                 child: ButtonPrimary(
                   'PAY',
                   rounded: false,

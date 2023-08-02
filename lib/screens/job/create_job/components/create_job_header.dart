@@ -14,7 +14,7 @@ import 'package:private_nurse_for_client/screens/job/create_job/components/creat
 import 'package:private_nurse_for_client/screens/job/create_job/components/emergency_contact.dart';
 import 'package:private_nurse_for_client/screens/job/create_job/components/preferred_nurse.dart';
 import 'package:private_nurse_for_client/screens/job/create_job/components/summary.dart';
-import 'package:private_nurse_for_client/screens/job/payment/payment.dart';
+import 'package:private_nurse_for_client/screens/payment/payment.dart';
 import 'package:private_nurse_for_client/screens/navigation/navigation.dart';
 import 'package:private_nurse_for_client/theme.dart';
 import 'package:table_calendar/table_calendar.dart';

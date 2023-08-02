@@ -184,3 +184,45 @@ Future<bool> showCancelForgotPasswordPopup(BuildContext context) async {
       // If show dialog return null, return false
       false;
 }
+
+// Popup if user want to pay but not subscribe yet
+Future<bool> showSubscriptionPopup(BuildContext context) async {
+  // If cant pop then show this dialog
+  // Unfocus from input field
+  FocusScope.of(context).unfocus();
+  // Show dialog
+  return await CustomDialog.show(
+        context,
+        title: "Subscription Not Complete",
+        description: "Subscription is not complete yet, please subscribe before accepting any nurse.",
+        btnCancelText: "Cancel",
+        btnOkText: "Pay",
+        btnCancelOnPress: () => Navigator.of(context).pop(),
+        btnOkOnPress: () => Navigator.of(context).pop(true),
+        icon: Icons.error_outline_outlined,
+        // dialogType: DialogType.warning,
+      ) ??
+      // If show dialog return null, return false
+      false;
+}
+
+// Popup if user want to hire nurse
+Future<bool> showHireNursePopup(BuildContext context) async {
+  // If cant pop then show this dialog
+  // Unfocus from input field
+  FocusScope.of(context).unfocus();
+  // Show dialog
+  return await CustomDialog.show(
+        context,
+        title: "Hire Confirmation",
+        description: "Are you sure to hire this nurse for this job? Retrieve action is not available after accepting the application.",
+        btnCancelText: "Cancel",
+        btnOkText: "Hire",
+        btnCancelOnPress: () => Navigator.of(context).pop(),
+        btnOkOnPress: () => Navigator.of(context).pop(true),
+        icon: Iconsax.info_circle,
+        // dialogType: DialogType.warning,
+      ) ??
+      // If show dialog return null, return false
+      false;
+}

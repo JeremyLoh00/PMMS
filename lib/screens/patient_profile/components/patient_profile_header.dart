@@ -8,12 +8,14 @@ class PatientProfileHeader extends StatelessWidget {
     required this.name,
     required this.phoneNum,
     required this.sufname,
+    required this.gender,
   }) : super(key: key);
 
   final String title;
   final String name;
   final String phoneNum;
   final String sufname;
+  final int gender;
 
   @override
   Widget build(BuildContext context) {
@@ -24,25 +26,34 @@ class PatientProfileHeader extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             // Contest Name
-            Text(
-              title,
-              style: const TextStyle(
-                color: kBlack,
-                fontSize: 28.0,
-                fontFamily: "Poppins",
-                fontWeight: FontWeight.w900,
+            Expanded(
+              child: Text(
+                title,
+                style: const TextStyle(
+                  color: kBlack,
+                  fontSize: 28.0,
+                  fontFamily: "Poppins",
+                  fontWeight: FontWeight.w900,
+                ),
               ),
             ),
             const SizedBox(
               width: 10,
             ),
-            const CircleAvatar(
+            CircleAvatar(
               radius: 15.0,
-              backgroundColor: Color.fromRGBO(255, 227, 246, 1),
-              child: Icon(
-                Icons.female_outlined,
-                color: Color.fromRGBO(212, 81, 168, 1),
-              ),
+              backgroundColor: gender == 1
+                  ? Color.fromRGBO(201, 218, 248, 1)
+                  : Color.fromRGBO(255, 227, 246, 1),
+              child: gender == 1
+                  ? Icon(
+                      Icons.male_outlined,
+                      color: Color.fromRGBO(81, 129, 212, 1),
+                    )
+                  : Icon(
+                      Icons.female_outlined,
+                      color: Color.fromRGBO(212, 81, 168, 1),
+                    ),
             ),
           ],
         ),
@@ -53,13 +64,15 @@ class PatientProfileHeader extends StatelessWidget {
         //Detail Information
         Row(
           children: [
-            Text(
-              name,
-              style: const TextStyle(
-                color: kPrimaryColor,
-                fontFamily: "Poppins",
-                fontSize: 20,
-                fontWeight: FontWeight.w700,
+            Expanded(
+              child: Text(
+                name,
+                style: const TextStyle(
+                  color: kPrimaryColor,
+                  fontFamily: "Poppins",
+                  fontSize: 20,
+                  fontWeight: FontWeight.w700,
+                ),
               ),
             ),
             const SizedBox(
@@ -89,6 +102,4 @@ class PatientProfileHeader extends StatelessWidget {
       ],
     );
   }
-
-  
 }
