@@ -24,34 +24,36 @@ class _JobDescriptionDetailState extends State<JobDescriptionDetail> {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  // Badge status
-                  badgeStatus(
-                            status: widget.jobModel.status!,
-                            bgColor: kOnGoingBg,
-                            textColor: kOnGoingText,
-                          ),
-                  Space(15),
-                  //Name and phone number
-                  Container(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(widget.jobModel.patient!.name!,
-                            style: TextStyle(
-                                fontSize: 16,
-                                color: kPrimaryColor,
-                                fontWeight: FontWeight.bold)),
-                        Text(widget.jobModel.phoneNo!,
-                            style: TextStyle(
-                              color: kGrey,
-                            )),
-                      ],
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    // Badge status
+                    badgeStatus(
+                              status: widget.jobModel.status!,
+                              bgColor: kOnGoingBg,
+                              textColor: kOnGoingText,
+                            ),
+                    Space(15),
+                    //Name and phone number
+                    Container(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(widget.jobModel.patient!.name!,
+                              style: TextStyle(
+                                  fontSize: 16,
+                                  color: kPrimaryColor,
+                                  fontWeight: FontWeight.bold)),
+                          Text(widget.jobModel.phoneNo!,
+                              style: TextStyle(
+                                color: kGrey,
+                              )),
+                        ],
+                      ),
                     ),
-                  ),
-                ],
+                  ],
+                ),
               ),
               //Price
               Container(
