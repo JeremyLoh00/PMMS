@@ -1,14 +1,11 @@
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_scale_tap/flutter_scale_tap.dart';
-import 'package:iconsax/iconsax.dart';
 import 'package:private_nurse_for_client/constant.dart';
-import 'package:private_nurse_for_client/helpers/general_method.dart';
+import 'package:private_nurse_for_client/models/job/job_model.dart';
 import 'package:private_nurse_for_client/public_components/button_primary.dart';
-import 'package:private_nurse_for_client/screens/profile/profile_screen.dart';
 
 class Payment extends StatefulWidget {
-  const Payment({super.key});
+  JobModel jobModel;
+  Payment({super.key, required this.jobModel});
 
   @override
   State<Payment> createState() => _PaymentState();
@@ -28,7 +25,11 @@ class _PaymentState extends State<Payment> {
           alignment: Alignment.center,
           child: Column(
             children: [
-              Icon(Icons.wallet_outlined, color: kPrimaryColor, size: 100,),
+              Icon(
+                Icons.wallet_outlined,
+                color: kPrimaryColor,
+                size: 100,
+              ),
               Text(
                 "Service Fee Payment",
                 style: TextStyle(
@@ -64,7 +65,7 @@ class _PaymentState extends State<Payment> {
                     width: 10,
                   ),
                   Text(
-                    "5.00",
+                    widget.jobModel.systemServiceFee!,
                     style: TextStyle(
                       color: kPrimaryColor,
                       fontFamily: "Poppins",
@@ -89,7 +90,7 @@ class _PaymentState extends State<Payment> {
                     width: 10,
                   ),
                   Text(
-                    "50.00",
+                    widget.jobModel.nursingServiceFee!,
                     style: TextStyle(
                       color: kPrimaryColor,
                       fontFamily: "Poppins",
@@ -100,7 +101,7 @@ class _PaymentState extends State<Payment> {
                 ],
               ),
               Row(
-               mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text(
                     "Total (RM):",
@@ -114,7 +115,7 @@ class _PaymentState extends State<Payment> {
                     width: 10,
                   ),
                   Text(
-                    "55.00",
+                    widget.jobModel.totalServiceFee!,
                     style: TextStyle(
                       color: kPrimaryColor,
                       fontFamily: "Poppins",

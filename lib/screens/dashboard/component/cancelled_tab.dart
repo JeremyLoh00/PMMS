@@ -67,7 +67,7 @@ class _CancelledTabState extends State<CancelledTab> {
 
   JobsBloc jobBloc = JobsBloc();
   JobFilterRequestModel jobFilterRequestModel = JobFilterRequestModel();
-  int jobStatus = 4;
+  int jobStatus = CANCELLED;
 
   Future<void> _fetchPage(int pageKey) async {
     jobFilterRequestModel.page = pageKey;

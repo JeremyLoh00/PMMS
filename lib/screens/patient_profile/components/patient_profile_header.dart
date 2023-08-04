@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:private_nurse_for_client/constant.dart';
+import 'package:private_nurse_for_client/public_components/space.dart';
 
 class PatientProfileHeader extends StatelessWidget {
   PatientProfileHeader({
@@ -57,47 +58,48 @@ class PatientProfileHeader extends StatelessWidget {
             ),
           ],
         ),
+        // const SizedBox(
+        //   height: 10,
+        // ),
+
+        // //Detail Information
+        // Row(
+        //   children: [
+        //     Expanded(
+        //       child: Text(
+        //         name,
+        //         style: const TextStyle(
+        //           color: kPrimaryColor,
+        //           fontFamily: "Poppins",
+        //           fontSize: 20,
+        //           fontWeight: FontWeight.w700,
+        //         ),
+        //       ),
+        //     ),
+        //     const SizedBox(
+        //       width: 5,
+        //     ),
+        //     Text(
+        //       sufname,
+        //       style: const TextStyle(
+        //         color: kGrey,
+        //         fontFamily: "Poppins",
+        //         fontSize: 14,
+        //         fontWeight: FontWeight.w700,
+        //       ),
+        //     ),
+        //   ],
+        // ),
+        // Space(5),
+        // Text(
+        //   phoneNum,
+        //   style: const TextStyle(
+        //     color: kGrey,
+        //     fontSize: 14.0,
+        //   ),
+        // ),
         const SizedBox(
           height: 10,
-        ),
-
-        //Detail Information
-        Row(
-          children: [
-            Expanded(
-              child: Text(
-                name,
-                style: const TextStyle(
-                  color: kPrimaryColor,
-                  fontFamily: "Poppins",
-                  fontSize: 20,
-                  fontWeight: FontWeight.w700,
-                ),
-              ),
-            ),
-            const SizedBox(
-              width: 5,
-            ),
-            Text(
-              sufname,
-              style: const TextStyle(
-                color: kGrey,
-                fontFamily: "Poppins",
-                fontSize: 14,
-                fontWeight: FontWeight.w700,
-              ),
-            ),
-          ],
-        ),
-        Text(
-          phoneNum,
-          style: const TextStyle(
-            color: kGrey,
-            fontSize: 12.0,
-          ),
-        ),
-        const SizedBox(
-          height: 20,
         ),
       ],
     );

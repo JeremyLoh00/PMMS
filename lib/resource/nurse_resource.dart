@@ -40,4 +40,22 @@ class NurseResource {
           return ListUserResponseModel(json.decode(response.body));
         });
   }
+
+  static Resource getListFeedbackForSpecificNurse(
+      NurseFilterRequestModel nurseHistoryFilterRequestModel) {
+    return Resource(
+        url: 'client/nurse-history/feedback',
+        params: {
+          // Calculate number page based on offset and take
+          'page': ((nurseHistoryFilterRequestModel.page! /
+                      nurseHistoryFilterRequestModel.take!) +
+                  1)
+              .toInt()
+              .toString(),
+          'take': nurseHistoryFilterRequestModel.take.toString(),
+        },
+        parse: (response) {
+          return ListUserResponseModel(json.decode(response.body));
+        });
+  }
 }

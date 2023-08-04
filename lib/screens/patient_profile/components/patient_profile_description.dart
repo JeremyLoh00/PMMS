@@ -32,6 +32,7 @@ class _PatientProfileDescriptionState extends State<PatientProfileDescription> {
     Icons.line_axis_outlined,
     Icons.list_alt_rounded,
     Icons.personal_injury_outlined,
+    Icons.emergency_outlined,
   ];
 
   List<String> title = [
@@ -39,6 +40,7 @@ class _PatientProfileDescriptionState extends State<PatientProfileDescription> {
     'Diagnosis',
     'Medical History',
     'Patient Condition',
+    'Emergency Contact',
   ];
 
   List<String> text1 = [
@@ -243,6 +245,7 @@ class _PatientProfileDescriptionState extends State<PatientProfileDescription> {
             ),
           ),
         ),
+        //Diagnosis
         ScaleTap(
           onPressed: null,
           child: Padding(
@@ -404,6 +407,7 @@ class _PatientProfileDescriptionState extends State<PatientProfileDescription> {
         SizedBox(
           height: 10,
         ),
+        //Medical History
         ScaleTap(
           onPressed: null,
           child: Padding(
@@ -562,6 +566,7 @@ class _PatientProfileDescriptionState extends State<PatientProfileDescription> {
         SizedBox(
           height: 10,
         ),
+        //Patient Condition
         ScaleTap(
           onPressed: null,
           child: Padding(
@@ -716,7 +721,158 @@ class _PatientProfileDescriptionState extends State<PatientProfileDescription> {
               ),
             ),
           ),
+        ),//Emergency Contact
+        ScaleTap(
+          onPressed: null,
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 15),
+            child: Container(
+              padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+              margin: EdgeInsets.only(top: 10),
+              width: double.infinity,
+              decoration: BoxDecoration(
+                color: kWhite,
+                borderRadius: BorderRadius.circular(10.0),
+                boxShadow: [
+                  profileShadow(
+                    kGrey.withOpacity(0.3),
+                  ),
+                ],
+              ),
+              child: Row(
+                // row for 2 column: image and column
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  SizedBox(width: 5),
+                  Expanded(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Space(7),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          children: [
+                            Icon(
+                              icon[4],
+                              color: kPrimaryColor,
+                            ),
+                            SizedBox(
+                              width: 10,
+                            ),
+                            Text(
+                              title[4],
+                              style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                                color: kPrimaryColor,
+                                fontSize: 18.0,
+                              ),
+                            ),
+                          ],
+                        ),
+                        Padding(
+                          padding:
+                              const EdgeInsets.only(right: 20.0, left: 20.0),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Space(15.0),
+                              Text(
+                                "Name",
+                                style: textStyleNormal(
+                                  color: kGrey,
+                                  fontWeight: FontWeight.bold,
+                                  fontsize: 12,
+                                ),
+                              ),
+                              Padding(
+                                padding: const EdgeInsets.all(10.0),
+                                child: Text(
+                                  widget.jobModel.emergencyContact!.name!,
+                                  style: textStyleNormal(
+                                    color: kPrimaryColor,
+                                    fontWeight: FontWeight.bold,
+                                    fontsize: 14,
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                        Padding(
+                          padding:
+                              const EdgeInsets.only(right: 18.0, left: 20.0),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Space(15.0),
+                                  Text(
+                                    "Phone No.",
+                                    style: textStyleNormal(
+                                      color: kGrey,
+                                      fontWeight: FontWeight.bold,
+                                      fontsize: 12,
+                                    ),
+                                  ),
+                                  Padding(
+                                    padding: const EdgeInsets.only(
+                                      right: 35.0,
+                                      top: 10.0,
+                                      left: 10.0,
+                                      bottom: 10.0,
+                                    ),
+                                    child: Text(
+                                     widget.jobModel.emergencyContact!.phoneNo!,
+                                      style: textStyleNormal(
+                                        color: kPrimaryColor,
+                                        fontWeight: FontWeight.bold,
+                                        fontsize: 16,
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                              Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Space(15.0),
+                                  Text(
+                                    "Relationship",
+                                    style: textStyleNormal(
+                                      color: kGrey,
+                                      fontWeight: FontWeight.bold,
+                                      fontsize: 12,
+                                    ),
+                                  ),
+                                  Padding(
+                                    padding: const EdgeInsets.all(10.0),
+                                    child: Text(
+                                      widget.jobModel.emergencyContact!.relationship!,
+                                      style: textStyleNormal(
+                                        color: kPrimaryColor,
+                                        fontWeight: FontWeight.bold,
+                                        fontsize: 16,
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ],
+                          ),
+                        ),
+                        
+                      ],
+                    ),
+                  )
+                ],
+              ),
+            ),
+          ),
         ),
+        
       ],
     );
   }

@@ -76,19 +76,21 @@ class _BodyState extends State<Body> {
                         //Title of job
                         Container(
                           alignment: Alignment.center,
-                          height: 50,
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.only(
                                 topLeft: Radius.circular(10),
                                 topRight: Radius.circular(10)),
                             color: kPrimaryColor,
                           ),
-                          child: Text(
-                            widget.jobModel.service!.name!,
-                            style: TextStyle(
-                                fontSize: 24,
-                                fontWeight: FontWeight.bold,
-                                color: kWhite),
+                          child: Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Text(
+                              widget.jobModel.service!.name!,
+                              style: TextStyle(
+                                  fontSize: 24,
+                                  fontWeight: FontWeight.bold,
+                                  color: kWhite),
+                            ),
                           ),
                         ),
                         SizedBox(

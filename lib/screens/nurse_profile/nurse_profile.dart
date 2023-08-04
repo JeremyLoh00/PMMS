@@ -223,7 +223,7 @@ class _NurseProfileState extends State<NurseProfile> {
             ),
           ),
           ScaleTap(
-            onPressed: () => (block == false
+            onPressed: () => (block == true
                 ? showUnblockNursePopup(context)
                 : showBlockNursePopup(context)),
             child: Text(

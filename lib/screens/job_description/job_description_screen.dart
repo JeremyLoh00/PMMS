@@ -44,32 +44,31 @@ class _JobDescriptionState extends State<JobDescription> {
             jobModel: widget.jobModel,
           ),
           //Bottom button with condition
-          footer: widget.jobModel.status! == "Waiting Payment" //Waiting payment
+          footer: widget.jobModel.statusId! == WAITING_CLIENT_PAYMENT //Waiting payment
               ? Padding(
                   padding: const EdgeInsets.all(15.0),
                   child: ButtonPrimary(
                     "Pay",
                     onPressed: () => navigateTo(
-                    context,
-                    Payment(
-                   
+                      context,
+                      Payment(
+                        jobModel: widget.jobModel,
+                      ),
                     ),
-                  ),
                     loadingText: "Updating...",
                   ),
                 )
-              : widget.jobModel.status! == "Waiting Client Reviews" //Waiting payment
-              ? Padding(
-                  padding: const EdgeInsets.all(15.0),
-                  child: ButtonPrimary(
-                    "Review",
-                    onPressed: () => navigateTo(
-                    context,
-                   Review()
-                  ),
-                    loadingText: "Updating...",
-                  ),
-                ): SizedBox()),
+              : widget.jobModel.statusId! ==
+                      WAITING_CLIENT_REVIEWS//Waiting payment
+                  ? Padding(
+                      padding: const EdgeInsets.all(15.0),
+                      child: ButtonPrimary(
+                        "Review",
+                        onPressed: () => navigateTo(context, Review()),
+                        loadingText: "Updating...",
+                      ),
+                    )
+                  : SizedBox()),
     );
   }
 }

@@ -58,7 +58,7 @@ class _CompletedTabState extends State<CompletedTab> {
 
   JobsBloc jobBloc = JobsBloc();
   JobFilterRequestModel jobFilterRequestModel = JobFilterRequestModel();
-  int jobStatus = 3;
+  int jobStatus = COMPLETED;
 
   Future<void> _fetchPage(int pageKey) async {
     jobFilterRequestModel.page = pageKey;

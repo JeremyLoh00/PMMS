@@ -81,7 +81,7 @@ class _NurseApplicationState extends State<NurseApplication> {
                         NurseProfile(
                           lsitOfAppliedNurseModel:
                               widget.jobModel.listOfAppliedNurse![index],
-                          hasButton: false, 
+                          hasButton: true, 
                         ),
                       );
                     }

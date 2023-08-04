@@ -15,13 +15,13 @@ Widget badgeStatus(
     decoration: BoxDecoration(
       color: statusId == ONGOING
           ? kOnGoingBg
-          : status == WAITING_CLIENT_REVIEWS
+          : statusId == WAITING_CLIENT_REVIEWS
               ? kReviewBg
-              : status == WAITING_NURSE_APPROVAL || status == WAITING_CLIENT_PAYMENT
+              : statusId == WAITING_NURSE_APPROVAL || statusId == WAITING_CLIENT_PAYMENT
                   ? kNurseApprovalBg
-                  : status == COMPLETED
+                  : statusId == COMPLETED
                       ? kCompletedBg
-                      : status == CANCELLED
+                      : statusId == CANCELLED
                           ? kBgDanger
                           : kBgSuccess,
       //  border: Border.all(color: textColor),
@@ -32,13 +32,13 @@ Widget badgeStatus(
       style: TextStyle(
         color: statusId == ONGOING
             ? kOnGoingText
-            : status == WAITING_CLIENT_REVIEWS
+            : statusId == WAITING_CLIENT_REVIEWS
                 ? kReviewText
-                : status == WAITING_NURSE_APPROVAL || status == WAITING_CLIENT_PAYMENT
+                : statusId == WAITING_NURSE_APPROVAL || statusId == WAITING_CLIENT_PAYMENT
                     ? kNurseApprovalText
-                    : status == COMPLETED
+                    : statusId == COMPLETED
                         ? kCompletedText
-                        : status == CANCELLED
+                        : statusId == CANCELLED
                             ? kTextDanger
                             : kTextSuccess,
         fontSize: 11,

@@ -66,7 +66,7 @@ class _OngoingTabState extends State<OngoingTab> {
 
   JobsBloc jobBloc = JobsBloc();
   JobFilterRequestModel jobFilterRequestModel = JobFilterRequestModel();
-  int jobStatus = 2;
+  int jobStatus = ONGOING;
 
   Future<void> _fetchPage(int pageKey) async {
     jobFilterRequestModel.page = pageKey;

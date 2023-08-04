@@ -54,7 +54,7 @@ class _BlockedNurseScreenState extends State<BlockedNurseScreen> {
     nurseHistoryFilterRequestModel.page = pageKey;
     try {
       //Call API
-      final ListUserResponseModel response = await nurseBloc.getLisNurseBlocked(
+      final ListUserResponseModel response = await nurseBloc.getListNurseBlocked(
         nurseHistoryFilterRequestModel,
       );
 

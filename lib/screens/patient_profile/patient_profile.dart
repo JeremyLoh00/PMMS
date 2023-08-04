@@ -105,6 +105,14 @@ class _PatientProfileState extends State<PatientProfile> {
 
   AppBar _buildAppBar() {
     return AppBar(
+      title:  Text(
+            "Patient Profile",
+            style: TextStyle(
+              fontFamily: "Poppins",
+              fontWeight: FontWeight.bold,
+              color: kBlack,
+            ),
+          ),
       elevation: 0,
       scrolledUnderElevation: 0,
       backgroundColor: Colors.transparent,

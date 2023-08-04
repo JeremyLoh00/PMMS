@@ -111,7 +111,7 @@ class _OpenTabState extends State<OpenTab> {
 
   JobsBloc jobBloc = JobsBloc();
 
-  int jobStatus = 1;
+  int jobStatus = OPEN;
 
   Future<void> _fetchPage(int pageKey) async {
     widget.jobFilterRequestModel.page = pageKey;
