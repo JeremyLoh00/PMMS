@@ -2,43 +2,45 @@ import 'package:flutter/material.dart';
 import 'package:private_nurse_for_client/constant.dart';
 
 Widget badgeStatus(
-    {required String status,
-    required Color bgColor,
-    required Color textColor}) {
+    {required int statusId,
+    required String status
+    // required Color bgColor,
+    // required Color textColor
+    }) {
   return Container(
     padding: const EdgeInsets.symmetric(
       horizontal: 5,
       vertical: 1,
     ),
     decoration: BoxDecoration(
-      color: status == "Ongoing"
+      color: statusId == ONGOING
           ? kOnGoingBg
-          : status == "Waiting Client Reviews"
+          : status == WAITING_CLIENT_REVIEWS
               ? kReviewBg
-              : status == "Waiting nurse approval" || status == "Waiting payment"
+              : status == WAITING_NURSE_APPROVAL || status == WAITING_CLIENT_PAYMENT
                   ? kNurseApprovalBg
-                  : status == "Completed"
+                  : status == COMPLETED
                       ? kCompletedBg
-                      : status == "Cancelled"
+                      : status == CANCELLED
                           ? kBgDanger
-                          : bgColor,
+                          : kBgSuccess,
       //  border: Border.all(color: textColor),
       borderRadius: BorderRadius.circular(7),
     ),
     child: Text(
       status,
       style: TextStyle(
-        color: status == "Ongoing"
+        color: statusId == ONGOING
             ? kOnGoingText
-            : status == "Awaiting Client Reviews"
+            : status == WAITING_CLIENT_REVIEWS
                 ? kReviewText
-                : status == "Waiting nurse approval" || status == "Waiting payment"
+                : status == WAITING_NURSE_APPROVAL || status == WAITING_CLIENT_PAYMENT
                     ? kNurseApprovalText
-                    : status == "Completed"
+                    : status == COMPLETED
                         ? kCompletedText
-                        : status == "Cancelled"
+                        : status == CANCELLED
                             ? kTextDanger
-                            : textColor,
+                            : kTextSuccess,
         fontSize: 11,
       ),
     ),

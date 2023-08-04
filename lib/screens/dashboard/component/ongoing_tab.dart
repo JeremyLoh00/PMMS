@@ -214,8 +214,7 @@ class _OngoingTabState extends State<OngoingTab> {
                           Space(7),
                           badgeStatus(
                             status: jobModel.status!,
-                            bgColor: kOnGoingBg,
-                            textColor: kOnGoingText,
+                            statusId: jobModel.statusId!,
                           ),
                           Space(5),
                           Text(

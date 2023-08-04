@@ -81,7 +81,7 @@ class _NurseApplicationState extends State<NurseApplication> {
                         NurseProfile(
                           lsitOfAppliedNurseModel:
                               widget.jobModel.listOfAppliedNurse![index],
-                          hasButton: false,
+                          hasButton: true, //change to false later
                         ),
                       );
                     }
@@ -159,8 +159,7 @@ class _NurseApplicationState extends State<NurseApplication> {
                                   SizedBox(width: 5),
                                   badgeStatus(
                                     status: widget.jobModel.status!,
-                                    bgColor: kOnGoingBg, //nurse status
-                                    textColor: kOnGoingText,
+                                    statusId: widget.jobModel.statusId!,
                                   )
                                   // status[index] == 'Accepted'
                                   //     ? Row(

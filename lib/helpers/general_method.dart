@@ -226,3 +226,45 @@ Future<bool> showHireNursePopup(BuildContext context) async {
       // If show dialog return null, return false
       false;
 }
+
+// Popup if user want to block nurse
+Future<bool> showBlockNursePopup(BuildContext context) async {
+  // If cant pop then show this dialog
+  // Unfocus from input field
+  FocusScope.of(context).unfocus();
+  // Show dialog
+  return await CustomDialog.show(
+        context,
+        title: "Block Nurse",
+        description: "Are you sure to block the nurse? You can unblock the nurse at the “Blocked Nurse” list. ",
+        btnCancelText: "Cancel",
+        btnOkText: "Block",
+        btnCancelOnPress: () => Navigator.of(context).pop(),
+        btnOkOnPress: () => Navigator.of(context).pop(true),
+        icon: Iconsax.info_circle,
+        // dialogType: DialogType.warning,
+      ) ??
+      // If show dialog return null, return false
+      false;
+}
+
+// Popup if user want to unblock nurse
+Future<bool> showUnblockNursePopup(BuildContext context) async {
+  // If cant pop then show this dialog
+  // Unfocus from input field
+  FocusScope.of(context).unfocus();
+  // Show dialog
+  return await CustomDialog.show(
+        context,
+        title: "Unblock Nurse",
+        description: "Are you sure to unblock the nurse?",
+        btnCancelText: "Cancel",
+        btnOkText: "Unblock",
+        btnCancelOnPress: () => Navigator.of(context).pop(),
+        btnOkOnPress: () => Navigator.of(context).pop(true),
+        icon: Iconsax.info_circle,
+        // dialogType: DialogType.warning,
+      ) ??
+      // If show dialog return null, return false
+      false;
+}

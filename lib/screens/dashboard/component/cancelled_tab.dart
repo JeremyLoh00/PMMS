@@ -215,8 +215,7 @@ class _CancelledTabState extends State<CancelledTab> {
                           Space(7),
                           badgeStatus(
                             status: jobModel.status!,
-                            bgColor: kBgSuccess,
-                            textColor: kTextSuccess,
+                            statusId: jobModel.statusId!,
                           ),
                           Space(5),
                           Text(

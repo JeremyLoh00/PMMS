@@ -27,6 +27,7 @@ class NurseProfile extends StatefulWidget {
 final String commentPic =
     "https://cdn.pixabay.com/photo/2017/12/03/18/04/christmas-balls-2995437_960_720.jpg";
 final int subCode = 200;
+bool block = false;
 
 class _NurseProfileState extends State<NurseProfile> {
   @override
@@ -106,6 +107,7 @@ class _NurseProfileState extends State<NurseProfile> {
                     ? Row(
                         children: [
                           Expanded(
+                            flex: 1,
                             child: ButtonSecondary(
                               paddingVertical: 17,
                               onPressed: () {
@@ -118,9 +120,13 @@ class _NurseProfileState extends State<NurseProfile> {
                             width: 10,
                           ),
                           Expanded(
+                            flex: 2,
                             child: ButtonPrimary(
-                              "Accept",
-                              onPressed: () => (subCode == 200 ?  showHireNursePopup(context) : showSubscriptionPopup(context)), //Confirmation of hire OR subscription if not subscribe yet
+                              "Hire Me",
+                              onPressed: () => (subCode == 200
+                                  ? showHireNursePopup(context)
+                                  : showSubscriptionPopup(
+                                      context)), //Confirmation of hire OR subscription if not subscribe yet
 
                               // showDialog(
                               //   context: context,
@@ -217,6 +223,9 @@ class _NurseProfileState extends State<NurseProfile> {
             ),
           ),
           ScaleTap(
+            onPressed: () => (block == false
+                ? showUnblockNursePopup(context)
+                : showBlockNursePopup(context)),
             child: Text(
               "Block Nurse",
               style: TextStyle(

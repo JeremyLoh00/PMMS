@@ -31,8 +31,7 @@ class _JobDescriptionDetailState extends State<JobDescriptionDetail> {
                     // Badge status
                     badgeStatus(
                               status: widget.jobModel.status!,
-                              bgColor: kOnGoingBg,
-                              textColor: kOnGoingText,
+                             statusId: widget.jobModel.statusId!,
                             ),
                     Space(15),
                     //Name and phone number
