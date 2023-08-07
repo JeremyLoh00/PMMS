@@ -533,7 +533,7 @@ class _NavigationState extends State<Navigation> {
       case 1:
         return NurseHistoryScreen();
       case 2:
-        return SubscriptionScreen();
+        return SubscriptionScreen(userModel: userModel,);
       case 3:
         return ContactUsScreen();
       case 4:

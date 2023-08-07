@@ -34,6 +34,7 @@ class _ReviewState extends State<Review> {
           // On submitting
           onSubmitting: (context, state) {
             // Remove focus from input field
+            print("Submitting");
             FocusScope.of(context).unfocus();
             // Set loading true
             setState(() {
@@ -43,7 +44,7 @@ class _ReviewState extends State<Review> {
           // On Success
           onSuccess: (context, state) {
             // navigator.setPageIndex(0, "Success");
-
+            print("Submitted");
             ThemeSnackBar.showSnackBar(
               context,
               "success",
@@ -57,6 +58,7 @@ class _ReviewState extends State<Review> {
           },
           //On submission failed
           onSubmissionFailed: (context, state) {
+            print("Submit failed");
             // Set loading false
             setState(() {
               _isLoading = false;
@@ -64,6 +66,7 @@ class _ReviewState extends State<Review> {
           },
           onFailure: (context, state) {
             // Set loading to false
+            print("Failed");
             setState(() {
               _isLoading = false;
             });
@@ -72,8 +75,7 @@ class _ReviewState extends State<Review> {
               "Falied",
             );
           },
-          child: 
-          Scaffold(
+          child: Scaffold(
             appBar: _buildAppBar(context),
             body: SafeArea(
               child: Padding(
