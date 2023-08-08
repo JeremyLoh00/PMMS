@@ -25,20 +25,7 @@ import 'package:pull_to_refresh/pull_to_refresh.dart';
 class NurseProfileReview extends StatefulWidget {
   const NurseProfileReview({
     Key? key,
-    required this.description,
-    required this.src,
-    required this.name,
-    required this.comment,
-    required this.commentPic,
-    required this.date,
   }) : super(key: key);
-
-  final String description;
-  final String src;
-  final String commentPic;
-  final String name;
-  final String comment;
-  final String date;
 
   @override
   State<NurseProfileReview> createState() => _NurseProfileReviewState();
@@ -125,176 +112,302 @@ class _NurseProfileReviewState extends State<NurseProfileReview> {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        const Padding(
-          padding: EdgeInsets.only(bottom: 5.0),
-          child: Text(
-            "Reviews",
-            style: TextStyle(
-              fontWeight: FontWeight.bold,
-              fontSize: 18.0,
-            ),
-          ),
-        ),
-        SizedBox(
-          height: 10,
-        ),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.start,
-          children: [
-            SizedBox(
-              width: 10,
-            ),
-            ScaleTap(
-              onPressed: () {
-                navigateTo(context, ProfileScreen());
-              },
-              child: Padding(
-                padding: EdgeInsets.only(right: 15),
-                child: Container(
-                  width: 35,
-                  height: 35,
-                  padding: const EdgeInsets.all(0.5),
-                  decoration: BoxDecoration(
-                    shape: BoxShape.circle,
-                  ),
-                  child: CachedNetworkImage(
-                    imageUrl: widget.src,
-                    imageBuilder: (context, imageProvider) => Container(
-                      decoration: BoxDecoration(
-                        shape: BoxShape.circle,
-                        image: DecorationImage(
-                          image: imageProvider,
-                          fit: BoxFit.cover,
-                        ),
-                      ),
-                    ),
-                    errorWidget: (context, url, error) =>
-                        const Icon(Icons.error),
-                  ),
-                ),
-              ),
-            ),
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  widget.name,
-                  style: TextStyle(
-                      fontFamily: "Poppins",
-                      fontSize: 14,
-                      fontWeight: FontWeight.w800),
-                ),
-                RatingBarIndicator(
-                  itemBuilder: (context, index) => Icon(
-                    _selectedIcon ?? Icons.star,
-                    color: kPrimaryColor,
-                  ),
-                  rating: _reviewRating,
-                  itemCount: 5,
-                  itemSize: 15.0,
-                  unratedColor: Color.fromRGBO(4, 99, 128, 0.39),
-                ),
-                SizedBox(
-                  width: 5,
-                ),
-              ],
-            ),
+    // return Column(
+    //   crossAxisAlignment: CrossAxisAlignment.start,
+    //   children: [
+    //     const Padding(
+    //       padding: EdgeInsets.only(bottom: 5.0),
+    //       child: Text(
+    //         "Reviews",
+    //         style: TextStyle(
+    //           fontWeight: FontWeight.bold,
+    //           fontSize: 18.0,
+    //         ),
+    //       ),
+    //     ),
+    //     SizedBox(
+    //       height: 10,
+    //     ),
+    //     Row(
+    //       mainAxisAlignment: MainAxisAlignment.start,
+    //       children: [
+    //         SizedBox(
+    //           width: 10,
+    //         ),
+    //         ScaleTap(
+    //           onPressed: () {
+    //             navigateTo(context, ProfileScreen());
+    //           },
+    //           child: Padding(
+    //             padding: EdgeInsets.only(right: 15),
+    //             child: Container(
+    //               width: 35,
+    //               height: 35,
+    //               padding: const EdgeInsets.all(0.5),
+    //               decoration: BoxDecoration(
+    //                 shape: BoxShape.circle,
+    //               ),
+    //               child: CachedNetworkImage(
+    //                 imageUrl: widget.src,
+    //                 imageBuilder: (context, imageProvider) => Container(
+    //                   decoration: BoxDecoration(
+    //                     shape: BoxShape.circle,
+    //                     image: DecorationImage(
+    //                       image: imageProvider,
+    //                       fit: BoxFit.cover,
+    //                     ),
+    //                   ),
+    //                 ),
+    //                 errorWidget: (context, url, error) =>
+    //                     const Icon(Icons.error),
+    //               ),
+    //             ),
+    //           ),
+    //         ),
+    //         Column(
+    //           crossAxisAlignment: CrossAxisAlignment.start,
+    //           children: [
+    //             Text(
+    //               widget.name,
+    //               style: TextStyle(
+    //                   fontFamily: "Poppins",
+    //                   fontSize: 14,
+    //                   fontWeight: FontWeight.w800),
+    //             ),
+    //             RatingBarIndicator(
+    //               itemBuilder: (context, index) => Icon(
+    //                 _selectedIcon ?? Icons.star,
+    //                 color: kPrimaryColor,
+    //               ),
+    //               rating: _reviewRating,
+    //               itemCount: 5,
+    //               itemSize: 15.0,
+    //               unratedColor: Color.fromRGBO(4, 99, 128, 0.39),
+    //             ),
+    //             SizedBox(
+    //               width: 5,
+    //             ),
+    //           ],
+    //         ),
+    //       ],
+    //     ),
+    //     SizedBox(
+    //       height: 5,
+    //     ),
+    //     Padding(
+    //       padding: const EdgeInsets.only(
+    //         left: 60.0,
+    //       ),
+    //       child: Column(
+    //         crossAxisAlignment: CrossAxisAlignment.start,
+    //         children: [
+    //           Text(
+    //             widget.comment,
+    //             style: TextStyle(
+    //               fontFamily: "Poppins",
+    //               fontSize: 14,
+    //             ),
+    //           ),
+    //           SizedBox(
+    //             height: 10,
+    //           ),
+    //           SizedBox(
+    //             height: MediaQuery.of(context).size.height * 0.2,
+    //             width: MediaQuery.of(context).size.width * 0.4,
+    //             child: Hero(
+    //               tag: "contest-banner",
+    //               // child: Text("data"),
+    //               child: Container(
+    //                 child: CachedNetworkImage(
+    //                   imageUrl: widget.commentPic,
+    //                   imageBuilder: (context, imageProvider) => Container(
+    //                     decoration: BoxDecoration(
+    //                       borderRadius: BorderRadius.circular(20.0),
+    //                       shape: BoxShape.rectangle,
+    //                       image: DecorationImage(
+    //                         image: imageProvider,
+    //                         fit: BoxFit.cover,
+    //                       ),
+    //                     ),
+    //                   ),
+    //                 ),
+    //               ),
+    //             ),
+    //           ),
+    //           SizedBox(
+    //             height: 10,
+    //           ),
+    //           Text(
+    //             widget.date,
+    //             style: TextStyle(
+    //               fontFamily: "Poppins",
+    //               fontSize: 12,
+    //               color: kGrey,
+    //             ),
+    //           ),
+    //         ],
+    //       ),
+    //     ),
+    //   ],
+    // );
+    return CustomScrollView(
+          slivers: <Widget>[
+            PagedSliverList<int, ListFeedbackForSpecificNurseModel>(
+              pagingController: _nursePagingController,
+              builderDelegate:
+                  PagedChildBuilderDelegate<ListFeedbackForSpecificNurseModel>(
+                      firstPageProgressIndicatorBuilder: (context) {
+                        return ThemeSpinner.spinner();
+                      },
+                      newPageProgressIndicatorBuilder: (context) {
+                        return ThemeSpinner.spinner();
+                      },
+                      noItemsFoundIndicatorBuilder: (context) => EmptyList(
+                            icon: Icons.work_outline,
+                            title: "No review found",
+                            subtitle: "No review available",
+                            query: '',
+                          ),
+                      animateTransitions: true,
+                      itemBuilder: (context, reviewModel, index) {
+                        return reviewItem(context, index, reviewModel);
+                      }),
+            )
           ],
-        ),
-        SizedBox(
-          height: 5,
-        ),
-        Padding(
-          padding: const EdgeInsets.only(
-            left: 60.0,
-          ),
-          child: Column(
+        );
+  }
+
+  Widget reviewItem(BuildContext context, int index,
+      ListFeedbackForSpecificNurseModel reviewModel) {
+    return Padding(
+        padding: const EdgeInsets.all(15),
+        child: Container(
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text(
-                widget.comment,
-                style: TextStyle(
-                  fontFamily: "Poppins",
-                  fontSize: 14,
-                ),
-              ),
+              // image
               SizedBox(
-                height: 10,
-              ),
-              SizedBox(
-                height: MediaQuery.of(context).size.height * 0.2,
-                width: MediaQuery.of(context).size.width * 0.4,
-                child: Hero(
-                  tag: "contest-banner",
-                  // child: Text("data"),
-                  child: Container(
-                    child: CachedNetworkImage(
-                      imageUrl: widget.commentPic,
-                      imageBuilder: (context, imageProvider) => Container(
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(20.0),
-                          shape: BoxShape.rectangle,
-                          image: DecorationImage(
-                            image: imageProvider,
-                            fit: BoxFit.cover,
-                          ),
-                        ),
+                width: 40,
+                height: 40,
+                child: CachedNetworkImage(
+                  imageUrl: reviewModel.profilePicUserFrom!,
+                  imageBuilder: (context, imageProvider) => Container(
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(20),
+                      image: DecorationImage(
+                        image: imageProvider,
+                        fit: BoxFit.cover,
                       ),
                     ),
                   ),
+                  placeholder: (context, url) =>
+                      const CircularProgressIndicator(
+                    color: kPrimaryColor,
+                  ),
+                  errorWidget: (context, url, error) => const Icon(Icons.error),
                 ),
               ),
-              SizedBox(
-                height: 10,
-              ),
-              Text(
-                widget.date,
-                style: TextStyle(
-                  fontFamily: "Poppins",
-                  fontSize: 12,
-                  color: kGrey,
+
+              SizedBox(width: 5),
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Space(7),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: [
+                        RatingBarIndicator(
+                          itemBuilder: (context, index) => Icon(
+                            _selectedIcon ?? Icons.star,
+                            color: kPrimaryColor,
+                          ),
+                          rating: double.parse(reviewModel.rating.toString()),
+                          itemCount: 5,
+                          itemSize: 15.0,
+                          unratedColor: Color.fromRGBO(4, 99, 128, 0.39),
+                        ),
+                        SizedBox(
+                          width: 5,
+                        ),
+                        Text(
+                          reviewModel.rating.toString(),
+                          style: TextStyle(
+                            color: kGrey,
+                            fontFamily: "Poppins",
+                            fontWeight: FontWeight.w700,
+                          ),
+                        ),
+                      ],
+                    ),
+                    Space(5),
+                    //Comment
+                    Text(
+                      reviewModel.comment!,
+                      style: TextStyle(color: kDarkGrey, fontFamily: "Poppins"),
+                    ),
+                    Space(10),
+                    //Comment's Image
+                    SizedBox(
+                      width: 80,
+                      height: 80,
+                      child: CachedNetworkImage(
+                        imageUrl: reviewModel.feedbackPhotoPath!,
+                        imageBuilder: (context, imageProvider) => Container(
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(5),
+                            image: DecorationImage(
+                              image: imageProvider,
+                              fit: BoxFit.cover,
+                            ),
+                          ),
+                        ),
+                        placeholder: (context, url) =>
+                            const CircularProgressIndicator(
+                          color: kPrimaryColor,
+                        ),
+                        errorWidget: (context, url, error) =>
+                            const Icon(Icons.error),
+                      ),
+                    ),
+                    Space(10),
+                    //Date and time of comment
+                    Row(
+                      children: [
+                        Text(
+                          reviewModel.date!,
+                          style: TextStyle(
+                            color: kGrey,
+                            fontFamily: "Poppins",
+                            fontSize: 10,
+                          ),
+                        ),
+                        Text(
+                          " | ",
+                          style: TextStyle(
+                            color: kGrey,
+                            fontFamily: "Poppins",
+                            fontSize: 10,
+                          ),
+                        ),
+                        Text(
+                          reviewModel.time!,
+                          style: TextStyle(
+                            color: kGrey,
+                            fontFamily: "Poppins",
+                            fontSize: 10,
+                          ),
+                        ),
+                      ],
+                    )
+                  ],
                 ),
-              ),
+              )
             ],
           ),
         ),
-      ],
-    );
-    // return SmartRefresher(
-    //   controller: _refreshController,
-    //   header: WaterDropMaterialHeader(
-    //     backgroundColor: kPrimaryColor,
-    //   ),
-    //   onRefresh: _onRefresh,
-    //   child: CustomScrollView(
-    //     slivers: <Widget>[
-    //       PagedSliverList<int, ListFeedbackForSpecificNurseModel>(
-    //         pagingController: _nursePagingController,
-    //         builderDelegate:
-    //             PagedChildBuilderDelegate<ListFeedbackForSpecificNurseModel>(
-    //                 firstPageProgressIndicatorBuilder: (context) {
-    //                   return ThemeSpinner.spinner();
-    //                 },
-    //                 newPageProgressIndicatorBuilder: (context) {
-    //                   return ThemeSpinner.spinner();
-    //                 },
-    //                 noItemsFoundIndicatorBuilder: (context) => EmptyList(
-    //                       icon: Icons.work_outline,
-    //                       title: "No review found",
-    //                       subtitle: "No review available",
-    //                       query: '',
-    //                     ),
-    //                 animateTransitions: true,
-    //                 itemBuilder: (context, reviewModel, index) {
-    //                   return reviewItem(context, index, reviewModel);
-    //                 }),
-    //       )
-    //     ],
-    //   ),
-    // );
+      );
   }
 }
 

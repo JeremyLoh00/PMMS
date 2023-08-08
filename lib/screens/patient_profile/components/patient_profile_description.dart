@@ -1,9 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_scale_tap/flutter_scale_tap.dart';
 import 'package:private_nurse_for_client/constant.dart';
-import 'package:private_nurse_for_client/helpers/general_method.dart';
 import 'package:private_nurse_for_client/models/job/job_model.dart';
 import 'package:private_nurse_for_client/public_components/space.dart';
 import 'package:private_nurse_for_client/theme.dart';
@@ -41,54 +39,6 @@ class _PatientProfileDescriptionState extends State<PatientProfileDescription> {
     'Medical History',
     'Patient Condition',
     'Emergency Contact',
-  ];
-
-  List<String> text1 = [
-    'Hypertension',
-    'Skin Problem',
-  ];
-
-  List<String> text2 = [
-    'Diabetics',
-    'Hypertension',
-    'Skin Problem',
-  ];
-
-  List<String> text3 = [
-    'Bed Bound',
-    'Not Cooperative',
-  ];
-
-  final List<String> patientDiagnosisList = [
-    'Diabetic',
-    'Hipertensi',
-    'Heart Failure',
-    'Kidney Disease',
-    'Dyalisis',
-    'Asthma',
-    'Skin Problem',
-    'Blindness',
-    'Dementia',
-    'Alzheimer',
-    'Stroke',
-    'Other',
-  ];
-  final List<String> patientConditionList = [
-    'Wheelchair Bound',
-    'Bed Bound',
-    'Can Ambulate',
-    'Can Talk and Walk',
-    'Cannot Talk',
-    'Cooperative',
-    'Not Cooperative',
-  ];
-  final List<String> patientMedicalHistoryList = [
-    'Diabetic',
-    'Hipertensi',
-    'Heart Failure',
-    'Kidney Disease',
-    'Dyalisis',
-    'Asthma',
   ];
   @override
   Widget build(BuildContext context) {
@@ -294,108 +244,59 @@ class _PatientProfileDescriptionState extends State<PatientProfileDescription> {
                             ),
                           ],
                         ),
-                        Row(mainAxisAlignment: MainAxisAlignment.start,
-                        children: [Text(widget.jobModel.allDiagnosis!)],)
-                        // Row(
-                        //   mainAxisAlignment: MainAxisAlignment.start,
-                        //   children: [
-                        //     SizedBox(
-                        //       width: 30,
-                        //     ),
-                        // Expanded(
-                        //   child: ListView.builder(
-                        //     itemCount: text1.length,
-                        //     shrinkWrap: true,
-                        //     itemBuilder: (context, index) {
-                        //       return RichText(
-                        //         text: TextSpan(
-                        //           style: const TextStyle(
-                        //             color: kBlack,
-                        //             fontSize: 12.0,
-                        //             letterSpacing: 0.5,
-                        //             height: 1.5,
-                        //           ),
-                        //           children: [
-                        //             TextSpan(
-                        //               text: "\u2022 ",
-                        //               style: TextStyle(
-                        //                 fontSize: 16,
-                        //                 fontWeight: FontWeight.w900,
-                        //               ),
-                        //             ),
-                        //             TextSpan(
-                        //               text: text1[index],
-                        //               style: TextStyle(
-                        //                 fontSize: 14,
-                        //                 fontWeight: FontWeight.w500,
-                        //               ),
-                        //             ),
-                        //           ],
-                        //         ),
-                        //       );
-                        //     },
-                        //   ),
-                        // ),
-                        // ],
-                        // ),
-
-                        //Badge type
-
-                        // Padding(
-                        //   padding:
-                        //       const EdgeInsets.only(right: 40.0, left: 20.0),
-                        //   child: Column(
-                        //     crossAxisAlignment: CrossAxisAlignment.start,
-                        //     children: [
-                        //       Space(15.0),
-                        //       // Text(
-                        //       //   "Patient Diagnosis",
-                        //       //   style: textStyleNormal(
-                        //       //     color: kGrey,
-                        //       //     fontWeight: FontWeight.bold,
-                        //       //     fontsize: 12,
-                        //       //   ),
-                        //       // ),
-                        //       Space(10.0),
-                        //       GridView.builder(
-                        //         physics: NeverScrollableScrollPhysics(),
-                        //         gridDelegate:
-                        //             const SliverGridDelegateWithMaxCrossAxisExtent(
-                        //           maxCrossAxisExtent: 130,
-                        //           mainAxisExtent: 30,
-                        //         ),
-                        //         shrinkWrap: true,
-                        //         itemCount: 2,
-                        //         itemBuilder: (context, index) {
-                        //           return Row(
-                        //             mainAxisAlignment: MainAxisAlignment.start,
-                        //             children: [
-                        //               Container(
-                        //                 height: 30,
-                        //                 width: 100,
-                        //                 decoration: BoxDecoration(
-                        //                   color: kPrimary100Color,
-                        //                   borderRadius:
-                        //                       BorderRadius.circular(30.0),
-                        //                 ),
-                        //                 child: Center(
-                        //                   child: Text(
-                        //                     patientDiagnosisList[index],
-                        //                     style: textStyleNormal(
-                        //                       color: kPrimaryColor,
-                        //                       fontWeight: FontWeight.bold,
-                        //                     ),
-                        //                   ),
-                        //                 ),
-                        //               ),
-                        //             ],
-                        //           );
-                        //         },
-                        //       ),
-                        //       Space(20.0),
-                        //     ],
-                        //   ),
-                        // ),
+                        Padding(
+                          padding:
+                              const EdgeInsets.only(right: 40.0, left: 20.0),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Space(10.0),
+                              GridView.builder(
+                                physics: NeverScrollableScrollPhysics(),
+                                gridDelegate:
+                                    const SliverGridDelegateWithMaxCrossAxisExtent(
+                                  maxCrossAxisExtent: 130,
+                                  mainAxisExtent: 30,
+                                ),
+                                shrinkWrap: true,
+                                itemCount: widget.jobModel.diagnoses!.length,
+                                itemBuilder: (context, index) {
+                                  return Row(
+                                    mainAxisAlignment: MainAxisAlignment.start,
+                                    children: [
+                                      Expanded(
+                                        child: Padding(
+                                          padding:
+                                              const EdgeInsets.only(right: 5.0),
+                                          child: Container(
+                                            height: 30,
+                                            width: 100,
+                                            decoration: BoxDecoration(
+                                              color: kPrimary100Color,
+                                              borderRadius:
+                                                  BorderRadius.circular(30.0),
+                                            ),
+                                            child: Center(
+                                              child: Text(
+                                                widget.jobModel
+                                                    .diagnoses![index].name!,
+                                                style: textStyleNormal(
+                                                  color: kPrimaryColor,
+                                                  fontWeight: FontWeight.bold,
+                                                ),
+                                              ),
+                                            ),
+                                          ),
+                                        ),
+                                      ),
+                                    ],
+                                  );
+                                },
+                              ),
+                              Space(10.0),
+                            ],
+                          ),
+                        ),
                       ],
                     ),
                   )
@@ -426,7 +327,6 @@ class _PatientProfileDescriptionState extends State<PatientProfileDescription> {
                 ],
               ),
               child: Row(
-                // row for 2 column: image and column
                 mainAxisAlignment: MainAxisAlignment.start,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -456,105 +356,63 @@ class _PatientProfileDescriptionState extends State<PatientProfileDescription> {
                             ),
                           ],
                         ),
-                        Row(mainAxisAlignment: MainAxisAlignment.start,
-                        children: [Expanded(child: Text(widget.jobModel.allMedicalHistories!))],)
-                        // Row(
-                        //   mainAxisAlignment: MainAxisAlignment.start,
-                        //   children: [
-                        //     SizedBox(
-                        //       width: 30,
-                        //     ),
-                        //     Expanded(
-                        //       child: ListView.builder(
-                        //         itemCount: text2.length,
-                        //         shrinkWrap: true,
-                        //         itemBuilder: (context, index) {
-                        //           return RichText(
-                        //             text: TextSpan(
-                        //               style: const TextStyle(
-                        //                 color: kBlack,
-                        //                 fontSize: 12.0,
-                        //                 letterSpacing: 0.5,
-                        //                 height: 1.5,
-                        //               ),
-                        //               children: [
-                        //                 TextSpan(
-                        //                   text: "\u2022 ",
-                        //                   style: TextStyle(
-                        //                     fontSize: 16,
-                        //                     fontWeight: FontWeight.w900,
-                        //                   ),
-                        //                 ),
-                        //                 TextSpan(
-                        //                   text: text2[index],
-                        //                   style: TextStyle(
-                        //                     fontSize: 14,
-                        //                     fontWeight: FontWeight.w500,
-                        //                   ),
-                        //                 ),
-                        //               ],
-                        //             ),
-                        //           );
-                        //         },
-                        //       ),
-                        //     ),
-                        //   ],
-                        // ),
-                        // Padding(
-                        //   padding:
-                        //       const EdgeInsets.only(right: 40.0, left: 20.0),
-                        //   child: Column(
-                        //     crossAxisAlignment: CrossAxisAlignment.start,
-                        //     children: [
-                        //       // Text(
-                        //       //   "Medical History",
-                        //       //   style: textStyleNormal(
-                        //       //     color: kGrey,
-                        //       //     fontWeight: FontWeight.bold,
-                        //       //     fontsize: 12,
-                        //       //   ),
-                        //       // ),
-                        //       Space(10.0),
-                        //       GridView.builder(
-                        //         physics: NeverScrollableScrollPhysics(),
-                        //         gridDelegate:
-                        //             const SliverGridDelegateWithMaxCrossAxisExtent(
-                        //           maxCrossAxisExtent: 150,
-                        //           mainAxisSpacing: 10,
-                        //           mainAxisExtent: 30,
-                        //         ),
-                        //         shrinkWrap: true,
-                        //         itemCount: 3,
-                        //         itemBuilder: (context, index) {
-                        //           return Row(
-                        //             mainAxisAlignment: MainAxisAlignment.start,
-                        //             children: [
-                        //               Container(
-                        //                 height: 30,
-                        //                 width: 100,
-                        //                 decoration: BoxDecoration(
-                        //                   color: kPrimary100Color,
-                        //                   borderRadius:
-                        //                       BorderRadius.circular(30.0),
-                        //                 ),
-                        //                 child: Center(
-                        //                   child: Text(
-                        //                     patientConditionList[index],
-                        //                     style: textStyleNormal(
-                        //                       color: kPrimaryColor,
-                        //                       fontWeight: FontWeight.bold,
-                        //                     ),
-                        //                   ),
-                        //                 ),
-                        //               ),
-                        //             ],
-                        //           );
-                        //         },
-                        //       ),
-                        //       Space(20.0),
-                        //     ],
-                        //   ),
-                        // ),
+                        Padding(
+                          padding:
+                              const EdgeInsets.only(right: 40.0, left: 20.0),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Space(10.0),
+                              GridView.builder(
+                                physics: NeverScrollableScrollPhysics(),
+                                gridDelegate:
+                                    const SliverGridDelegateWithMaxCrossAxisExtent(
+                                  maxCrossAxisExtent: 150,
+                                  mainAxisSpacing: 10,
+                                  mainAxisExtent: 30,
+                                ),
+                                shrinkWrap: true,
+                                itemCount:
+                                    widget.jobModel.medicalHistories!.length,
+                                itemBuilder: (context, index) {
+                                  return Row(
+                                    mainAxisAlignment: MainAxisAlignment.start,
+                                    children: [
+                                      Expanded(
+                                        child: Padding(
+                                          padding:
+                                              const EdgeInsets.only(right: 5.0),
+                                          child: Container(
+                                            height: 30,
+                                            width: 100,
+                                            decoration: BoxDecoration(
+                                              color: kPrimary100Color,
+                                              borderRadius:
+                                                  BorderRadius.circular(30.0),
+                                            ),
+                                            child: Center(
+                                              child: Text(
+                                                widget
+                                                    .jobModel
+                                                    .medicalHistories![index]
+                                                    .name!,
+                                                style: textStyleNormal(
+                                                  color: kPrimaryColor,
+                                                  fontWeight: FontWeight.bold,
+                                                ),
+                                              ),
+                                            ),
+                                          ),
+                                        ),
+                                      ),
+                                    ],
+                                  );
+                                },
+                              ),
+                              Space(10.0),
+                            ],
+                          ),
+                        ),
                       ],
                     ),
                   )
@@ -585,143 +443,102 @@ class _PatientProfileDescriptionState extends State<PatientProfileDescription> {
                 ],
               ),
               child: Row(
-                // row for 2 column: image and column
                 mainAxisAlignment: MainAxisAlignment.start,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   SizedBox(width: 5),
                   Expanded(
                     child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Space(7),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          children: [
-                            Icon(
-                              icon[3],
-                              color: kPrimaryColor,
-                            ),
-                            SizedBox(
-                              width: 10,
-                            ),
-                            Text(
-                              title[3],
-                              style: TextStyle(
-                                fontWeight: FontWeight.bold,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Space(7),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            children: [
+                              Icon(
+                                icon[3],
                                 color: kPrimaryColor,
-                                fontSize: 18.0,
                               ),
-                            ),
-                          ],
-                        ),
-                        // Row(
-                        //   mainAxisAlignment: MainAxisAlignment.start,
-                        //   children: [
-                        //     SizedBox(
-                        //       width: 30,
-                        //     ),
-                        //     Expanded(
-                        //       child: ListView.builder(
-                        //         itemCount: text3.length,
-                        //         shrinkWrap: true,
-                        //         itemBuilder: (context, index) {
-                        //           return RichText(
-                        //             text: TextSpan(
-                        //               style: const TextStyle(
-                        //                 color: kBlack,
-                        //                 fontSize: 12.0,
-                        //                 letterSpacing: 0.5,
-                        //                 height: 1.5,
-                        //               ),
-                        //               children: [
-                        //                 TextSpan(
-                        //                   text: "\u2022 ",
-                        //                   style: TextStyle(
-                        //                     fontSize: 16,
-                        //                     fontWeight: FontWeight.w900,
-                        //                   ),
-                        //                 ),
-                        //                 TextSpan(
-                        //                   text: text3[index],
-                        //                   style: TextStyle(
-                        //                     fontSize: 14,
-                        //                     fontWeight: FontWeight.w500,
-                        //                   ),
-                        //                 ),
-                        //               ],
-                        //             ),
-                        //           );
-                        //         },
-                        //       ),
-                        //     ),
-                        //   ],
-                        // ),
-                        Row(mainAxisAlignment: MainAxisAlignment.start,
-                        children: [Text(widget.jobModel.allCondition!)],),
-                        // Padding(
-                        //   padding:
-                        //       const EdgeInsets.only(right: 40.0, left: 20.0),
-                        //   child: Column(
-                        //     crossAxisAlignment: CrossAxisAlignment.start,
-                        //     children: [
-                        //       // Text(
-                        //       //   "Medical History",
-                        //       //   style: textStyleNormal(
-                        //       //     color: kGrey,
-                        //       //     fontWeight: FontWeight.bold,
-                        //       //     fontsize: 12,
-                        //       //   ),
-                        //       // ),
-                        //       Space(10.0),
-                        //       GridView.builder(
-                        //         physics: NeverScrollableScrollPhysics(),
-                        //         gridDelegate:
-                        //             const SliverGridDelegateWithMaxCrossAxisExtent(
-                        //           maxCrossAxisExtent: 150,
-                        //           mainAxisSpacing: 10,
-                        //           mainAxisExtent: 30,
-                        //         ),
-                        //         shrinkWrap: true,
-                        //         itemCount: 3,
-                        //         itemBuilder: (context, index) {
-                        //           return Row(
-                        //             mainAxisAlignment: MainAxisAlignment.start,
-                        //             children: [
-                        //               Container(
-                        //                 height: 30,
-                        //                 width: 100,
-                        //                 decoration: BoxDecoration(
-                        //                   color: kPrimary100Color,
-                        //                   borderRadius:
-                        //                       BorderRadius.circular(30.0),
-                        //                 ),
-                        //                 child: Center(
-                        //                   child: Text(
-                        //                     patientMedicalHistoryList[index],
-                        //                     style: textStyleNormal(
-                        //                       color: kPrimaryColor,
-                        //                       fontWeight: FontWeight.bold,
-                        //                     ),
-                        //                   ),
-                        //                 ),
-                        //               ),
-                        //             ],
-                        //           );
-                        //         },
-                        //       ),
-                        //       Space(20.0),
-                        //     ],
-                        //   ),
-                        // ),
-                      ],
-                    ),
+                              SizedBox(
+                                width: 10,
+                              ),
+                              Text(
+                                title[3],
+                                style: TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  color: kPrimaryColor,
+                                  fontSize: 18.0,
+                                ),
+                              ),
+                            ],
+                          ),
+                          Padding(
+                            padding:
+                                const EdgeInsets.only(right: 40.0, left: 20.0),
+                            child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Space(10.0),
+                                  GridView.builder(
+                                    physics: NeverScrollableScrollPhysics(),
+                                    gridDelegate:
+                                        const SliverGridDelegateWithMaxCrossAxisExtent(
+                                      maxCrossAxisExtent: 150,
+                                      mainAxisSpacing: 10,
+                                      mainAxisExtent: 30,
+                                    ),
+                                    shrinkWrap: true,
+                                    itemCount:
+                                        widget.jobModel.conditions!.length,
+                                    itemBuilder: (context, index) {
+                                      return Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.start,
+                                        children: [
+                                          Expanded(
+                                            child: Padding(
+                                              padding: const EdgeInsets.only(
+                                                  right: 5.0),
+                                              child: Container(
+                                                height: 30,
+                                                width: 100,
+                                                decoration: BoxDecoration(
+                                                  color: kPrimary100Color,
+                                                  borderRadius:
+                                                      BorderRadius.circular(
+                                                          30.0),
+                                                ),
+                                                child: Center(
+                                                  child: Text(
+                                                    widget
+                                                        .jobModel
+                                                        .conditions![index]
+                                                        .name!,
+                                                    style: textStyleNormal(
+                                                      color: kPrimaryColor,
+                                                      fontWeight:
+                                                          FontWeight.bold,
+                                                    ),
+                                                  ),
+                                                ),
+                                              ),
+                                            ),
+                                          ),
+                                        ],
+                                      );
+                                    },
+                                  ),
+                                  Space(10.0),
+                                ]),
+                          )
+                        ]),
                   )
                 ],
               ),
             ),
           ),
-        ),//Emergency Contact
+        ),
+        //Emergency Contact
         ScaleTap(
           onPressed: null,
           child: Padding(
@@ -788,7 +605,8 @@ class _PatientProfileDescriptionState extends State<PatientProfileDescription> {
                               Padding(
                                 padding: const EdgeInsets.all(10.0),
                                 child: Text(
-                                  widget.jobModel.emergencyContact!.name!,
+                                  widget
+                                      .jobModel.patientEmergencyContact!.name!,
                                   style: textStyleNormal(
                                     color: kPrimaryColor,
                                     fontWeight: FontWeight.bold,
@@ -825,7 +643,8 @@ class _PatientProfileDescriptionState extends State<PatientProfileDescription> {
                                       bottom: 10.0,
                                     ),
                                     child: Text(
-                                     widget.jobModel.emergencyContact!.phoneNo!,
+                                      widget.jobModel.patientEmergencyContact!
+                                          .phoneNo!,
                                       style: textStyleNormal(
                                         color: kPrimaryColor,
                                         fontWeight: FontWeight.bold,
@@ -850,7 +669,8 @@ class _PatientProfileDescriptionState extends State<PatientProfileDescription> {
                                   Padding(
                                     padding: const EdgeInsets.all(10.0),
                                     child: Text(
-                                      widget.jobModel.emergencyContact!.relationship!,
+                                      widget.jobModel.patientEmergencyContact!
+                                          .relationship!,
                                       style: textStyleNormal(
                                         color: kPrimaryColor,
                                         fontWeight: FontWeight.bold,
@@ -863,7 +683,6 @@ class _PatientProfileDescriptionState extends State<PatientProfileDescription> {
                             ],
                           ),
                         ),
-                        
                       ],
                     ),
                   )
@@ -872,7 +691,6 @@ class _PatientProfileDescriptionState extends State<PatientProfileDescription> {
             ),
           ),
         ),
-        
       ],
     );
   }

@@ -9,7 +9,6 @@ import 'package:private_nurse_for_client/models/job/job_form_error_model.dart';
 import 'package:private_nurse_for_client/models/job/job_model.dart';
 import 'package:private_nurse_for_client/models/job/job_store_response_model.dart';
 import 'package:private_nurse_for_client/models/job/schedule_list_response_model.dart';
-import 'package:private_nurse_for_client/models/job/schedule_model.dart';
 import 'package:private_nurse_for_client/models/job_schedule/job_schedule_model.dart';
 import 'package:private_nurse_for_client/models/service/service_list_response_model.dart';
 import 'package:private_nurse_for_client/models/service/service_model.dart';
@@ -30,7 +29,7 @@ class StoreJobFormBloc extends FormBloc<String, String> {
     ],
   );
 
-  final scheduleList = SelectFieldBloc<ScheduleModel, dynamic>();
+  final scheduleList = SelectFieldBloc<JobScheduleModel, dynamic>();
 
   final preferredDay = SelectFieldBloc();
 
@@ -63,7 +62,8 @@ class StoreJobFormBloc extends FormBloc<String, String> {
       JobModel jobModel = JobModel();
       jobModel.service = ServiceModel();
       jobModel.service = serviceInfo.value;
-      jobModel.jobSchedule = variants.value.map<JobScheduleModel>((scheduleJob) {
+      jobModel.jobSchedule =
+          variants.value.map<JobScheduleModel>((scheduleJob) {
         return JobScheduleModel(
           id: scheduleJob.id,
           startTime: scheduleJob.prefferedStartTime.value,
@@ -122,7 +122,7 @@ class StoreJobFormBloc extends FormBloc<String, String> {
         await serviceBloc.getListSchedule();
 
     if (scheduleListResponseModel.isSuccess) {
-      for (ScheduleModel schedule in scheduleListResponseModel.data!) {
+      for (JobScheduleModel schedule in scheduleListResponseModel.data!) {
         scheduleList.addItem(schedule);
       }
       scheduleList.updateInitialValue(scheduleListResponseModel.data?[0]);

@@ -289,19 +289,19 @@ class _OpenTabState extends State<OpenTab> {
                     children: [
                       Space(7),
                       badgeStatus(
-                            status: jobModel.status!,
-                            statusId: jobModel.statusId!,
-                          ),
-                           Space(5),
+                        status: jobModel.jobStatus!,
+                        statusId: jobModel.jobStatusId!,
+                      ),
+                      Space(5),
                       Text(
-                              jobModel.service!.name!,
-                              style: TextStyle(
-                                color: kBlack,
-                                fontWeight: FontWeight.bold,
-                              ),
-                              maxLines: 1,
-                              overflow: TextOverflow.ellipsis,
-                            ),
+                        jobModel.service!.name!,
+                        style: TextStyle(
+                          color: kBlack,
+                          fontWeight: FontWeight.bold,
+                        ),
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
+                      ),
                       // Row(
                       //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       //   children: [

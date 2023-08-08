@@ -2,6 +2,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:private_nurse_for_client/constant.dart';
 import 'package:private_nurse_for_client/models/job/job_model.dart';
+import 'package:private_nurse_for_client/screens/job_description/components/comment.dart';
 import 'package:private_nurse_for_client/screens/job_description/components/job_description_detail.dart';
 import 'package:private_nurse_for_client/screens/job_description/components/nurse_application.dart';
 import 'package:private_nurse_for_client/screens/job_description/components/patient.dart';
@@ -51,7 +52,8 @@ class _BodyState extends State<Body> {
               Container(
                 height: 700,
               ),
-              Positioned( //Position of the float container
+              Positioned(
+                //Position of the float container
                 top: MediaQuery.of(context).size.height * .16 -
                     (MediaQuery.of(context).size.width * .4),
                 left: 15,
@@ -107,7 +109,14 @@ class _BodyState extends State<Body> {
                         //Nurse applications info
                         NurseApplication(
                           jobModel: widget.jobModel,
-                        )
+                        ),
+                        widget.jobModel.jobStatusId == WAITING_CLIENT_REVIEWS
+                            ?
+                            //Comment
+                            Comment(jobModel: widget.jobModel)
+                            : widget.jobModel.jobStatusId == COMPLETED
+                                ? Comment(jobModel: widget.jobModel)
+                                : SizedBox(),
                       ]),
                 ),
               ),

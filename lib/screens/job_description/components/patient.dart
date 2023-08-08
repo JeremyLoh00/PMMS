@@ -80,7 +80,7 @@ class _PatientState extends State<Patient> {
                               width: 40,
                               height: 40,
                               child: CachedNetworkImage(
-                                imageUrl: widget.jobModel.patientPhoto2Path!,
+                                imageUrl: widget.jobModel.patientPhotoList!.first,
                                 imageBuilder: (context, imageProvider) =>
                                     Container(
                                   decoration: BoxDecoration(

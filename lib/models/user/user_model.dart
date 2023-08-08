@@ -1,6 +1,6 @@
 
 import 'package:private_nurse_for_client/models/bank/bank_model.dart';
-import 'package:private_nurse_for_client/models/emergency_contact/emergency_contact_model.dart';
+import 'package:private_nurse_for_client/models/emergency_contact/patient_emergency_contact_model.dart';
 import 'package:private_nurse_for_client/models/nurse/nurse_model.dart';
 
 class UserModel {

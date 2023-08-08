@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:private_nurse_for_client/bloc/reject_reason_bloc.dart';
 import 'package:private_nurse_for_client/constant.dart';
+import 'package:private_nurse_for_client/helpers/http_response.dart';
+import 'package:private_nurse_for_client/models/reject_reason/list_reject_reason_model.dart';
+import 'package:private_nurse_for_client/models/reject_reason/reject_reason_list_response_model.dart';
 import 'package:private_nurse_for_client/public_components/button_primary.dart';
 import 'package:private_nurse_for_client/public_components/space.dart';
 
@@ -18,6 +22,20 @@ List<String> listReason = [
 ];
 
 class _RejectReasonState extends State<RejectReason> {
+  late Future<ListRejectReasonModel> rejectReasonModel;
+
+  RejectReasonBloc rejectReasonBloc = RejectReasonBloc();
+  void initState() {
+    rejectReasonModel = getRejectReason();
+    super.initState();
+  }
+
+  Future<ListRejectReasonModel> getRejectReason() async {
+    RejectReasonListResponseModel rejectReasonListResponseModel =
+        await rejectReasonBloc.getListRejectReason();
+    return rejectReasonListResponseModel.data!;
+  }
+
   String raasonOption = listReason[0];
   TextEditingController comment = TextEditingController();
   @override
@@ -31,35 +49,70 @@ class _RejectReasonState extends State<RejectReason> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text("Select reasons below for candidate rejection, multiple reasons can be selected. ", style: TextStyle(color: kGrey),),
-                Space(10),
-                Text("Reason : -", style: TextStyle(fontFamily: "Poppins", fontWeight: FontWeight.bold),),
-                ListView.builder(
-                  itemCount: listReason.length,
-                  shrinkWrap: true,
-                  itemBuilder: (context, index) {
-                    return CheckboxListTile(
-                      controlAffinity: ListTileControlAffinity.leading,
-                      title: Text(listReason[index], style: TextStyle(fontFamily: "Poppins",),),
-                      value: false,
-                      onChanged: (value) {
-                        setState(() {
-                          value = true;
-                        });
-                      },
-                    );
-                    // RadioListTile(
-                    //   title: Text(listReason[index]),
-                    //   value: listReason[index],
-                    //   groupValue: raasonOption,
-                    //   onChanged: (value) {
-                    //     setState(() {
-                    //       raasonOption = value.toString();
-                    //     });
-                    //   },
-                    // );
-                  },
+                Text(
+                  "Select reasons below for candidate rejection, multiple reasons can be selected. ",
+                  style: TextStyle(color: kGrey),
                 ),
+                Space(10),
+                Text(
+                  "Reason : -",
+                  style: TextStyle(
+                      fontFamily: "Poppins", fontWeight: FontWeight.bold),
+                ),
+                FutureBuilder<ListRejectReasonModel>(
+                    future: rejectReasonModel,
+                    builder: (context, snapshot) {
+                      if (snapshot.data != null) {
+                        return CheckboxListTile(
+                          controlAffinity: ListTileControlAffinity.leading,
+                          title: Text(
+                            snapshot.data!.name!,
+                            style: TextStyle(
+                              fontFamily: "Poppins",
+                            ),
+                          ),
+                          value: false,
+                          onChanged: (value) {
+                            setState(() {
+                              value = true;
+                            });
+                          },
+                        );
+                      } else {
+                        return const SizedBox();
+                      }
+                      // return ListView.builder(
+                      //   itemCount: snapshot.data,
+                      //   shrinkWrap: true,
+                      //   itemBuilder: (context, index) {
+                      //     return CheckboxListTile(
+                      //       controlAffinity: ListTileControlAffinity.leading,
+                      //       title: Text(
+                      //         listReason[index],
+                      //         style: TextStyle(
+                      //           fontFamily: "Poppins",
+                      //         ),
+                      //       ),
+                      //       value: false,
+                      //       onChanged: (value) {
+                      //         setState(() {
+                      //           value = true;
+                      //         });
+                      //       },
+                      //     );
+                      //     // RadioListTile(
+                      //     //   title: Text(listReason[index]),
+                      //     //   value: listReason[index],
+                      //     //   groupValue: raasonOption,
+                      //     //   onChanged: (value) {
+                      //     //     setState(() {
+                      //     //       raasonOption = value.toString();
+                      //     //     });
+                      //     //   },
+                      //     // );
+                      //   },
+                      // );
+                    }),
                 // SizedBox(
                 //   height: 10,
                 // ),

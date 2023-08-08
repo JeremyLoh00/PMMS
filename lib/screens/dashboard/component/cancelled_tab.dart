@@ -214,8 +214,8 @@ class _CancelledTabState extends State<CancelledTab> {
                         children: [
                           Space(7),
                           badgeStatus(
-                            status: jobModel.status!,
-                            statusId: jobModel.statusId!,
+                            status: jobModel.jobStatus!,
+                            statusId: jobModel.jobStatusId!,
                           ),
                           Space(5),
                           Text(
@@ -311,7 +311,7 @@ class _CancelledTabState extends State<CancelledTab> {
                           ),
                           Space(5),
                           Text(
-                            jobModel.status!,
+                            jobModel.jobStatus!,
                             style: TextStyle(
                               fontSize: 12,
                               fontWeight: FontWeight.w500,

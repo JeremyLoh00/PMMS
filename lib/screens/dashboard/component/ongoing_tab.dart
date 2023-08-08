@@ -213,8 +213,8 @@ class _OngoingTabState extends State<OngoingTab> {
                         children: [
                           Space(7),
                           badgeStatus(
-                            status: jobModel.status!,
-                            statusId: jobModel.statusId!,
+                            status: jobModel.jobStatus!,
+                            statusId: jobModel.jobStatusId!,
                           ),
                           Space(5),
                           Text(

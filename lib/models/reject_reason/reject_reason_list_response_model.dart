@@ -1,15 +1,15 @@
 import 'package:private_nurse_for_client/helpers/base_api_response.dart';
-import 'package:private_nurse_for_client/models/job_schedule/job_schedule_model.dart';
 import 'package:private_nurse_for_client/models/paginator_model.dart';
+import 'package:private_nurse_for_client/models/reject_reason/list_reject_reason_model.dart';
 
-class ScheduleListResponseModel
-    extends BaseAPIResponse<List<JobScheduleModel>, void> {
-  ScheduleListResponseModel(fullJson) : super(fullJson);
+class RejectReasonListResponseModel
+    extends BaseAPIResponse<ListRejectReasonModel, void> {
+  RejectReasonListResponseModel(fullJson) : super(fullJson);
 
   @override
-  dataToJson(List<JobScheduleModel>? data) {
+  dataToJson(ListRejectReasonModel? data) {
     if (data != null) {
-      return this.data?.map((v) => v.toJson()).toList();
+      return this.data?.toJson();
     }
     return null;
   }
@@ -20,18 +20,9 @@ class ScheduleListResponseModel
   }
 
   @override
-  List<JobScheduleModel>? jsonToData(Map<String, dynamic>? json) {
-    if (json != null) {
-      data = [];
+  ListRejectReasonModel? jsonToData(Map<String, dynamic>? json) {
+       return json!["data"] != null ? ListRejectReasonModel.fromJson(json["data"]) : null;
 
-      json["data"].forEach((v) {
-        data!.add(JobScheduleModel.fromJson(v));
-      });
-
-      return data!;
-    }
-
-    return null;
   }
 
   @override

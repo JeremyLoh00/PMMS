@@ -1,4 +1,4 @@
-import 'package:private_nurse_for_client/models/emergency_contact/emergency_contact_model.dart';
+import 'package:private_nurse_for_client/models/emergency_contact/patient_emergency_contact_model.dart';
 
 class NurseModel {
   int? id;
@@ -11,13 +11,15 @@ class NurseModel {
   String? educationLevel;
   int? educationLevelId;
   String? collegeName;
-  EmergencyContactModel? emergencyContact;
+  PatientEmergencyContactModel? emergencyContact;
   String? income;
   bool? isCompanyNurse;
   int? totalPatientServed;
   int? points;
   int? totalFeedback;
   String? averageRating;
+  int? applyJobStatusId;
+  String? applyJobStatus;
 
   NurseModel(
       {this.id,
@@ -36,7 +38,9 @@ class NurseModel {
       this.totalPatientServed,
       this.points,
       this.totalFeedback,
-      this.averageRating});
+      this.averageRating,
+      this.applyJobStatusId,
+      this.applyJobStatus});
 
   NurseModel.fromJson(Map<String, dynamic> json) {
     id = json['id'];
@@ -50,7 +54,7 @@ class NurseModel {
     educationLevelId = json['education_level_id'];
     collegeName = json['college_name'];
     emergencyContact = json['emergency_contact'] != null
-        ? new EmergencyContactModel.fromJson(json['emergency_contact'])
+        ? new PatientEmergencyContactModel.fromJson(json['emergency_contact'])
         : null;
     income = json['income'];
     isCompanyNurse = json['is_company_nurse'];
@@ -58,6 +62,8 @@ class NurseModel {
     points = json['points'];
     totalFeedback = json['total_feedback'];
     averageRating = json['average_rating'];
+    applyJobStatusId = json['apply_job_status_id'];
+    applyJobStatus = json['apply_job_status'];
   }
 
   Map<String, dynamic> toJson() {
@@ -81,6 +87,8 @@ class NurseModel {
     data['points'] = this.points;
     data['total_feedback'] = this.totalFeedback;
     data['average_rating'] = this.averageRating;
+    data['apply_job_status_id'] = this.applyJobStatusId;
+    data['apply_job_status'] = this.applyJobStatus;
     return data;
   }
 }

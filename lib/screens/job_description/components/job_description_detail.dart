@@ -30,8 +30,8 @@ class _JobDescriptionDetailState extends State<JobDescriptionDetail> {
                   children: [
                     // Badge status
                     badgeStatus(
-                              status: widget.jobModel.status!,
-                             statusId: widget.jobModel.statusId!,
+                              status: widget.jobModel.jobStatus!,
+                             statusId: widget.jobModel.jobStatusId!,
                             ),
                     Space(15),
                     //Name and phone number

@@ -48,7 +48,7 @@ class _NurseApplicationState extends State<NurseApplication> {
                 onPressed: () {
                   // navigateTo(context, InformationDetailsScreen(selectedTabIndex: widget.selectedTabIndex,));
                   setState(() {
-                    if (widget.jobModel.status == 'Open') {
+                    if (widget.jobModel.jobStatusId == OPEN) {
                       navigateTo(
                         context,
                         NurseProfile(
@@ -57,7 +57,7 @@ class _NurseApplicationState extends State<NurseApplication> {
                           hasButton: true,
                         ),
                       );
-                    } else if (widget.jobModel.status == 'Awaiting') {
+                    } else if (widget.jobModel.jobStatusId == WAITING_CLIENT_PAYMENT) {
                       navigateTo(
                         context,
                         NurseProfile(
@@ -66,7 +66,7 @@ class _NurseApplicationState extends State<NurseApplication> {
                           hasButton: true,
                         ),
                       );
-                    } else if (widget.jobModel.status == 'Ongoing') {
+                    } else if (widget.jobModel.jobStatusId == ONGOING) {
                       navigateTo(
                         context,
                         NurseProfile(
@@ -158,8 +158,8 @@ class _NurseApplicationState extends State<NurseApplication> {
                                   ),
                                   SizedBox(width: 5),
                                   badgeStatus(
-                                    status: widget.jobModel.status!,
-                                    statusId: widget.jobModel.statusId!,
+                                    status: widget.jobModel.listOfAppliedNurse![index].nurse!.applyJobStatus!,
+                                    statusId: widget.jobModel.listOfAppliedNurse![index].nurse!.applyJobStatusId!,
                                   )
                                   // status[index] == 'Accepted'
                                   //     ? Row(

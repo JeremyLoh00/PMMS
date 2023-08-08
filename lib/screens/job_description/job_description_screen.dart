@@ -44,7 +44,7 @@ class _JobDescriptionState extends State<JobDescription> {
             jobModel: widget.jobModel,
           ),
           //Bottom button with condition
-          footer: widget.jobModel.statusId! == WAITING_CLIENT_PAYMENT //Waiting payment
+          footer: widget.jobModel.jobStatusId! == WAITING_CLIENT_PAYMENT //Waiting payment
               ? Padding(
                   padding: const EdgeInsets.all(15.0),
                   child: ButtonPrimary(
@@ -58,7 +58,7 @@ class _JobDescriptionState extends State<JobDescription> {
                     loadingText: "Updating...",
                   ),
                 )
-              : widget.jobModel.statusId! ==
+              : widget.jobModel.jobStatusId! ==
                       WAITING_CLIENT_REVIEWS//Waiting payment
                   ? Padding(
                       padding: const EdgeInsets.all(15.0),

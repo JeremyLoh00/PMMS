@@ -1,18 +1,18 @@
-class EmergencyContactModel {
+class PatientEmergencyContactModel {
   int? id;
   String? name;
   String? phoneNo;
   String? relationship;
   int? relationshipId;
 
-  EmergencyContactModel(
+  PatientEmergencyContactModel(
       {this.id,
       this.name,
       this.phoneNo,
       this.relationship,
       this.relationshipId});
 
-  EmergencyContactModel.fromJson(Map<String, dynamic> json) {
+  PatientEmergencyContactModel.fromJson(Map<String, dynamic> json) {
     id = json['id'];
     name = json['name'];
     phoneNo = json['phone_no'];
