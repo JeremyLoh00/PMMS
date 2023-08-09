@@ -32,6 +32,9 @@ class NurseProfileReview extends StatefulWidget {
 }
 
 class _NurseProfileReviewState extends State<NurseProfileReview> {
+  late Future<List<ListFeedbackForSpecificNurseModel>>
+      listFeedbackForSpecificNurseModel;
+
   NurseBloc nurseBloc = NurseBloc();
   static const _pageSize = 30;
   final PagingController<int, ListFeedbackForSpecificNurseModel>
@@ -82,6 +85,12 @@ class _NurseProfileReviewState extends State<NurseProfileReview> {
     }
   }
 
+  Future<List<ListFeedbackForSpecificNurseModel>> getListFeedback() async {
+    ListFeedbackResponseModel rejectReasonListResponseModel = await nurseBloc
+        .getListFeedbackForSpecificNurse(nurseHistoryFilterRequestModel);
+    return rejectReasonListResponseModel.data!;
+  }
+
   @override
   void initState() {
     // TODO: implement initState
@@ -91,6 +100,7 @@ class _NurseProfileReviewState extends State<NurseProfileReview> {
     _nursePagingController.addPageRequestListener((pageKey) {
       _fetchPage(pageKey);
     });
+    listFeedbackForSpecificNurseModel = getListFeedback();
   }
 
   final int charactersLimit = 150;
@@ -250,164 +260,348 @@ class _NurseProfileReviewState extends State<NurseProfileReview> {
     //     ),
     //   ],
     // );
-    return CustomScrollView(
-          slivers: <Widget>[
-            PagedSliverList<int, ListFeedbackForSpecificNurseModel>(
-              pagingController: _nursePagingController,
-              builderDelegate:
-                  PagedChildBuilderDelegate<ListFeedbackForSpecificNurseModel>(
-                      firstPageProgressIndicatorBuilder: (context) {
-                        return ThemeSpinner.spinner();
-                      },
-                      newPageProgressIndicatorBuilder: (context) {
-                        return ThemeSpinner.spinner();
-                      },
-                      noItemsFoundIndicatorBuilder: (context) => EmptyList(
-                            icon: Icons.work_outline,
-                            title: "No review found",
-                            subtitle: "No review available",
-                            query: '',
+    return FutureBuilder<List<ListFeedbackForSpecificNurseModel>>(
+        future: listFeedbackForSpecificNurseModel,
+        builder: (context, snapshot) {
+          if (snapshot.data != null) {
+            return ListView.builder(
+                itemCount: snapshot.data!.length,
+                shrinkWrap: true,
+                itemBuilder: (context, index) {
+                  return Column(
+                    children: [
+                      Text(
+                        "Review",
+                        style: TextStyle(fontWeight: FontWeight.bold),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.all(15),
+                        child: Expanded(
+                          child: Container(
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                // image
+                                SizedBox(
+                                  width: 40,
+                                  height: 40,
+                                  child: CachedNetworkImage(
+                                    imageUrl: snapshot
+                                        .data![index].profilePicUserFrom!,
+                                    imageBuilder: (context, imageProvider) =>
+                                        Container(
+                                      decoration: BoxDecoration(
+                                        borderRadius: BorderRadius.circular(20),
+                                        image: DecorationImage(
+                                          image: imageProvider,
+                                          fit: BoxFit.cover,
+                                        ),
+                                      ),
+                                    ),
+                                    placeholder: (context, url) =>
+                                        const CircularProgressIndicator(
+                                      color: kPrimaryColor,
+                                    ),
+                                    errorWidget: (context, url, error) =>
+                                        const Icon(Icons.error),
+                                  ),
+                                ),
+
+                                SizedBox(width: 5),
+                                Expanded(
+                                  child: Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      Space(7),
+                                      Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.start,
+                                        children: [
+                                          RatingBarIndicator(
+                                            itemBuilder: (context, index) =>
+                                                Icon(
+                                              _selectedIcon ?? Icons.star,
+                                              color: kPrimaryColor,
+                                            ),
+                                            rating: double.parse(snapshot
+                                                .data![index].rating
+                                                .toString()),
+                                            itemCount: 5,
+                                            itemSize: 15.0,
+                                            unratedColor: Color.fromRGBO(
+                                                4, 99, 128, 0.39),
+                                          ),
+                                          SizedBox(
+                                            width: 5,
+                                          ),
+                                          Text(
+                                            snapshot.data![index].rating
+                                                .toString(),
+                                            style: TextStyle(
+                                              color: kGrey,
+                                              fontFamily: "Poppins",
+                                              fontWeight: FontWeight.w700,
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                      Space(5),
+                                      //Comment
+                                      Text(
+                                        snapshot.data![index].comment!,
+                                        style: TextStyle(
+                                            color: kDarkGrey,
+                                            fontFamily: "Poppins"),
+                                      ),
+                                      Space(10),
+                                      //Comment's Image
+                                      SizedBox(
+                                        width: 80,
+                                        height: 80,
+                                        child: CachedNetworkImage(
+                                          imageUrl: snapshot
+                                              .data![index].feedbackPhotoPath!,
+                                          imageBuilder:
+                                              (context, imageProvider) =>
+                                                  Container(
+                                            decoration: BoxDecoration(
+                                              borderRadius:
+                                                  BorderRadius.circular(5),
+                                              image: DecorationImage(
+                                                image: imageProvider,
+                                                fit: BoxFit.cover,
+                                              ),
+                                            ),
+                                          ),
+                                          placeholder: (context, url) =>
+                                              const CircularProgressIndicator(
+                                            color: kPrimaryColor,
+                                          ),
+                                          errorWidget: (context, url, error) =>
+                                              const Icon(Icons.error),
+                                        ),
+                                      ),
+                                      Space(10),
+                                      //Date and time of comment
+                                      Row(
+                                        children: [
+                                          Text(
+                                            snapshot.data![index].date!,
+                                            style: TextStyle(
+                                              color: kGrey,
+                                              fontFamily: "Poppins",
+                                              fontSize: 10,
+                                            ),
+                                          ),
+                                          Text(
+                                            " | ",
+                                            style: TextStyle(
+                                              color: kGrey,
+                                              fontFamily: "Poppins",
+                                              fontSize: 10,
+                                            ),
+                                          ),
+                                          Text(
+                                            snapshot.data![index].time!,
+                                            style: TextStyle(
+                                              color: kGrey,
+                                              fontFamily: "Poppins",
+                                              fontSize: 10,
+                                            ),
+                                          ),
+                                        ],
+                                      )
+                                    ],
+                                  ),
+                                )
+                              ],
+                            ),
                           ),
-                      animateTransitions: true,
-                      itemBuilder: (context, reviewModel, index) {
-                        return reviewItem(context, index, reviewModel);
-                      }),
-            )
-          ],
-        );
+                        ),
+                      ),
+                    ],
+                  );
+                });
+          } else {
+            return Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  "Review",
+                  style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.all(15.0),
+                  child: Text(
+                    "No review yet.",
+                    style: TextStyle(fontFamily: "Poppins", color: kGrey),
+                  ),
+                ),
+              ],
+            );
+          }
+        });
+    // CustomScrollView(
+    //       slivers: <Widget>[
+    //         PagedSliverList<int, ListFeedbackForSpecificNurseModel>(
+    //           pagingController: _nursePagingController,
+    //           builderDelegate:
+    //               PagedChildBuilderDelegate<ListFeedbackForSpecificNurseModel>(
+    //                   firstPageProgressIndicatorBuilder: (context) {
+    //                     return ThemeSpinner.spinner();
+    //                   },
+    //                   newPageProgressIndicatorBuilder: (context) {
+    //                     return ThemeSpinner.spinner();
+    //                   },
+    //                   noItemsFoundIndicatorBuilder: (context) => EmptyList(
+    //                         icon: Icons.work_outline,
+    //                         title: "No review found",
+    //                         subtitle: "No review available",
+    //                         query: '',
+    //                       ),
+    //                   animateTransitions: true,
+    //                   itemBuilder: (context, reviewModel, index) {
+    //                     return reviewItem(context, index, reviewModel);
+    //                   }),
+    //         )
+    //       ],
+    //     );
   }
 
   Widget reviewItem(BuildContext context, int index,
       ListFeedbackForSpecificNurseModel reviewModel) {
     return Padding(
-        padding: const EdgeInsets.all(15),
-        child: Container(
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.start,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              // image
-              SizedBox(
-                width: 40,
-                height: 40,
-                child: CachedNetworkImage(
-                  imageUrl: reviewModel.profilePicUserFrom!,
-                  imageBuilder: (context, imageProvider) => Container(
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(20),
-                      image: DecorationImage(
-                        image: imageProvider,
-                        fit: BoxFit.cover,
-                      ),
+      padding: const EdgeInsets.all(15),
+      child: Container(
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            // image
+            SizedBox(
+              width: 40,
+              height: 40,
+              child: CachedNetworkImage(
+                imageUrl: reviewModel.profilePicUserFrom!,
+                imageBuilder: (context, imageProvider) => Container(
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(20),
+                    image: DecorationImage(
+                      image: imageProvider,
+                      fit: BoxFit.cover,
                     ),
                   ),
-                  placeholder: (context, url) =>
-                      const CircularProgressIndicator(
-                    color: kPrimaryColor,
-                  ),
-                  errorWidget: (context, url, error) => const Icon(Icons.error),
                 ),
+                placeholder: (context, url) => const CircularProgressIndicator(
+                  color: kPrimaryColor,
+                ),
+                errorWidget: (context, url, error) => const Icon(Icons.error),
               ),
+            ),
 
-              SizedBox(width: 5),
-              Expanded(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Space(7),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      children: [
-                        RatingBarIndicator(
-                          itemBuilder: (context, index) => Icon(
-                            _selectedIcon ?? Icons.star,
-                            color: kPrimaryColor,
-                          ),
-                          rating: double.parse(reviewModel.rating.toString()),
-                          itemCount: 5,
-                          itemSize: 15.0,
-                          unratedColor: Color.fromRGBO(4, 99, 128, 0.39),
-                        ),
-                        SizedBox(
-                          width: 5,
-                        ),
-                        Text(
-                          reviewModel.rating.toString(),
-                          style: TextStyle(
-                            color: kGrey,
-                            fontFamily: "Poppins",
-                            fontWeight: FontWeight.w700,
-                          ),
-                        ),
-                      ],
-                    ),
-                    Space(5),
-                    //Comment
-                    Text(
-                      reviewModel.comment!,
-                      style: TextStyle(color: kDarkGrey, fontFamily: "Poppins"),
-                    ),
-                    Space(10),
-                    //Comment's Image
-                    SizedBox(
-                      width: 80,
-                      height: 80,
-                      child: CachedNetworkImage(
-                        imageUrl: reviewModel.feedbackPhotoPath!,
-                        imageBuilder: (context, imageProvider) => Container(
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(5),
-                            image: DecorationImage(
-                              image: imageProvider,
-                              fit: BoxFit.cover,
-                            ),
-                          ),
-                        ),
-                        placeholder: (context, url) =>
-                            const CircularProgressIndicator(
+            SizedBox(width: 5),
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Space(7),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: [
+                      RatingBarIndicator(
+                        itemBuilder: (context, index) => Icon(
+                          _selectedIcon ?? Icons.star,
                           color: kPrimaryColor,
                         ),
-                        errorWidget: (context, url, error) =>
-                            const Icon(Icons.error),
+                        rating: double.parse(reviewModel.rating.toString()),
+                        itemCount: 5,
+                        itemSize: 15.0,
+                        unratedColor: Color.fromRGBO(4, 99, 128, 0.39),
                       ),
+                      SizedBox(
+                        width: 5,
+                      ),
+                      Text(
+                        reviewModel.rating.toString(),
+                        style: TextStyle(
+                          color: kGrey,
+                          fontFamily: "Poppins",
+                          fontWeight: FontWeight.w700,
+                        ),
+                      ),
+                    ],
+                  ),
+                  Space(5),
+                  //Comment
+                  Text(
+                    reviewModel.comment!,
+                    style: TextStyle(color: kDarkGrey, fontFamily: "Poppins"),
+                  ),
+                  Space(10),
+                  //Comment's Image
+                  SizedBox(
+                    width: 80,
+                    height: 80,
+                    child: CachedNetworkImage(
+                      imageUrl: reviewModel.feedbackPhotoPath!,
+                      imageBuilder: (context, imageProvider) => Container(
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(5),
+                          image: DecorationImage(
+                            image: imageProvider,
+                            fit: BoxFit.cover,
+                          ),
+                        ),
+                      ),
+                      placeholder: (context, url) =>
+                          const CircularProgressIndicator(
+                        color: kPrimaryColor,
+                      ),
+                      errorWidget: (context, url, error) =>
+                          const Icon(Icons.error),
                     ),
-                    Space(10),
-                    //Date and time of comment
-                    Row(
-                      children: [
-                        Text(
-                          reviewModel.date!,
-                          style: TextStyle(
-                            color: kGrey,
-                            fontFamily: "Poppins",
-                            fontSize: 10,
-                          ),
+                  ),
+                  Space(10),
+                  //Date and time of comment
+                  Row(
+                    children: [
+                      Text(
+                        reviewModel.date!,
+                        style: TextStyle(
+                          color: kGrey,
+                          fontFamily: "Poppins",
+                          fontSize: 10,
                         ),
-                        Text(
-                          " | ",
-                          style: TextStyle(
-                            color: kGrey,
-                            fontFamily: "Poppins",
-                            fontSize: 10,
-                          ),
+                      ),
+                      Text(
+                        " | ",
+                        style: TextStyle(
+                          color: kGrey,
+                          fontFamily: "Poppins",
+                          fontSize: 10,
                         ),
-                        Text(
-                          reviewModel.time!,
-                          style: TextStyle(
-                            color: kGrey,
-                            fontFamily: "Poppins",
-                            fontSize: 10,
-                          ),
+                      ),
+                      Text(
+                        reviewModel.time!,
+                        style: TextStyle(
+                          color: kGrey,
+                          fontFamily: "Poppins",
+                          fontSize: 10,
                         ),
-                      ],
-                    )
-                  ],
-                ),
-              )
-            ],
-          ),
+                      ),
+                    ],
+                  )
+                ],
+              ),
+            )
+          ],
         ),
-      );
+      ),
+    );
   }
 }
 

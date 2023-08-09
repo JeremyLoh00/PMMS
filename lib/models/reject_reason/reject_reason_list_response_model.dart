@@ -3,13 +3,13 @@ import 'package:private_nurse_for_client/models/paginator_model.dart';
 import 'package:private_nurse_for_client/models/reject_reason/list_reject_reason_model.dart';
 
 class RejectReasonListResponseModel
-    extends BaseAPIResponse<ListRejectReasonModel, void> {
+    extends BaseAPIResponse<List<ListRejectReasonModel>, void> {
   RejectReasonListResponseModel(fullJson) : super(fullJson);
 
   @override
-  dataToJson(ListRejectReasonModel? data) {
+  dataToJson(List<ListRejectReasonModel>? data) {
     if (data != null) {
-      return this.data?.toJson();
+      return this.data?.map((v) => v.toJson()).toList();
     }
     return null;
   }
@@ -20,9 +20,18 @@ class RejectReasonListResponseModel
   }
 
   @override
-  ListRejectReasonModel? jsonToData(Map<String, dynamic>? json) {
-       return json!["data"] != null ? ListRejectReasonModel.fromJson(json["data"]) : null;
+  List<ListRejectReasonModel>? jsonToData(Map<String, dynamic>? json) {
+     if (json != null) {
+      data = [];
 
+      json["data"].forEach((v) {
+        data!.add(ListRejectReasonModel.fromJson(v));
+      });
+
+      return data!;
+    }
+
+    return null;
   }
 
   @override

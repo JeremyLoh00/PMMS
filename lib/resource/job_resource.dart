@@ -36,16 +36,16 @@ class JobResource {
         });
   }
 
-  static Resource applyJob(int jobId) {
+  static Resource acceptJob(int jobId) {
     return Resource(
-        url: 'client/jobs/$jobId/apply-jobs',
+        url: 'client/jobs/$jobId/accept',
         parse: (response) {
           return DefaultResponseModel(json.decode(response.body));
         });
   }
-  static Resource ongoingJob(int jobId) {
+  static Resource rejectJob(int jobId) {
     return Resource(
-        url: 'client/jobs/$jobId/ongoing-jobs',
+        url: 'client/jobs/$jobId/reject',
         parse: (response) {
           return DefaultResponseModel(json.decode(response.body));
         });
@@ -76,7 +76,7 @@ class JobResource {
         url: 'client/jobs/1/review',
         data: reviewNurseRequestModel.toJson(),
         parse: (response) {
-          return JobStoreResponseModel(json.decode(response.body));
+          return DefaultResponseModel(json.decode(response.body));
         });
   }
 }

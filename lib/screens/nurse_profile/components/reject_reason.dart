@@ -2,10 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:private_nurse_for_client/bloc/reject_reason_bloc.dart';
 import 'package:private_nurse_for_client/constant.dart';
 import 'package:private_nurse_for_client/helpers/http_response.dart';
+import 'package:private_nurse_for_client/models/default_response_model.dart';
 import 'package:private_nurse_for_client/models/reject_reason/list_reject_reason_model.dart';
 import 'package:private_nurse_for_client/models/reject_reason/reject_reason_list_response_model.dart';
 import 'package:private_nurse_for_client/public_components/button_primary.dart';
 import 'package:private_nurse_for_client/public_components/space.dart';
+import 'package:private_nurse_for_client/public_components/theme_snack_bar.dart';
 
 class RejectReason extends StatefulWidget {
   const RejectReason({super.key});
@@ -22,7 +24,7 @@ List<String> listReason = [
 ];
 
 class _RejectReasonState extends State<RejectReason> {
-  late Future<ListRejectReasonModel> rejectReasonModel;
+  late Future<List<ListRejectReasonModel>> rejectReasonModel;
 
   RejectReasonBloc rejectReasonBloc = RejectReasonBloc();
   void initState() {
@@ -30,7 +32,7 @@ class _RejectReasonState extends State<RejectReason> {
     super.initState();
   }
 
-  Future<ListRejectReasonModel> getRejectReason() async {
+  Future<List<ListRejectReasonModel>> getRejectReason() async {
     RejectReasonListResponseModel rejectReasonListResponseModel =
         await rejectReasonBloc.getListRejectReason();
     return rejectReasonListResponseModel.data!;
@@ -38,6 +40,24 @@ class _RejectReasonState extends State<RejectReason> {
 
   String raasonOption = listReason[0];
   TextEditingController comment = TextEditingController();
+
+  final List<String> _selectedItems = [];
+
+// This function is triggered when a checkbox is checked or unchecked
+  void _itemChange(String itemValue, bool isSelected) {
+    setState(() {
+      if (isSelected) {
+        _selectedItems.add(itemValue);
+      } else {
+        _selectedItems.remove(itemValue);
+      }
+    });
+  }
+
+  bool _isLoadingAccept = false;
+  bool _isLoadingReject = false;
+  bool _isLoading = false;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -59,23 +79,52 @@ class _RejectReasonState extends State<RejectReason> {
                   style: TextStyle(
                       fontFamily: "Poppins", fontWeight: FontWeight.bold),
                 ),
-                FutureBuilder<ListRejectReasonModel>(
+                FutureBuilder<List<ListRejectReasonModel>>(
                     future: rejectReasonModel,
                     builder: (context, snapshot) {
                       if (snapshot.data != null) {
-                        return CheckboxListTile(
-                          controlAffinity: ListTileControlAffinity.leading,
-                          title: Text(
-                            snapshot.data!.name!,
-                            style: TextStyle(
-                              fontFamily: "Poppins",
-                            ),
-                          ),
-                          value: false,
-                          onChanged: (value) {
-                            setState(() {
-                              value = true;
-                            });
+                        // return CheckboxListTile(
+                        //   controlAffinity: ListTileControlAffinity.leading,
+                        //   title: Text(
+                        //     snapshot.data!.name!,
+                        //     style: TextStyle(
+                        //       fontFamily: "Poppins",
+                        //     ),
+                        //   ),
+                        //   value: false,
+                        //   onChanged: (value) {
+                        //     setState(() {
+                        //       value = true;
+                        //     });
+                        //   },
+                        // );
+                        return ListView.builder(
+                          itemCount: snapshot.data!.length,
+                          shrinkWrap: true,
+                          itemBuilder: (context, index) {
+                            return CheckboxListTile(
+                              controlAffinity: ListTileControlAffinity.leading,
+                              title: Text(
+                                snapshot.data![index].name!,
+                                style: TextStyle(
+                                  fontFamily: "Poppins",
+                                ),
+                              ),
+                              value: _selectedItems
+                                  .contains(snapshot.data![index].name!),
+                              onChanged: (isChecked) => _itemChange(
+                                  snapshot.data![index].name!, isChecked!),
+                            );
+                            // RadioListTile(
+                            //   title: Text(listReason[index]),
+                            //   value: listReason[index],
+                            //   groupValue: raasonOption,
+                            //   onChanged: (value) {
+                            //     setState(() {
+                            //       raasonOption = value.toString();
+                            //     });
+                            //   },
+                            // );
                           },
                         );
                       } else {
@@ -151,7 +200,9 @@ class _RejectReasonState extends State<RejectReason> {
         padding: const EdgeInsets.all(30.0),
         child: ButtonPrimary(
           "Submit",
-          onPressed: () {},
+          onPressed: () {
+            rejectReason();
+          },
           rounded: false,
         ),
       ),
@@ -181,5 +232,26 @@ class _RejectReasonState extends State<RejectReason> {
         },
       ),
     );
+  }
+
+  Future<void> rejectReason() async {
+    setState(() {
+      _isLoadingReject = true;
+    });
+    DefaultResponseModel responseModel =
+        await rejectReasonBloc.rejectNurse(1);
+
+    setState(() {
+      _isLoadingAccept = false;
+    });
+    if (responseModel.isSuccess) {
+      if (mounted) {
+        ThemeSnackBar.showSnackBar(context, responseModel.message);
+      }
+    } else {
+      if (mounted) {
+        ThemeSnackBar.showSnackBar(context, responseModel.message);
+      }
+    }
   }
 }

@@ -5,13 +5,15 @@ import 'package:image_picker/image_picker.dart';
 import 'package:private_nurse_for_client/constant.dart';
 import 'package:private_nurse_for_client/form_bloc/store_review_form_bloc.dart';
 import 'package:private_nurse_for_client/models/feedback/feedback_model.dart';
+import 'package:private_nurse_for_client/models/job/job_model.dart';
 import 'package:private_nurse_for_client/public_components/button_primary.dart';
 import 'package:private_nurse_for_client/public_components/space.dart';
 import 'package:private_nurse_for_client/public_components/theme_snack_bar.dart';
 import 'package:private_nurse_for_client/screens/review/components/file_uploader_edit_profile.dart';
 
 class Review extends StatefulWidget {
-  const Review({super.key});
+  final JobModel jobModel;
+  const Review({super.key, required this.jobModel});
 
   @override
   State<Review> createState() => _ReviewState();
@@ -28,7 +30,9 @@ class _ReviewState extends State<Review> {
       create: (context) => StoreReviewFormBloc(),
       child: Builder(builder: (context) {
         final StoreReviewFormBloc storeReviewFormBloc =
-            BlocProvider.of<StoreReviewFormBloc>(context);
+            BlocProvider.of<StoreReviewFormBloc>(
+          context,
+        );
 
         return FormBlocListener<StoreReviewFormBloc, String, String>(
           // On submitting

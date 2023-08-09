@@ -61,7 +61,6 @@ class _BlockedNurseScreenState extends State<BlockedNurseScreen> {
       // If success
       if (response.statusCode == HttpResponse.HTTP_OK) {
         List<UserModel> listNurseModel = response.data!;
-
         // Compare the lenght with the page size to know either already last page or not
         final isLastPage = listNurseModel.length < _pageSize;
         if (isLastPage) {

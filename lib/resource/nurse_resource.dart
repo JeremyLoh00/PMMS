@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:private_nurse_for_client/models/default_response_model.dart';
 import 'package:private_nurse_for_client/models/user/list_user_response_model.dart';
 import 'package:private_nurse_for_client/models/nurse/nurse_filter_request_model.dart';
 import 'package:private_nurse_for_client/services/resource.dart';
@@ -56,6 +57,13 @@ class NurseResource {
         },
         parse: (response) {
           return ListUserResponseModel(json.decode(response.body));
+        });
+  }
+  static Resource blockNurse(int nurseId) {
+    return Resource(
+        url: 'client/nurse-history/block/$nurseId',
+        parse: (response) {
+          return DefaultResponseModel(json.decode(response.body));
         });
   }
 }

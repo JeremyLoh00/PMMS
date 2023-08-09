@@ -13,4 +13,8 @@ class RejectReasonBloc {
   Future<RejectReasonListResponseModel> getListRejectReason() async {
     return await WebService.get(RejectReasonResource.getListRejectReason());
   }
+   Future<DefaultResponseModel> rejectNurse(int rejectId) async {
+    return await WebService.put(RejectReasonResource.rejectNurse(rejectId));
+  }
+
 }

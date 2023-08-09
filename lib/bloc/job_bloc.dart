@@ -19,12 +19,12 @@ class JobsBloc {
     return await WebService.post(JobResource.storeJob(jobModel));
   }
 
-  Future<DefaultResponseModel> applyJob(int jobId) async {
-    return await WebService.post(JobResource.applyJob(jobId));
+  Future<DefaultResponseModel> acceptJob(int jobId) async {
+    return await WebService.put(JobResource.acceptJob(jobId));
   }
 
-  Future<DefaultResponseModel> ongoingJob(int jobId) async {
-    return await WebService.post(JobResource.ongoingJob(jobId));
+  Future<DefaultResponseModel> rejectJob(int jobId) async {
+    return await WebService.put(JobResource.rejectJob(jobId));
   }
 
   Future<DefaultResponseModel> completeJob(int jobId) async {

@@ -64,7 +64,7 @@ class _JobDescriptionState extends State<JobDescription> {
                       padding: const EdgeInsets.all(15.0),
                       child: ButtonPrimary(
                         "Review",
-                        onPressed: () => navigateTo(context, Review()),
+                        onPressed: () => navigateTo(context, Review(jobModel: widget.jobModel,)),
                         loadingText: "Updating...",
                       ),
                     )

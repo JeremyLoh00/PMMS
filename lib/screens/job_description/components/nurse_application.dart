@@ -54,6 +54,7 @@ class _NurseApplicationState extends State<NurseApplication> {
                         NurseProfile(
                           lsitOfAppliedNurseModel:
                               widget.jobModel.listOfAppliedNurse![index],
+                              jobModel: widget.jobModel,
                           hasButton: true,
                         ),
                       );
@@ -63,6 +64,7 @@ class _NurseApplicationState extends State<NurseApplication> {
                         NurseProfile(
                           lsitOfAppliedNurseModel:
                               widget.jobModel.listOfAppliedNurse![index],
+                               jobModel: widget.jobModel,
                           hasButton: true,
                         ),
                       );
@@ -72,6 +74,7 @@ class _NurseApplicationState extends State<NurseApplication> {
                         NurseProfile(
                           lsitOfAppliedNurseModel:
                               widget.jobModel.listOfAppliedNurse![index],
+                               jobModel: widget.jobModel,
                           hasButton: true,
                         ),
                       );
@@ -81,6 +84,7 @@ class _NurseApplicationState extends State<NurseApplication> {
                         NurseProfile(
                           lsitOfAppliedNurseModel:
                               widget.jobModel.listOfAppliedNurse![index],
+                               jobModel: widget.jobModel,
                           hasButton: true, 
                         ),
                       );
