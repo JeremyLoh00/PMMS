@@ -39,7 +39,7 @@ class JobsBloc {
     return await WebService.post(JobResource.generateBillPayment());
   }
 
-  Future<DefaultResponseModel> storeReview(ReviewNurseRequestModel reviewNurseRequestModel) async {
-    return await WebService.post(JobResource.storeReview(reviewNurseRequestModel));
+  Future<DefaultResponseModel> storeReview(int jobId, ReviewNurseRequestModel reviewNurseRequestModel) async {
+    return await WebService.post(JobResource.storeReview(jobId, reviewNurseRequestModel));
   }
 }

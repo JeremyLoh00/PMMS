@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_form_bloc/flutter_form_bloc.dart';
 import 'package:private_nurse_for_client/bloc/reject_reason_bloc.dart';
 import 'package:private_nurse_for_client/constant.dart';
+import 'package:private_nurse_for_client/form_bloc/reject_reason_form_bloc.dart';
 import 'package:private_nurse_for_client/helpers/http_response.dart';
 import 'package:private_nurse_for_client/models/default_response_model.dart';
+import 'package:private_nurse_for_client/models/job/job_model.dart';
 import 'package:private_nurse_for_client/models/reject_reason/list_reject_reason_model.dart';
 import 'package:private_nurse_for_client/models/reject_reason/reject_reason_list_response_model.dart';
 import 'package:private_nurse_for_client/public_components/button_primary.dart';
@@ -10,7 +13,8 @@ import 'package:private_nurse_for_client/public_components/space.dart';
 import 'package:private_nurse_for_client/public_components/theme_snack_bar.dart';
 
 class RejectReason extends StatefulWidget {
-  const RejectReason({super.key});
+  final JobModel jobModel;
+  const RejectReason({super.key, required this.jobModel});
 
   @override
   State<RejectReason> createState() => _RejectReasonState();
@@ -54,10 +58,8 @@ class _RejectReasonState extends State<RejectReason> {
     });
   }
 
-  bool _isLoadingAccept = false;
-  bool _isLoadingReject = false;
   bool _isLoading = false;
-
+  // RejectReasonFormBloc rejectReasonFormBloc = RejectReasonFormBloc();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -79,116 +81,76 @@ class _RejectReasonState extends State<RejectReason> {
                   style: TextStyle(
                       fontFamily: "Poppins", fontWeight: FontWeight.bold),
                 ),
+                Space(5),
                 FutureBuilder<List<ListRejectReasonModel>>(
                     future: rejectReasonModel,
                     builder: (context, snapshot) {
                       if (snapshot.data != null) {
-                        // return CheckboxListTile(
-                        //   controlAffinity: ListTileControlAffinity.leading,
-                        //   title: Text(
-                        //     snapshot.data!.name!,
-                        //     style: TextStyle(
-                        //       fontFamily: "Poppins",
-                        //     ),
-                        //   ),
-                        //   value: false,
-                        //   onChanged: (value) {
-                        //     setState(() {
-                        //       value = true;
-                        //     });
-                        //   },
-                        // );
-                        return ListView.builder(
-                          itemCount: snapshot.data!.length,
-                          shrinkWrap: true,
-                          itemBuilder: (context, index) {
-                            return CheckboxListTile(
-                              controlAffinity: ListTileControlAffinity.leading,
-                              title: Text(
-                                snapshot.data![index].name!,
-                                style: TextStyle(
-                                  fontFamily: "Poppins",
+                        return Padding(
+                          padding: const EdgeInsets.only(top:8.0),
+                          child: ListView.builder(
+                            itemCount: snapshot.data!.length,
+                            shrinkWrap: true,
+                            itemBuilder: (context, index) {
+                              return Padding(
+                                padding: const EdgeInsets.only(bottom: 10.0,),
+                                child: Row(
+                                  children: [
+                                    SizedBox(
+                                      width: 20,
+                                      height: 20,
+                                      child: Checkbox(
+                                        materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                                        shape: RoundedRectangleBorder(
+                                            borderRadius: BorderRadius.circular(5)),
+                                        checkColor: kWhite,
+                                        activeColor: kPrimaryColor,
+                                        // controlAffinity: ListTileControlAffinity.leading,
+                                        // title: Text(
+                                        //   snapshot.data![index].name!,
+                                        //   style: TextStyle(
+                                        //     fontFamily: "Poppins",
+                                        //   ),
+                                        // ),
+                                        value: _selectedItems
+                                            .contains(snapshot.data![index].name!),
+                                        onChanged: (isChecked) => _itemChange(
+                                            snapshot.data![index].name!, isChecked!),
+                                      ),
+                                    ),
+                                    SizedBox(width: 30,),
+                                    Text(
+                                      snapshot.data![index].name!,
+                                      style: TextStyle(
+                                        fontFamily: "Poppins",
+                                      ),
+                                    ),
+                                  ],
                                 ),
-                              ),
-                              value: _selectedItems
-                                  .contains(snapshot.data![index].name!),
-                              onChanged: (isChecked) => _itemChange(
-                                  snapshot.data![index].name!, isChecked!),
-                            );
-                            // RadioListTile(
-                            //   title: Text(listReason[index]),
-                            //   value: listReason[index],
-                            //   groupValue: raasonOption,
-                            //   onChanged: (value) {
-                            //     setState(() {
-                            //       raasonOption = value.toString();
-                            //     });
-                            //   },
-                            // );
-                          },
+                              );
+                              // RadioListTile(
+                              //   title: Text(listReason[index]),
+                              //   value: listReason[index],
+                              //   groupValue: raasonOption,
+                              //   onChanged: (value) {
+                              //     setState(() {
+                              //       raasonOption = value.toString();
+                              //     });
+                              //   },
+                              // );
+                            },
+                          ),
                         );
                       } else {
                         return const SizedBox();
                       }
-                      // return ListView.builder(
-                      //   itemCount: snapshot.data,
-                      //   shrinkWrap: true,
-                      //   itemBuilder: (context, index) {
-                      //     return CheckboxListTile(
-                      //       controlAffinity: ListTileControlAffinity.leading,
-                      //       title: Text(
-                      //         listReason[index],
-                      //         style: TextStyle(
-                      //           fontFamily: "Poppins",
-                      //         ),
-                      //       ),
-                      //       value: false,
-                      //       onChanged: (value) {
-                      //         setState(() {
-                      //           value = true;
-                      //         });
-                      //       },
-                      //     );
-                      //     // RadioListTile(
-                      //     //   title: Text(listReason[index]),
-                      //     //   value: listReason[index],
-                      //     //   groupValue: raasonOption,
-                      //     //   onChanged: (value) {
-                      //     //     setState(() {
-                      //     //       raasonOption = value.toString();
-                      //     //     });
-                      //     //   },
-                      //     // );
-                      //   },
-                      // );
                     }),
-                // SizedBox(
-                //   height: 10,
-                // ),
-                // Container(
-                //   height: 200,
-                //   child: Padding(
-                //     padding: const EdgeInsets.only(right: 30.0, left: 10.0),
-                //     child: TextFormField(
-                //       controller: comment,
-                //       keyboardType: TextInputType.multiline,
-                //       maxLines: null,
-                //       expands: true,
-                //       decoration: InputDecoration(
-                //         contentPadding:
-                //             const EdgeInsets.symmetric(horizontal: 10.0),
-                //         enabled: true,
-                //         hintText: 'Explain reject reason here....',
-                //         labelText: 'Reasons',
-                //         border: OutlineInputBorder(
-                //           borderSide: BorderSide(
-                //             width: 3,
-                //             color: Colors.grey,
-                //           ),
-                //           borderRadius: BorderRadius.circular(10.0),
-                //         ),
-                //       ),
-                //     ),
+                // CheckboxGroupFieldBlocBuilder<ListRejectReasonModel>(
+                //   canTapItemTile: true,
+                //   multiSelectFieldBloc: rejectReasonFormBloc.rejectReason,
+                //   itemBuilder: (context, item) => FieldItem(
+                //     alignment: AlignmentDirectional.centerEnd,
+                //     child: Text(item.name!),
                 //   ),
                 // ),
               ],
@@ -236,13 +198,12 @@ class _RejectReasonState extends State<RejectReason> {
 
   Future<void> rejectReason() async {
     setState(() {
-      _isLoadingReject = true;
+      _isLoading = true;
     });
-    DefaultResponseModel responseModel =
-        await rejectReasonBloc.rejectNurse(1);
+    DefaultResponseModel responseModel = await rejectReasonBloc.rejectNurse(1);
 
     setState(() {
-      _isLoadingAccept = false;
+      _isLoading = false;
     });
     if (responseModel.isSuccess) {
       if (mounted) {

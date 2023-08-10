@@ -3,20 +3,32 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:flutter_scale_tap/flutter_scale_tap.dart';
+import 'package:iconsax/iconsax.dart';
+import 'package:private_nurse_for_client/bloc/nurse_bloc.dart';
 import 'package:private_nurse_for_client/constant.dart';
+import 'package:private_nurse_for_client/models/default_response_model.dart';
 import 'package:private_nurse_for_client/models/nurse/nurse_model.dart';
 import 'package:private_nurse_for_client/models/user/user_model.dart';
+import 'package:private_nurse_for_client/public_components/custom_dialog.dart';
 import 'package:private_nurse_for_client/public_components/space.dart';
+import 'package:private_nurse_for_client/public_components/theme_snack_bar.dart';
 import 'package:private_nurse_for_client/public_components/theme_spinner.dart';
 import 'package:private_nurse_for_client/theme.dart';
 
-class NurseBlockedItem extends StatelessWidget {
+class NurseBlockedItem extends StatefulWidget {
   final UserModel userModel;
-  const NurseBlockedItem({
-    super.key,
+  NurseBlockedItem({
+    Key? key,
     required this.userModel,
-  });
+  }) : super(key: key);
 
+  @override
+  State<NurseBlockedItem> createState() => _NurseBlockedItemState();
+}
+
+class _NurseBlockedItemState extends State<NurseBlockedItem> {
+  bool _isLoading = false;
+  NurseBloc nurseBloc = NurseBloc();
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -43,9 +55,9 @@ class NurseBlockedItem extends StatelessWidget {
                 width: 100,
                 height: 100,
                 child: CachedNetworkImage(
-                  imageUrl: userModel.profilePhoto == null
+                  imageUrl: widget.userModel.profilePhoto == null
                       ? ""
-                      : userModel.profilePhoto!,
+                      : widget.userModel.profilePhoto!,
                   imageBuilder: (context, imageProvider) => Container(
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(10),
@@ -83,7 +95,8 @@ class NurseBlockedItem extends StatelessWidget {
                             ),
                           ),
                           TextSpan(
-                              text: userModel.nurseModel!.points!.toString(),
+                              text: widget.userModel.nurseModel!.points!
+                                  .toString(),
                               //recognizer: onTapRecognizer,
                               style: TextStyle(
                                 color: kPrimaryColor,
@@ -105,7 +118,7 @@ class NurseBlockedItem extends StatelessWidget {
                   children: [
                     Expanded(
                       child: Text(
-                        userModel.name!,
+                        widget.userModel.name!,
                         maxLines: 1,
                         overflow: TextOverflow.ellipsis,
                         style: TextStyle(
@@ -117,11 +130,11 @@ class NurseBlockedItem extends StatelessWidget {
                   ],
                 ),
                 Text(
-                  userModel.phoneNo!,
+                  widget.userModel.phoneNo!,
                   style: TextStyle(color: kSecondaryColor, fontSize: 10),
                 ),
                 Text(
-                  userModel.nurseModel!.workExperience!,
+                  widget.userModel.nurseModel!.workExperience!,
                   style: TextStyle(fontSize: 10, color: kLightGrey),
                   textAlign: TextAlign.justify,
                 ),
@@ -130,8 +143,8 @@ class NurseBlockedItem extends StatelessWidget {
                   children: [
                     Expanded(
                       child: RatingBarIndicator(
-                        rating:
-                            double.parse(userModel.nurseModel!.averageRating!),
+                        rating: double.parse(
+                            widget.userModel.nurseModel!.averageRating!),
                         itemBuilder: (context, index) => Icon(
                           Icons.star,
                           color: kPrimaryColor,
@@ -143,7 +156,7 @@ class NurseBlockedItem extends StatelessWidget {
                     ),
                     ScaleTap(
                       onPressed: () {
-                        print("unblock nurse");
+                        showUnblockNursePopup(context);
                       },
                       child: Container(
                         padding: const EdgeInsets.symmetric(
@@ -190,7 +203,8 @@ class NurseBlockedItem extends StatelessWidget {
                   text: TextSpan(
                     children: [
                       TextSpan(
-                        text: userModel.nurseModel!.totalFeedback!.toString(),
+                        text: widget.userModel.nurseModel!.totalFeedback!
+                            .toString(),
                         //recognizer: onTapRecognizer,
                         style: const TextStyle(
                           color: kPrimaryColor,
@@ -215,5 +229,48 @@ class NurseBlockedItem extends StatelessWidget {
         ],
       ),
     );
+  }
+
+  // Popup if user want to unblock nurse
+  Future<bool> showUnblockNursePopup(BuildContext context) async {
+    // If cant pop then show this dialog
+    // Unfocus from input field
+    FocusScope.of(context).unfocus();
+    // Show dialog
+    return await CustomDialog.show(
+          context,
+          title: "Unblock Nurse",
+          description: "Are you sure to unblock the nurse?",
+          btnCancelText: "Cancel",
+          btnOkText: "Unblock",
+          btnCancelOnPress: () => Navigator.of(context).pop(),
+          btnOkOnPress: () => {unBlockNurse(), Navigator.of(context).pop(true)},
+          icon: Iconsax.info_circle,
+          // dialogType: DialogType.warning,
+        ) ??
+        // If show dialog return null, return false
+        false;
+  }
+
+  Future<void> unBlockNurse() async {
+    setState(() {
+      _isLoading = true;
+    });
+    DefaultResponseModel responseModel =
+        await nurseBloc.blockNurse(widget.userModel.nurseModel!.id!);
+
+    setState(() {
+      _isLoading = false;
+    });
+    if (responseModel.isSuccess) {
+      if (mounted) {
+        ThemeSnackBar.showSnackBar(context, responseModel.message);
+        Navigator.of(context).pop();
+      }
+    } else {
+      if (mounted) {
+        ThemeSnackBar.showSnackBar(context, responseModel.message);
+      }
+    }
   }
 }

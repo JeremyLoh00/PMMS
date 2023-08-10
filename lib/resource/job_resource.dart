@@ -71,9 +71,9 @@ class JobResource {
           return DefaultResponseModel(json.decode(response.body));
         });
   }
-    static Resource storeReview(ReviewNurseRequestModel reviewNurseRequestModel) {
+    static Resource storeReview(int jobId, ReviewNurseRequestModel reviewNurseRequestModel) {
     return Resource(
-        url: 'client/jobs/1/review',
+        url: 'client/jobs/$jobId/review',
         data: reviewNurseRequestModel.toJson(),
         parse: (response) {
           return DefaultResponseModel(json.decode(response.body));

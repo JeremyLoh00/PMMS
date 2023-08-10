@@ -8,9 +8,11 @@ import 'package:private_nurse_for_client/models/subscription/subscription_model.
 import 'package:private_nurse_for_client/models/user/user_model.dart';
 import 'package:private_nurse_for_client/public_components/button_primary.dart';
 import 'package:private_nurse_for_client/public_components/space.dart';
+
 class SubscriptionScreen extends StatefulWidget {
   final UserModel? userModel;
-  const SubscriptionScreen({super.key, this.userModel});
+  final int? fromCustomeDialog;
+  const SubscriptionScreen({super.key, this.userModel, this.fromCustomeDialog});
 
   @override
   State<SubscriptionScreen> createState() => _SubscriptionScreenState();
@@ -38,10 +40,9 @@ class _SubscriptionScreenState extends State<SubscriptionScreen> {
   @override
   SingingCharacter? _character = SingingCharacter.six;
   Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: () => FocusScope.of(context).unfocus(),
-      child: SafeArea(
-        child: Padding(
+    return Scaffold(
+        appBar: widget.fromCustomeDialog == 1 ? _buildAppBar() : null,
+        body: Padding(
             padding: const EdgeInsets.only(top: 15.0),
             child: Column(children: [
               Text(
@@ -256,6 +257,22 @@ class _SubscriptionScreenState extends State<SubscriptionScreen> {
                     }
                   })
             ])),
+      );
+  }
+
+  AppBar _buildAppBar() {
+    return AppBar(
+      elevation: 0,
+      centerTitle: true,
+      title: Text("Subscription"),
+      backgroundColor: Colors.transparent,
+      leading: IconButton(
+        icon: Icon(
+          Icons.arrow_back,
+        ),
+        onPressed: () {
+          Navigator.pop(context);
+        },
       ),
     );
   }

@@ -23,7 +23,9 @@ class NurseBloc {
     return await WebService.get(
         NurseResource.getListFeedbackForSpecificNurse(nurseHistoryFilterRequestModel));
   }
+  //Bloc or unblock nurse
   Future<DefaultResponseModel> blockNurse(int nurseId) async {
     return await WebService.put(NurseResource.blockNurse(nurseId));
   }
+  
 }

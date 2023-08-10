@@ -6,6 +6,7 @@ import 'package:private_nurse_for_client/bloc/job_bloc.dart';
 import 'package:private_nurse_for_client/bloc/nurse_bloc.dart';
 import 'package:private_nurse_for_client/constant.dart';
 import 'package:private_nurse_for_client/helpers/general_method.dart';
+import 'package:private_nurse_for_client/helpers/http_response.dart';
 import 'package:private_nurse_for_client/models/default_response_model.dart';
 import 'package:private_nurse_for_client/models/job/job_model.dart';
 import 'package:private_nurse_for_client/models/list_of_applied_nurse/list_of_applied_nurse_model.dart';
@@ -16,6 +17,8 @@ import 'package:private_nurse_for_client/public_components/theme_snack_bar.dart'
 import 'package:private_nurse_for_client/screens/nurse_profile/components/nurse_profile_header.dart';
 import 'package:private_nurse_for_client/screens/nurse_profile/components/nurse_profile_review.dart';
 import 'package:private_nurse_for_client/screens/nurse_profile/components/reject_reason.dart';
+import 'package:private_nurse_for_client/screens/payment/payment.dart';
+import 'package:private_nurse_for_client/screens/subscription/subscription_screen.dart';
 import 'package:private_nurse_for_client/theme.dart';
 
 class NurseProfile extends StatefulWidget {
@@ -116,7 +119,7 @@ class _NurseProfileState extends State<NurseProfile> {
                             child: ButtonSecondary(
                               paddingVertical: 17,
                               onPressed: () {
-                                navigateTo(context, RejectReason());
+                                navigateTo(context, RejectReason(jobModel: widget.jobModel,));
                               },
                               text: "Reject",
                             ),
@@ -128,10 +131,12 @@ class _NurseProfileState extends State<NurseProfile> {
                             flex: 2,
                             child: ButtonPrimary(
                               "Hire Me",
-                              onPressed: () => (subCode == 200
-                                  ? showHireNursePopup(context)
-                                  : showSubscriptionPopup(
-                                      context)), //Confirmation of hire OR subscription if not subscribe yet
+                              onPressed: () async {
+                                await showHireNursePopup(context);
+                              },
+                              isLoading: _isLoadingAccept,
+                              loadingText:
+                                  "Accepting...", //Confirmation of hire OR subscription if not subscribe yet
 
                               // showDialog(
                               //   context: context,
@@ -228,9 +233,7 @@ class _NurseProfileState extends State<NurseProfile> {
             ),
           ),
           ScaleTap(
-            onPressed: () => (block == true
-                ? showUnblockNursePopup(context)
-                : showBlockNursePopup(context)),
+            onPressed: () => (showBlockNursePopup(context)),
             child: Text(
               "Block Nurse",
               style: TextStyle(
@@ -257,43 +260,117 @@ class _NurseProfileState extends State<NurseProfile> {
     );
   } // Popup if user want to hire nurse
 
-  Future<bool> showHireNursePopup(BuildContext context) async {
-    // If cant pop then show this dialog
-    // Unfocus from input field
-    FocusScope.of(context).unfocus();
-    // Show dialog
-    return await CustomDialog.show(
-          context,
-          title: "Hire Confirmation",
-          description:
-              "Are you sure to hire this nurse for this job? Retrieve action is not available after accepting the application.",
-          btnCancelText: "Cancel",
-          btnOkText: "Hire",
-          btnCancelOnPress: () => Navigator.of(context).pop(),
-          btnOkOnPress: () => hireNurse(),
-          icon: Iconsax.info_circle,
-          // dialogType: DialogType.warning,
-        ) ??
-        // If show dialog return null, return false
-        false;
-  }
-
-  Future<void> hireNurse() async {
+  Future<void> showHireNursePopup(BuildContext context) async {
     setState(() {
-      _isLoadingAccept = true;
+      _isLoading = true;
     });
     DefaultResponseModel responseModel =
         await jobsBloc.acceptJob(widget.jobModel.id!);
 
     setState(() {
-      _isLoadingAccept = false;
+      _isLoading = false;
+    });
+    if (responseModel.isSuccess) {
+      if (responseModel.statusCode == HttpResponse.HTTP_PAYMENT_REQUIRED) {
+        if (mounted) {
+          // ThemeSnackBar.showSnackBar(context, responseModel.message);
+          CustomDialog.show(
+            context,
+            isDissmissable: true,
+            icon: Icons.warning,
+            dialogType: DialogType.success,
+            title: responseModel.message,
+            description:
+                "Subscription is not complete yet, please subscribe before accepting any nurse.",
+            btnCancelText: "Cancel",
+            btnCancelOnPress: () {
+              Navigator.pop(context);
+            },
+            btnOkText: "View Plan",
+            btnOkOnPress: () async {
+              Navigator.pop(context);
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) {
+                    return SubscriptionScreen(fromCustomeDialog: 1);
+                  },
+                ),
+              );
+            },
+          );
+        }
+      } else if (responseModel.statusCode == HttpResponse.HTTP_BAD_REQUEST) {
+        if (mounted) {
+          ThemeSnackBar.showSnackBar(context, responseModel.message);
+        }
+      } else {
+        if (mounted) {
+          CustomDialog.show(
+            context,
+            title: "Hire Confirmation",
+            description:
+                "Are you sure to hire this nurse for this job? Retrieve action is not available after accepting the application.",
+            btnCancelText: "Cancel",
+            btnOkText: "Hire",
+            btnCancelOnPress: () => Navigator.of(context).pop(),
+            btnOkOnPress: () => hireNurse(),
+            icon: Iconsax.info_circle,
+            dialogType: DialogType.warning,
+          );
+          ThemeSnackBar.showSnackBar(context, responseModel.message);
+        }
+      }
+    } else {
+      if (mounted) {
+         CustomDialog.show(
+            context,
+            isDissmissable: true,
+            icon: Icons.warning,
+            dialogType: DialogType.success,
+            title: responseModel.message,
+            description:
+                "Subscription is not complete yet, please subscribe before accepting any nurse.",
+            btnCancelText: "Cancel",
+            btnCancelOnPress: () {
+              Navigator.pop(context);
+            },
+            btnOkText: "View Plan",
+            btnOkOnPress: () async {
+              Navigator.pop(context);
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) {
+                    return SubscriptionScreen(fromCustomeDialog: 1);
+                  },
+                ),
+              );
+            },
+          );
+        ThemeSnackBar.showSnackBar(context, responseModel.message);
+      }
+    }
+  }
+
+  Future<void> hireNurse() async {
+    setState(() {
+      _isLoading = true;
+    });
+    DefaultResponseModel responseModel =
+        await jobsBloc.acceptJob(widget.jobModel.id!);
+
+    setState(() {
+      _isLoading = false;
     });
     if (responseModel.isSuccess) {
       if (mounted) {
+        print(responseModel.message);
         ThemeSnackBar.showSnackBar(context, responseModel.message);
       }
     } else {
       if (mounted) {
+        print(responseModel.message);
         ThemeSnackBar.showSnackBar(context, responseModel.message);
       }
     }
@@ -344,17 +421,18 @@ class _NurseProfileState extends State<NurseProfile> {
 
   Future<void> blockNurse() async {
     setState(() {
-      _isLoadingAccept = true;
+      _isLoading = true;
     });
     DefaultResponseModel responseModel =
         await nurseBloc.blockNurse(widget.lsitOfAppliedNurseModel.nurse!.id!);
 
     setState(() {
-      _isLoadingAccept = false;
+      _isLoading = false;
     });
     if (responseModel.isSuccess) {
       if (mounted) {
         ThemeSnackBar.showSnackBar(context, responseModel.message);
+        Navigator.of(context).pop();
       }
     } else {
       if (mounted) {

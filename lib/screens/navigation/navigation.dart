@@ -22,6 +22,7 @@ import 'package:private_nurse_for_client/resource/user_resource.dart';
 import 'package:private_nurse_for_client/screens/about_us/about_us_screen.dart';
 import 'package:private_nurse_for_client/screens/contact_us/contact_us_screen.dart';
 import 'package:private_nurse_for_client/screens/dashboard/home_screen.dart';
+import 'package:private_nurse_for_client/screens/history/components/blocked_nurse_screen.dart';
 import 'package:private_nurse_for_client/screens/history/nurse_history_screen.dart';
 import 'package:private_nurse_for_client/screens/navigation/app_bar_type.dart';
 import 'package:private_nurse_for_client/screens/notification/notification_screen.dart';
@@ -510,7 +511,48 @@ class _NavigationState extends State<Navigation> {
           ],
         );
       case 1:
-        return appBarNurseHistory();
+        return AppBar(
+          elevation: 0,
+          centerTitle: true,
+          title: Text(
+            "Nurse History",
+            style: TextStyle(
+              color: kBlack,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+          backgroundColor: Colors.transparent,
+          leading: Builder(
+            builder: (context) => // Ensure Scaffold is in context
+                ScaleTap(
+                    onPressed: () => Scaffold.of(context).openDrawer(),
+                    child: Icon(
+                      Icons.menu,
+                      color: kBlack,
+                    )),
+          ),
+          actions: [
+            ScaleTap(
+              onPressed: () {
+                print("notification");
+                Navigator.push(
+                  context,
+                  CupertinoPageRoute(
+                    builder: (context) {
+                      return BlockedNurseScreen();
+                    },
+                  ),
+                );
+              },
+              child: const Padding(
+                padding: EdgeInsets.only(top: 23,right: 15,),
+                child: Text("Blocked Nurse", style: TextStyle(color: kSecondaryColor,
+              fontWeight: FontWeight.bold,
+              fontSize: 12),)
+              ),
+            ),
+          ],
+        );
       case 2:
         // about us
         return appBarSubscription();

@@ -12,6 +12,7 @@ import 'package:private_nurse_for_client/models/job/job_store_response_model.dar
 import 'package:private_nurse_for_client/models/list_feedback_for_specific_nurse/review_nurse_request_model.dart';
 
 class StoreReviewFormBloc extends FormBloc<String, String> {
+  JobModel jobModel;
   JobsBloc feedbackBloc = new JobsBloc();
   XFile? newFormalPhoto1;
   //Form key declaration and validations
@@ -22,7 +23,8 @@ class StoreReviewFormBloc extends FormBloc<String, String> {
   );
   final newRating = TextFieldBloc();
 
-  StoreReviewFormBloc() {
+  StoreReviewFormBloc(this.jobModel) {
+    
     addFieldBlocs(fieldBlocs: [
       newComment,
       newRating,
@@ -41,7 +43,7 @@ class StoreReviewFormBloc extends FormBloc<String, String> {
 
       //Call API
       DefaultResponseModel responseModel =
-          await feedbackBloc.storeReview(reviewNurseRequestModel);
+          await feedbackBloc.storeReview(jobModel.id!, reviewNurseRequestModel);
 
       if (responseModel.isSuccess) {
         emitSuccess(successResponse: responseModel.data!);

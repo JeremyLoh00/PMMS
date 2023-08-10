@@ -50,7 +50,7 @@ class _BodyState extends State<Body> {
             //Detail container
             Stack(clipBehavior: Clip.none, children: [
               Container(
-                height: 700,
+                height: calcHeight(widget.jobModel.jobSchedule!.length),
               ),
               Positioned(
                 //Position of the float container
@@ -125,5 +125,12 @@ class _BodyState extends State<Body> {
         ),
       ),
     );
+  }
+    double calcHeight(int length) {
+    if (length == 1) {
+      return 450;
+    } else {
+      return 450 + (length * 50);
+    }
   }
 }

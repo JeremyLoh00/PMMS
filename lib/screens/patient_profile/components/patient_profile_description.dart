@@ -1,6 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_scale_tap/flutter_scale_tap.dart';
 import 'package:private_nurse_for_client/constant.dart';
 import 'package:private_nurse_for_client/models/job/job_model.dart';
 import 'package:private_nurse_for_client/public_components/space.dart';
@@ -40,658 +40,443 @@ class _PatientProfileDescriptionState extends State<PatientProfileDescription> {
     'Patient Condition',
     'Emergency Contact',
   ];
+
+  List<String> text1 = [
+    'Hypertension',
+    'Skin Problem',
+  ];
+
+  List<String> text2 = [
+    'Diabetics',
+    'Hypertension',
+    'Skin Problem',
+  ];
+
+  List<String> text3 = [
+    'Bed Bound',
+    'Not Cooperative',
+  ];
+
+  final List<String> patientDiagnosisList = [
+    'Diabetic',
+    'Hipertensi',
+    'Heart Failure',
+    'Kidney Disease',
+    'Dyalisis',
+    'Asthma',
+    'Skin Problem',
+    'Blindness',
+    'Dementia',
+    'Alzheimer',
+    'Stroke',
+    'Other',
+  ];
+  final List<String> patientConditionList = [
+    'Wheelchair Bound',
+    'Bed Bound',
+    'Can Ambulate',
+    'Can Talk and Walk',
+    'Cannot Talk',
+    'Cooperative',
+    'Not Cooperative',
+  ];
+
   @override
   Widget build(BuildContext context) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         //Personal Info
-        ScaleTap(
-          onPressed: null,
-          child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 15),
-            child: Container(
-              padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
-              margin: EdgeInsets.only(top: 10),
-              width: double.infinity,
-              decoration: BoxDecoration(
-                color: kWhite,
-                borderRadius: BorderRadius.circular(10.0),
-                boxShadow: [
-                  profileShadow(
-                    kGrey.withOpacity(0.3),
+        Container(
+          padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 15),
+          margin: EdgeInsets.only(top: 15, right: 15, left: 15),
+          width: double.infinity,
+          decoration: BoxDecoration(
+            color: kWhite,
+            borderRadius: BorderRadius.circular(10.0),
+            boxShadow: [
+              profileShadow(
+                kGrey.withOpacity(0.3),
+              ),
+            ],
+          ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              const Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  Icon(
+                    Icons.person_outline,
+                    color: kPrimaryColor,
+                    size: 20,
+                  ),
+                  SizedBox(
+                    width: 10,
+                  ),
+                  Text(
+                    'Personal Info',
+                    style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      color: kPrimaryColor,
+                      fontSize: 15.0,
+                    ),
                   ),
                 ],
               ),
-              child: Row(
-                // row for 2 column: image and column
-                mainAxisAlignment: MainAxisAlignment.start,
-                crossAxisAlignment: CrossAxisAlignment.start,
+              Divider(
+                color: kGrey,
+                thickness: 0.1,
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  SizedBox(width: 5),
                   Expanded(
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Space(7),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          children: [
-                            Icon(
-                              icon[0],
-                              color: kPrimaryColor,
-                            ),
-                            SizedBox(
-                              width: 10,
-                            ),
-                            Text(
-                              title[0],
-                              style: TextStyle(
-                                fontWeight: FontWeight.bold,
-                                color: kPrimaryColor,
-                                fontSize: 18.0,
-                              ),
-                            ),
-                          ],
-                        ),
-                        Padding(
-                          padding:
-                              const EdgeInsets.only(right: 18.0, left: 20.0),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Space(15.0),
-                                  Text(
-                                    "Phone No.",
-                                    style: textStyleNormal(
-                                      color: kGrey,
-                                      fontWeight: FontWeight.bold,
-                                      fontsize: 12,
-                                    ),
-                                  ),
-                                  Padding(
-                                    padding: const EdgeInsets.only(
-                                      right: 35.0,
-                                      top: 10.0,
-                                      left: 10.0,
-                                      bottom: 10.0,
-                                    ),
-                                    child: Text(
-                                      widget.jobModel.phoneNo!,
-                                      style: textStyleNormal(
-                                        color: kPrimaryColor,
-                                        fontWeight: FontWeight.bold,
-                                        fontsize: 16,
-                                      ),
-                                    ),
-                                  ),
-                                ],
-                              ),
-                              Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Space(15.0),
-                                  Text(
-                                    "Race",
-                                    style: textStyleNormal(
-                                      color: kGrey,
-                                      fontWeight: FontWeight.bold,
-                                      fontsize: 12,
-                                    ),
-                                  ),
-                                  Padding(
-                                    padding: const EdgeInsets.all(10.0),
-                                    child: Text(
-                                      widget.jobModel.patient!.gender!,
-                                      style: textStyleNormal(
-                                        color: kPrimaryColor,
-                                        fontWeight: FontWeight.bold,
-                                        fontsize: 16,
-                                      ),
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ],
+                        Text(
+                          "Age",
+                          style: textStyleNormal(
+                            color: kGrey,
+                            fontWeight: FontWeight.bold,
+                            fontsize: 14,
                           ),
                         ),
-                        Padding(
-                          padding:
-                              const EdgeInsets.only(right: 20.0, left: 20.0),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Space(15.0),
-                              Text(
-                                "Address",
-                                style: textStyleNormal(
-                                  color: kGrey,
-                                  fontWeight: FontWeight.bold,
-                                  fontsize: 12,
-                                ),
-                              ),
-                              Padding(
-                                padding: const EdgeInsets.all(10.0),
-                                child: Text(
-                                  widget.jobModel.address!,
-                                  style: textStyleNormal(
-                                    color: kPrimaryColor,
-                                    fontWeight: FontWeight.bold,
-                                    fontsize: 14,
-                                  ),
-                                ),
-                              ),
-                            ],
+                        Space(5),
+                        Text(
+                          widget.jobModel.patient!.age!,
+                          style: textStyleNormal(
+                            color: kPrimaryColor,
+                            fontWeight: FontWeight.bold,
+                            fontsize: 12,
                           ),
                         ),
                       ],
                     ),
-                  )
+                  ),
+                  Expanded(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          "Race",
+                          style: textStyleNormal(
+                            color: kGrey,
+                            fontWeight: FontWeight.bold,
+                            fontsize: 14,
+                          ),
+                        ),
+                        Space(5),
+                        Text(
+                          widget.jobModel.patient!.race!,
+                          style: textStyleNormal(
+                            color: kPrimaryColor,
+                            fontWeight: FontWeight.bold,
+                            fontsize: 12,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                  Expanded(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          "Nationality",
+                          style: textStyleNormal(
+                            color: kGrey,
+                            fontWeight: FontWeight.bold,
+                            fontsize: 14,
+                          ),
+                        ),
+                        Space(5),
+                        Text(
+                          widget.jobModel.patient!.nationality!,
+                          style: textStyleNormal(
+                            color: kPrimaryColor,
+                            fontWeight: FontWeight.bold,
+                            fontsize: 12,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
                 ],
               ),
-            ),
+            ],
           ),
         ),
+
         //Diagnosis
-        ScaleTap(
-          onPressed: null,
-          child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 15),
-            child: Container(
-              padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
-              margin: EdgeInsets.only(top: 10),
-              width: double.infinity,
-              decoration: BoxDecoration(
-                color: kWhite,
-                borderRadius: BorderRadius.circular(10.0),
-                boxShadow: [
-                  profileShadow(
-                    kGrey.withOpacity(0.3),
-                  ),
-                ],
-              ),
-              child: Row(
-                // row for 2 column: image and column
-                mainAxisAlignment: MainAxisAlignment.start,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  SizedBox(width: 5),
-                  Expanded(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Space(7),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          children: [
-                            Icon(
-                              icon[1],
-                              color: kPrimaryColor,
-                            ),
-                            SizedBox(
-                              width: 10,
-                            ),
-                            Text(
-                              title[1],
-                              style: TextStyle(
-                                fontWeight: FontWeight.bold,
-                                color: kPrimaryColor,
-                                fontSize: 18.0,
-                              ),
-                            ),
-                          ],
-                        ),
-                        Padding(
-                          padding:
-                              const EdgeInsets.only(right: 40.0, left: 20.0),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Space(10.0),
-                              GridView.builder(
-                                physics: NeverScrollableScrollPhysics(),
-                                gridDelegate:
-                                    const SliverGridDelegateWithMaxCrossAxisExtent(
-                                  maxCrossAxisExtent: 130,
-                                  mainAxisExtent: 30,
-                                ),
-                                shrinkWrap: true,
-                                itemCount: widget.jobModel.diagnoses!.length,
-                                itemBuilder: (context, index) {
-                                  return Row(
-                                    mainAxisAlignment: MainAxisAlignment.start,
-                                    children: [
-                                      Expanded(
-                                        child: Padding(
-                                          padding:
-                                              const EdgeInsets.only(right: 5.0),
-                                          child: Container(
-                                            height: 30,
-                                            width: 100,
-                                            decoration: BoxDecoration(
-                                              color: kPrimary100Color,
-                                              borderRadius:
-                                                  BorderRadius.circular(30.0),
-                                            ),
-                                            child: Center(
-                                              child: Text(
-                                                widget.jobModel
-                                                    .diagnoses![index].name!,
-                                                style: textStyleNormal(
-                                                  color: kPrimaryColor,
-                                                  fontWeight: FontWeight.bold,
-                                                ),
-                                              ),
-                                            ),
-                                          ),
-                                        ),
-                                      ),
-                                    ],
-                                  );
-                                },
-                              ),
-                              Space(10.0),
-                            ],
-                          ),
-                        ),
-                      ],
-                    ),
-                  )
-                ],
-              ),
-            ),
-          ),
-        ),
-        SizedBox(
-          height: 10,
+        patientInfoItemDetails(
+          icon: Icons.line_axis_outlined,
+          title: 'Diagnosis',
+          list: widget.jobModel.diagnoses!,
         ),
         //Medical History
-        ScaleTap(
-          onPressed: null,
-          child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 15),
-            child: Container(
-              padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
-              margin: EdgeInsets.only(top: 10),
-              width: double.infinity,
-              decoration: BoxDecoration(
-                color: kWhite,
-                borderRadius: BorderRadius.circular(10.0),
-                boxShadow: [
-                  profileShadow(
-                    kGrey.withOpacity(0.3),
-                  ),
-                ],
-              ),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.start,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  SizedBox(width: 5),
-                  Expanded(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Space(7),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          children: [
-                            Icon(
-                              icon[2],
-                              color: kPrimaryColor,
-                            ),
-                            SizedBox(
-                              width: 10,
-                            ),
-                            Text(
-                              title[2],
-                              style: TextStyle(
-                                fontWeight: FontWeight.bold,
-                                color: kPrimaryColor,
-                                fontSize: 18.0,
-                              ),
-                            ),
-                          ],
-                        ),
-                        Padding(
-                          padding:
-                              const EdgeInsets.only(right: 40.0, left: 20.0),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Space(10.0),
-                              GridView.builder(
-                                physics: NeverScrollableScrollPhysics(),
-                                gridDelegate:
-                                    const SliverGridDelegateWithMaxCrossAxisExtent(
-                                  maxCrossAxisExtent: 150,
-                                  mainAxisSpacing: 10,
-                                  mainAxisExtent: 30,
-                                ),
-                                shrinkWrap: true,
-                                itemCount:
-                                    widget.jobModel.medicalHistories!.length,
-                                itemBuilder: (context, index) {
-                                  return Row(
-                                    mainAxisAlignment: MainAxisAlignment.start,
-                                    children: [
-                                      Expanded(
-                                        child: Padding(
-                                          padding:
-                                              const EdgeInsets.only(right: 5.0),
-                                          child: Container(
-                                            height: 30,
-                                            width: 100,
-                                            decoration: BoxDecoration(
-                                              color: kPrimary100Color,
-                                              borderRadius:
-                                                  BorderRadius.circular(30.0),
-                                            ),
-                                            child: Center(
-                                              child: Text(
-                                                widget
-                                                    .jobModel
-                                                    .medicalHistories![index]
-                                                    .name!,
-                                                style: textStyleNormal(
-                                                  color: kPrimaryColor,
-                                                  fontWeight: FontWeight.bold,
-                                                ),
-                                              ),
-                                            ),
-                                          ),
-                                        ),
-                                      ),
-                                    ],
-                                  );
-                                },
-                              ),
-                              Space(10.0),
-                            ],
-                          ),
-                        ),
-                      ],
-                    ),
-                  )
-                ],
-              ),
-            ),
-          ),
-        ),
-        SizedBox(
-          height: 10,
+        patientInfoItemDetails(
+          icon: Icons.list_alt_rounded,
+          title: 'Medical History',
+          list: widget.jobModel.medicalHistories!,
         ),
         //Patient Condition
-        ScaleTap(
-          onPressed: null,
-          child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 15),
-            child: Container(
-              padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
-              margin: EdgeInsets.only(top: 10),
-              width: double.infinity,
-              decoration: BoxDecoration(
-                color: kWhite,
-                borderRadius: BorderRadius.circular(10.0),
-                boxShadow: [
-                  profileShadow(
-                    kGrey.withOpacity(0.3),
-                  ),
-                ],
-              ),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.start,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  SizedBox(width: 5),
-                  Expanded(
-                    child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Space(7),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.start,
-                            children: [
-                              Icon(
-                                icon[3],
-                                color: kPrimaryColor,
-                              ),
-                              SizedBox(
-                                width: 10,
-                              ),
-                              Text(
-                                title[3],
-                                style: TextStyle(
-                                  fontWeight: FontWeight.bold,
-                                  color: kPrimaryColor,
-                                  fontSize: 18.0,
-                                ),
-                              ),
-                            ],
-                          ),
-                          Padding(
-                            padding:
-                                const EdgeInsets.only(right: 40.0, left: 20.0),
-                            child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Space(10.0),
-                                  GridView.builder(
-                                    physics: NeverScrollableScrollPhysics(),
-                                    gridDelegate:
-                                        const SliverGridDelegateWithMaxCrossAxisExtent(
-                                      maxCrossAxisExtent: 150,
-                                      mainAxisSpacing: 10,
-                                      mainAxisExtent: 30,
-                                    ),
-                                    shrinkWrap: true,
-                                    itemCount:
-                                        widget.jobModel.conditions!.length,
-                                    itemBuilder: (context, index) {
-                                      return Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.start,
-                                        children: [
-                                          Expanded(
-                                            child: Padding(
-                                              padding: const EdgeInsets.only(
-                                                  right: 5.0),
-                                              child: Container(
-                                                height: 30,
-                                                width: 100,
-                                                decoration: BoxDecoration(
-                                                  color: kPrimary100Color,
-                                                  borderRadius:
-                                                      BorderRadius.circular(
-                                                          30.0),
-                                                ),
-                                                child: Center(
-                                                  child: Text(
-                                                    widget
-                                                        .jobModel
-                                                        .conditions![index]
-                                                        .name!,
-                                                    style: textStyleNormal(
-                                                      color: kPrimaryColor,
-                                                      fontWeight:
-                                                          FontWeight.bold,
-                                                    ),
-                                                  ),
-                                                ),
-                                              ),
-                                            ),
-                                          ),
-                                        ],
-                                      );
-                                    },
-                                  ),
-                                  Space(10.0),
-                                ]),
-                          )
-                        ]),
-                  )
-                ],
-              ),
-            ),
-          ),
+        patientInfoItemDetails(
+          icon: Icons.personal_injury_outlined,
+          title: 'Patient Condition',
+          list: widget.jobModel.conditions!,
         ),
-        //Emergency Contact
-        ScaleTap(
-          onPressed: null,
-          child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 15),
-            child: Container(
-              padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
-              margin: EdgeInsets.only(top: 10),
-              width: double.infinity,
-              decoration: BoxDecoration(
-                color: kWhite,
-                borderRadius: BorderRadius.circular(10.0),
-                boxShadow: [
-                  profileShadow(
-                    kGrey.withOpacity(0.3),
+
+        //patientInfoItem(), //Emergency Contact
+        Container(
+          padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 15),
+          margin: EdgeInsets.only(top: 15, right: 15, left: 15),
+          width: double.infinity,
+          decoration: BoxDecoration(
+            color: kWhite,
+            borderRadius: BorderRadius.circular(10.0),
+            boxShadow: [
+              profileShadow(
+                kGrey.withOpacity(0.3),
+              ),
+            ],
+          ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              const Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  Icon(
+                    Icons.emergency_outlined,
+                    color: kPrimaryColor,
+                    size: 20,
+                  ),
+                  SizedBox(
+                    width: 10,
+                  ),
+                  Text(
+                    'Emergency Contact',
+                    style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      color: kPrimaryColor,
+                      fontSize: 15.0,
+                    ),
                   ),
                 ],
               ),
-              child: Row(
-                // row for 2 column: image and column
-                mainAxisAlignment: MainAxisAlignment.start,
-                crossAxisAlignment: CrossAxisAlignment.start,
+              Divider(
+                color: kGrey,
+                thickness: 0.1,
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  SizedBox(width: 5),
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        "Name",
+                        style: textStyleNormal(
+                          color: kGrey,
+                          fontWeight: FontWeight.bold,
+                          fontsize: 14,
+                        ),
+                      ),
+                      Space(5),
+                      Text(
+                        widget.jobModel.patientEmergencyContact!.name!,
+                        style: textStyleNormal(
+                          color: kPrimaryColor,
+                          fontWeight: FontWeight.bold,
+                          fontsize: 14,
+                        ),
+                      ),
+                    ],
+                  ),
+                ],
+              ),
+              Space(10),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
                   Expanded(
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Space(7),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          children: [
-                            Icon(
-                              icon[4],
-                              color: kPrimaryColor,
-                            ),
-                            SizedBox(
-                              width: 10,
-                            ),
-                            Text(
-                              title[4],
-                              style: TextStyle(
-                                fontWeight: FontWeight.bold,
-                                color: kPrimaryColor,
-                                fontSize: 18.0,
-                              ),
-                            ),
-                          ],
-                        ),
-                        Padding(
-                          padding:
-                              const EdgeInsets.only(right: 20.0, left: 20.0),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Space(15.0),
-                              Text(
-                                "Name",
-                                style: textStyleNormal(
-                                  color: kGrey,
-                                  fontWeight: FontWeight.bold,
-                                  fontsize: 12,
-                                ),
-                              ),
-                              Padding(
-                                padding: const EdgeInsets.all(10.0),
-                                child: Text(
-                                  widget
-                                      .jobModel.patientEmergencyContact!.name!,
-                                  style: textStyleNormal(
-                                    color: kPrimaryColor,
-                                    fontWeight: FontWeight.bold,
-                                    fontsize: 14,
-                                  ),
-                                ),
-                              ),
-                            ],
+                        Text(
+                          "Phone No",
+                          style: textStyleNormal(
+                            color: kGrey,
+                            fontWeight: FontWeight.bold,
+                            fontsize: 14,
                           ),
                         ),
-                        Padding(
-                          padding:
-                              const EdgeInsets.only(right: 18.0, left: 20.0),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Space(15.0),
-                                  Text(
-                                    "Phone No.",
-                                    style: textStyleNormal(
-                                      color: kGrey,
-                                      fontWeight: FontWeight.bold,
-                                      fontsize: 12,
-                                    ),
-                                  ),
-                                  Padding(
-                                    padding: const EdgeInsets.only(
-                                      right: 35.0,
-                                      top: 10.0,
-                                      left: 10.0,
-                                      bottom: 10.0,
-                                    ),
-                                    child: Text(
-                                      widget.jobModel.patientEmergencyContact!
-                                          .phoneNo!,
-                                      style: textStyleNormal(
-                                        color: kPrimaryColor,
-                                        fontWeight: FontWeight.bold,
-                                        fontsize: 16,
-                                      ),
-                                    ),
-                                  ),
-                                ],
-                              ),
-                              Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Space(15.0),
-                                  Text(
-                                    "Relationship",
-                                    style: textStyleNormal(
-                                      color: kGrey,
-                                      fontWeight: FontWeight.bold,
-                                      fontsize: 12,
-                                    ),
-                                  ),
-                                  Padding(
-                                    padding: const EdgeInsets.all(10.0),
-                                    child: Text(
-                                      widget.jobModel.patientEmergencyContact!
-                                          .relationship!,
-                                      style: textStyleNormal(
-                                        color: kPrimaryColor,
-                                        fontWeight: FontWeight.bold,
-                                        fontsize: 16,
-                                      ),
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ],
+                        Space(5),
+                        Text(
+                          widget.jobModel.patientEmergencyContact!.phoneNo!,
+                          style: textStyleNormal(
+                            color: kPrimaryColor,
+                            fontWeight: FontWeight.bold,
+                            fontsize: 14,
                           ),
                         ),
                       ],
                     ),
-                  )
+                  ),
+                  Expanded(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          "Relationship",
+                          style: textStyleNormal(
+                            color: kGrey,
+                            fontWeight: FontWeight.bold,
+                            fontsize: 14,
+                          ),
+                        ),
+                        Space(5),
+                        Text(
+                          widget.jobModel.patientEmergencyContact!.relationship!,
+                          style: textStyleNormal(
+                            color: kPrimaryColor,
+                            fontWeight: FontWeight.bold,
+                            fontsize: 14,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
                 ],
               ),
-            ),
+            ],
           ),
         ),
       ],
+    );
+  }
+
+  Widget patientInfoItemDetails({
+    required IconData icon,
+    required String title,
+    required List<dynamic> list,
+  }) {
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 15),
+      margin: EdgeInsets.only(top: 15, right: 15, left: 15),
+      width: double.infinity,
+      decoration: BoxDecoration(
+        color: kWhite,
+        borderRadius: BorderRadius.circular(10.0),
+        boxShadow: [
+          profileShadow(
+            kGrey.withOpacity(0.3),
+          ),
+        ],
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Row(
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: [
+              Icon(
+                icon,
+                color: kPrimaryColor,
+                size: 20,
+              ),
+              SizedBox(
+                width: 10,
+              ),
+              Text(
+                title,
+                style: TextStyle(
+                  fontWeight: FontWeight.bold,
+                  color: kPrimaryColor,
+                  fontSize: 15.0,
+                ),
+              ),
+            ],
+          ),
+          Space(10),
+          GridView.builder(
+            physics: NeverScrollableScrollPhysics(),
+            gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
+              maxCrossAxisExtent: 200,
+              mainAxisSpacing: 90,
+              mainAxisExtent: 25,
+              crossAxisSpacing: 25,
+            ),
+            shrinkWrap: true,
+            itemCount: list.length,
+            itemBuilder: (context, index) {
+              return Container(
+                padding: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+                decoration: BoxDecoration(
+                  color: kPrimary100Color,
+                  borderRadius: BorderRadius.circular(30.0),
+                ),
+                child: Text(
+                  list[index].name!,
+                  style: textStyleNormal(
+                    color: kPrimaryColor,
+                    fontWeight: FontWeight.bold,
+                    fontsize: 12,
+                  ),
+                  textAlign: TextAlign.center,
+                ),
+              );
+            },
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget patientInfoItem() {
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 15),
+      margin: EdgeInsets.only(top: 10),
+      width: double.infinity,
+      decoration: BoxDecoration(
+        color: kWhite,
+        borderRadius: BorderRadius.circular(10.0),
+        boxShadow: [
+          profileShadow(
+            kGrey.withOpacity(0.3),
+          ),
+        ],
+      ),
+      child: Column(
+        children: [
+          Row(
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: [
+              Container(
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+                decoration: BoxDecoration(
+                  shape: BoxShape.circle,
+                  color: Colors.blue.shade300,
+                ),
+              ),
+              SizedBox(
+                width: 10,
+              ),
+              Text(
+                "Patient Condition",
+                style: TextStyle(
+                  fontWeight: FontWeight.bold,
+                  color: kPrimaryColor,
+                  fontSize: 15.0,
+                ),
+              ),
+            ],
+          ),
+        ],
+      ),
     );
   }
 }

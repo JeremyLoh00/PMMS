@@ -27,7 +27,7 @@ class _ReviewState extends State<Review> {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (context) => StoreReviewFormBloc(),
+      create: (context) => StoreReviewFormBloc(widget.jobModel),
       child: Builder(builder: (context) {
         final StoreReviewFormBloc storeReviewFormBloc =
             BlocProvider.of<StoreReviewFormBloc>(
