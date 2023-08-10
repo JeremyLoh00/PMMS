@@ -91,7 +91,7 @@ class _CompletedTabState extends State<CompletedTab> {
   @override
   void initState() {
     super.initState();
-    jobFilterRequestModel.tab = jobStatus;
+    jobFilterRequestModel.tab = 3;
     jobFilterRequestModel.take = pageSize;
     widget.jobFilterRequestModel.page = 1;
     widget.pagingController.addPageRequestListener((pageKey) {

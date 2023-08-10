@@ -18,11 +18,11 @@ class NurseBloc {
         NurseResource.getListNurseBlocked(nurseHistoryFilterRequestModel));
   }
     
-    Future<ListFeedbackResponseModel> getListFeedbackForSpecificNurse(
-      NurseFilterRequestModel nurseHistoryFilterRequestModel) async {
-    return await WebService.get(
-        NurseResource.getListFeedbackForSpecificNurse(nurseHistoryFilterRequestModel));
-  }
+  //   Future<ListFeedbackResponseModel> getListFeedbackForSpecificNurse(int nurseId,
+  //     NurseFilterRequestModel nurseHistoryFilterRequestModel) async {
+  //   return await WebService.get(
+  //       NurseResource.getListFeedbackForSpecificNurse(nurseId, nurseHistoryFilterRequestModel));
+  // }
   //Bloc or unblock nurse
   Future<DefaultResponseModel> blockNurse(int nurseId) async {
     return await WebService.put(NurseResource.blockNurse(nurseId));

@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:private_nurse_for_client/models/default_response_model.dart';
+import 'package:private_nurse_for_client/models/list_feedback_for_specific_nurse/list_feedback_response_model.dart';
 import 'package:private_nurse_for_client/models/user/list_user_response_model.dart';
 import 'package:private_nurse_for_client/models/nurse/nurse_filter_request_model.dart';
 import 'package:private_nurse_for_client/services/resource.dart';
@@ -42,23 +43,23 @@ class NurseResource {
         });
   }
 
-  static Resource getListFeedbackForSpecificNurse(
-      NurseFilterRequestModel nurseHistoryFilterRequestModel) {
-    return Resource(
-        url: 'client/nurse-history/feedback',
-        params: {
-          // Calculate number page based on offset and take
-          'page': ((nurseHistoryFilterRequestModel.page! /
-                      nurseHistoryFilterRequestModel.take!) +
-                  1)
-              .toInt()
-              .toString(),
-          'take': nurseHistoryFilterRequestModel.take.toString(),
-        },
-        parse: (response) {
-          return ListUserResponseModel(json.decode(response.body));
-        });
-  }
+  // static Resource getListFeedbackForSpecificNurse(int nurseId,
+  //     NurseFilterRequestModel nurseHistoryFilterRequestModel) {
+  //   return Resource(
+  //       url: 'client/nurse-history/feedback/$nurseId',
+  //       params: {
+  //         // Calculate number page based on offset and take
+  //         'page': ((nurseHistoryFilterRequestModel.page! /
+  //                     nurseHistoryFilterRequestModel.take!) +
+  //                 1)
+  //             .toInt()
+  //             .toString(),
+  //         'take': nurseHistoryFilterRequestModel.take.toString(),
+  //       },
+  //       parse: (response) {
+  //         return ListFeedbackResponseModel(json.decode(response.body));
+  //       });
+  // }
   static Resource blockNurse(int nurseId) {
     return Resource(
         url: 'client/nurse-history/block/$nurseId',

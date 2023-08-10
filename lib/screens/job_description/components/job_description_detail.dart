@@ -35,22 +35,22 @@ class _JobDescriptionDetailState extends State<JobDescriptionDetail> {
                             ),
                     Space(15),
                     //Name and phone number
-                    Container(
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(widget.jobModel.patient!.name!,
-                              style: TextStyle(
-                                  fontSize: 16,
-                                  color: kPrimaryColor,
-                                  fontWeight: FontWeight.bold)),
-                          Text(widget.jobModel.phoneNo!,
-                              style: TextStyle(
-                                color: kGrey,
-                              )),
-                        ],
-                      ),
-                    ),
+                    // Container(
+                    //   child: Column(
+                    //     crossAxisAlignment: CrossAxisAlignment.start,
+                    //     children: [
+                    //       Text(widget.jobModel.patient!.name!,
+                    //           style: TextStyle(
+                    //               fontSize: 16,
+                    //               color: kPrimaryColor,
+                    //               fontWeight: FontWeight.bold)),
+                    //       Text(widget.jobModel.phoneNo!,
+                    //           style: TextStyle(
+                    //             color: kGrey,
+                    //           )),
+                    //     ],
+                    //   ),
+                    // ),
                   ],
                 ),
               ),

@@ -144,7 +144,7 @@ class _OpenTabState extends State<OpenTab> {
   @override
   void initState() {
     super.initState();
-    widget.jobFilterRequestModel.tab = jobStatus;
+    widget.jobFilterRequestModel.tab = 1;
     widget.jobFilterRequestModel.take = pageSize;
     widget.jobFilterRequestModel.page = 1;
 

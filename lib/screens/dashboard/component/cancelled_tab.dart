@@ -100,7 +100,7 @@ class _CancelledTabState extends State<CancelledTab> {
   @override
   void initState() {
     super.initState();
-    jobFilterRequestModel.tab = jobStatus;
+    jobFilterRequestModel.tab = 4;
     jobFilterRequestModel.take = pageSize;
     widget.jobFilterRequestModel.page = 1;
     widget.pagingController.addPageRequestListener((pageKey) {

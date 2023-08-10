@@ -54,17 +54,18 @@ class _NurseApplicationState extends State<NurseApplication> {
                         NurseProfile(
                           lsitOfAppliedNurseModel:
                               widget.jobModel.listOfAppliedNurse![index],
-                              jobModel: widget.jobModel,
+                          jobModel: widget.jobModel,
                           hasButton: true,
                         ),
                       );
-                    } else if (widget.jobModel.jobStatusId == WAITING_CLIENT_PAYMENT) {
+                    } else if (widget.jobModel.jobStatusId ==
+                        WAITING_CLIENT_PAYMENT) {
                       navigateTo(
                         context,
                         NurseProfile(
                           lsitOfAppliedNurseModel:
                               widget.jobModel.listOfAppliedNurse![index],
-                               jobModel: widget.jobModel,
+                          jobModel: widget.jobModel,
                           hasButton: true,
                         ),
                       );
@@ -74,7 +75,7 @@ class _NurseApplicationState extends State<NurseApplication> {
                         NurseProfile(
                           lsitOfAppliedNurseModel:
                               widget.jobModel.listOfAppliedNurse![index],
-                               jobModel: widget.jobModel,
+                          jobModel: widget.jobModel,
                           hasButton: true,
                         ),
                       );
@@ -84,8 +85,8 @@ class _NurseApplicationState extends State<NurseApplication> {
                         NurseProfile(
                           lsitOfAppliedNurseModel:
                               widget.jobModel.listOfAppliedNurse![index],
-                               jobModel: widget.jobModel,
-                          hasButton: true, 
+                          jobModel: widget.jobModel,
+                          hasButton: true,
                         ),
                       );
                     }
@@ -96,7 +97,7 @@ class _NurseApplicationState extends State<NurseApplication> {
                   child: Container(
                     padding:
                         const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
-                    margin: EdgeInsets.only(top: 10),
+                    // margin: EdgeInsets.only(top: 10),
                     width: double.infinity,
                     decoration: BoxDecoration(
                       color: kWhite,
@@ -110,44 +111,39 @@ class _NurseApplicationState extends State<NurseApplication> {
                     child: Row(
                       // row for 2 column: image and column
                       mainAxisAlignment: MainAxisAlignment.start,
-                      crossAxisAlignment: CrossAxisAlignment.start,
+                      crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
                         // image
-                        Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            SizedBox(
-                              width: 40,
-                              height: 40,
-                              child: CachedNetworkImage(
-                                imageUrl: widget.jobModel
-                                    .listOfAppliedNurse![index].profilePhoto!,
-                                imageBuilder: (context, imageProvider) =>
-                                    Container(
-                                  decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(5),
-                                    image: DecorationImage(
-                                      image: imageProvider,
-                                      fit: BoxFit.cover,
-                                    ),
-                                  ),
+
+                        SizedBox(
+                          width: 40,
+                          height: 40,
+                          child: CachedNetworkImage(
+                            imageUrl: widget.jobModel.listOfAppliedNurse![index]
+                                .profilePhoto!,
+                            imageBuilder: (context, imageProvider) => Container(
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(5),
+                                image: DecorationImage(
+                                  image: imageProvider,
+                                  fit: BoxFit.cover,
                                 ),
-                                placeholder: (context, url) =>
-                                    const CircularProgressIndicator(
-                                  color: kPrimaryColor,
-                                ),
-                                errorWidget: (context, url, error) =>
-                                    const Icon(Icons.error),
                               ),
                             ),
-                          ],
+                            placeholder: (context, url) =>
+                                const CircularProgressIndicator(
+                              color: kPrimaryColor,
+                            ),
+                            errorWidget: (context, url, error) =>
+                                const Icon(Icons.error),
+                          ),
                         ),
+
                         SizedBox(width: 5),
                         Expanded(
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              Space(7),
                               Row(
                                 children: [
                                   Expanded(
@@ -162,8 +158,16 @@ class _NurseApplicationState extends State<NurseApplication> {
                                   ),
                                   SizedBox(width: 5),
                                   badgeStatus(
-                                    status: widget.jobModel.listOfAppliedNurse![index].nurse!.applyJobStatus!,
-                                    statusId: widget.jobModel.listOfAppliedNurse![index].nurse!.applyJobStatusId!,
+                                    status: widget
+                                        .jobModel
+                                        .listOfAppliedNurse![index]
+                                        .nurse!
+                                        .applyJobStatus!,
+                                    statusId: widget
+                                        .jobModel
+                                        .listOfAppliedNurse![index]
+                                        .nurse!
+                                        .applyJobStatusId!,
                                   )
                                   // status[index] == 'Accepted'
                                   //     ? Row(

@@ -36,100 +36,76 @@ class _PatientState extends State<Patient> {
               fontSize: 12.0,
             ),
           ),
-          ListView.builder(
-            padding: EdgeInsets.zero,
-            shrinkWrap: true,
-            physics: const BouncingScrollPhysics(),
-            itemCount: 1, // Replace with your actual item count
-            itemBuilder: (context, index) {
-              return ScaleTap(
-                onPressed: () {
-                  navigateTo(
-                    context,
-                    PatientProfile(
-                      jobModel: widget.jobModel,
-                    ),
-                  );
-                },
-                child: Padding(
-                  padding: const EdgeInsets.only(top: 10),
-                  child: Container(
-                    padding:
-                        const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
-                    // margin: EdgeInsets.only(top: 10),
-                    width: double.infinity,
-                    decoration: BoxDecoration(
-                      color: kWhite,
-                      borderRadius: BorderRadius.circular(5),
-                      boxShadow: [
-                        profileShadow(
-                          kGrey.withOpacity(0.3),
-                        ),
-                      ],
-                    ),
-                    child: Row(
-                      // row for 2 column: image and column
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        // image
-                        Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            SizedBox(
-                              width: 40,
-                              height: 40,
-                              child: CachedNetworkImage(
-                                imageUrl: widget.jobModel.patientPhotoList!.first,
-                                imageBuilder: (context, imageProvider) =>
-                                    Container(
-                                  decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(5),
-                                    image: DecorationImage(
-                                      image: imageProvider,
-                                      fit: BoxFit.cover,
-                                    ),
-                                  ),
-                                ),
-                                placeholder: (context, url) =>
-                                    const CircularProgressIndicator(
-                                  color: kPrimaryColor,
-                                ),
-                                errorWidget: (context, url, error) =>
-                                    const Icon(Icons.error),
-                              ),
-                            ),
-                          ],
-                        ),
-                        SizedBox(width: 5),
-                        Expanded(
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Space(7),
-                              Row(
-                                children: [
-                                  Expanded(
-                                    child: const Text(
-                                      "Ms. John",
-                                      style: TextStyle(
-                                        color: kBlack,
-                                        fontWeight: FontWeight.bold,
-                                      ),
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ],
-                          ),
-                        )
-                      ],
-                    ),
-                  ),
+          ScaleTap(
+            onPressed: () {
+              navigateTo(
+                context,
+                PatientProfile(
+                  jobModel: widget.jobModel,
                 ),
               );
             },
-          ),
+            child: Padding(
+              padding: const EdgeInsets.only(top: 10),
+              child: Container(
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+                // margin: EdgeInsets.only(top: 10),
+                width: double.infinity,
+                decoration: BoxDecoration(
+                  color: kWhite,
+                  borderRadius: BorderRadius.circular(5),
+                  boxShadow: [
+                    profileShadow(
+                      kGrey.withOpacity(0.3),
+                    ),
+                  ],
+                ),
+                child: Row(
+                  // row for 2 column: image and column
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    // image
+                    SizedBox(
+                      width: 40,
+                      height: 40,
+                      child: CachedNetworkImage(
+                        imageUrl: widget.jobModel.patientPhotoList!.first,
+                        imageBuilder: (context, imageProvider) => Container(
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(5),
+                            image: DecorationImage(
+                              image: imageProvider,
+                              fit: BoxFit.cover,
+                            ),
+                          ),
+                        ),
+                        placeholder: (context, url) =>
+                            const CircularProgressIndicator(
+                          color: kPrimaryColor,
+                        ),
+                        errorWidget: (context, url, error) =>
+                            const Icon(Icons.error),
+                      ),
+                    ),
+                    SizedBox(width: 5),
+                    Expanded(
+                      child: Text(
+                        widget.jobModel.patient!.name!,
+                        style: TextStyle(
+                          color: kBlack,
+                          fontWeight: FontWeight.bold,
+                        ),
+                        maxLines: 2,
+                        overflow: TextOverflow.ellipsis,
+                      ),
+                    )
+                  ],
+                ),
+              ),
+            ),
+          )
         ],
       ),
     );

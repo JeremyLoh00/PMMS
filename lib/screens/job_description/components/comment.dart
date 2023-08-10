@@ -131,7 +131,7 @@ class _CommentState extends State<Comment> {
                               height: 80,
                               child: CachedNetworkImage(
                                 imageUrl: widget.jobModel.feedbacks![index]
-                                    .feedbackPhotoPath!,
+                                    .feedbackPhotoUrl!,
                                 imageBuilder: (context, imageProvider) =>
                                     Container(
                                   decoration: BoxDecoration(

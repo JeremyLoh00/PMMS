@@ -1,14 +1,15 @@
-import 'package:image_picker/image_picker.dart';
-
 class FeedbackModel {
   int? id;
   String? date;
   String? time;
-  int? commentId;
+  String? commentId;
   String? comment;
   int? rating;
-  String? feedbackPhotoPath;
+  String? feedbackPhotoUrl;
+  String? serviceName;
+  int? jobId;
   String? profilePicUserFrom;
+  String? nameUserFrom;
 
   FeedbackModel(
       {this.id,
@@ -17,8 +18,11 @@ class FeedbackModel {
       this.commentId,
       this.comment,
       this.rating,
-      this.feedbackPhotoPath,
-      this.profilePicUserFrom});
+      this.feedbackPhotoUrl,
+      this.serviceName,
+      this.jobId,
+      this.profilePicUserFrom,
+      this.nameUserFrom});
 
   FeedbackModel.fromJson(Map<String, dynamic> json) {
     id = json['id'];
@@ -27,8 +31,11 @@ class FeedbackModel {
     commentId = json['comment_id'];
     comment = json['comment'];
     rating = json['rating'];
-    feedbackPhotoPath = json['feedback_photo_path'];
+    feedbackPhotoUrl = json['feedback_photo_url'];
+    serviceName = json['service_name'];
+    jobId = json['job_id'];
     profilePicUserFrom = json['profile_pic_user_from'];
+    nameUserFrom = json['name_user_from'];
   }
 
   Map<String, dynamic> toJson() {
@@ -39,8 +46,11 @@ class FeedbackModel {
     data['comment_id'] = this.commentId;
     data['comment'] = this.comment;
     data['rating'] = this.rating;
-    data['feedback_photo_path'] = this.feedbackPhotoPath;
+    data['feedback_photo_url'] = this.feedbackPhotoUrl;
+    data['service_name'] = this.serviceName;
+    data['job_id'] = this.jobId;
     data['profile_pic_user_from'] = this.profilePicUserFrom;
+    data['name_user_from'] = this.nameUserFrom;
     return data;
   }
 }

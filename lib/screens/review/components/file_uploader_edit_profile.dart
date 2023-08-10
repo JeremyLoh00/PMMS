@@ -84,9 +84,9 @@ class _ImageUploaderState extends State<ImageUploader> {
                   ? DecorationImage(
                       image: FileImage(File(_selectedImage!.path)),
                       fit: BoxFit.cover)
-                  : (widget.feedbackModel.feedbackPhotoPath != null
+                  : (widget.feedbackModel.feedbackPhotoUrl != null
                       ? DecorationImage(
-                          image: NetworkImage(widget.feedbackModel.feedbackPhotoPath!.toString()),
+                          image: NetworkImage(widget.feedbackModel.feedbackPhotoUrl!.toString()),
                           fit: BoxFit.cover,
                         )
                       : null),

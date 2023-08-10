@@ -16,6 +16,7 @@ import 'package:private_nurse_for_client/public_components/custom_dialog.dart';
 import 'package:private_nurse_for_client/public_components/theme_snack_bar.dart';
 import 'package:private_nurse_for_client/screens/nurse_profile/components/nurse_profile_header.dart';
 import 'package:private_nurse_for_client/screens/nurse_profile/components/nurse_profile_review.dart';
+import 'package:private_nurse_for_client/screens/nurse_profile/components/nurse_review.dart';
 import 'package:private_nurse_for_client/screens/nurse_profile/components/reject_reason.dart';
 import 'package:private_nurse_for_client/screens/payment/payment.dart';
 import 'package:private_nurse_for_client/screens/subscription/subscription_screen.dart';
@@ -107,7 +108,29 @@ class _NurseProfileState extends State<NurseProfile> {
                 SizedBox(
                   height: 10,
                 ),
-                NurseProfileReview(),
+                Text(
+                  "Reviews",
+                  style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    fontSize: 18.0,
+                  ),
+                ),
+                ScaleTap(
+                  onPressed: () {
+                    navigateTo(
+                      context,
+                      const NurseReview(),
+                    );
+                  },
+                  child: Text(
+                    "View Reviewssss",
+                    style: TextStyle(
+                      color: kPrimaryColor,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                ),
+                // NurseProfileReview(),
                 SizedBox(
                   height: 10,
                 ),
@@ -119,7 +142,11 @@ class _NurseProfileState extends State<NurseProfile> {
                             child: ButtonSecondary(
                               paddingVertical: 17,
                               onPressed: () {
-                                navigateTo(context, RejectReason(jobModel: widget.jobModel,));
+                                navigateTo(
+                                    context,
+                                    RejectReason(
+                                      jobModel: widget.jobModel,
+                                    ));
                               },
                               text: "Reject",
                             ),
@@ -323,31 +350,31 @@ class _NurseProfileState extends State<NurseProfile> {
       }
     } else {
       if (mounted) {
-         CustomDialog.show(
-            context,
-            isDissmissable: true,
-            icon: Icons.warning,
-            dialogType: DialogType.success,
-            title: responseModel.message,
-            description:
-                "Subscription is not complete yet, please subscribe before accepting any nurse.",
-            btnCancelText: "Cancel",
-            btnCancelOnPress: () {
-              Navigator.pop(context);
-            },
-            btnOkText: "View Plan",
-            btnOkOnPress: () async {
-              Navigator.pop(context);
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) {
-                    return SubscriptionScreen(fromCustomeDialog: 1);
-                  },
-                ),
-              );
-            },
-          );
+        CustomDialog.show(
+          context,
+          isDissmissable: true,
+          icon: Icons.warning,
+          dialogType: DialogType.success,
+          title: responseModel.message,
+          description:
+              "Subscription is not complete yet, please subscribe before accepting any nurse.",
+          btnCancelText: "Cancel",
+          btnCancelOnPress: () {
+            Navigator.pop(context);
+          },
+          btnOkText: "View Plan",
+          btnOkOnPress: () async {
+            Navigator.pop(context);
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) {
+                  return SubscriptionScreen(fromCustomeDialog: 1);
+                },
+              ),
+            );
+          },
+        );
         ThemeSnackBar.showSnackBar(context, responseModel.message);
       }
     }

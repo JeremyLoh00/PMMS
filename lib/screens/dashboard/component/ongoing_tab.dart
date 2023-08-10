@@ -99,7 +99,7 @@ class _OngoingTabState extends State<OngoingTab> {
   @override
   void initState() {
     super.initState();
-    jobFilterRequestModel.tab = jobStatus;
+    jobFilterRequestModel.tab = 2;
     jobFilterRequestModel.take = pageSize;
     widget.jobFilterRequestModel.page = 1;
     widget.pagingController.addPageRequestListener((pageKey) {
