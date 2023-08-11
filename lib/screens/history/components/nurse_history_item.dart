@@ -4,10 +4,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:flutter_scale_tap/flutter_scale_tap.dart';
 import 'package:private_nurse_for_client/constant.dart';
+import 'package:private_nurse_for_client/helpers/general_method.dart';
 import 'package:private_nurse_for_client/models/nurse/nurse_model.dart';
 import 'package:private_nurse_for_client/models/user/user_model.dart';
 import 'package:private_nurse_for_client/public_components/space.dart';
 import 'package:private_nurse_for_client/public_components/theme_spinner.dart';
+import 'package:private_nurse_for_client/screens/history/components/nurse_profile_screen.dart';
 import 'package:private_nurse_for_client/theme.dart';
 
 class NurseHistoryItem extends StatelessWidget {
@@ -22,12 +24,11 @@ class NurseHistoryItem extends StatelessWidget {
     return ScaleTap(
       //list onclick
       onPressed: () {
-        // navigateTo(context, InformationDetailsScreen(selectedTabIndex: widget.selectedTabIndex,));
-        // navigateTo(
-        //     context,
-        //     JobDetail(
-        //       hasComment: false,
-        //     ));
+        navigateTo(
+            context,
+            NurseProfileScreen(
+              userModel: userModel,
+            ));
       },
       child: Container(
         margin: const EdgeInsets.only(top: 10, right: 15, left: 15),

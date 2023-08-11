@@ -45,6 +45,7 @@ class _NurseProfileState extends State<NurseProfile> {
   bool _isLoadingAccept = false;
   bool _isLoadingReject = false;
   bool _isLoading = false;
+  JobModel _jobModel = JobModel();
   JobsBloc jobsBloc = JobsBloc();
   NurseBloc nurseBloc = NurseBloc();
   @override
@@ -97,151 +98,105 @@ class _NurseProfileState extends State<NurseProfile> {
                   location: widget.lsitOfAppliedNurseModel.nurse!.collegeName!,
                   experience:
                       widget.lsitOfAppliedNurseModel.nurse!.workExperience!,
+                  nurseId: widget.lsitOfAppliedNurseModel.nurse!.id!,
                 ),
                 SizedBox(
                   height: 10,
                 ),
-                Divider(
-                  thickness: 0.5,
-                  color: kGrey,
-                ),
+                // Divider(
+                //   thickness: 0.5,
+                //   color: kGrey,
+                // ),
                 SizedBox(
                   height: 10,
-                ),
-                Text(
-                  "Reviews",
-                  style: TextStyle(
-                    fontWeight: FontWeight.bold,
-                    fontSize: 18.0,
-                  ),
-                ),
-                ScaleTap(
-                  onPressed: () {
-                    navigateTo(
-                      context,
-                      const NurseReview(),
-                    );
-                  },
-                  child: Text(
-                    "View Reviewssss",
-                    style: TextStyle(
-                      color: kPrimaryColor,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
                 ),
                 // NurseProfileReview(),
                 SizedBox(
                   height: 10,
                 ),
-                widget.hasButton == true
-                    ? Row(
-                        children: [
-                          Expanded(
-                            flex: 1,
-                            child: ButtonSecondary(
-                              paddingVertical: 17,
-                              onPressed: () {
-                                navigateTo(
-                                    context,
-                                    RejectReason(
-                                      jobModel: widget.jobModel,
-                                    ));
-                              },
-                              text: "Reject",
-                            ),
-                          ),
-                          SizedBox(
-                            width: 10,
-                          ),
-                          Expanded(
-                            flex: 2,
-                            child: ButtonPrimary(
-                              "Hire Me",
-                              onPressed: () async {
-                                await showHireNursePopup(context);
-                              },
-                              isLoading: _isLoadingAccept,
-                              loadingText:
-                                  "Accepting...", //Confirmation of hire OR subscription if not subscribe yet
-
-                              // showDialog(
-                              //   context: context,
-                              //   builder: (context) => AlertDialog(
-                              //     backgroundColor: kWhite,
-                              //     content: Column(
-                              //         mainAxisSize: MainAxisSize.min,
-                              //         children: [
-                              //           Container(
-                              //             padding: const EdgeInsets.all(10),
-                              //             decoration: BoxDecoration(
-                              //                 color: kBgDanger,
-                              //                 borderRadius:
-                              //                     BorderRadius.circular(50)),
-                              //             child: const Icon(
-                              //               Icons.warning_amber,
-                              //               color: Colors.red,
-                              //             ),
-                              //           ),
-                              //           const SizedBox(
-                              //             height: 10,
-                              //           ),
-                              //           Text(
-                              //             "Subscription Not Complete",
-                              //             style: textStyleH1(),
-                              //           ),
-                              //           const SizedBox(
-                              //             height: 10,
-                              //           ),
-                              //           Text(
-                              //             "Subscription is not complete yet, please subscribe before accepting any nurse.",
-                              //             textAlign: TextAlign.center,
-                              //             style:
-                              //                 textStyleNormal(color: kTextGray),
-                              //           ),
-                              //           const SizedBox(
-                              //             height: 10,
-                              //           ),
-                              //           Row(
-                              //             mainAxisAlignment:
-                              //                 MainAxisAlignment.spaceBetween,
-                              //             children: [
-                              //               Expanded(
-                              //                 child: Container(
-                              //                   height: 52,
-                              //                   margin: EdgeInsets.all(10),
-                              //                   child: ButtonPrimary(
-                              //                     "Pay",
-                              //                     onPressed: () {},
-                              //                   ),
-                              //                 ),
-                              //               ),
-                              //               const SizedBox(
-                              //                 height: 10,
-                              //               ),
-                              //               Expanded(
-                              //                 child: ButtonSecondary(
-                              //                   onPressed: () {
-                              //                     Navigator.pop(context);
-                              //                   },
-                              //                   text: "Cancel",
-                              //                 ),
-                              //               ),
-                              //             ],
-                              //           ),
-                              //         ]),
-                              //   ),
-                              // ),
-                            ),
-                          ),
-                        ],
-                      )
-                    : SizedBox(),
+                //  widget.hasButton == true
+                //     ? Row(
+                //         children: [
+                //           Expanded(
+                //             flex: 1,
+                //             child: ButtonSecondary(
+                //               paddingVertical: 17,
+                //               onPressed: () {
+                //                 navigateTo(
+                //                     context,
+                //                     RejectReason(
+                //                       jobModel: widget.jobModel,
+                //                     ));
+                //               },
+                //               text: "Reject",
+                //             ),
+                //           ),
+                //           SizedBox(
+                //             width: 10,
+                //           ),
+                //           Expanded(
+                //             flex: 2,
+                //             child: ButtonPrimary(
+                //               "Hire Me",
+                //               onPressed: () async {
+                //                 await showHireNursePopup(context);
+                //               },
+                //               isLoading: _isLoadingAccept,
+                //               loadingText:
+                //                   "Accepting...", //Confirmation of hire OR subscription if not subscribe yet
+                //             ),
+                //           ),
+                //         ],
+                //       )
+                //     : SizedBox(),
               ],
             ),
           ),
         ),
       ),
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
+      floatingActionButton: widget.hasButton == true
+          ? Padding(
+              padding: const EdgeInsets.all(18.0),
+              child: Row(
+                children: [
+                  Expanded(
+                    flex: 1,
+                    child: ButtonSecondary(
+                      paddingVertical: 17,
+                      onPressed: () {
+                        navigateTo(
+                            context,
+                            RejectReasonScreen(
+                              jobModel: widget.jobModel,
+                              callBackJobModel: (data) {
+                                setState(() {
+                                  _jobModel = data;
+                                });
+                              },
+                            ));
+                      },
+                      text: "Reject",
+                    ),
+                  ),
+                  SizedBox(
+                    width: 10,
+                  ),
+                  Expanded(
+                    flex: 2,
+                    child: ButtonPrimary(
+                      "Hire Me",
+                      onPressed: () async {
+                        await showHireNursePopup(context);
+                      },
+                      isLoading: _isLoadingAccept,
+                      loadingText: "Accepting...",
+                    ),
+                  ),
+                ],
+              ),
+            )
+          : SizedBox(),
     );
   }
 

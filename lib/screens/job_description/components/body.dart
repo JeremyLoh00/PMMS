@@ -50,7 +50,7 @@ class _BodyState extends State<Body> {
             //Detail container
             Stack(clipBehavior: Clip.none, children: [
               Container(
-                height: calcHeight(widget.jobModel.jobSchedule!.length),
+                height: calcHeight(widget.jobModel.jobSchedule!.length, widget.jobModel.feedbacks!.length),
               ),
               Positioned(
                 //Position of the float container
@@ -126,11 +126,16 @@ class _BodyState extends State<Body> {
       ),
     );
   }
-    double calcHeight(int length) {
-    if (length == 1) {
-      return 450;
+
+  double calcHeight(int length, int reviewLength) {
+    if (reviewLength == 0) {
+      if (length == 1) {
+        return 450;
+      } else {
+        return 450 + (length * 50);
+      }
     } else {
-      return 450 + (length * 50);
+      return 450 + (length * 50) + (reviewLength * 250);
     }
   }
 }

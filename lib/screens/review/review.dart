@@ -5,6 +5,7 @@ import 'package:image_picker/image_picker.dart';
 import 'package:private_nurse_for_client/constant.dart';
 import 'package:private_nurse_for_client/form_bloc/store_review_form_bloc.dart';
 import 'package:private_nurse_for_client/models/feedback/feedback_model.dart';
+import 'package:private_nurse_for_client/models/feedback/feedback_response_model.dart';
 import 'package:private_nurse_for_client/models/job/job_model.dart';
 import 'package:private_nurse_for_client/public_components/button_primary.dart';
 import 'package:private_nurse_for_client/public_components/space.dart';
@@ -35,7 +36,7 @@ class _ReviewState extends State<Review> {
           context,
         );
 
-        return FormBlocListener<StoreReviewFormBloc, String, String>(
+        return FormBlocListener<StoreReviewFormBloc, FeedbackModel, FeedbackResponseModel>(
           // On submitting
           onSubmitting: (context, state) {
             // Remove focus from input field
@@ -52,7 +53,7 @@ class _ReviewState extends State<Review> {
             print("Submitted");
             ThemeSnackBar.showSnackBar(
               context,
-              "success",
+              "Success",
             );
             // Set loading false
             setState(() {

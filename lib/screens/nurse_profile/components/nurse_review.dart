@@ -13,7 +13,8 @@ import 'package:private_nurse_for_client/screens/nurse_profile/components/feedba
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 
 class NurseReview extends StatefulWidget {
-  const NurseReview({super.key});
+  final int nurseId;
+  const NurseReview({super.key, required this.nurseId});
 
   @override
   State<NurseReview> createState() => _NurseReviewState();
@@ -43,7 +44,7 @@ class _NurseReviewState extends State<NurseReview> {
     try {
       //Call API
       final ListFeedbackResponseModel response =
-          await _feedbackBloc.getFeedbackList(_requestModel);
+          await _feedbackBloc.getFeedbackList(widget.nurseId, _requestModel);
 
       // If success
       if (response.statusCode == HttpResponse.HTTP_OK) {

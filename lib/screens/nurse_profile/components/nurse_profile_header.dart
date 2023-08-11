@@ -1,18 +1,22 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
+import 'package:flutter_scale_tap/flutter_scale_tap.dart';
 import 'package:private_nurse_for_client/constant.dart';
+import 'package:private_nurse_for_client/helpers/general_method.dart';
 import 'package:private_nurse_for_client/public_components/space.dart';
+import 'package:private_nurse_for_client/screens/nurse_profile/components/nurse_review.dart';
 
 class NurseProfileHeader extends StatelessWidget {
-  NurseProfileHeader({
-    Key? key,
-    required this.title,
-    required this.totalReview,
-    required this.phoneNum,
-    required this.education,
-    required this.location,
-    required this.experience,
-  }) : super(key: key);
+  NurseProfileHeader(
+      {Key? key,
+      required this.title,
+      required this.totalReview,
+      required this.phoneNum,
+      required this.education,
+      required this.location,
+      required this.experience,
+      required this.nurseId})
+      : super(key: key);
 
   final String title;
   final String totalReview;
@@ -20,6 +24,7 @@ class NurseProfileHeader extends StatelessWidget {
   final String education;
   final String location;
   final String experience;
+  final int nurseId;
   IconData? _selectedIcon;
 
   @override
@@ -28,62 +33,93 @@ class NurseProfileHeader extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Row(
-          crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            // Contest Name
             Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Row(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      // Contest Name
+                      Expanded(
+                        child: Text(
+                          title,
+                          style: const TextStyle(
+                            color: kBlack,
+                            fontSize: 28.0,
+                            fontFamily: "Poppins",
+                            fontWeight: FontWeight.w900,
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+
+                  //Detail Information
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: [
+                      RatingBarIndicator(
+                        itemBuilder: (context, index) => Icon(
+                          _selectedIcon ?? Icons.star,
+                          color: kPrimaryColor,
+                        ),
+                        rating: double.parse(totalReview),
+                        itemCount: 5,
+                        itemSize: 25.0,
+                        unratedColor: Color.fromRGBO(4, 99, 128, 0.39),
+                      ),
+                      SizedBox(
+                        width: 5,
+                      ),
+                      Text(
+                        totalReview,
+                        style: TextStyle(
+                          color: kGrey,
+                          fontFamily: "Poppins",
+                          fontSize: 16,
+                          fontWeight: FontWeight.w700,
+                        ),
+                      ),
+                    ],
+                  ),
+                  Text(
+                    phoneNum,
+                    style: const TextStyle(
+                      color: kGrey,
+                      fontSize: 12.0,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            ScaleTap(
+              onPressed: () {
+                navigateTo(
+                  context,
+                  NurseReview(
+                    nurseId: nurseId,
+                  ),
+                );
+              },
               child: Text(
-                title,
-                style: const TextStyle(
-                  color: kBlack,
-                  fontSize: 28.0,
-                  fontFamily: "Poppins",
-                  fontWeight: FontWeight.w900,
+                "View Reviews",
+                style: TextStyle(
+                  color: kPrimaryColor,
+                  fontWeight: FontWeight.bold,
                 ),
               ),
             ),
           ],
         ),
-
-        //Detail Information
-        Row(
-          mainAxisAlignment: MainAxisAlignment.start,
-          children: [
-            RatingBarIndicator(
-              itemBuilder: (context, index) => Icon(
-                _selectedIcon ?? Icons.star,
-                color: kPrimaryColor,
-              ),
-              rating: double.parse(totalReview),
-              itemCount: 5,
-              itemSize: 25.0,
-              unratedColor: Color.fromRGBO(4, 99, 128, 0.39),
-            ),
-            SizedBox(
-              width: 5,
-            ),
-            Text(
-              totalReview,
-              style: TextStyle(
-                color: kGrey,
-                fontFamily: "Poppins",
-                fontSize: 16,
-                fontWeight: FontWeight.w700,
-              ),
-            ),
-          ],
-        ),
-        Text(
-          phoneNum,
-          style: const TextStyle(
-            color: kGrey,
-            fontSize: 12.0,
-          ),
-        ),
         SizedBox(
-          height: 20,
+          height: 10,
         ),
-
+        Divider(
+          thickness: 0.5,
+          color: kGrey,
+        ),
         //Nurse Detail Information
         Padding(
           padding: const EdgeInsets.all(8.0),

@@ -224,6 +224,8 @@ class _CancelledTabState extends State<CancelledTab> {
                               color: kBlack,
                               fontWeight: FontWeight.bold,
                             ),
+                            maxLines: 1,
+                            overflow: TextOverflow.ellipsis,
                           ),
                           // Row(
                           //   children: [
@@ -308,14 +310,6 @@ class _CancelledTabState extends State<CancelledTab> {
                                 ),
                               ),
                             ],
-                          ),
-                          Space(5),
-                          Text(
-                            jobModel.jobStatus!,
-                            style: TextStyle(
-                              fontSize: 12,
-                              fontWeight: FontWeight.w500,
-                            ),
                           ),
                         ],
                       ),

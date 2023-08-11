@@ -1,5 +1,4 @@
 import 'package:private_nurse_for_client/models/default_response_model.dart';
-import 'package:private_nurse_for_client/models/list_feedback_for_specific_nurse/list_feedback_response_model.dart';
 import 'package:private_nurse_for_client/models/user/list_user_response_model.dart';
 import 'package:private_nurse_for_client/models/nurse/nurse_filter_request_model.dart';
 import 'package:private_nurse_for_client/resource/nurse_resource.dart';

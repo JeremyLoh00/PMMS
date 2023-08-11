@@ -63,10 +63,17 @@ const kCompletedBg = Color.fromRGBO(209, 250, 229, 1.0);
 const kCompletedText = Color.fromRGBO(6, 68, 70, 1.0);
 
 //Job Status
-const int OPEN = 1; // cancel
+const int OPEN = 1; 
 const int ONGOING = 2;
 const int WAITING_CLIENT_REVIEWS = 3;
 const int COMPLETED = 4;
 const int CANCELLED = 5;
-const int WAITING_CLIENT_PAYMENT = 6; //cancel
-const int WAITING_NURSE_APPROVAL = 7; //cancel
+const int WAITING_CLIENT_PAYMENT = 6; 
+const int WAITING_NURSE_APPROVAL = 7; 
+
+class TransactionStatus {
+  static const String success = "1";
+  static const String pending = "2";
+  static const String fail = "3";
+}
+const devToyyibPay = "https://dev.toyyibpay.com/";

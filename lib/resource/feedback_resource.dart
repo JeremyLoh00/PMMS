@@ -7,10 +7,10 @@ import 'package:private_nurse_for_client/models/job/job_store_response_model.dar
 import 'package:private_nurse_for_client/services/resource.dart';
 
 class FeedbackResource {
-      static Resource getListFeedback(
+      static Resource getListFeedback(int nurseId,
       FeedbackFilterRequestModel requestModel ) {
     return Resource(
-        url: 'client/nurse-history/feedback/1000005',
+        url: 'client/nurse-history/feedback/$nurseId',
         params: {
           'page': ((requestModel.page! / requestModel.take!) + 1)
               .toInt()

@@ -2,16 +2,16 @@ import 'dart:async';
 
 import 'package:form_bloc/form_bloc.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:private_nurse_for_client/bloc/feedback_bloc.dart';
 import 'package:private_nurse_for_client/bloc/job_bloc.dart';
 import 'package:private_nurse_for_client/helpers/validators.dart';
 import 'package:private_nurse_for_client/models/default_response_model.dart';
 import 'package:private_nurse_for_client/models/feedback/feedback_model.dart';
+import 'package:private_nurse_for_client/models/feedback/feedback_response_model.dart';
 import 'package:private_nurse_for_client/models/job/job_model.dart';
-import 'package:private_nurse_for_client/models/job/job_store_response_model.dart';
-import 'package:private_nurse_for_client/models/list_feedback_for_specific_nurse/review_nurse_request_model.dart';
+import 'package:private_nurse_for_client/models/review_model/review_nurse_request_model.dart';
 
-class StoreReviewFormBloc extends FormBloc<String, String> {
+class StoreReviewFormBloc
+    extends FormBloc<FeedbackModel, FeedbackResponseModel> {
   JobModel jobModel;
   JobsBloc feedbackBloc = new JobsBloc();
   XFile? newFormalPhoto1;
@@ -24,7 +24,6 @@ class StoreReviewFormBloc extends FormBloc<String, String> {
   final newRating = TextFieldBloc();
 
   StoreReviewFormBloc(this.jobModel) {
-    
     addFieldBlocs(fieldBlocs: [
       newComment,
       newRating,
@@ -38,11 +37,11 @@ class StoreReviewFormBloc extends FormBloc<String, String> {
           ReviewNurseRequestModel();
 
       reviewNurseRequestModel.comment = newComment.value;
-      reviewNurseRequestModel.rating = int.parse(newRating.value);
+      reviewNurseRequestModel.rating = newRating.value;
       reviewNurseRequestModel.photoPath = newFormalPhoto1;
 
       //Call API
-      DefaultResponseModel responseModel =
+      FeedbackResponseModel responseModel =
           await feedbackBloc.storeReview(jobModel.id!, reviewNurseRequestModel);
 
       if (responseModel.isSuccess) {
@@ -51,7 +50,7 @@ class StoreReviewFormBloc extends FormBloc<String, String> {
         print(responseModel.message);
       }
     } catch (exception) {
-      emitFailure(failureResponse: exception.toString());
+      emitFailure(failureResponse: null);
     }
   }
 }

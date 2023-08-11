@@ -184,35 +184,6 @@ class _OpenTabState extends State<OpenTab> {
                 itemBuilder: (context, jobModel, index) {
                   return jobItem(context, index,
                       jobModel); // return jobItem(context, index, jobModel);
-                  // return Consumer<UserDataNotifier>(
-                  //     builder: (context, userDataNotifier, _) {
-                  //   // If the user data in the notifier is not null
-                  //   if (userDataNotifier.user != null) {
-                  //     // Show UI using the data in the notifier
-
-                  //     // Else try o get the data from shared preferences the show the UI
-                  //   } else {
-                  //     return FutureBuilder(
-                  //         future: _userModel,
-                  //         builder: (context, snapshot) {
-                  //           if (snapshot.hasData && snapshot.data != null) {
-                  //             // Set to the user data notifier
-                  //             userDataNotifier.setUserData(snapshot.data);
-                  //             // return UI
-                  //             return jobItem(
-                  //               context,
-                  //               index,
-                  //               jobModel
-                  //             );
-                  //           } else {
-                  //             // Show loading
-                  //             return Center(
-                  //               child: ThemeSpinner.spinner(),
-                  //             );
-                  //           }
-                  //         });
-                  //   }
-                  // });
                 }),
           )
         ],
