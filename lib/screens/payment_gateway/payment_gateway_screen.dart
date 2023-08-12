@@ -13,14 +13,13 @@ import 'package:webview_flutter/webview_flutter.dart';
 
 class PaymentGatewayScreen extends StatefulWidget {
   final String billId;
-  final Future<void> Function()? callbackGetJobData;
-  final JobModel jobModel;
+  final String titlePage;
+  final Future<void> Function()? callbackGetData;
 
   const PaymentGatewayScreen({
     super.key,
     required this.billId,
-    required this.jobModel,
-    this.callbackGetJobData,
+    this.callbackGetData, required this.titlePage,
   });
 
   @override
@@ -34,7 +33,7 @@ class _PaymentGatewayScreenState extends State<PaymentGatewayScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: ThemeAppBar("Uniform Fee Payment"),
+      appBar: ThemeAppBar(widget.titlePage),
       body: Body(
         billId: widget.billId,
         callBackSetWebViewController: (WebViewController wb) {
@@ -93,7 +92,7 @@ class _PaymentGatewayScreenState extends State<PaymentGatewayScreen> {
             // go to job details
             Navigator.pop(context);
             Navigator.pop(context);
-            widget.callbackGetJobData!( );
+            widget.callbackGetData!();
           },
           icon: Iconsax.check,
           dialogType: DialogType.success,

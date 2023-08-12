@@ -89,7 +89,7 @@ class _NurseProfileState extends State<NurseProfile> {
                         shape: BoxShape.rectangle,
                         image: DecorationImage(
                           image: imageProvider,
-                          fit: BoxFit.cover,
+                          fit: BoxFit.contain,
                         ),
                       ),
                     ),

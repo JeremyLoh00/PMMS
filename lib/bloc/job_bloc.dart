@@ -28,7 +28,8 @@ class JobsBloc {
 
   Future<JobResponseModel> rejectJob(
       int jobId, List<String> rejectedReasons, int nurseId) async {
-    return await WebService.put(JobResource.rejectJob(jobId, rejectedReasons, nurseId));
+    return await WebService.put(
+        JobResource.rejectJob(jobId, rejectedReasons, nurseId));
   }
 
   Future<DefaultResponseModel> completeJob(int jobId) async {

@@ -19,7 +19,7 @@ import 'package:private_nurse_for_client/screens/review/components/file_uploader
 
 class ReviewScreen extends StatefulWidget {
   final JobModel jobModel;
-  final  Function() callbackGetJobModelData;
+  final Function() callbackGetJobModelData;
   const ReviewScreen(
       {super.key,
       required this.jobModel,
@@ -196,7 +196,7 @@ class _ReviewScreenState extends State<ReviewScreen> {
                     : () {
                         storeReviewFormBloc.submit();
                       },
-                loadingText: "Updating...",
+                loadingText: "Submitting...",
                 isLoading: _isLoading,
               ),
             ),

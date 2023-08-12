@@ -49,18 +49,22 @@ class _PatientProfileState extends State<PatientProfile> {
                                 child: ClipRRect(
                                   borderRadius:
                                       BorderRadius.all(Radius.circular(5.0)),
-                                  child: Image.network(
-                                    url,
-                                    fit: BoxFit.cover,
-                                    width: 1000.0,
-                                    errorBuilder: (context, error, stackTrace) {
-                                      return Icon(Icons.error);
-                                    },
-                                    loadingBuilder:
-                                        (context, child, loadingProgress) {
-                                      return ThemeSpinner.spinner();
-                                    },
-                                    
+                                  child: CachedNetworkImage(
+                                    imageUrl: url,
+                                    imageBuilder: (context, imageProvider) =>
+                                        Container(
+                                      decoration: BoxDecoration(
+                                        borderRadius: BorderRadius.circular(5),
+                                        image: DecorationImage(
+                                          image: imageProvider,
+                                          fit: BoxFit.cover,
+                                        ),
+                                      ),
+                                    ),
+                                    placeholder: (context, url) =>
+                                        ThemeSpinner.spinnerInput(),
+                                    errorWidget: (context, url, error) =>
+                                        const Icon(Icons.error),
                                   ),
                                 ),
                               );

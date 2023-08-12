@@ -81,6 +81,7 @@ class JobResource {
         });
   }
 
+
   static Resource storeReview(
       int jobId, ReviewNurseRequestModel reviewNurseRequestModel) {
     return Resource(

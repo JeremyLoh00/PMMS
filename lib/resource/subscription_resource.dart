@@ -17,12 +17,11 @@ class SubscriptionResource {
         });
   }
 
-  static Resource storeSubscription(SubscriptionModel subscriptionModel) {
+   static Resource generateSubscriptionBillPayment(int subscriptionId) {
     return Resource(
-        url: 'client/generate-bill/subscription-fee/1',
-        data: subscriptionModel.toJson(),
+        url: 'client/generate-bill/subscription-fee/$subscriptionId',
         parse: (response) {
-          return SubscriptionStoreResponseModel(json.decode(response.body));
+          return DefaultResponseModel(json.decode(response.body));
         });
   }
 }

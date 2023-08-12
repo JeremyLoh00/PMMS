@@ -224,7 +224,7 @@ class _CommentState extends State<Comment> {
                   ),
                   Space(10),
                   Divider(
-                    thickness: 0.5,
+                    thickness: 0.2,
                     color: kGrey,
                   ),
                 ],

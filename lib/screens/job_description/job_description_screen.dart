@@ -255,9 +255,9 @@ class _JobDescriptionScreenState extends State<JobDescriptionScreen> {
           MaterialPageRoute(
             builder: (context) {
               return PaymentGatewayScreen(
-                jobModel: widget.jobModel!,
+                titlePage: "Uniform Fee Payment",
                 billId: responseModel.data,
-                callbackGetJobData: getJobData,
+                callbackGetData: getJobData,
               );
             },
           ),

@@ -31,13 +31,13 @@ Color getBgColorStatus(int statusId) {
   } else if (statusId == WAITING_CLIENT_REVIEWS) {
     return kReviewBg;
   } else if (statusId == WAITING_NURSE_APPROVAL) {
-    return kNurseApprovalText;
+    return kLightGrey.withOpacity(0.3);
   } else if (statusId == COMPLETED) {
     return kCompletedBg;
   } else if (statusId == CANCELLED) {
     return kBgDanger;
   } else if (statusId == WAITING_CLIENT_PAYMENT) {
-    return kNurseApprovalBg;
+    return kNurseApprovalText;
   } else {
     return kBgSuccess;
   }
@@ -55,7 +55,7 @@ Color getTextColorStatus(int statusId) {
   } else if (statusId == CANCELLED) {
     return kTextDanger;
   } else if (statusId == WAITING_CLIENT_PAYMENT) {
-    return kNurseApprovalText;
+    return kNurseApprovalBg;
   } else {
     return kTextSuccess;
   }
