@@ -2,50 +2,35 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_scale_tap/flutter_scale_tap.dart';
 import 'package:iconsax/iconsax.dart';
-import 'package:private_nurse_for_client/bloc/job_bloc.dart';
+
 import 'package:private_nurse_for_client/bloc/nurse_bloc.dart';
 import 'package:private_nurse_for_client/constant.dart';
 import 'package:private_nurse_for_client/helpers/general_method.dart';
-import 'package:private_nurse_for_client/helpers/http_response.dart';
 import 'package:private_nurse_for_client/models/default_response_model.dart';
-import 'package:private_nurse_for_client/models/job/job_model.dart';
-import 'package:private_nurse_for_client/models/list_of_applied_nurse/list_of_applied_nurse_model.dart';
+
 import 'package:private_nurse_for_client/models/user/user_model.dart';
-import 'package:private_nurse_for_client/public_components/button_primary.dart';
-import 'package:private_nurse_for_client/public_components/button_secondary.dart';
 import 'package:private_nurse_for_client/public_components/custom_dialog.dart';
 import 'package:private_nurse_for_client/public_components/theme_snack_bar.dart';
+import 'package:private_nurse_for_client/public_components/theme_spinner.dart';
+
 import 'package:private_nurse_for_client/screens/nurse_profile/components/nurse_profile_header.dart';
-import 'package:private_nurse_for_client/screens/nurse_profile/components/nurse_profile_review.dart';
-import 'package:private_nurse_for_client/screens/nurse_profile/components/nurse_review.dart';
-import 'package:private_nurse_for_client/screens/nurse_profile/components/reject_reason.dart';
-import 'package:private_nurse_for_client/screens/payment/payment.dart';
-import 'package:private_nurse_for_client/screens/subscription/subscription_screen.dart';
-import 'package:private_nurse_for_client/theme.dart';
 
 class NurseProfileScreen extends StatefulWidget {
-
   final UserModel userModel;
-  const NurseProfileScreen(
-      {super.key,
-      required this.userModel,
-});
+  final Function() callbackRefresh;
+  const NurseProfileScreen({
+    super.key,
+    required this.userModel,
+    required this.callbackRefresh,
+  });
 
   @override
   State<NurseProfileScreen> createState() => _NurseProfileScreenState();
 }
 
-final String commentPic =
-    "https://cdn.pixabay.com/photo/2017/12/03/18/04/christmas-balls-2995437_960_720.jpg";
-final int subCode = 200;
 bool block = false;
 
 class _NurseProfileScreenState extends State<NurseProfileScreen> {
-  bool _isLoadingAccept = false;
-  bool _isLoadingReject = false;
-  bool _isLoading = false;
-  JobModel _jobModel = JobModel();
-  JobsBloc jobsBloc = JobsBloc();
   NurseBloc nurseBloc = NurseBloc();
   @override
   Widget build(BuildContext context) {
@@ -64,21 +49,15 @@ class _NurseProfileScreenState extends State<NurseProfileScreen> {
                 SizedBox(
                   height: MediaQuery.of(context).size.height * 0.3,
                   width: double.infinity,
-                  child: Hero(
-                    tag: "contest-banner",
-                    // child: Text("data"),
-                    child: Container(
-                      child: CachedNetworkImage(
-                        imageUrl: widget.userModel.profilePhoto!,
-                        imageBuilder: (context, imageProvider) => Container(
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(20.0),
-                            shape: BoxShape.rectangle,
-                            image: DecorationImage(
-                              image: imageProvider,
-                              fit: BoxFit.cover,
-                            ),
-                          ),
+                  child: CachedNetworkImage(
+                    imageUrl: widget.userModel.profilePhoto!,
+                    imageBuilder: (context, imageProvider) => Container(
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(20.0),
+                        shape: BoxShape.rectangle,
+                        image: DecorationImage(
+                          image: imageProvider,
+                          fit: BoxFit.cover,
                         ),
                       ),
                     ),
@@ -89,14 +68,11 @@ class _NurseProfileScreenState extends State<NurseProfileScreen> {
                 ),
                 NurseProfileHeader(
                   title: widget.userModel.name!,
-                  totalReview:
-                      widget.userModel.nurseModel!.averageRating!,
+                  totalReview: widget.userModel.nurseModel!.averageRating!,
                   phoneNum: widget.userModel.phoneNo!,
-                  education:
-                      widget.userModel.nurseModel!.educationLevel!,
+                  education: widget.userModel.nurseModel!.educationLevel!,
                   location: widget.userModel.nurseModel!.collegeName!,
-                  experience:
-                      widget.userModel.nurseModel!.workExperience!,
+                  experience: widget.userModel.nurseModel!.workExperience!,
                   nurseId: widget.userModel.nurseModel!.id!,
                 ),
                 SizedBox(
@@ -113,15 +89,14 @@ class _NurseProfileScreenState extends State<NurseProfileScreen> {
                 SizedBox(
                   height: 10,
                 ),
-
               ],
             ),
           ),
         ),
       ),
-      
     );
   }
+
   AppBar _buildAppBar() {
     return AppBar(
       centerTitle: false,
@@ -137,8 +112,10 @@ class _NurseProfileScreenState extends State<NurseProfileScreen> {
             ),
           ),
           ScaleTap(
-            onPressed: () => (showBlockNursePopup(context)),
-            child: Text(
+            onPressed: () {
+              showPopupWarning();
+            },
+            child: const Text(
               "Block Nurse",
               style: TextStyle(
                 fontFamily: "Poppins",
@@ -162,6 +139,48 @@ class _NurseProfileScreenState extends State<NurseProfileScreen> {
         },
       ),
     );
-  } // Popup if user want to hire nurse
+  }
 
+  void showPopupWarning() {
+    CustomDialog.show(
+      context,
+      icon: Iconsax.info_circle,
+      title: "Block Nurse",
+      description:
+          "Are you sure to block the nurse? You can unblock the nurse at the “Blocked Nurse” list. ",
+      btnCancelText: "Cancel",
+      btnOkText: "Block",
+      btnCancelOnPress: () => Navigator.of(context).pop(),
+      btnOkOnPress: () async {
+        Navigator.pop(context);
+        await blockNurse();
+      },
+
+      // dialogType: DialogType.warning,
+    );
+  }
+
+  Future<void> blockNurse() async {
+    CustomDialog.show(
+      context,
+      isDissmissable: false,
+      title: "Blocking Nurse...",
+      center: ThemeSpinner.spinner(),
+    );
+    DefaultResponseModel responseModel =
+        await nurseBloc.blockNurse(widget.userModel.nurseModel!.id!);
+    Navigator.pop(context);
+
+    if (responseModel.isSuccess) {
+      if (mounted) {
+        ThemeSnackBar.showSnackBar(context, responseModel.message);
+        Navigator.of(context).pop();
+        widget.callbackRefresh();
+      }
+    } else {
+      if (mounted) {
+        ThemeSnackBar.showSnackBar(context, responseModel.message);
+      }
+    }
+  } // Popup if user want to hire nurse
 }

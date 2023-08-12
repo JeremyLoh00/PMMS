@@ -14,9 +14,10 @@ import 'package:private_nurse_for_client/theme.dart';
 
 class NurseHistoryItem extends StatelessWidget {
   final UserModel userModel;
+  final Function() callbackRefresh;
   const NurseHistoryItem({
     super.key,
-    required this.userModel,
+    required this.userModel, required this.callbackRefresh,
   });
 
   @override
@@ -27,6 +28,7 @@ class NurseHistoryItem extends StatelessWidget {
         navigateTo(
             context,
             NurseProfileScreen(
+              callbackRefresh: callbackRefresh,
               userModel: userModel,
             ));
       },

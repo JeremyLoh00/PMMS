@@ -122,7 +122,10 @@ class _NurseHistoryScreenState extends State<NurseHistoryScreen> {
                     ),
                 animateTransitions: true,
                 itemBuilder: (context, nurseModel, index) {
-                  return NurseHistoryItem(userModel: nurseModel);
+                  return NurseHistoryItem(
+                    callbackRefresh: _onRefresh,
+                    userModel: nurseModel,
+                  );
                 }),
           )
         ],
