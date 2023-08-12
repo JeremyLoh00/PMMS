@@ -10,4 +10,8 @@ class UserDataNotifier with ChangeNotifier {
     _user = userModel;
     notifyListeners();
   }
+  void setUser(UserModel? userModel) {
+    _user = userModel;
+   
+  }
 }

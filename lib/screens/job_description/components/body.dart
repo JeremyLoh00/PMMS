@@ -9,7 +9,7 @@ import 'package:private_nurse_for_client/screens/job_description/components/pati
 
 class Body extends StatefulWidget {
   final JobModel jobModel;
-  Body({Key? key, required this.jobModel}) : super(key: key);
+  const Body({Key? key, required this.jobModel}) : super(key: key);
 
   @override
   State<Body> createState() => _BodyState();
@@ -22,7 +22,7 @@ class _BodyState extends State<Body> {
       body: SingleChildScrollView(
         physics: BouncingScrollPhysics(),
         child: Container(
-          color: kWhite,
+          color: Colors.grey.shade100,
           child: Column(children: [
             //Image
             Container(
@@ -50,7 +50,11 @@ class _BodyState extends State<Body> {
             //Detail container
             Stack(clipBehavior: Clip.none, children: [
               Container(
-                height: calcHeight(widget.jobModel.jobSchedule!.length, widget.jobModel.feedbacks!.length),
+                height: calcHeight(
+                    widget.jobModel.jobSchedule!.length,
+                    widget.jobModel.feedbacks != null
+                        ? widget.jobModel.feedbacks!.length
+                        : 0),
               ),
               Positioned(
                 //Position of the float container
@@ -73,51 +77,58 @@ class _BodyState extends State<Body> {
                   ),
                   width: 350,
                   child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        //Title of job
-                        Container(
-                          alignment: Alignment.center,
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.only(
-                                topLeft: Radius.circular(10),
-                                topRight: Radius.circular(10)),
-                            color: kPrimaryColor,
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      //Title of job
+                      Container(
+                        alignment: Alignment.center,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.only(
+                              topLeft: Radius.circular(10),
+                              topRight: Radius.circular(10)),
+                          color: kPrimaryColor,
+                        ),
+                        child: Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Text(
+                            widget.jobModel.service!.name!,
+                            style: TextStyle(
+                                fontSize: 24,
+                                fontWeight: FontWeight.bold,
+                                color: kWhite),
                           ),
-                          child: Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: Text(
-                              widget.jobModel.service!.name!,
-                              style: TextStyle(
-                                  fontSize: 24,
-                                  fontWeight: FontWeight.bold,
-                                  color: kWhite),
-                            ),
-                          ),
                         ),
-                        SizedBox(
-                          height: 10,
-                        ),
-                        //Job detail description
-                        JobDescriptionDetail(
-                          jobModel: widget.jobModel,
-                        ),
-                        //Patient info
-                        Patient(
-                          jobModel: widget.jobModel,
-                        ),
-                        //Nurse applications info
-                        NurseApplication(
-                          jobModel: widget.jobModel,
-                        ),
-                        widget.jobModel.jobStatusId == WAITING_CLIENT_REVIEWS
-                            ?
-                            //Comment
-                            Comment(jobModel: widget.jobModel)
-                            : widget.jobModel.jobStatusId == COMPLETED
-                                ? Comment(jobModel: widget.jobModel)
-                                : SizedBox(),
-                      ]),
+                      ),
+                      SizedBox(
+                        height: 10,
+                      ),
+                      //Job detail description
+                      JobDescriptionDetail(
+                        jobModel: widget.jobModel,
+                      ),
+                      //Patient info
+                      Patient(
+                        jobModel: widget.jobModel,
+                      ),
+                      //Nurse applications info
+
+                      NurseApplication(
+                        jobModel: widget.jobModel,
+                      ),
+
+                      // widget.jobModel.jobStatusId == WAITING_CLIENT_REVIEWS
+                      //     ?
+                      //     //Comment
+                      //     Comment(jobModel: widget.jobModel)
+                      //     : widget.jobModel.jobStatusId == COMPLETED
+                      //         ? Comment(jobModel: widget.jobModel)
+                      //         : SizedBox(),
+
+                      widget.jobModel.feedbacks != null
+                          ? Comment(jobModel: widget.jobModel)
+                          : SizedBox()
+                    ],
+                  ),
                 ),
               ),
             ]),
@@ -128,7 +139,7 @@ class _BodyState extends State<Body> {
   }
 
   double calcHeight(int length, int reviewLength) {
-    if (reviewLength == 0) {
+    if (reviewLength == null) {
       if (length == 1) {
         return 450;
       } else {

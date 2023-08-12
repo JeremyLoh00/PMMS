@@ -33,11 +33,11 @@ class OpenTab extends StatefulWidget {
     required this.selectedTabIndex,
     required this.jobFilterRequestModel,
     required this.pagingController,
-    required this.userModel,
+ 
   });
 
   final int selectedTabIndex;
-  final UserModel userModel;
+ 
   final JobFilterRequestModel jobFilterRequestModel;
   final PagingController<int, JobModel> pagingController;
 
@@ -67,7 +67,7 @@ class _OpenTabState extends State<OpenTab> {
       final UserDataNotifier userDataNotifier =
           Provider.of<UserDataNotifier>(context, listen: false);
       // Set to the notifier
-      userDataNotifier.setUserData(user);
+      userDataNotifier.setUser(user);
     }
     // monitor network fetch
 
@@ -308,7 +308,7 @@ class _OpenTabState extends State<OpenTab> {
                           Expanded(
                               child: Text(
                             jobModel.patient!.name!,
-                            // jobModel.client!.userModel!.name!,
+                       
                             maxLines: 1,
                             overflow: TextOverflow.ellipsis,
                             style: TextStyle(

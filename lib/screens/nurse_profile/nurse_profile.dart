@@ -275,7 +275,7 @@ class _NurseProfileState extends State<NurseProfile> {
                 context,
                 MaterialPageRoute(
                   builder: (context) {
-                    return SubscriptionScreen(fromCustomeDialog: 1);
+                    return SubscriptionScreen(fromCustomerDialog: 1);
                   },
                 ),
               );
@@ -324,7 +324,7 @@ class _NurseProfileState extends State<NurseProfile> {
               context,
               MaterialPageRoute(
                 builder: (context) {
-                  return SubscriptionScreen(fromCustomeDialog: 1);
+                  return SubscriptionScreen(fromCustomerDialog: 1);
                 },
               ),
             );

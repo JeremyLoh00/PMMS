@@ -5,6 +5,7 @@ import 'package:private_nurse_for_client/constant.dart';
 import 'package:private_nurse_for_client/helpers/general_method.dart';
 import 'package:private_nurse_for_client/models/job/job_model.dart';
 import 'package:private_nurse_for_client/public_components/space.dart';
+import 'package:private_nurse_for_client/public_components/theme_spinner.dart';
 import 'package:private_nurse_for_client/screens/dashboard/component/home_function.dart';
 import 'package:private_nurse_for_client/screens/nurse_profile/nurse_profile.dart';
 import 'package:private_nurse_for_client/theme.dart';
@@ -30,7 +31,7 @@ class _NurseApplicationState extends State<NurseApplication> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(
+          const Text(
             "Nurse Applications",
             style: TextStyle(
               fontWeight: FontWeight.bold,
@@ -131,9 +132,7 @@ class _NurseApplicationState extends State<NurseApplication> {
                               ),
                             ),
                             placeholder: (context, url) =>
-                                const CircularProgressIndicator(
-                              color: kPrimaryColor,
-                            ),
+                                ThemeSpinner.spinnerInput(),
                             errorWidget: (context, url, error) =>
                                 const Icon(Icons.error),
                           ),
@@ -169,144 +168,6 @@ class _NurseApplicationState extends State<NurseApplication> {
                                         .nurse!
                                         .applyJobStatusId!,
                                   )
-                                  // status[index] == 'Accepted'
-                                  //     ? Row(
-                                  //         mainAxisAlignment:
-                                  //             MainAxisAlignment.end,
-                                  //         children: [
-                                  //           Container(
-                                  //               padding:
-                                  //                   const EdgeInsets.symmetric(
-                                  //                       horizontal: 10,
-                                  //                       vertical: 2),
-                                  //               decoration: BoxDecoration(
-                                  //                 color: Color.fromRGBO(
-                                  //                     209, 250, 229, 10),
-                                  //                 borderRadius:
-                                  //                     BorderRadius.circular(10),
-                                  //               ),
-                                  //               child: Text(
-                                  //                 status[0],
-                                  //                 style: TextStyle(
-                                  //                   color: Color.fromRGBO(
-                                  //                       6, 95, 70, 1),
-                                  //                   fontSize: 12,
-                                  //                   fontWeight: FontWeight.w500,
-                                  //                 ),
-                                  //               ))
-                                  //         ],
-                                  //       )
-                                  //     : status[index] == 'Cancelled'
-                                  //         ? Row(
-                                  //             mainAxisAlignment:
-                                  //                 MainAxisAlignment.end,
-                                  //             children: [
-                                  //               Container(
-                                  //                   padding: const EdgeInsets
-                                  //                           .symmetric(
-                                  //                       horizontal: 10,
-                                  //                       vertical: 2),
-                                  //                   decoration: BoxDecoration(
-                                  //                     color: Color.fromRGBO(
-                                  //                         250, 209, 209, 0.965),
-                                  //                     borderRadius:
-                                  //                         BorderRadius.circular(
-                                  //                             10),
-                                  //                   ),
-                                  //                   child: Text(
-                                  //                     status[1],
-                                  //                     style: TextStyle(
-                                  //                       color: Color.fromRGBO(
-                                  //                           95, 6, 6, 1),
-                                  //                       fontSize: 12,
-                                  //                       fontWeight:
-                                  //                           FontWeight.w500,
-                                  //                     ),
-                                  //                   ))
-                                  //             ],
-                                  //           )
-                                  //         : status[index] == 'Awaiting'
-                                  //             ? Row(
-                                  //                 mainAxisAlignment:
-                                  //                     MainAxisAlignment.end,
-                                  //                 children: [
-                                  //                   Container(
-                                  //                       padding:
-                                  //                           const EdgeInsets
-                                  //                                   .symmetric(
-                                  //                               horizontal: 10,
-                                  //                               vertical: 2),
-                                  //                       decoration:
-                                  //                           BoxDecoration(
-                                  //                         color: Color.fromRGBO(
-                                  //                             247,
-                                  //                             250,
-                                  //                             209,
-                                  //                             0.965),
-                                  //                         borderRadius:
-                                  //                             BorderRadius
-                                  //                                 .circular(10),
-                                  //                       ),
-                                  //                       child: Text(
-                                  //                         status[2],
-                                  //                         style: TextStyle(
-                                  //                           color:
-                                  //                               Color.fromRGBO(
-                                  //                                   95,
-                                  //                                   86,
-                                  //                                   6,
-                                  //                                   1),
-                                  //                           fontSize: 12,
-                                  //                           fontWeight:
-                                  //                               FontWeight.w500,
-                                  //                         ),
-                                  //                       ))
-                                  //                 ],
-                                  //               )
-                                  //             : status[index] == 'On-going'
-                                  //                 ? Row(
-                                  //                     mainAxisAlignment:
-                                  //                         MainAxisAlignment.end,
-                                  //                     children: [
-                                  //                       Container(
-                                  //                           padding:
-                                  //                               const EdgeInsets
-                                  //                                       .symmetric(
-                                  //                                   horizontal:
-                                  //                                       10,
-                                  //                                   vertical:
-                                  //                                       2),
-                                  //                           decoration:
-                                  //                               BoxDecoration(
-                                  //                             color: Color
-                                  //                                 .fromRGBO(
-                                  //                                     209,
-                                  //                                     222,
-                                  //                                     250,
-                                  //                                     0.965),
-                                  //                             borderRadius:
-                                  //                                 BorderRadius
-                                  //                                     .circular(
-                                  //                                         10),
-                                  //                           ),
-                                  //                           child: Text(
-                                  //                             status[3],
-                                  //                             style: TextStyle(
-                                  //                               color: Color
-                                  //                                   .fromARGB(
-                                  //                                       255,
-                                  //                                       6,
-                                  //                                       27,
-                                  //                                       95),
-                                  //                               fontSize: 12,
-                                  //                               fontWeight:
-                                  //                                   FontWeight
-                                  //                                       .w500,
-                                  //                             ),
-                                  //                           ))
-                                  //     ],
-                                  //   )
-                                  // : SizedBox(),
                                 ],
                               ),
                             ],

@@ -134,25 +134,21 @@ class _HomeScreenState extends State<HomeScreen>
               controller: _tabController,
               children: [
                 OpenTab(
-                  userModel: widget.userModel!,
                   selectedTabIndex: _selectedTabIndex,
                   jobFilterRequestModel: jobFilterRequestModel,
                   pagingController: _jobPagingController,
                 ),
                 OngoingTab(
-                  userModel: widget.userModel!,
                   selectedTabIndex: _selectedTabIndex,
                   jobFilterRequestModel: jobFilterRequestModel,
                   pagingController: _ongoingPagingController,
                 ),
                 CompletedTab(
-                  userModel: widget.userModel!,
                   selectedTabIndex: _selectedTabIndex,
                   jobFilterRequestModel: jobFilterRequestModel,
                   pagingController: _completedPagingController,
                 ),
                 CancelledTab(
-                  userModel: widget.userModel!,
                   selectedTabIndex: _selectedTabIndex,
                   jobFilterRequestModel: jobFilterRequestModel,
                   pagingController: _cancelledPagingController,

@@ -25,13 +25,13 @@ class CompletedTab extends StatefulWidget {
     required this.selectedTabIndex,
     required this.jobFilterRequestModel,
     required this.pagingController,
-    required this.userModel,
+   
   });
 
   final int selectedTabIndex;
   final JobFilterRequestModel jobFilterRequestModel;
   final PagingController<int, JobModel> pagingController;
-  final UserModel userModel;
+ 
 
   @override
   State<CompletedTab> createState() => _CompletedTabState();

@@ -29,7 +29,7 @@ import 'package:pull_to_refresh/pull_to_refresh.dart';
 
 class OngoingTab extends StatefulWidget {
   final int selectedTabIndex;
-  final UserModel userModel;
+ 
   final JobFilterRequestModel jobFilterRequestModel;
   final PagingController<int, JobModel> pagingController;
 
@@ -38,7 +38,7 @@ class OngoingTab extends StatefulWidget {
     required this.selectedTabIndex,
     required this.jobFilterRequestModel,
     required this.pagingController,
-    required this.userModel,
+ 
   });
 
   @override
@@ -261,7 +261,7 @@ class _OngoingTabState extends State<OngoingTab> {
                               Expanded(
                                   child: Text(
                                 jobModel.patient!.name!,
-                                // jobModel.client!.userModel!.name!,
+                          
                                 maxLines: 1,
                                 overflow: TextOverflow.ellipsis,
                                 style: TextStyle(

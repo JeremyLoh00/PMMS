@@ -55,81 +55,68 @@ class _JobDescriptionState extends State<JobDescription> {
             jobModel: widget.jobModel,
           ),
           //Bottom button with condition
-          footer: widget.jobModel.jobStatusId! ==
-                  WAITING_CLIENT_PAYMENT //Waiting payment
-              ? Padding(
-                  padding: const EdgeInsets.all(18.0),
-                  child: Row(
-                    children: [
-                      Expanded(
-                        flex: 1,
-                        child: ButtonSecondary(
-                          paddingVertical: 17,
-                          onPressed: () {},
-                          text: "Cancel",
-                        ),
-                      ),
-                      SizedBox(
-                        width: 10,
-                      ),
-                      Expanded(
-                        flex: 2,
-                        child: ButtonPrimary(
-                          "Pay",
-                          onPressed: () async {
-                            await generateBillPayment(context);
-                          },
-                          isLoading: _isLoading,
-                          loadingText: "Accepting...",
-                        ),
-                      ),
-                    ],
-                  ),
-                )
-              : widget.jobModel.jobStatusId! ==
-                      WAITING_CLIENT_REVIEWS //Waiting payment
-                  ? Padding(
-                      padding: const EdgeInsets.all(15.0),
-                      child: ButtonPrimary(
-                        "Review",
-                        onPressed: () => navigateTo(
-                            context,
-                            Review(
-                              jobModel: widget.jobModel,
-                            )),
-                        loadingText: "Updating...",
-                      ),
-                    )
-                  : widget.jobModel.jobStatusId! == OPEN
-                      ? Padding(
-                          padding: const EdgeInsets.all(18.0),
-                          child: Expanded(
-                            flex: 1,
-                            child: ButtonSecondary(
-                              paddingVertical: 17,
-                              onPressed: () {
-                                showCancelPopup(context);
-                              },
-                              text: "Cancel",
-                            ),
-                          ),
-                        )
-                      : widget.jobModel.jobStatusId! == WAITING_NURSE_APPROVAL
-                          ? Padding(
-                              padding: const EdgeInsets.all(18.0),
-                              child: Expanded(
-                                flex: 1,
-                                child: ButtonSecondary(
-                                  paddingVertical: 17,
-                                  onPressed: () {
-                                    showCancelPopup(context);
-                                  },
-                                  text: "Cancel",
-                                ),
-                              ),
-                            )
-                          : SizedBox()),
+          footer: getBottomButton(widget.jobModel)),
     );
+  }
+
+  Widget getBottomButton(JobModel jobModel) {
+    if (jobModel.jobStatusId! == WAITING_CLIENT_PAYMENT) {
+      return Padding(
+        padding: const EdgeInsets.all(18.0),
+        child: Row(
+          children: [
+            Expanded(
+              flex: 1,
+              child: ButtonSecondary(
+                paddingVertical: 17,
+                onPressed: () {},
+                text: "Cancel",
+              ),
+            ),
+            SizedBox(width: 10),
+            Expanded(
+              flex: 2,
+              child: ButtonPrimary(
+                "Pay",
+                onPressed: () async {
+                  await generateBillPayment(context);
+                },
+                isLoading: _isLoading,
+                loadingText: "Accepting...",
+              ),
+            ),
+          ],
+        ),
+      );
+    } else if (jobModel.jobStatusId! == WAITING_CLIENT_REVIEWS) {
+      return Padding(
+        padding: const EdgeInsets.all(15.0),
+        child: ButtonPrimary(
+          "Review",
+          onPressed: () => navigateTo(
+            context,
+            Review(
+              jobModel: widget.jobModel,
+            ),
+          ),
+          loadingText: "Updating...",
+        ),
+      );
+    } else if (jobModel.jobStatusId! == OPEN ||
+        jobModel.jobStatusId! == WAITING_NURSE_APPROVAL) {
+      return Padding(
+        padding: const EdgeInsets.all(18.0),
+        child: ButtonSecondary(
+          paddingVertical: 17,
+          onPressed: () {
+            showCancelPopup(context);
+          },
+          text: "Cancel",
+        ),
+      );
+    } else {
+      return SizedBox();
+    }
   }
 
   Future<bool> showCancelPopup(BuildContext context) async {

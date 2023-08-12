@@ -89,8 +89,6 @@ class _NavigationState extends State<Navigation> {
     }
   }
 
-
-
   @override
   Widget build(BuildContext context) {
     return WillPopScope(
@@ -118,37 +116,7 @@ class _NavigationState extends State<Navigation> {
             }
           },
         ),
-        // body: _buildBody(),
-        body: Consumer<UserDataNotifier>(
-          builder: (context, userDataNotifier, child) {
-            if (userDataNotifier.user != null) {
-              // Show UI using the data in the notifier
-              return _buildBody(
-                userModel: userDataNotifier.user!,
-              );
-              // Else try to get the data from shared preferences the show the UI
-            } else {
-              return FutureBuilder(
-                future: _userModel,
-                builder: (context, snapshot) {
-                  if (snapshot.hasData && snapshot.data != null) {
-                    // Set to the user data notifier
-                    userDataNotifier.setUserData(snapshot.data);
-                    // return UI
-                    return _buildBody(
-                      userModel: snapshot.data!,
-                    );
-                  } else {
-                    // Show loading
-                    return Center(
-                      child: ThemeSpinner.spinner(),
-                    );
-                  }
-                },
-              );
-            }
-          },
-        ),
+        body: _buildBody(),
       ),
     );
   }
@@ -438,6 +406,7 @@ class _NavigationState extends State<Navigation> {
                 await userBloc.signOut(context);
               },
               child: Container(
+                color: kTransparent,
                 padding: EdgeInsets.all(15),
                 child: const Row(
                   mainAxisAlignment: MainAxisAlignment.center,
@@ -545,11 +514,17 @@ class _NavigationState extends State<Navigation> {
                 );
               },
               child: const Padding(
-                padding: EdgeInsets.only(top: 23,right: 15,),
-                child: Text("Blocked Nurse", style: TextStyle(color: kSecondaryColor,
-              fontWeight: FontWeight.bold,
-              fontSize: 12),)
-              ),
+                  padding: EdgeInsets.only(
+                    top: 23,
+                    right: 15,
+                  ),
+                  child: Text(
+                    "Blocked Nurse",
+                    style: TextStyle(
+                        color: kSecondaryColor,
+                        fontWeight: FontWeight.bold,
+                        fontSize: 12),
+                  )),
             ),
           ],
         );
@@ -566,16 +541,14 @@ class _NavigationState extends State<Navigation> {
     }
   }
 
-  Widget _buildBody({required UserModel userModel}) {
+  Widget _buildBody() {
     switch (_selectedIndex) {
       case 0:
-        return HomeScreen(
-          userModel: userModel,
-        );
+        return HomeScreen();
       case 1:
         return NurseHistoryScreen();
       case 2:
-        return SubscriptionScreen(userModel: userModel,);
+        return SubscriptionScreen();
       case 3:
         return ContactUsScreen();
       case 4:

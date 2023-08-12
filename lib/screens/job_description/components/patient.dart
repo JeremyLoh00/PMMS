@@ -5,6 +5,7 @@ import 'package:private_nurse_for_client/constant.dart';
 import 'package:private_nurse_for_client/helpers/general_method.dart';
 import 'package:private_nurse_for_client/models/job/job_model.dart';
 import 'package:private_nurse_for_client/public_components/space.dart';
+import 'package:private_nurse_for_client/public_components/theme_spinner.dart';
 import 'package:private_nurse_for_client/screens/patient_profile/patient_profile.dart';
 import 'package:private_nurse_for_client/theme.dart';
 
@@ -29,7 +30,7 @@ class _PatientState extends State<Patient> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(
+          const Text(
             "Patient",
             style: TextStyle(
               fontWeight: FontWeight.bold,
@@ -82,9 +83,7 @@ class _PatientState extends State<Patient> {
                           ),
                         ),
                         placeholder: (context, url) =>
-                            const CircularProgressIndicator(
-                          color: kPrimaryColor,
-                        ),
+                            ThemeSpinner.spinnerInput(),
                         errorWidget: (context, url, error) =>
                             const Icon(Icons.error),
                       ),
