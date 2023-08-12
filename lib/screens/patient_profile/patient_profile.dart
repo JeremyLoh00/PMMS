@@ -1,8 +1,10 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:getwidget/components/carousel/gf_carousel.dart';
+import 'package:iconsax/iconsax.dart';
 import 'package:private_nurse_for_client/constant.dart';
 import 'package:private_nurse_for_client/models/job/job_model.dart';
+import 'package:private_nurse_for_client/public_components/theme_spinner.dart';
 import 'package:private_nurse_for_client/screens/patient_profile/components/patient_profile_description.dart';
 import 'package:private_nurse_for_client/screens/patient_profile/components/patient_profile_header.dart';
 
@@ -47,8 +49,19 @@ class _PatientProfileState extends State<PatientProfile> {
                                 child: ClipRRect(
                                   borderRadius:
                                       BorderRadius.all(Radius.circular(5.0)),
-                                  child: Image.network(url,
-                                      fit: BoxFit.cover, width: 1000.0),
+                                  child: Image.network(
+                                    url,
+                                    fit: BoxFit.cover,
+                                    width: 1000.0,
+                                    errorBuilder: (context, error, stackTrace) {
+                                      return Icon(Icons.error);
+                                    },
+                                    loadingBuilder:
+                                        (context, child, loadingProgress) {
+                                      return ThemeSpinner.spinner();
+                                    },
+                                    
+                                  ),
                                 ),
                               );
                             },

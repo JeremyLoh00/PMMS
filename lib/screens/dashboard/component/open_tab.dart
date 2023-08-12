@@ -199,7 +199,7 @@ class _OpenTabState extends State<OpenTab> {
       onPressed: () {
         navigateTo(
             context,
-            JobDescription(
+            JobDescriptionScreen(
               jobModel: jobModel,
             ));
       },

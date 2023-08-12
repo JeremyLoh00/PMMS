@@ -21,20 +21,22 @@ import 'package:private_nurse_for_client/screens/payment/payment.dart';
 import 'package:private_nurse_for_client/screens/payment_gateway/payment_gateway_screen.dart';
 import 'package:private_nurse_for_client/screens/review/review_screen.dart';
 
-class JobDescription extends StatefulWidget {
+class JobDescriptionScreen extends StatefulWidget {
   final JobModel? jobModel;
   final int? jobId;
-  const JobDescription({super.key, this.jobModel, this.jobId});
+  const JobDescriptionScreen({super.key, this.jobModel, this.jobId});
 
   @override
-  State<JobDescription> createState() => _JobDescriptionState();
+  State<JobDescriptionScreen> createState() => _JobDescriptionScreenState();
 }
 
-class _JobDescriptionState extends State<JobDescription> {
+class _JobDescriptionScreenState extends State<JobDescriptionScreen> {
   bool _isLoading = false;
   bool _isLoadingCancel = false;
   JobsBloc jobsBloc = JobsBloc();
   Future<JobModel> futureData = Future.value(JobModel());
+
+  String loadingTextPayJob = "Accepting...";
 
   @override
   void initState() {
@@ -137,7 +139,7 @@ class _JobDescriptionState extends State<JobDescription> {
                 onPressed: () {
                   showCancelPopup(context, jobModel);
                 },
-                isLoading: _isLoadingCancel,
+                isLoading: _isLoading,
               ),
             ),
             SizedBox(width: 10),
@@ -149,7 +151,7 @@ class _JobDescriptionState extends State<JobDescription> {
                   await generateBillPayment(context, jobModel);
                 },
                 isLoading: _isLoading,
-                loadingText: "Accepting...",
+                loadingText: loadingTextPayJob,
               ),
             ),
           ],
@@ -210,12 +212,14 @@ class _JobDescriptionState extends State<JobDescription> {
 
   Future<void> cancelJob(JobModel jobModel) async {
     setState(() {
-      _isLoadingCancel = true;
+      _isLoading = true;
+      loadingTextPayJob = "Please Wait...";
     });
     JobResponseModel responseModel = await jobsBloc.cancelJob(jobModel.id!);
 
     setState(() {
-      _isLoadingCancel = false;
+      _isLoading = false;
+      loadingTextPayJob = "Accepting...";
     });
     if (responseModel.isSuccess) {
       if (mounted) {

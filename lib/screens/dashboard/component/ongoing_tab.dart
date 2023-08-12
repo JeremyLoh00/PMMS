@@ -81,7 +81,8 @@ class _OngoingTabState extends State<OngoingTab> {
         List<JobModel> listJobsModel = response.data!;
 
         // Compare the lenght with the page size to know either already last page or not
-        final isLastPage = listJobsModel.length < widget.jobFilterRequestModel.take!;
+        final isLastPage =
+            listJobsModel.length < widget.jobFilterRequestModel.take!;
         if (isLastPage) {
           widget.pagingController.appendLastPage(listJobsModel);
         } else {
@@ -100,10 +101,10 @@ class _OngoingTabState extends State<OngoingTab> {
   void initState() {
     super.initState();
     jobFilterRequestModel.tab = 2;
-   
+
     widget.jobFilterRequestModel.page = 1;
     widget.pagingController.addPageRequestListener((pageKey) {
-       EasyDebounce.debounce(
+      EasyDebounce.debounce(
         'openTab',
         const Duration(milliseconds: 500),
         () => _fetchPage(pageKey),
@@ -151,7 +152,7 @@ class _OngoingTabState extends State<OngoingTab> {
       onPressed: () {
         navigateTo(
             context,
-            JobDescription(
+            JobDescriptionScreen(
               jobModel: jobModel,
             ));
       },

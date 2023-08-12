@@ -25,62 +25,6 @@ class _PatientProfileDescriptionState extends State<PatientProfileDescription> {
 
   bool hide = true;
 
-  List<IconData> icon = [
-    Icons.person_outline,
-    Icons.line_axis_outlined,
-    Icons.list_alt_rounded,
-    Icons.personal_injury_outlined,
-    Icons.emergency_outlined,
-  ];
-
-  List<String> title = [
-    'Personal Info',
-    'Diagnosis',
-    'Medical History',
-    'Patient Condition',
-    'Emergency Contact',
-  ];
-
-  List<String> text1 = [
-    'Hypertension',
-    'Skin Problem',
-  ];
-
-  List<String> text2 = [
-    'Diabetics',
-    'Hypertension',
-    'Skin Problem',
-  ];
-
-  List<String> text3 = [
-    'Bed Bound',
-    'Not Cooperative',
-  ];
-
-  final List<String> patientDiagnosisList = [
-    'Diabetic',
-    'Hipertensi',
-    'Heart Failure',
-    'Kidney Disease',
-    'Dyalisis',
-    'Asthma',
-    'Skin Problem',
-    'Blindness',
-    'Dementia',
-    'Alzheimer',
-    'Stroke',
-    'Other',
-  ];
-  final List<String> patientConditionList = [
-    'Wheelchair Bound',
-    'Bed Bound',
-    'Can Ambulate',
-    'Can Talk and Walk',
-    'Cannot Talk',
-    'Cooperative',
-    'Not Cooperative',
-  ];
-
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -339,7 +283,8 @@ class _PatientProfileDescriptionState extends State<PatientProfileDescription> {
                         ),
                         Space(5),
                         Text(
-                          widget.jobModel.patientEmergencyContact!.relationship!,
+                          widget
+                              .jobModel.patientEmergencyContact!.relationship!,
                           style: textStyleNormal(
                             color: kPrimaryColor,
                             fontWeight: FontWeight.bold,
@@ -405,7 +350,7 @@ class _PatientProfileDescriptionState extends State<PatientProfileDescription> {
             physics: NeverScrollableScrollPhysics(),
             gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
               maxCrossAxisExtent: 200,
-              mainAxisSpacing: 90,
+              mainAxisSpacing: 10,
               mainAxisExtent: 25,
               crossAxisSpacing: 25,
             ),

@@ -26,13 +26,11 @@ class CompletedTab extends StatefulWidget {
     required this.selectedTabIndex,
     required this.jobFilterRequestModel,
     required this.pagingController,
-   
   });
 
   final int selectedTabIndex;
   final JobFilterRequestModel jobFilterRequestModel;
   final PagingController<int, JobModel> pagingController;
- 
 
   @override
   State<CompletedTab> createState() => _CompletedTabState();
@@ -74,7 +72,8 @@ class _CompletedTabState extends State<CompletedTab> {
         List<JobModel> listJobsModel = response.data!;
 
         // Compare the lenght with the page size to know either already last page or not
-        final isLastPage = listJobsModel.length < widget.jobFilterRequestModel.take!;
+        final isLastPage =
+            listJobsModel.length < widget.jobFilterRequestModel.take!;
         if (isLastPage) {
           widget.pagingController.appendLastPage(listJobsModel);
         } else {
@@ -93,7 +92,7 @@ class _CompletedTabState extends State<CompletedTab> {
   void initState() {
     super.initState();
     jobFilterRequestModel.tab = 3;
-   
+
     widget.jobFilterRequestModel.page = 1;
     widget.pagingController.addPageRequestListener((pageKey) {
       EasyDebounce.debounce(
@@ -144,7 +143,7 @@ class _CompletedTabState extends State<CompletedTab> {
       onPressed: () {
         navigateTo(
             context,
-            JobDescription(
+            JobDescriptionScreen(
               jobModel: jobModel,
             ));
       },
@@ -172,47 +171,47 @@ class _CompletedTabState extends State<CompletedTab> {
                 children: [
                   // image
                   Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Space(5),
-                  Text(
-                    " #${jobModel.id!}",
-                    style: TextStyle(
-                      color: kPrimaryColor,
-                      fontSize: 12,
-                      fontWeight: FontWeight.bold,
-                    ),
-                    textAlign: TextAlign.left,
-                  ),
-                  Space(5),
-                  SizedBox(
-                    width: 100,
-                    height: 100,
-                    child: CachedNetworkImage(
-                      imageUrl: jobModel.service!.photoPath!,
-                      imageBuilder: (context, imageProvider) => Container(
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(10),
-                          image: DecorationImage(
-                            image: imageProvider,
-                            fit: BoxFit.cover,
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Space(5),
+                      Text(
+                        " #${jobModel.id!}",
+                        style: TextStyle(
+                          color: kPrimaryColor,
+                          fontSize: 12,
+                          fontWeight: FontWeight.bold,
+                        ),
+                        textAlign: TextAlign.left,
+                      ),
+                      Space(5),
+                      SizedBox(
+                        width: 100,
+                        height: 100,
+                        child: CachedNetworkImage(
+                          imageUrl: jobModel.service!.photoPath!,
+                          imageBuilder: (context, imageProvider) => Container(
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(10),
+                              image: DecorationImage(
+                                image: imageProvider,
+                                fit: BoxFit.cover,
+                              ),
+                            ),
                           ),
+                          placeholder: (context, url) => Container(
+                            width: 10,
+                            height: 10,
+                            child: Center(
+                              child: ThemeSpinner.spinner(),
+                            ),
+                          ),
+                          errorWidget: (context, url, error) =>
+                              const Icon(Icons.error),
                         ),
                       ),
-                      placeholder: (context, url) => Container(
-                        width: 10,
-                        height: 10,
-                        child: Center(
-                          child: ThemeSpinner.spinner(),
-                        ),
-                      ),
-                      errorWidget: (context, url, error) =>
-                          const Icon(Icons.error),
-                    ),
+                    ],
                   ),
-                ],
-              ),
                   SizedBox(width: 15),
                   Expanded(
                     child: Padding(

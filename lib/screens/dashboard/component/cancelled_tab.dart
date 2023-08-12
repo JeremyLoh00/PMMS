@@ -152,7 +152,7 @@ class _CancelledTabState extends State<CancelledTab> {
       onPressed: () {
         navigateTo(
             context,
-            JobDescription(
+            JobDescriptionScreen(
               jobModel: jobModel,
             ));
       },
