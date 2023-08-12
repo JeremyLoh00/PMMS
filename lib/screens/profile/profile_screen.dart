@@ -21,6 +21,7 @@ import 'package:private_nurse_for_client/screens/profile/components/body.dart';
 import 'package:private_nurse_for_client/theme.dart';
 import 'package:provider/provider.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
+
 class ProfileScreen extends StatefulWidget {
   const ProfileScreen({super.key});
 
@@ -34,7 +35,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
   // For refresher
   RefreshController _refreshController =
       RefreshController(initialRefresh: false);
-  
+
   void callBackRefresh() {
     _onRefresh();
   }
@@ -95,45 +96,49 @@ class _ProfileScreenState extends State<ProfileScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        backgroundColor: kWhite,
-        appBar: ThemeAppBar(
-          "Profile",
-          trailing: Padding(
-            padding: const EdgeInsets.only(right: 15),
-            child: Consumer<UserDataNotifier>(
-                builder: (context, userDataNotifier, _) {
-              // If the user data in the notifier is not null
-              if (userDataNotifier.user != null) {
-                // Show UI using the data in the notifier
-                return editIcon(
-                  context,
-                  userDataNotifier.user!,
-                );
-                // Else try o get the data from shared preferences the show the UI
-              } else {
-                return FutureBuilder(
-                    future: _userModel,
-                    builder: (context, snapshot) {
-                      if (snapshot.hasData && snapshot.data != null) {
-                        // Set to the user data notifier
-                        userDataNotifier.setUserData(snapshot.data);
-                        // return UI
-                        return editIcon(
-                          context,
-                          snapshot.data!,
-                        );
-                      } else {
-                        // Show loading
-                        return Center(
-                          child: ThemeSpinner.spinner(),
-                        );
-                      }
-                    });
-              }
-            }),
-          ),
+      backgroundColor: kWhite,
+      appBar: ThemeAppBar(
+        "Profile",
+        trailing: Padding(
+          padding: const EdgeInsets.only(right: 15),
+          child: Consumer<UserDataNotifier>(
+              builder: (context, userDataNotifier, _) {
+            // If the user data in the notifier is not null
+            if (userDataNotifier.user != null) {
+              // Show UI using the data in the notifier
+              return editIcon(
+                context,
+                userDataNotifier.user!,
+              );
+              // Else try o get the data from shared preferences the show the UI
+            } else {
+              return FutureBuilder(
+                  future: _userModel,
+                  builder: (context, snapshot) {
+                    if (snapshot.hasData && snapshot.data != null) {
+                      // Set to the user data notifier
+                      userDataNotifier.setUserData(snapshot.data);
+                      // return UI
+                      return editIcon(
+                        context,
+                        snapshot.data!,
+                      );
+                    } else {
+                      // Show loading
+                      return Center(
+                        child: ThemeSpinner.spinner(),
+                      );
+                    }
+                  });
+            }
+          }),
         ),
-        body: SingleChildScrollView(
+      ),
+      body: SmartRefresher(
+        controller: _refreshController,
+        header: WaterDropMaterialHeader(),
+        onRefresh: _onRefresh,
+        child: SingleChildScrollView(
           child: // Use the user data notifier
               Consumer<UserDataNotifier>(
                   builder: (context, userDataNotifier, _) {
@@ -164,7 +169,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   });
             }
           }),
-        ));
+        ),
+      ),
+    );
   }
 
   Widget editIcon(BuildContext context, UserModel userModel) {

@@ -42,49 +42,23 @@ void main() async {
 
   if (divisionJson != null) {
     List<DivisionModel>? data = [];
+    data.add(DivisionModel(id: -1, name: "All State"));
     divisionJson.forEach((v) {
       data.add(DivisionModel.fromJson(v));
     });
-    DivisionResource.registerGetIt(data);
+    DivisionResource.setGetIt(data);
   } else {
     //Call API
     DivisionBloc divisionBloc = DivisionBloc();
     final DivisionResponseModel response = await divisionBloc.getDivisionList();
-    print("sdsdivision${response.toJson()}");
+    print(response.toJson());
 
     if (response.isSuccess) {
       await SecureStorageApi.saveObject('list_division', response.data);
-      DivisionResource.registerGetIt(response.data!);
+      DivisionResource.setGetIt(response.data!);
     }
   }
-
-  // handle list of city data
-  List<dynamic>? listDivision =
-      await SecureStorageApi.readObject("list_division");
-
-  divisionModel.id = listDivision?[0]["id"] ?? 0;
-  divisionModel.name = listDivision?[0]["name"] ?? "N/A";
-
-  List<dynamic>? cityJson = await SecureStorageApi.readObject("list_city");
-
-  if (cityJson != null) {
-    List<CityModel>? data = [];
-    cityJson.forEach((v) {
-      data.add(CityModel.fromJson(v));
-    });
-    CityResource.registerGetIt(data);
-  } else {
-    //Call API
-    CityBloc cityBloc = CityBloc();
-    final CityResponseModel response =
-        await cityBloc.getCityList(divisionModel: divisionModel);
-    print("sds${response.toJson()}");
-    if (response.isSuccess) {
-      print(response.isSuccess);
-      await SecureStorageApi.saveObject('list_city', response.data);
-      CityResource.registerGetIt(response.data!);
-    }
-  }
+  CityResource.setGetIt([CityModel(id: -1, name: "All Cities")]);
 
   //save in GetIt
   UserResource.setGetIt(user);
