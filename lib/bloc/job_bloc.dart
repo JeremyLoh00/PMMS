@@ -22,13 +22,13 @@ class JobsBloc {
     return await WebService.post(JobResource.storeJob(jobModel));
   }
 
-  Future<DefaultResponseModel> acceptNurse(int jobId) async {
-    return await WebService.put(JobResource.acceptNurse(jobId));
+  Future<DefaultResponseModel> acceptNurse(int jobId, int nurseId) async {
+    return await WebService.put(JobResource.acceptNurse(jobId, nurseId));
   }
 
   Future<JobResponseModel> rejectJob(
-      int jobId, List<String> rejectedReasons) async {
-    return await WebService.put(JobResource.rejectJob(jobId, rejectedReasons));
+      int jobId, List<String> rejectedReasons, int nurseId) async {
+    return await WebService.put(JobResource.rejectJob(jobId, rejectedReasons, nurseId));
   }
 
   Future<DefaultResponseModel> completeJob(int jobId) async {

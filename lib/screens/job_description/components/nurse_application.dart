@@ -171,12 +171,12 @@ class _NurseApplicationState extends State<NurseApplication> {
                                     status: widget
                                         .jobModel
                                         .listOfAppliedNurse![index]
-                                        .nurse!
+                                        .nurseModel!
                                         .applyJobStatus!,
                                     statusId: widget
                                         .jobModel
                                         .listOfAppliedNurse![index]
-                                        .nurse!
+                                        .nurseModel!
                                         .applyJobStatusId!,
                                   )
                                 ],

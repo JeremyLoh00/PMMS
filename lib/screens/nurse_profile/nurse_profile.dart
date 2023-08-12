@@ -9,11 +9,13 @@ import 'package:private_nurse_for_client/helpers/general_method.dart';
 import 'package:private_nurse_for_client/helpers/http_response.dart';
 import 'package:private_nurse_for_client/models/default_response_model.dart';
 import 'package:private_nurse_for_client/models/job/job_model.dart';
-import 'package:private_nurse_for_client/models/list_of_applied_nurse/list_of_applied_nurse_model.dart';
+import 'package:private_nurse_for_client/models/user/user_model.dart';
 import 'package:private_nurse_for_client/public_components/button_primary.dart';
 import 'package:private_nurse_for_client/public_components/button_secondary.dart';
 import 'package:private_nurse_for_client/public_components/custom_dialog.dart';
+import 'package:private_nurse_for_client/public_components/theme_app_bar.dart';
 import 'package:private_nurse_for_client/public_components/theme_snack_bar.dart';
+import 'package:private_nurse_for_client/public_components/theme_spinner.dart';
 import 'package:private_nurse_for_client/screens/nurse_profile/components/nurse_profile_header.dart';
 import 'package:private_nurse_for_client/screens/nurse_profile/components/nurse_profile_review.dart';
 import 'package:private_nurse_for_client/screens/nurse_profile/components/nurse_review.dart';
@@ -23,7 +25,7 @@ import 'package:private_nurse_for_client/screens/subscription/subscription_scree
 import 'package:private_nurse_for_client/theme.dart';
 
 class NurseProfile extends StatefulWidget {
-  final ListOfAppliedNurseModel listOfAppliedNurseModel;
+  final UserModel listOfAppliedNurseModel;
   final Function() callbackData;
   final Function(JobModel) callbackJobModel;
   final JobModel jobModel;
@@ -61,7 +63,7 @@ class _NurseProfileState extends State<NurseProfile> {
     return Scaffold(
       backgroundColor: kWhite,
       drawerEnableOpenDragGesture: true,
-      appBar: _buildAppBar(),
+      appBar: ThemeAppBar("Nurse Profile"),
       body: SingleChildScrollView(
         physics: BouncingScrollPhysics(),
         child: Padding(
@@ -75,6 +77,12 @@ class _NurseProfileState extends State<NurseProfile> {
                   width: double.infinity,
                   child: CachedNetworkImage(
                     imageUrl: widget.listOfAppliedNurseModel.profilePhoto!,
+                    errorWidget: (context, url, error) {
+                      return Icon(Icons.error);
+                    },
+                    placeholder: (context, url) {
+                      return ThemeSpinner.spinner();
+                    },
                     imageBuilder: (context, imageProvider) => Container(
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(20.0),
@@ -93,14 +101,15 @@ class _NurseProfileState extends State<NurseProfile> {
                 NurseProfileHeader(
                   title: widget.listOfAppliedNurseModel.name!,
                   totalReview:
-                      widget.listOfAppliedNurseModel.nurse!.averageRating!,
+                      widget.listOfAppliedNurseModel.nurseModel!.averageRating!,
                   phoneNum: widget.listOfAppliedNurseModel.phoneNo!,
-                  education:
-                      widget.listOfAppliedNurseModel.nurse!.educationLevel!,
-                  location: widget.listOfAppliedNurseModel.nurse!.collegeName!,
-                  experience:
-                      widget.listOfAppliedNurseModel.nurse!.workExperience!,
-                  nurseId: widget.listOfAppliedNurseModel.nurse!.id!,
+                  education: widget
+                      .listOfAppliedNurseModel.nurseModel!.educationLevel!,
+                  location:
+                      widget.listOfAppliedNurseModel.nurseModel!.collegeName!,
+                  experience: widget
+                      .listOfAppliedNurseModel.nurseModel!.workExperience!,
+                  nurseId: widget.listOfAppliedNurseModel.nurseModel!.id!,
                 ),
                 SizedBox(
                   height: 10,
@@ -117,13 +126,13 @@ class _NurseProfileState extends State<NurseProfile> {
         ),
       ),
       bottomNavigationBar: getBottomNavigation(
-        widget.jobModel.jobStatusId!,
-        widget.listOfAppliedNurseModel.nurse!.applyJobStatusId!,
-      ),
+          widget.jobModel.jobStatusId!,
+          widget.listOfAppliedNurseModel.nurseModel!.applyJobStatusId!,
+          widget.listOfAppliedNurseModel.nurseModel!.id!),
     );
   }
 
-  Widget getBottomNavigation(int jobStatusId, int nurseStatus) {
+  Widget getBottomNavigation(int jobStatusId, int nurseStatus, int nurseId) {
     if (jobStatusId == OPEN) {
       if (nurseStatus == NurseJobStatus.WAITING_FOR_APPROVAL) {
         return Padding(
@@ -142,6 +151,7 @@ class _NurseProfileState extends State<NurseProfile> {
                       RejectReasonScreen(
                         jobModel: widget.jobModel,
                         callBackJobModel: widget.callbackJobModel,
+                        nurseModel: widget.listOfAppliedNurseModel.nurseModel!,
                       ),
                     );
                   },
@@ -155,7 +165,22 @@ class _NurseProfileState extends State<NurseProfile> {
                 child: ButtonPrimary(
                   "Hire Me",
                   onPressed: () async {
-                    await showHireNursePopup(context);
+                    CustomDialog.show(
+                      context,
+                      title: "Hire Confirmation",
+                      description:
+                          "Are you sure to hire this nurse for this job? This action cannot be undone",
+                      btnCancelText: "Cancel",
+                      btnOkText: "Hire",
+                      btnCancelOnPress: () => Navigator.of(context).pop(),
+                      btnOkOnPress: () async {
+                        Navigator.pop(context);
+                        await hireNurse(
+                            widget.listOfAppliedNurseModel.nurseModel!.id!);
+                      },
+                      icon: Iconsax.info_circle,
+                      dialogType: DialogType.warning,
+                    );
                   },
                   isLoading: _isLoading,
                   loadingText: "Accepting...",
@@ -214,73 +239,12 @@ class _NurseProfileState extends State<NurseProfile> {
     );
   } // Popup if user want to hire nurse
 
-  Future<void> showHireNursePopup(BuildContext context) async {
+  Future<void> hireNurse(int nurseId) async {
     setState(() {
       _isLoading = true;
     });
     DefaultResponseModel responseModel =
-        await jobsBloc.acceptNurse(widget.jobModel.id!);
-
-    setState(() {
-      _isLoading = false;
-    });
-    if (responseModel.isSuccess) {
-      if (mounted) {
-        CustomDialog.show(
-          context,
-          title: "Hire Confirmation",
-          description:
-              "Are you sure to hire this nurse for this job? Retrieve action is not available after accepting the application.",
-          btnCancelText: "Cancel",
-          btnOkText: "Hire",
-          btnCancelOnPress: () => Navigator.of(context).pop(),
-          btnOkOnPress: () async {
-            Navigator.pop(context);
-            await hireNurse();
-          },
-          icon: Iconsax.info_circle,
-          dialogType: DialogType.warning,
-        );
-        ThemeSnackBar.showSnackBar(context, responseModel.message);
-      }
-    } else {
-      if (mounted) {
-        CustomDialog.show(
-          context,
-          isDissmissable: true,
-          icon: Icons.warning,
-          dialogType: DialogType.success,
-          title: responseModel.message,
-          description:
-              "Subscription is not complete yet, please subscribe before accepting any nurse.",
-          btnCancelText: "Cancel",
-          btnCancelOnPress: () {
-            Navigator.pop(context);
-          },
-          btnOkText: "View Plan",
-          btnOkOnPress: () async {
-            Navigator.pop(context);
-            Navigator.push(
-              context,
-              MaterialPageRoute(
-                builder: (context) {
-                  return SubscriptionScreen(fromCustomerDialog: 1);
-                },
-              ),
-            );
-          },
-        );
-        ThemeSnackBar.showSnackBar(context, responseModel.message);
-      }
-    }
-  }
-
-  Future<void> hireNurse() async {
-    setState(() {
-      _isLoading = true;
-    });
-    DefaultResponseModel responseModel =
-        await jobsBloc.acceptNurse(widget.jobModel.id!);
+        await jobsBloc.acceptNurse(widget.jobModel.id!, nurseId);
 
     setState(() {
       _isLoading = false;
@@ -289,12 +253,42 @@ class _NurseProfileState extends State<NurseProfile> {
       if (mounted) {
         print(responseModel.message);
         ThemeSnackBar.showSnackBar(context, responseModel.message);
+        Navigator.pop(context);
         widget.callbackData();
       }
     } else {
-      if (mounted) {
-        print(responseModel.message);
-        ThemeSnackBar.showSnackBar(context, responseModel.message);
+      if (responseModel.statusCode == HttpResponse.HTTP_PAYMENT_REQUIRED) {
+        if (mounted) {
+          CustomDialog.show(
+            context,
+            isDissmissable: true,
+            icon: Icons.warning,
+            dialogType: DialogType.success,
+            title: responseModel.message,
+            description:
+                "Subscription is not complete yet, please subscribe before accepting any nurse.",
+            btnCancelText: "Cancel",
+            btnCancelOnPress: () {
+              Navigator.pop(context);
+            },
+            btnOkText: "View Plan",
+            btnOkOnPress: () async {
+              Navigator.pop(context);
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) {
+                    return SubscriptionScreen(fromCustomerDialog: 1);
+                  },
+                ),
+              );
+            },
+          );
+        }
+      } else {
+        if (mounted) {
+          ThemeSnackBar.showSnackBar(context, responseModel.message);
+        }
       }
     }
   }
@@ -351,8 +345,8 @@ class _NurseProfileState extends State<NurseProfile> {
     setState(() {
       _isLoading = true;
     });
-    DefaultResponseModel responseModel =
-        await nurseBloc.blockNurse(widget.listOfAppliedNurseModel.nurse!.id!);
+    DefaultResponseModel responseModel = await nurseBloc
+        .blockNurse(widget.listOfAppliedNurseModel.nurseModel!.id!);
 
     setState(() {
       _isLoading = false;

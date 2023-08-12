@@ -9,7 +9,7 @@ class ButtonPrimary extends StatefulWidget {
   final String loadingText;
   final bool isDisabled;
   final Color? primaryColor;
-
+  final Color? textColor;
   final Function() onPressed;
 
   const ButtonPrimary(this.title,
@@ -18,7 +18,7 @@ class ButtonPrimary extends StatefulWidget {
       this.isLoading = false,
       this.isDisabled = false,
       this.loadingText = "",
-      this.primaryColor = kPrimaryColor});
+      this.primaryColor = kPrimaryColor, this.textColor = kWhite});
 
   @override
   _ButtonPrimaryState createState() => _ButtonPrimaryState();
@@ -76,7 +76,7 @@ class _ButtonPrimaryState extends State<ButtonPrimary> {
                 Text(
                   widget.isLoading ? widget.loadingText : widget.title,
                   style: TextStyle(
-                    color: widget.isLoading ? kDisabledText : Colors.white,
+                    color: widget.isLoading ? kDisabledText : widget.textColor,
                     fontFamily: "Poppins",
                     fontWeight: FontWeight.bold,
                   ),

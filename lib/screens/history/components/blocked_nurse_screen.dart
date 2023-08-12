@@ -117,8 +117,8 @@ class _BlockedNurseScreenState extends State<BlockedNurseScreen> {
                   },
                   noItemsFoundIndicatorBuilder: (context) => const EmptyList(
                         icon: Iconsax.people,
-                        title: "No Nurse History ",
-                        subtitle: "No new nurse history available",
+                        title: "No Nurse Blocked ",
+                        subtitle: "You have not block any nurse.",
                         query: '',
                       ),
                   animateTransitions: true,

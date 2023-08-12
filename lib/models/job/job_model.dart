@@ -3,10 +3,12 @@ import 'package:private_nurse_for_client/models/diagnosis/diagnosis_model.dart';
 import 'package:private_nurse_for_client/models/emergency_contact/patient_emergency_contact_model.dart';
 import 'package:private_nurse_for_client/models/feedback/feedback_model.dart';
 import 'package:private_nurse_for_client/models/job_schedule/job_schedule_model.dart';
-import 'package:private_nurse_for_client/models/list_of_applied_nurse/list_of_applied_nurse_model.dart';
+
 import 'package:private_nurse_for_client/models/medical_history/medical_history_model.dart';
 import 'package:private_nurse_for_client/models/patient/patient_model.dart';
 import 'package:private_nurse_for_client/models/service/service_model.dart';
+import 'package:private_nurse_for_client/models/user/user_model.dart';
+
 class JobModel {
   int? id;
   int? jobStatusId;
@@ -33,7 +35,7 @@ class JobModel {
   String? allDiagnosis;
   List<DiagnosisModel>? diagnoses;
   PatientEmergencyContactModel? patientEmergencyContact;
-  List<ListOfAppliedNurseModel>? listOfAppliedNurse;
+  List<UserModel>? listOfAppliedNurse;
   List<FeedbackModel>? feedbacks;
 
   JobModel(
@@ -69,8 +71,9 @@ class JobModel {
     id = json['id'];
     jobStatusId = json['job_status_id'];
     jobStatus = json['job_status'];
-    service =
-        json['service'] != null ? new ServiceModel.fromJson(json['service']) : null;
+    service = json['service'] != null
+        ? new ServiceModel.fromJson(json['service'])
+        : null;
     systemServiceFee = json['system_service_fee'];
     nursingServiceFee = json['nursing_service_fee'];
     totalServiceFee = json['total_service_fee'];
@@ -80,8 +83,9 @@ class JobModel {
         jobSchedule!.add(new JobScheduleModel.fromJson(v));
       });
     }
-    patient =
-        json['patient'] != null ? new PatientModel.fromJson(json['patient']) : null;
+    patient = json['patient'] != null
+        ? new PatientModel.fromJson(json['patient'])
+        : null;
     address = json['address'];
     worldDivisionId = json['world_division_id'];
     worldDivision = json['world_division'];
@@ -117,9 +121,9 @@ class JobModel {
             json['patient_emergency_contact'])
         : null;
     if (json['list_of_applied_nurse'] != null) {
-      listOfAppliedNurse = <ListOfAppliedNurseModel>[];
+      listOfAppliedNurse = <UserModel>[];
       json['list_of_applied_nurse'].forEach((v) {
-        listOfAppliedNurse!.add(new ListOfAppliedNurseModel.fromJson(v));
+        listOfAppliedNurse!.add(new UserModel.fromJson(v));
       });
     }
     if (json['feedbacks'] != null) {

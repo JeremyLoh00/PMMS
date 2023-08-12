@@ -39,17 +39,18 @@ class JobResource {
         });
   }
 
-  static Resource acceptNurse(int jobId) {
+  static Resource acceptNurse(int jobId, int nurseId) {
     return Resource(
-        url: 'client/jobs/$jobId/accept',
+        url: 'client/jobs/accept/$jobId/$nurseId',
         parse: (response) {
           return DefaultResponseModel(json.decode(response.body));
         });
   }
 
-  static Resource rejectJob(int jobId, List<String> rejectedReasons) {
+  static Resource rejectJob(
+      int jobId, List<String> rejectedReasons, int nurseId) {
     return Resource(
-        url: 'client/jobs/$jobId/reject',
+        url: 'client/jobs/reject/$jobId/$nurseId',
         data: {"rejected_reason": rejectedReasons},
         parse: (response) {
           return JobResponseModel(json.decode(response.body));

@@ -5,6 +5,7 @@ import 'package:private_nurse_for_client/bloc/job_bloc.dart';
 import 'package:private_nurse_for_client/constant.dart';
 import 'package:private_nurse_for_client/models/job/job_model.dart';
 import 'package:private_nurse_for_client/models/job/job_response_model.dart';
+import 'package:private_nurse_for_client/models/nurse/nurse_model.dart';
 import 'package:private_nurse_for_client/models/reject_reason/list_reject_reason_model.dart';
 import 'package:private_nurse_for_client/models/reject_reason/list_reject_reason_response_model.dart';
 import 'package:private_nurse_for_client/public_components/button_primary.dart';
@@ -16,11 +17,13 @@ import 'package:private_nurse_for_client/public_components/theme_spinner.dart';
 class RejectReasonScreen extends StatefulWidget {
   final Function(JobModel) callBackJobModel;
   final JobModel jobModel;
+  final NurseModel nurseModel;
 
   const RejectReasonScreen({
     super.key,
     required this.callBackJobModel,
     required this.jobModel,
+    required this.nurseModel,
   });
   @override
   _RejectReasonScreenState createState() => _RejectReasonScreenState();
@@ -160,6 +163,7 @@ class _RejectReasonScreenState extends State<RejectReasonScreen> {
                   convertIntListToStringList(
                     getIntListFromReasons(reasons),
                   ),
+                  widget.nurseModel.id!,
                 );
               },
             );
@@ -222,13 +226,13 @@ class _RejectReasonScreenState extends State<RejectReasonScreen> {
     return stringList;
   }
 
-  Future<void> rejectJob(List<String> reasonList) async {
+  Future<void> rejectJob(List<String> reasonList, int nurseId) async {
     print(reasonList);
     setState(() {
       _isLoadingReject = true;
     });
     JobResponseModel responseModel =
-        await jobsBloc.rejectJob(widget.jobModel.id!, reasonList);
+        await jobsBloc.rejectJob(widget.jobModel.id!, reasonList, nurseId);
 
     setState(() {
       _isLoadingReject = false;
