@@ -82,3 +82,15 @@ class NurseJobStatus {
   static const int WAITING_FOR_APPROVAL = 3;
 }
 const devToyyibPay = "https://dev.toyyibpay.com/";
+// Preferred Gender
+const int PREFERRED_GENDER_FEMALE = 0;
+const int PREFERRED_GENDER_MALE = 1;
+const int PREFERRED_GENDER_ANY = 2;
+
+// Preferred Race
+const int PREFERRED_RACE_MALAY = 0;
+const int PREFERRED_RACE_CHINESE = 1;
+const int PREFERRED_RACE_INDIAN = 2;
+const int PREFERRED_RACE_SABAHAN = 3;
+const int PREFERRED_RACE_SARAWAKIAN = 4;
+const int PREFERRED_RACE_ANY = 5;
