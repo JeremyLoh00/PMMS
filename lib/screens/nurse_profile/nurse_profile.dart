@@ -163,7 +163,7 @@ class _NurseProfileState extends State<NurseProfile> {
                   Expanded(
                     flex: 1,
                     child: ButtonSecondary(
-                      paddingVertical: 17,
+                      "Reject",
                       onPressed: () {
                         navigateTo(
                             context,
@@ -176,7 +176,6 @@ class _NurseProfileState extends State<NurseProfile> {
                               },
                             ));
                       },
-                      text: "Reject",
                     ),
                   ),
                   SizedBox(

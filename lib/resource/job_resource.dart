@@ -96,4 +96,12 @@ class JobResource {
           return ListRejectReasonResponseModel(json.decode(response.body));
         });
   }
+
+   static Resource showJob(String jobId) {
+    return Resource(
+        url: 'client/jobs/$jobId',
+        parse: (response) {
+          return JobResponseModel(json.decode(response.body));
+        });
+  }
 }

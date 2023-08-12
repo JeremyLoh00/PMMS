@@ -53,4 +53,8 @@ class JobsBloc {
   Future<ListRejectReasonResponseModel> getListRejectReason() async {
     return await WebService.get(JobResource.getListRejectReason());
   }
+
+  Future<JobResponseModel> showJob(String jobId) async {
+    return await WebService.get(JobResource.showJob(jobId));
+  }
 }

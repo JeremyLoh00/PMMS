@@ -7,15 +7,15 @@ import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:private_nurse_for_client/constant.dart';
 
-class Content extends StatefulWidget {
+class BodyContent extends StatefulWidget {
   final Widget body;
   final bool darkMode;
   final bool? isFooterExtra;
-  Widget? footer;
+  final Widget? footer;
   final void Function()? onBackPressed;
   final void Function()? onTextPressed;
 
-  Content(
+  BodyContent(
       {Key? key,
       required this.body,
       this.onBackPressed,
@@ -26,10 +26,10 @@ class Content extends StatefulWidget {
       : super(key: key);
 
   @override
-  State<Content> createState() => _ContentState();
+  State<BodyContent> createState() => _BodyContentState();
 }
 
-class _ContentState extends State<Content> {
+class _BodyContentState extends State<BodyContent> {
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -57,8 +57,7 @@ class _ContentState extends State<Content> {
           ),
           widget.footer == null
               ? SizedBox()
-              :  Container(color: kWhite, child: widget.footer),
-                
+              : Container(color: kWhite, child: widget.footer),
         ],
       ),
     );

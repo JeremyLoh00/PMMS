@@ -86,10 +86,11 @@ class DeleteDialog extends StatefulBuilder {
                           children: [
                             Expanded(
                               child: ButtonSecondary(
+                                "Cancel",
                                 onPressed: (() {
                                   Navigator.of(context).pop();
                                 }),
-                                text: "Cancel",
+                                
                               ),
                             ),
                             const SizedBox(
