@@ -132,7 +132,7 @@ class _PaymentState extends State<Payment> {
                 padding: const EdgeInsets.all(0.0),
                 child: ButtonPrimary(
                   'PAY',
-                  rounded: false,
+                  
                   onPressed: () {},
                 ),
               ),

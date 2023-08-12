@@ -1,42 +1,52 @@
+import 'package:delayed_display/delayed_display.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_form_bloc/flutter_form_bloc.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
+import 'package:iconsax/iconsax.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:private_nurse_for_client/constant.dart';
 import 'package:private_nurse_for_client/form_bloc/store_review_form_bloc.dart';
 import 'package:private_nurse_for_client/models/feedback/feedback_model.dart';
 import 'package:private_nurse_for_client/models/feedback/feedback_response_model.dart';
 import 'package:private_nurse_for_client/models/job/job_model.dart';
+import 'package:private_nurse_for_client/models/job/job_response_model.dart';
 import 'package:private_nurse_for_client/public_components/button_primary.dart';
+import 'package:private_nurse_for_client/public_components/input_decoration%20copy.dart';
 import 'package:private_nurse_for_client/public_components/space.dart';
+import 'package:private_nurse_for_client/public_components/theme_app_bar.dart';
 import 'package:private_nurse_for_client/public_components/theme_snack_bar.dart';
 import 'package:private_nurse_for_client/screens/review/components/file_uploader_edit_profile.dart';
 
-class Review extends StatefulWidget {
+class ReviewScreen extends StatefulWidget {
   final JobModel jobModel;
-  const Review({super.key, required this.jobModel});
+  final Future<void> Function() callbackGetJobModelData;
+  const ReviewScreen(
+      {super.key,
+      required this.jobModel,
+      required this.callbackGetJobModelData});
 
   @override
-  State<Review> createState() => _ReviewState();
+  State<ReviewScreen> createState() => _ReviewScreenState();
 }
 
-class _ReviewState extends State<Review> {
+class _ReviewScreenState extends State<ReviewScreen> {
   bool _isLoading = false;
-  FeedbackModel feedbackModel = new FeedbackModel();
+  FeedbackModel feedbackModel = FeedbackModel();
   XFile? selectedProfilePic;
-  TextEditingController comment = TextEditingController();
+  int delayAnimationDuration = 200;
+
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
       create: (context) => StoreReviewFormBloc(widget.jobModel),
       child: Builder(builder: (context) {
-        
         final StoreReviewFormBloc storeReviewFormBloc =
             BlocProvider.of<StoreReviewFormBloc>(
           context,
         );
 
-        return FormBlocListener<StoreReviewFormBloc, FeedbackModel, FeedbackResponseModel>(
+        return FormBlocListener<StoreReviewFormBloc, JobModel,
+            JobResponseModel>(
           // On submitting
           onSubmitting: (context, state) {
             // Remove focus from input field
@@ -61,6 +71,7 @@ class _ReviewState extends State<Review> {
             });
             // Navigate to profile screen
             Navigator.of(context).pop();
+            widget.callbackGetJobModelData();
           },
           //On submission failed
           onSubmissionFailed: (context, state) {
@@ -82,7 +93,7 @@ class _ReviewState extends State<Review> {
             );
           },
           child: Scaffold(
-            appBar: _buildAppBar(context),
+            appBar: ThemeAppBar("Comment and Review"),
             body: SafeArea(
               child: Padding(
                 padding: EdgeInsets.only(left: 30.0, top: 10.0, right: 30.0),
@@ -113,16 +124,21 @@ class _ReviewState extends State<Review> {
                             initialRating: 0,
                             minRating: 1,
                             direction: Axis.horizontal,
-                            allowHalfRating: true,
+                            allowHalfRating: false,
                             itemCount: 5,
                             itemSize: 20.0,
+                            glowRadius: 1,
                             itemPadding: EdgeInsets.symmetric(horizontal: 4.0),
-                            itemBuilder: (context, _) => Icon(
+                            itemBuilder: (context, _) => const Icon(
                               Icons.star,
                               color: kPrimaryColor,
                             ),
                             onRatingUpdate: (rating) {
-                              print(rating);
+                              setState(() {
+                                print(rating);
+                                storeReviewFormBloc.newRating
+                                    .updateValue(rating.toString());
+                              });
                             },
                           )
                         ],
@@ -134,42 +150,18 @@ class _ReviewState extends State<Review> {
                             fontFamily: "Poppins", fontWeight: FontWeight.bold),
                       ),
                       Space(5),
-                      Container(
-                        height: 200,
-                        child: Padding(
-                          padding: const EdgeInsets.only(),
-                          child: TextFormField(
-                            controller: comment,
-                            keyboardType: TextInputType.multiline,
-                            maxLines: null,
-                            expands: true,
-                            decoration: InputDecoration(
-                              contentPadding:
-                                  const EdgeInsets.symmetric(horizontal: 10.0),
-                              enabled: true,
-                              hintText: 'Comments here....',
-                              labelText: 'Comments',
-                              border: OutlineInputBorder(
-                                borderSide: BorderSide(
-                                  width: 3,
-                                  color: Colors.grey,
-                                ),
-                                borderRadius: BorderRadius.circular(10.0),
-                              ),
-                            ),
+                      DelayedDisplay(
+                        delay: Duration(milliseconds: delayAnimationDuration),
+                        child: TextFieldBlocBuilder(
+                          textFieldBloc: storeReviewFormBloc.newComment,
+                          cursorColor: kPrimaryColor,
+                          maxLines: 5,
+                          decoration: textFieldInputDecoration(
+                            "",
                           ),
                         ),
                       ),
                       Space(10.0),
-                      // InputFormalPhoto(
-                      //   formBloc: widget.storeReviewFormBloc,
-                      //   onImageFormalSelected: (XFile selectedImage) {
-                      //     setState(() {
-                      //       _selectedFormalImage1 = selectedImage;
-                      //       // widget.storeJobFormBloc.newFormalPhoto = selectedImage;
-                      //     });
-                      //   },
-                      // ),
                       Text(
                         "Upload image: ",
                         style: TextStyle(
@@ -177,7 +169,7 @@ class _ReviewState extends State<Review> {
                       ),
                       Space(10),
                       ImageUploader(
-                        heroTag: 'editprofile',
+                        heroTag: 'commentpicture',
                         feedbackModel: feedbackModel,
                         formBloc: storeReviewFormBloc,
                         onImageSelected: (XFile selectedImage) {
@@ -193,13 +185,19 @@ class _ReviewState extends State<Review> {
               ),
             ),
             bottomNavigationBar: Padding(
-              padding: const EdgeInsets.all(30.0),
+              padding: const EdgeInsets.all(15.0),
               child: ButtonPrimary(
                 "Submit",
-                onPressed: storeReviewFormBloc.submit,
+                onPressed: storeReviewFormBloc.newRating.value == ""
+                    ? () {
+                        ThemeSnackBar.showSnackBar(
+                            context, "Please give at least 1 star");
+                      }
+                    : () {
+                        storeReviewFormBloc.submit();
+                      },
                 loadingText: "Updating...",
                 isLoading: _isLoading,
-                rounded: false,
               ),
             ),
           ),

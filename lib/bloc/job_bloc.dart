@@ -35,7 +35,7 @@ class JobsBloc {
     return await WebService.post(JobResource.completeJob(jobId));
   }
 
-  Future<DefaultResponseModel> cancelJob(int jobId) async {
+  Future<JobResponseModel> cancelJob(int jobId) async {
     return await WebService.put(JobResource.cancelJob(jobId));
   }
 
@@ -43,11 +43,12 @@ class JobsBloc {
     return await WebService.post(JobResource.generateBillPayment(jobId));
   }
 
-  Future<FeedbackResponseModel> storeReview(
+  Future<JobResponseModel> storeReview(
       int jobId, ReviewNurseRequestModel reviewNurseRequestModel) async {
     return await WebService.postUpdateReview(
-        JobResource.storeReview(jobId, reviewNurseRequestModel),
-        reviewNurseRequestModel);
+      JobResource.storeReview(jobId, reviewNurseRequestModel),
+      reviewNurseRequestModel,
+    );
   }
 
   Future<ListRejectReasonResponseModel> getListRejectReason() async {

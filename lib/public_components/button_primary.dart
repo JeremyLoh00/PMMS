@@ -9,29 +9,23 @@ class ButtonPrimary extends StatefulWidget {
   final String loadingText;
   final bool isDisabled;
   final Color? primaryColor;
-  final Color? titleColor;
-  final bool? rounded;
 
   final Function() onPressed;
 
-  const ButtonPrimary(
-    this.title, {
-    super.key,
-    required this.onPressed,
-    this.isLoading = false,
-    this.isDisabled = false,
-    this.loadingText = "",
-    this.primaryColor = kPrimaryColor,
-    this.titleColor = kWhite,
-    this.rounded = true,
-  });
+  const ButtonPrimary(this.title,
+      {super.key,
+      required this.onPressed,
+      this.isLoading = false,
+      this.isDisabled = false,
+      this.loadingText = "",
+      this.primaryColor = kPrimaryColor});
 
   @override
   _ButtonPrimaryState createState() => _ButtonPrimaryState();
 }
 
 class _ButtonPrimaryState extends State<ButtonPrimary> {
-  final spinner = SizedBox(
+  final spinner = const SizedBox(
     height: 24,
     width: 24,
     child: SpinKitDoubleBounce(
@@ -59,13 +53,12 @@ class _ButtonPrimaryState extends State<ButtonPrimary> {
                   ? kDisabledBg
                   : widget.primaryColor,
               borderRadius: BorderRadius.horizontal(
-                left:
-                    widget.rounded! ? Radius.circular(15) : Radius.circular(30),
-                right:
-                    widget.rounded! ? Radius.circular(15) : Radius.circular(30),
+                left: Radius.circular(15),
+                right: Radius.circular(15),
               )),
           child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 60, vertical: 17.5),
+            padding: EdgeInsets.symmetric(
+                vertical: widget.isDisabled || widget.isLoading ? 13.5 : 17.5),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.center,
@@ -83,7 +76,7 @@ class _ButtonPrimaryState extends State<ButtonPrimary> {
                 Text(
                   widget.isLoading ? widget.loadingText : widget.title,
                   style: TextStyle(
-                    color: widget.isLoading ? kDisabledText : widget.titleColor,
+                    color: widget.isLoading ? kDisabledText : Colors.white,
                     fontFamily: "Poppins",
                     fontWeight: FontWeight.bold,
                   ),

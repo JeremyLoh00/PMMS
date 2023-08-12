@@ -19,7 +19,7 @@ import 'package:private_nurse_for_client/screens/job_description/components/body
 import 'package:private_nurse_for_client/screens/nurse_profile/components/reject_reason.dart';
 import 'package:private_nurse_for_client/screens/payment/payment.dart';
 import 'package:private_nurse_for_client/screens/payment_gateway/payment_gateway_screen.dart';
-import 'package:private_nurse_for_client/screens/review/review.dart';
+import 'package:private_nurse_for_client/screens/review/review_screen.dart';
 
 class JobDescription extends StatefulWidget {
   final JobModel? jobModel;
@@ -32,6 +32,7 @@ class JobDescription extends StatefulWidget {
 
 class _JobDescriptionState extends State<JobDescription> {
   bool _isLoading = false;
+  bool _isLoadingCancel = false;
   JobsBloc jobsBloc = JobsBloc();
   Future<JobModel> futureData = Future.value(JobModel());
 
@@ -93,23 +94,23 @@ class _JobDescriptionState extends State<JobDescription> {
           futureData = Future.value(responseModel.data);
         });
       }
-    }
-
-    setState(() {
-      futureData = Future.value(widget.jobModel);
-    });
-
-    // load data balik bile dah tekan button > back > masuk balik
-
-    JobsBloc jobsBloc = JobsBloc();
-
-    JobResponseModel responseModel =
-        await jobsBloc.showJob(widget.jobModel!.id!.toString());
-
-    if (responseModel.isSuccess) {
+    } else {
       setState(() {
-        futureData = Future.value(responseModel.data);
+        futureData = Future.value(widget.jobModel);
       });
+
+      // load data balik bile dah tekan button > back > masuk balik
+
+      JobsBloc jobsBloc = JobsBloc();
+
+      JobResponseModel responseModel =
+          await jobsBloc.showJob(widget.jobModel!.id!.toString());
+
+      if (responseModel.isSuccess) {
+        setState(() {
+          futureData = Future.value(responseModel.data);
+        });
+      }
     }
   }
 
@@ -122,17 +123,20 @@ class _JobDescriptionState extends State<JobDescription> {
             Expanded(
               flex: 1,
               child: ButtonSecondary(
-                "Cancel",
-                onPressed: () {},
+                "Cancel Job",
+                onPressed: () {
+                  showCancelPopup(context, jobModel);
+                },
+                isLoading: _isLoadingCancel,
               ),
             ),
             SizedBox(width: 10),
             Expanded(
               flex: 2,
               child: ButtonPrimary(
-                "Pay",
+                "Pay For This Job",
                 onPressed: () async {
-                  await generateBillPayment(context);
+                  await generateBillPayment(context, jobModel);
                 },
                 isLoading: _isLoading,
                 loadingText: "Accepting...",
@@ -148,8 +152,9 @@ class _JobDescriptionState extends State<JobDescription> {
           "Review",
           onPressed: () => navigateTo(
             context,
-            Review(
+            ReviewScreen(
               jobModel: widget.jobModel!,
+              callbackGetJobModelData: getJobData,
             ),
           ),
           loadingText: "Updating...",
@@ -161,7 +166,7 @@ class _JobDescriptionState extends State<JobDescription> {
         padding: const EdgeInsets.all(18.0),
         child: ButtonPrimary(
           "Cancel Job",
-          isLoading: _isLoading,
+          isLoading: _isLoadingCancel,
           onPressed: () {
             showCancelPopup(context, jobModel);
           },
@@ -195,12 +200,12 @@ class _JobDescriptionState extends State<JobDescription> {
 
   Future<void> cancelJob(JobModel jobModel) async {
     setState(() {
-      _isLoading = true;
+      _isLoadingCancel = true;
     });
-    DefaultResponseModel responseModel = await jobsBloc.cancelJob(jobModel.id!);
+    JobResponseModel responseModel = await jobsBloc.cancelJob(jobModel.id!);
 
     setState(() {
-      _isLoading = false;
+      _isLoadingCancel = false;
     });
     if (responseModel.isSuccess) {
       if (mounted) {
@@ -216,14 +221,15 @@ class _JobDescriptionState extends State<JobDescription> {
     }
   }
 
-  Future<void> generateBillPayment(BuildContext context) async {
+  Future<void> generateBillPayment(
+      BuildContext context, JobModel jobModel) async {
     CustomDialog.show(context,
         isDissmissable: false,
         title: "Generating Bill Payment...",
         center: ThemeSpinner.spinner());
 
     DefaultResponseModel responseModel =
-        await jobsBloc.generateBillPayment(widget.jobModel!.id!);
+        await jobsBloc.generateBillPayment(jobModel.id!);
 
     Navigator.pop(context);
 
@@ -237,13 +243,18 @@ class _JobDescriptionState extends State<JobDescription> {
               return PaymentGatewayScreen(
                 jobModel: widget.jobModel!,
                 billId: responseModel.data,
+                callbackGetJobData: getJobData,
               );
             },
           ),
         );
       }
+      // setState(() {
+      //   futureData = Future.value(responseModel.data);
+      // });
     } else {
       print(responseModel.message);
+      ThemeSnackBar.showSnackBar(context, responseModel.message);
     }
   }
 }

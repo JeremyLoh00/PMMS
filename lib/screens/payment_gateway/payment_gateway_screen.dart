@@ -13,13 +13,14 @@ import 'package:webview_flutter/webview_flutter.dart';
 
 class PaymentGatewayScreen extends StatefulWidget {
   final String billId;
-
+  final Future<void> Function()? callbackGetJobData;
   final JobModel jobModel;
 
   const PaymentGatewayScreen({
     super.key,
     required this.billId,
     required this.jobModel,
+    this.callbackGetJobData,
   });
 
   @override
@@ -92,6 +93,7 @@ class _PaymentGatewayScreenState extends State<PaymentGatewayScreen> {
             // go to job details
             Navigator.pop(context);
             Navigator.pop(context);
+            widget.callbackGetJobData!( );
           },
           icon: Iconsax.check,
           dialogType: DialogType.success,

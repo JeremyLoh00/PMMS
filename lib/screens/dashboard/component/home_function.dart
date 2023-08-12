@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:private_nurse_for_client/constant.dart';
 
-Widget badgeStatus(
-    {required int statusId,
-    required String status
+Widget badgeStatus({required int statusId, required String status
     // required Color bgColor,
     // required Color textColor
     }) {
@@ -13,38 +11,54 @@ Widget badgeStatus(
       vertical: 1,
     ),
     decoration: BoxDecoration(
-      color: statusId == ONGOING
-          ? kOnGoingBg
-          : statusId == WAITING_CLIENT_REVIEWS
-              ? kReviewBg
-              : statusId == WAITING_NURSE_APPROVAL || statusId == WAITING_CLIENT_PAYMENT
-                  ? kNurseApprovalBg
-                  : statusId == COMPLETED
-                      ? kCompletedBg
-                      : statusId == CANCELLED
-                          ? kBgDanger
-                          : kBgSuccess,
+      color: getBgColorStatus(statusId),
       //  border: Border.all(color: textColor),
       borderRadius: BorderRadius.circular(7),
     ),
     child: Text(
       status,
       style: TextStyle(
-        color: statusId == ONGOING
-            ? kOnGoingText
-            : statusId == WAITING_CLIENT_REVIEWS
-                ? kReviewText
-                : statusId == WAITING_NURSE_APPROVAL || statusId == WAITING_CLIENT_PAYMENT
-                    ? kNurseApprovalText
-                    : statusId == COMPLETED
-                        ? kCompletedText
-                        : statusId == CANCELLED
-                            ? kTextDanger
-                            : kTextSuccess,
+        color: getTextColorStatus(statusId),
         fontSize: 11,
       ),
     ),
   );
+}
+
+Color getBgColorStatus(int statusId) {
+  if (statusId == ONGOING) {
+    return kOnGoingBg;
+  } else if (statusId == WAITING_CLIENT_REVIEWS) {
+    return kReviewBg;
+  } else if (statusId == WAITING_NURSE_APPROVAL) {
+    return kNurseApprovalText;
+  } else if (statusId == COMPLETED) {
+    return kCompletedBg;
+  } else if (statusId == CANCELLED) {
+    return kBgDanger;
+  } else if (statusId == WAITING_CLIENT_PAYMENT) {
+    return kNurseApprovalBg;
+  } else {
+    return kBgSuccess;
+  }
+}
+
+Color getTextColorStatus(int statusId) {
+  if (statusId == ONGOING) {
+    return kOnGoingText;
+  } else if (statusId == WAITING_CLIENT_REVIEWS) {
+    return kReviewText;
+  } else if (statusId == WAITING_NURSE_APPROVAL) {
+    return kNurseApprovalBg;
+  } else if (statusId == COMPLETED) {
+    return kCompletedText;
+  } else if (statusId == CANCELLED) {
+    return kTextDanger;
+  } else if (statusId == WAITING_CLIENT_PAYMENT) {
+    return kNurseApprovalText;
+  } else {
+    return kTextSuccess;
+  }
 }
 
 String getDate(String date) {

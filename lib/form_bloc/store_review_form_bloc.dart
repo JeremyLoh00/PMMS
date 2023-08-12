@@ -8,10 +8,11 @@ import 'package:private_nurse_for_client/models/default_response_model.dart';
 import 'package:private_nurse_for_client/models/feedback/feedback_model.dart';
 import 'package:private_nurse_for_client/models/feedback/feedback_response_model.dart';
 import 'package:private_nurse_for_client/models/job/job_model.dart';
+import 'package:private_nurse_for_client/models/job/job_response_model.dart';
 import 'package:private_nurse_for_client/models/review_model/review_nurse_request_model.dart';
 
 class StoreReviewFormBloc
-    extends FormBloc<FeedbackModel, FeedbackResponseModel> {
+    extends FormBloc<JobModel, JobResponseModel> {
   JobModel jobModel;
   JobsBloc feedbackBloc = new JobsBloc();
   XFile? newFormalPhoto1;
@@ -41,7 +42,7 @@ class StoreReviewFormBloc
       reviewNurseRequestModel.photoPath = newFormalPhoto1;
 
       //Call API
-      FeedbackResponseModel responseModel =
+      JobResponseModel responseModel =
           await feedbackBloc.storeReview(jobModel.id!, reviewNurseRequestModel);
 
       if (responseModel.isSuccess) {

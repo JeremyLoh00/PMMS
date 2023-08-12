@@ -235,7 +235,6 @@ class _SubscriptionScreenState extends State<SubscriptionScreen> {
                                     // controller.makePayment(context: context);
                                   },
                                   primaryColor: kWhite,
-                                  titleColor: kPrimaryColor,
                                 )
                               ],
                             ),

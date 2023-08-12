@@ -68,7 +68,7 @@ class JobResource {
     return Resource(
         url: 'client/jobs/$jobId/canceled',
         parse: (response) {
-          return DefaultResponseModel(json.decode(response.body));
+          return JobResponseModel(json.decode(response.body));
         });
   }
 
@@ -86,10 +86,11 @@ class JobResource {
         url: 'client/jobs/$jobId/review',
         data: reviewNurseRequestModel.toJson(),
         parse: (response) {
-          return FeedbackResponseModel(json.decode(response.body));
+          return JobResponseModel(json.decode(response.body));
         });
   }
-   static Resource getListRejectReason() {
+
+  static Resource getListRejectReason() {
     return Resource(
         url: 'reject-reason',
         parse: (response) {
@@ -97,7 +98,7 @@ class JobResource {
         });
   }
 
-   static Resource showJob(String jobId) {
+  static Resource showJob(String jobId) {
     return Resource(
         url: 'client/jobs/$jobId',
         parse: (response) {
