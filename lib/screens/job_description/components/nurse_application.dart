@@ -13,10 +13,14 @@ import 'package:private_nurse_for_client/theme.dart';
 class NurseApplication extends StatefulWidget {
   // final String src;
   final JobModel jobModel;
-  NurseApplication(
+  final Function(JobModel) callbackJobModel;
+  final Function() callbackData;
+  const NurseApplication(
       {Key? key,
       // required this.src,
-      required this.jobModel})
+      required this.jobModel,
+      required this.callbackJobModel,
+      required this.callbackData})
       : super(key: key);
 
   @override
@@ -31,8 +35,10 @@ class _NurseApplicationState extends State<NurseApplication> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const Text(
-            "Nurse Applications",
+          Text(
+            widget.jobModel.listOfAppliedNurse!.isNotEmpty
+                ? "Nurse Applications"
+                : "No nurse apply yet",
             style: TextStyle(
               fontWeight: FontWeight.bold,
               fontSize: 12.0,
@@ -53,10 +59,11 @@ class _NurseApplicationState extends State<NurseApplication> {
                       navigateTo(
                         context,
                         NurseProfile(
-                          lsitOfAppliedNurseModel:
+                          callbackData: widget.callbackData,
+                          callbackJobModel: widget.callbackJobModel,
+                          listOfAppliedNurseModel:
                               widget.jobModel.listOfAppliedNurse![index],
                           jobModel: widget.jobModel,
-                          hasButton: true,
                         ),
                       );
                     } else if (widget.jobModel.jobStatusId ==
@@ -64,30 +71,34 @@ class _NurseApplicationState extends State<NurseApplication> {
                       navigateTo(
                         context,
                         NurseProfile(
-                          lsitOfAppliedNurseModel:
+                          callbackData: widget.callbackData,
+                          callbackJobModel: widget.callbackJobModel,
+                          listOfAppliedNurseModel:
                               widget.jobModel.listOfAppliedNurse![index],
                           jobModel: widget.jobModel,
-                          hasButton: true,
                         ),
                       );
+                      // if kene reject
                     } else if (widget.jobModel.jobStatusId == ONGOING) {
                       navigateTo(
                         context,
                         NurseProfile(
-                          lsitOfAppliedNurseModel:
+                          callbackData: widget.callbackData,
+                          callbackJobModel: widget.callbackJobModel,
+                          listOfAppliedNurseModel:
                               widget.jobModel.listOfAppliedNurse![index],
                           jobModel: widget.jobModel,
-                          hasButton: true,
                         ),
                       );
                     } else {
                       navigateTo(
                         context,
                         NurseProfile(
-                          lsitOfAppliedNurseModel:
+                          callbackData: widget.callbackData,
+                          callbackJobModel: widget.callbackJobModel,
+                          listOfAppliedNurseModel:
                               widget.jobModel.listOfAppliedNurse![index],
                           jobModel: widget.jobModel,
-                          hasButton: true,
                         ),
                       );
                     }

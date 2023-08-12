@@ -22,8 +22,8 @@ class JobsBloc {
     return await WebService.post(JobResource.storeJob(jobModel));
   }
 
-  Future<DefaultResponseModel> acceptJob(int jobId) async {
-    return await WebService.put(JobResource.acceptJob(jobId));
+  Future<DefaultResponseModel> acceptNurse(int jobId) async {
+    return await WebService.put(JobResource.acceptNurse(jobId));
   }
 
   Future<JobResponseModel> rejectJob(

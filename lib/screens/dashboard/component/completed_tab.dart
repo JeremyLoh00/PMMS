@@ -1,4 +1,5 @@
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:easy_debounce/easy_debounce.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_scale_tap/flutter_scale_tap.dart';
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
@@ -73,7 +74,7 @@ class _CompletedTabState extends State<CompletedTab> {
         List<JobModel> listJobsModel = response.data!;
 
         // Compare the lenght with the page size to know either already last page or not
-        final isLastPage = listJobsModel.length < _pageSize;
+        final isLastPage = listJobsModel.length < widget.jobFilterRequestModel.take!;
         if (isLastPage) {
           widget.pagingController.appendLastPage(listJobsModel);
         } else {
@@ -92,10 +93,14 @@ class _CompletedTabState extends State<CompletedTab> {
   void initState() {
     super.initState();
     jobFilterRequestModel.tab = 3;
-    jobFilterRequestModel.take = pageSize;
+   
     widget.jobFilterRequestModel.page = 1;
     widget.pagingController.addPageRequestListener((pageKey) {
-      _fetchPage(pageKey);
+      EasyDebounce.debounce(
+        'openTab',
+        const Duration(milliseconds: 500),
+        () => _fetchPage(pageKey),
+      );
     });
   }
 
@@ -167,35 +172,47 @@ class _CompletedTabState extends State<CompletedTab> {
                 children: [
                   // image
                   Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      SizedBox(
-                        width: 100,
-                        height: 120,
-                        child: CachedNetworkImage(
-                          imageUrl: jobModel.service!.photoPath!,
-                          imageBuilder: (context, imageProvider) => Container(
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(10),
-                              image: DecorationImage(
-                                image: imageProvider,
-                                fit: BoxFit.cover,
-                              ),
-                            ),
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Space(5),
+                  Text(
+                    " #${jobModel.id!}",
+                    style: TextStyle(
+                      color: kPrimaryColor,
+                      fontSize: 12,
+                      fontWeight: FontWeight.bold,
+                    ),
+                    textAlign: TextAlign.left,
+                  ),
+                  Space(5),
+                  SizedBox(
+                    width: 100,
+                    height: 100,
+                    child: CachedNetworkImage(
+                      imageUrl: jobModel.service!.photoPath!,
+                      imageBuilder: (context, imageProvider) => Container(
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(10),
+                          image: DecorationImage(
+                            image: imageProvider,
+                            fit: BoxFit.cover,
                           ),
-                          placeholder: (context, url) => Container(
-                            width: 10,
-                            height: 10,
-                            child: Center(
-                              child: ThemeSpinner.spinner(),
-                            ),
-                          ),
-                          errorWidget: (context, url, error) =>
-                              const Icon(Icons.error),
                         ),
                       ),
-                    ],
+                      placeholder: (context, url) => Container(
+                        width: 10,
+                        height: 10,
+                        child: Center(
+                          child: ThemeSpinner.spinner(),
+                        ),
+                      ),
+                      errorWidget: (context, url, error) =>
+                          const Icon(Icons.error),
+                    ),
                   ),
+                ],
+              ),
                   SizedBox(width: 15),
                   Expanded(
                     child: Padding(

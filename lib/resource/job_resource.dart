@@ -39,7 +39,7 @@ class JobResource {
         });
   }
 
-  static Resource acceptJob(int jobId) {
+  static Resource acceptNurse(int jobId) {
     return Resource(
         url: 'client/jobs/$jobId/accept',
         parse: (response) {

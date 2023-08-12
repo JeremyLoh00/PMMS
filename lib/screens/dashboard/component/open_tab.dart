@@ -26,6 +26,7 @@ import 'package:private_nurse_for_client/screens/job_description/job_description
 import 'package:private_nurse_for_client/theme.dart';
 import 'package:provider/provider.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
+import 'package:easy_debounce/easy_debounce.dart';
 
 class OpenTab extends StatefulWidget {
   const OpenTab({
@@ -33,11 +34,10 @@ class OpenTab extends StatefulWidget {
     required this.selectedTabIndex,
     required this.jobFilterRequestModel,
     required this.pagingController,
- 
   });
 
   final int selectedTabIndex;
- 
+
   final JobFilterRequestModel jobFilterRequestModel;
   final PagingController<int, JobModel> pagingController;
 
@@ -126,7 +126,8 @@ class _OpenTabState extends State<OpenTab> {
         List<JobModel> listJobsModel = response.data!;
 
         // Compare the lenght with the page size to know either already last page or not
-        final isLastPage = listJobsModel.length < _pageSize;
+        final isLastPage =
+            listJobsModel.length < widget.jobFilterRequestModel.take!;
         if (isLastPage) {
           widget.pagingController.appendLastPage(listJobsModel);
         } else {
@@ -145,11 +146,13 @@ class _OpenTabState extends State<OpenTab> {
   void initState() {
     super.initState();
     widget.jobFilterRequestModel.tab = 1;
-    widget.jobFilterRequestModel.take = pageSize;
-    widget.jobFilterRequestModel.page = 1;
 
     widget.pagingController.addPageRequestListener((pageKey) {
-      _fetchPage(pageKey);
+      EasyDebounce.debounce(
+        'openTab',
+        const Duration(milliseconds: 500),
+        () => _fetchPage(pageKey),
+      );
     });
 
     _userModel = getUserDetails();
@@ -223,10 +226,22 @@ class _OpenTabState extends State<OpenTab> {
               // image
               Column(
                 mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
+                  Space(5),
+                  Text(
+                    " #${jobModel.id!}",
+                    style: TextStyle(
+                      color: kPrimaryColor,
+                      fontSize: 12,
+                      fontWeight: FontWeight.bold,
+                    ),
+                    textAlign: TextAlign.left,
+                  ),
+                  Space(5),
                   SizedBox(
                     width: 100,
-                    height: 120,
+                    height: 100,
                     child: CachedNetworkImage(
                       imageUrl: jobModel.service!.photoPath!,
                       imageBuilder: (context, imageProvider) => Container(
@@ -308,7 +323,6 @@ class _OpenTabState extends State<OpenTab> {
                           Expanded(
                               child: Text(
                             jobModel.patient!.name!,
-                       
                             maxLines: 1,
                             overflow: TextOverflow.ellipsis,
                             style: TextStyle(

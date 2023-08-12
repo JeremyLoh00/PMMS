@@ -31,7 +31,7 @@ class _CommentState extends State<Comment> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            "Your Comment",
+            "Feedbacks",
             style: TextStyle(
               fontWeight: FontWeight.bold,
               fontSize: 12.0,
@@ -41,7 +41,7 @@ class _CommentState extends State<Comment> {
               ? Padding(
                   padding: const EdgeInsets.all(15),
                   child: Text(
-                    "No comment yet.",
+                    "No feedbacks yet.",
                     style: TextStyle(fontFamily: "Poppins", color: kGrey),
                   ),
                 )

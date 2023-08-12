@@ -54,7 +54,8 @@ class _BlockedNurseScreenState extends State<BlockedNurseScreen> {
     nurseHistoryFilterRequestModel.page = pageKey;
     try {
       //Call API
-      final ListUserResponseModel response = await nurseBloc.getListNurseBlocked(
+      final ListUserResponseModel response =
+          await nurseBloc.getListNurseBlocked(
         nurseHistoryFilterRequestModel,
       );
 
@@ -124,6 +125,7 @@ class _BlockedNurseScreenState extends State<BlockedNurseScreen> {
                   itemBuilder: (context, userModel, index) {
                     return NurseBlockedItem(
                       userModel: userModel,
+                      callbackRefresh: _onRefresh,
                     );
                   }),
             )

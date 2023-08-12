@@ -24,56 +24,40 @@ class _JobDescriptionDetailState extends State<JobDescriptionDetail> {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Expanded(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    // Badge status
-                    badgeStatus(
-                              status: widget.jobModel.jobStatus!,
-                             statusId: widget.jobModel.jobStatusId!,
-                            ),
-                    Space(15),
-                    //Name and phone number
-                    // Container(
-                    //   child: Column(
-                    //     crossAxisAlignment: CrossAxisAlignment.start,
-                    //     children: [
-                    //       Text(widget.jobModel.patient!.name!,
-                    //           style: TextStyle(
-                    //               fontSize: 16,
-                    //               color: kPrimaryColor,
-                    //               fontWeight: FontWeight.bold)),
-                    //       Text(widget.jobModel.phoneNo!,
-                    //           style: TextStyle(
-                    //             color: kGrey,
-                    //           )),
-                    //     ],
-                    //   ),
-                    // ),
-                  ],
+              badgeStatus(
+                status: widget.jobModel.jobStatus!,
+                statusId: widget.jobModel.jobStatusId!,
+              ),
+              Text(
+                "#${widget.jobModel.id!.toString()}",
+                style: const TextStyle(
+                  fontSize: 13,
+                  color: kPrimaryColor,
+                  fontWeight: FontWeight.bold,
                 ),
               ),
+            ],
+          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.end,
+            children: [
               //Price
-              Container(
-                child: Padding(
-                  padding: const EdgeInsets.all(5.0),
-                  child: Row(
-                    children: [
-                      Text("RM",
-                          style: TextStyle(
-                              color: kPrimaryColor,
-                              fontWeight: FontWeight.bold)),
-                      SizedBox(
-                        width: 5,
-                      ),
-                      Text(widget.jobModel.totalServiceFee!,
-                          style: TextStyle(
-                              fontSize: 30,
-                              fontWeight: FontWeight.bold,
-                              color: kPrimaryColor)),
-                    ],
-                  ),
+              Padding(
+                padding: const EdgeInsets.all(5.0),
+                child: Row(
+                  children: [
+                    Text("RM",
+                        style: TextStyle(
+                            color: kPrimaryColor, fontWeight: FontWeight.bold)),
+                    SizedBox(
+                      width: 5,
+                    ),
+                    Text(widget.jobModel.totalServiceFee!,
+                        style: TextStyle(
+                            fontSize: 30,
+                            fontWeight: FontWeight.bold,
+                            color: kPrimaryColor)),
+                  ],
                 ),
               ),
             ],

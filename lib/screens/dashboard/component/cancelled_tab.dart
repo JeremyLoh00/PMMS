@@ -1,4 +1,5 @@
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:easy_debounce/easy_debounce.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_scale_tap/flutter_scale_tap.dart';
 import 'package:get_it/get_it.dart';
@@ -33,13 +34,11 @@ class CancelledTab extends StatefulWidget {
     required this.selectedTabIndex,
     required this.jobFilterRequestModel,
     required this.pagingController,
- 
   });
 
   final int selectedTabIndex;
   final JobFilterRequestModel jobFilterRequestModel;
   final PagingController<int, JobModel> pagingController;
- 
 
   @override
   State<CancelledTab> createState() => _CancelledTabState();
@@ -82,7 +81,8 @@ class _CancelledTabState extends State<CancelledTab> {
         List<JobModel> listJobsModel = response.data!;
 
         // Compare the lenght with the page size to know either already last page or not
-        final isLastPage = listJobsModel.length < _pageSize;
+        final isLastPage =
+            listJobsModel.length < widget.jobFilterRequestModel.take!;
         if (isLastPage) {
           widget.pagingController.appendLastPage(listJobsModel);
         } else {
@@ -101,10 +101,14 @@ class _CancelledTabState extends State<CancelledTab> {
   void initState() {
     super.initState();
     jobFilterRequestModel.tab = 4;
-    jobFilterRequestModel.take = pageSize;
+
     widget.jobFilterRequestModel.page = 1;
     widget.pagingController.addPageRequestListener((pageKey) {
-      _fetchPage(pageKey);
+      EasyDebounce.debounce(
+        'openTab',
+        const Duration(milliseconds: 500),
+        () => _fetchPage(pageKey),
+      );
     });
   }
 
@@ -177,10 +181,22 @@ class _CancelledTabState extends State<CancelledTab> {
                   // image
                   Column(
                     mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
+                      Space(5),
+                      Text(
+                        " #${jobModel.id!}",
+                        style: TextStyle(
+                          color: kPrimaryColor,
+                          fontSize: 12,
+                          fontWeight: FontWeight.bold,
+                        ),
+                        textAlign: TextAlign.left,
+                      ),
+                      Space(5),
                       SizedBox(
                         width: 100,
-                        height: 120,
+                        height: 100,
                         child: CachedNetworkImage(
                           imageUrl: jobModel.service!.photoPath!,
                           imageBuilder: (context, imageProvider) => Container(

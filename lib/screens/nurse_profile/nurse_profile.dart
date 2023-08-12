@@ -23,23 +23,23 @@ import 'package:private_nurse_for_client/screens/subscription/subscription_scree
 import 'package:private_nurse_for_client/theme.dart';
 
 class NurseProfile extends StatefulWidget {
-  final bool? hasButton;
-  final ListOfAppliedNurseModel lsitOfAppliedNurseModel;
+  final ListOfAppliedNurseModel listOfAppliedNurseModel;
+  final Function() callbackData;
+  final Function(JobModel) callbackJobModel;
   final JobModel jobModel;
   const NurseProfile(
       {super.key,
-      required this.lsitOfAppliedNurseModel,
+      required this.listOfAppliedNurseModel,
       required this.jobModel,
-      this.hasButton = false});
+      required this.callbackData,
+      required this.callbackJobModel});
 
   @override
   State<NurseProfile> createState() => _NurseProfileState();
 }
 
-final String commentPic =
-    "https://cdn.pixabay.com/photo/2017/12/03/18/04/christmas-balls-2995437_960_720.jpg";
-final int subCode = 200;
 bool block = false;
+String rejectLoadingText = "";
 
 class _NurseProfileState extends State<NurseProfile> {
   bool _isLoadingAccept = false;
@@ -48,6 +48,14 @@ class _NurseProfileState extends State<NurseProfile> {
   JobModel _jobModel = JobModel();
   JobsBloc jobsBloc = JobsBloc();
   NurseBloc nurseBloc = NurseBloc();
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    _jobModel = widget.jobModel;
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -65,21 +73,15 @@ class _NurseProfileState extends State<NurseProfile> {
                 SizedBox(
                   height: MediaQuery.of(context).size.height * 0.3,
                   width: double.infinity,
-                  child: Hero(
-                    tag: "contest-banner",
-                    // child: Text("data"),
-                    child: Container(
-                      child: CachedNetworkImage(
-                        imageUrl: widget.lsitOfAppliedNurseModel.profilePhoto!,
-                        imageBuilder: (context, imageProvider) => Container(
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(20.0),
-                            shape: BoxShape.rectangle,
-                            image: DecorationImage(
-                              image: imageProvider,
-                              fit: BoxFit.cover,
-                            ),
-                          ),
+                  child: CachedNetworkImage(
+                    imageUrl: widget.listOfAppliedNurseModel.profilePhoto!,
+                    imageBuilder: (context, imageProvider) => Container(
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(20.0),
+                        shape: BoxShape.rectangle,
+                        image: DecorationImage(
+                          image: imageProvider,
+                          fit: BoxFit.cover,
                         ),
                       ),
                     ),
@@ -89,114 +91,85 @@ class _NurseProfileState extends State<NurseProfile> {
                   height: 20,
                 ),
                 NurseProfileHeader(
-                  title: widget.lsitOfAppliedNurseModel.name!,
+                  title: widget.listOfAppliedNurseModel.name!,
                   totalReview:
-                      widget.lsitOfAppliedNurseModel.nurse!.averageRating!,
-                  phoneNum: widget.lsitOfAppliedNurseModel.phoneNo!,
+                      widget.listOfAppliedNurseModel.nurse!.averageRating!,
+                  phoneNum: widget.listOfAppliedNurseModel.phoneNo!,
                   education:
-                      widget.lsitOfAppliedNurseModel.nurse!.educationLevel!,
-                  location: widget.lsitOfAppliedNurseModel.nurse!.collegeName!,
+                      widget.listOfAppliedNurseModel.nurse!.educationLevel!,
+                  location: widget.listOfAppliedNurseModel.nurse!.collegeName!,
                   experience:
-                      widget.lsitOfAppliedNurseModel.nurse!.workExperience!,
-                  nurseId: widget.lsitOfAppliedNurseModel.nurse!.id!,
+                      widget.listOfAppliedNurseModel.nurse!.workExperience!,
+                  nurseId: widget.listOfAppliedNurseModel.nurse!.id!,
                 ),
                 SizedBox(
                   height: 10,
                 ),
-                // Divider(
-                //   thickness: 0.5,
-                //   color: kGrey,
-                // ),
                 SizedBox(
                   height: 10,
                 ),
-                // NurseProfileReview(),
                 SizedBox(
                   height: 10,
                 ),
-                //  widget.hasButton == true
-                //     ? Row(
-                //         children: [
-                //           Expanded(
-                //             flex: 1,
-                //             child: ButtonSecondary(
-                //               paddingVertical: 17,
-                //               onPressed: () {
-                //                 navigateTo(
-                //                     context,
-                //                     RejectReason(
-                //                       jobModel: widget.jobModel,
-                //                     ));
-                //               },
-                //               text: "Reject",
-                //             ),
-                //           ),
-                //           SizedBox(
-                //             width: 10,
-                //           ),
-                //           Expanded(
-                //             flex: 2,
-                //             child: ButtonPrimary(
-                //               "Hire Me",
-                //               onPressed: () async {
-                //                 await showHireNursePopup(context);
-                //               },
-                //               isLoading: _isLoadingAccept,
-                //               loadingText:
-                //                   "Accepting...", //Confirmation of hire OR subscription if not subscribe yet
-                //             ),
-                //           ),
-                //         ],
-                //       )
-                //     : SizedBox(),
               ],
             ),
           ),
         ),
       ),
-      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
-      floatingActionButton: widget.hasButton == true
-          ? Padding(
-              padding: const EdgeInsets.all(18.0),
-              child: Row(
-                children: [
-                  Expanded(
-                    flex: 1,
-                    child: ButtonSecondary(
-                      "Reject",
-                      onPressed: () {
-                        navigateTo(
-                            context,
-                            RejectReasonScreen(
-                              jobModel: widget.jobModel,
-                              callBackJobModel: (data) {
-                                setState(() {
-                                  _jobModel = data;
-                                });
-                              },
-                            ));
-                      },
-                    ),
-                  ),
-                  SizedBox(
-                    width: 10,
-                  ),
-                  Expanded(
-                    flex: 2,
-                    child: ButtonPrimary(
-                      "Hire Me",
-                      onPressed: () async {
-                        await showHireNursePopup(context);
-                      },
-                      isLoading: _isLoadingAccept,
-                      loadingText: "Accepting...",
-                    ),
-                  ),
-                ],
-              ),
-            )
-          : SizedBox(),
+      bottomNavigationBar: getBottomNavigation(
+        widget.jobModel.jobStatusId!,
+        widget.listOfAppliedNurseModel.nurse!.applyJobStatusId!,
+      ),
     );
+  }
+
+  Widget getBottomNavigation(int jobStatusId, int nurseStatus) {
+    if (jobStatusId == OPEN) {
+      if (nurseStatus == NurseJobStatus.WAITING_FOR_APPROVAL) {
+        return Padding(
+          padding: const EdgeInsets.all(15.0),
+          child: Row(
+            children: [
+              Expanded(
+                flex: 1,
+                child: ButtonSecondary(
+                  "Reject",
+                  loadingText: rejectLoadingText,
+                  isLoading: _isLoading,
+                  onPressed: () {
+                    navigateTo(
+                      context,
+                      RejectReasonScreen(
+                        jobModel: widget.jobModel,
+                        callBackJobModel: widget.callbackJobModel,
+                      ),
+                    );
+                  },
+                ),
+              ),
+              SizedBox(
+                width: 10,
+              ),
+              Expanded(
+                flex: 2,
+                child: ButtonPrimary(
+                  "Hire Me",
+                  onPressed: () async {
+                    await showHireNursePopup(context);
+                  },
+                  isLoading: _isLoading,
+                  loadingText: "Accepting...",
+                ),
+              ),
+            ],
+          ),
+        );
+      } else {
+        return SizedBox();
+      }
+    } else {
+      return SizedBox();
+    }
   }
 
   AppBar _buildAppBar() {
@@ -214,7 +187,7 @@ class _NurseProfileState extends State<NurseProfile> {
             ),
           ),
           ScaleTap(
-            onPressed: () => (showBlockNursePopup(context)),
+            onPressed: () => showBlockNursePopup(context),
             child: Text(
               "Block Nurse",
               style: TextStyle(
@@ -246,61 +219,29 @@ class _NurseProfileState extends State<NurseProfile> {
       _isLoading = true;
     });
     DefaultResponseModel responseModel =
-        await jobsBloc.acceptJob(widget.jobModel.id!);
+        await jobsBloc.acceptNurse(widget.jobModel.id!);
 
     setState(() {
       _isLoading = false;
     });
     if (responseModel.isSuccess) {
-      if (responseModel.statusCode == HttpResponse.HTTP_PAYMENT_REQUIRED) {
-        if (mounted) {
-          // ThemeSnackBar.showSnackBar(context, responseModel.message);
-          CustomDialog.show(
-            context,
-            isDissmissable: true,
-            icon: Icons.warning,
-            dialogType: DialogType.success,
-            title: responseModel.message,
-            description:
-                "Subscription is not complete yet, please subscribe before accepting any nurse.",
-            btnCancelText: "Cancel",
-            btnCancelOnPress: () {
-              Navigator.pop(context);
-            },
-            btnOkText: "View Plan",
-            btnOkOnPress: () async {
-              Navigator.pop(context);
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) {
-                    return SubscriptionScreen(fromCustomerDialog: 1);
-                  },
-                ),
-              );
-            },
-          );
-        }
-      } else if (responseModel.statusCode == HttpResponse.HTTP_BAD_REQUEST) {
-        if (mounted) {
-          ThemeSnackBar.showSnackBar(context, responseModel.message);
-        }
-      } else {
-        if (mounted) {
-          CustomDialog.show(
-            context,
-            title: "Hire Confirmation",
-            description:
-                "Are you sure to hire this nurse for this job? Retrieve action is not available after accepting the application.",
-            btnCancelText: "Cancel",
-            btnOkText: "Hire",
-            btnCancelOnPress: () => Navigator.of(context).pop(),
-            btnOkOnPress: () => hireNurse(),
-            icon: Iconsax.info_circle,
-            dialogType: DialogType.warning,
-          );
-          ThemeSnackBar.showSnackBar(context, responseModel.message);
-        }
+      if (mounted) {
+        CustomDialog.show(
+          context,
+          title: "Hire Confirmation",
+          description:
+              "Are you sure to hire this nurse for this job? Retrieve action is not available after accepting the application.",
+          btnCancelText: "Cancel",
+          btnOkText: "Hire",
+          btnCancelOnPress: () => Navigator.of(context).pop(),
+          btnOkOnPress: () async {
+            Navigator.pop(context);
+            await hireNurse();
+          },
+          icon: Iconsax.info_circle,
+          dialogType: DialogType.warning,
+        );
+        ThemeSnackBar.showSnackBar(context, responseModel.message);
       }
     } else {
       if (mounted) {
@@ -339,7 +280,7 @@ class _NurseProfileState extends State<NurseProfile> {
       _isLoading = true;
     });
     DefaultResponseModel responseModel =
-        await jobsBloc.acceptJob(widget.jobModel.id!);
+        await jobsBloc.acceptNurse(widget.jobModel.id!);
 
     setState(() {
       _isLoading = false;
@@ -348,6 +289,7 @@ class _NurseProfileState extends State<NurseProfile> {
       if (mounted) {
         print(responseModel.message);
         ThemeSnackBar.showSnackBar(context, responseModel.message);
+        widget.callbackData();
       }
     } else {
       if (mounted) {
@@ -367,11 +309,14 @@ class _NurseProfileState extends State<NurseProfile> {
           context,
           title: "Block Nurse",
           description:
-              "Are you sure to block the nurse? You can unblock the nurse at the “Blocked Nurse” list. ",
+              "Are you sure to block this nurse? You can unblock the nurse at the “Blocked Nurse” list. ",
           btnCancelText: "Cancel",
           btnOkText: "Block",
           btnCancelOnPress: () => Navigator.of(context).pop(),
-          btnOkOnPress: () => {blockNurse(), Navigator.of(context).pop(true)},
+          btnOkOnPress: () {
+            blockNurse();
+            Navigator.of(context).pop(true);
+          },
           icon: Iconsax.info_circle,
           // dialogType: DialogType.warning,
         ) ??
@@ -392,7 +337,9 @@ class _NurseProfileState extends State<NurseProfile> {
           btnCancelText: "Cancel",
           btnOkText: "Unblock",
           btnCancelOnPress: () => Navigator.of(context).pop(),
-          btnOkOnPress: () => {Navigator.of(context).pop(true)},
+          btnOkOnPress: () {
+            Navigator.of(context).pop();
+          },
           icon: Iconsax.info_circle,
           // dialogType: DialogType.warning,
         ) ??
@@ -405,7 +352,7 @@ class _NurseProfileState extends State<NurseProfile> {
       _isLoading = true;
     });
     DefaultResponseModel responseModel =
-        await nurseBloc.blockNurse(widget.lsitOfAppliedNurseModel.nurse!.id!);
+        await nurseBloc.blockNurse(widget.listOfAppliedNurseModel.nurse!.id!);
 
     setState(() {
       _isLoading = false;

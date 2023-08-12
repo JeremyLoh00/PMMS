@@ -42,6 +42,10 @@ class _JobDescriptionState extends State<JobDescription> {
     getJobData();
   }
 
+  void callBackGetJobModelData() {
+    getJobData();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -68,6 +72,12 @@ class _JobDescriptionState extends State<JobDescription> {
               JobModel jobModel = builder.data!;
               return BodyContent(
                 body: Body(
+                  callbackData: callBackGetJobModelData,
+                  callbackJobModel: (data) {
+                    setState(() {
+                      futureData = Future.value(data);
+                    });
+                  },
                   jobModel: jobModel,
                 ),
                 //Bottom button with condition
@@ -154,7 +164,7 @@ class _JobDescriptionState extends State<JobDescription> {
             context,
             ReviewScreen(
               jobModel: widget.jobModel!,
-              callbackGetJobModelData: getJobData,
+              callbackGetJobModelData: callBackGetJobModelData,
             ),
           ),
           loadingText: "Updating...",

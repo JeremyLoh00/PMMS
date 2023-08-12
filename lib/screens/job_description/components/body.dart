@@ -9,7 +9,9 @@ import 'package:private_nurse_for_client/screens/job_description/components/pati
 
 class Body extends StatefulWidget {
   final JobModel jobModel;
-  const Body({Key? key, required this.jobModel}) : super(key: key);
+  final Function(JobModel) callbackJobModel;
+  final Function() callbackData;
+  const Body({Key? key, required this.jobModel, required this.callbackJobModel, required this.callbackData}) : super(key: key);
 
   @override
   State<Body> createState() => _BodyState();
@@ -112,8 +114,11 @@ class _BodyState extends State<Body> {
                       ),
                       //Nurse applications info
 
+                        
                       NurseApplication(
                         jobModel: widget.jobModel,
+                           callbackData: widget.callbackData,
+                          callbackJobModel: widget.callbackJobModel,
                       ),
 
                       // widget.jobModel.jobStatusId == WAITING_CLIENT_REVIEWS

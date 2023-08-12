@@ -17,9 +17,11 @@ import 'package:private_nurse_for_client/theme.dart';
 
 class NurseBlockedItem extends StatefulWidget {
   final UserModel userModel;
-  NurseBlockedItem({
+  final Function() callbackRefresh;
+  const NurseBlockedItem({
     Key? key,
     required this.userModel,
+    required this.callbackRefresh,
   }) : super(key: key);
 
   @override
@@ -69,7 +71,8 @@ class _NurseBlockedItemState extends State<NurseBlockedItem> {
                       ),
                     ),
                     placeholder: (context, url) => ThemeSpinner.spinner(),
-                    errorWidget: (context, url, error) => const Icon(Icons.error),
+                    errorWidget: (context, url, error) =>
+                        const Icon(Icons.error),
                   ),
                 ),
               ],
@@ -246,7 +249,10 @@ class _NurseBlockedItemState extends State<NurseBlockedItem> {
           btnCancelText: "Cancel",
           btnOkText: "Unblock",
           btnCancelOnPress: () => Navigator.of(context).pop(),
-          btnOkOnPress: () => {unBlockNurse(), Navigator.of(context).pop(true)},
+          btnOkOnPress: () {
+            Navigator.pop(context);
+            unBlockNurse();
+          },
           icon: Iconsax.info_circle,
           // dialogType: DialogType.warning,
         ) ??
@@ -255,19 +261,21 @@ class _NurseBlockedItemState extends State<NurseBlockedItem> {
   }
 
   Future<void> unBlockNurse() async {
-    setState(() {
-      _isLoading = true;
-    });
+    CustomDialog.show(
+      context,
+      isDissmissable: false,
+      title: "Unblocking Nurse",
+      center: ThemeSpinner.spinner(),
+    );
     DefaultResponseModel responseModel =
         await nurseBloc.blockNurse(widget.userModel.nurseModel!.id!);
 
-    setState(() {
-      _isLoading = false;
-    });
+    Navigator.pop(context);
     if (responseModel.isSuccess) {
       if (mounted) {
         ThemeSnackBar.showSnackBar(context, responseModel.message);
-        Navigator.of(context).pop();
+
+        widget.callbackRefresh();
       }
     } else {
       if (mounted) {

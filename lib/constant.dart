@@ -76,4 +76,9 @@ class TransactionStatus {
   static const String pending = "2";
   static const String fail = "3";
 }
+class NurseJobStatus {
+  static const int ACCEPTED = 1;
+  static const int REJECTED = 2;
+  static const int WAITING_FOR_APPROVAL = 3;
+}
 const devToyyibPay = "https://dev.toyyibpay.com/";
